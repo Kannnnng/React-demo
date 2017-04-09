@@ -1,0 +1,22 @@
+{
+  "name": "react-demo",
+  "version": "1.0.0",
+  "description": "基于webpack的react学习与演示项目",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "webpack"
+  ],
+  "author": "Einskang",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.28.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.3.3"
+  }
+}
