@@ -6,11 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='container'>
-        <h1>Hello React!</h1>
-        <h1>Hello React!</h1>
-        <h1>Hello React!</h1>
-        <h1>Hello React!</h1>
-        <Profile name="闫守康" age="23" />
+        <Profile name="kang" age="23" />
       </div>
     )
   }
