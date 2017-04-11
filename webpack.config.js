@@ -1,9 +1,9 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path')  // eslint-disable-line
+var webpack = require('webpack')  // eslint-disable-line
 
-var ROOT_PATH = path.resolve(__dirname)
-var APP_PATH = path.resolve(ROOT_PATH, 'app')
-var BUILD_PATH = path.resolve(ROOT_PATH, 'build')
+var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
+var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
+var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 
 module.exports = {
   entry: {
@@ -37,9 +37,9 @@ module.exports = {
         loaders: ['style-loader', 'sass-loader', 'css-loader'],
         include: APP_PATH,
       },
-    ]
+    ],
   },
   resolve: {
     extensions: ['.js', 'jsx'],
-  }
+  },
 }
