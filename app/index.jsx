@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+// import { Router, Route, hashHistory } from 'react-router'
 import Profile from './Profile.jsx'
+
+require('normalize.css/normalize.css')
 
 class App extends React.Component {
   render() {
