@@ -13,7 +13,7 @@ module.exports = {
     path: BUILD_PATH,
     filename: 'bundle.js',
   },
-  // devtool: 'eval-source-map',
+  devtool: 'cheap-eval-source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,
@@ -39,6 +39,16 @@ module.exports = {
           'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
           'sass-loader',
         ],
+        include: APP_PATH,
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2)$/,
+        loader: 'url-loader?limit=8192',
+        include: APP_PATH,
+      },
+      {
+        test: /\.(mp4|ogg|svg)$/,
+        loader: 'file-loader',
         include: APP_PATH,
       },
     ],
