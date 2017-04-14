@@ -34,7 +34,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'sass-loader', 'css-loader'],
+        loaders: [
+          'style-loader',
+          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
+          'sass-loader',
+        ],
         include: APP_PATH,
       },
     ],
