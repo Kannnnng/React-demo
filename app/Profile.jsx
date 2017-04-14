@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styles from './index.scss'
 
 function funcHobby(value, index) {
   return <li key={index}>{value}</li>
@@ -34,7 +35,7 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div className="profileComponent">
+      <div className={styles.profileComponent}>
         <h1>我的名字叫做{this.props.name}</h1>
         <h1>我今年{this.props.age}岁了</h1>
         <button onClick={this.handleOnClickliked}>给我点赞</button>
