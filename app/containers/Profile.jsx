@@ -2,10 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './index.scss'
 
-function funcHobby(value, index) {
-  return <li key={index}>{value}</li>
-}
-
 class Profile extends React.Component {
   constructor(props) {
     super(props)
@@ -42,7 +38,7 @@ class Profile extends React.Component {
         <h2>获得的赞：{this.state.liked}</h2>
         <h2>我的爱好</h2>
         <ul>
-          {this.state.hobbies.map((value, index) => funcHobby(value, index))}
+          {this.state.hobbies.map((value, index) => <li key={index}>{value}</li>)}
         </ul>
         <input type="text" ref={(node) => { this.hobby = node }} />
         <button onClick={this.handleOnAddHobby}>添加爱好</button>

@@ -11,7 +11,8 @@ module.exports = {
   },
   output: {
     path: BUILD_PATH,
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js',
   },
   devtool: 'cheap-eval-source-map',
   devServer: {
@@ -20,6 +21,7 @@ module.exports = {
     inline: true,
     port: 7000,
   },
+  cache: false,
   module: {
     loaders: [
       {
