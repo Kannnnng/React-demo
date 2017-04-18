@@ -48,8 +48,8 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-  name: PropTypes.string.isRequired,
-  age: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  age: PropTypes.string,
 }
 
 export default Profile

@@ -1,13 +1,15 @@
-import 'normalize.css/normalize.css'
+import 'style-loader!css-loader?importLoaders=1!normalize.css/normalize.css'  // eslint-disable-line
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
-import store from './store/index.jsx'
-import routes from './router.jsx'
+import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
+import configStore from './store'
+import routes from './router.js'
 
+const initialState = {}
+const store = configStore(initialState, routerMiddleware(browserHistory))
 const history = syncHistoryWithStore(browserHistory, store)
 
 class App extends React.Component {
