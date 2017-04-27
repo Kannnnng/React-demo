@@ -7,6 +7,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 
 module.exports = {
   entry: {
+    babel: 'babel-polyfill',
     app: path.resolve(APP_PATH, 'index.js'),
   },
   output: {
@@ -25,7 +26,7 @@ module.exports = {
     loaders: [
       {
         enforce: 'pre',
-        test: /\.jsx$/,
+        test: /\.jsx$/i,
         loaders: ['eslint-loader'],
         include: APP_PATH,
       },
@@ -46,7 +47,7 @@ module.exports = {
         test: /\.scss$/i,
         loaders: [
           'style-loader',
-          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
+          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
           'sass-loader',
         ],
         include: APP_PATH,
@@ -64,6 +65,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', 'css', 'scss'],
   },
 }

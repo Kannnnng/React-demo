@@ -1,22 +1,24 @@
-import 'style-loader!css-loader?importLoaders=1!normalize.css/normalize.css'  // eslint-disable-line
+import 'style-loader!css-loader!normalize.css/normalize.css'  // eslint-disable-line
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, browserHistory } from 'react-router'
-import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
+import { HashRouter } from 'react-router-dom'
 import configStore from './store'
 import routes from './router.js'
 
 const initialState = {}
-const store = configStore(initialState, routerMiddleware(browserHistory))
-const history = syncHistoryWithStore(browserHistory, store)
+const store = configStore(initialState)
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history} routes={routes} />
+        <HashRouter basename="/">
+          <div>
+            {routes}
+          </div>
+        </HashRouter>
       </Provider>
     )
   }
