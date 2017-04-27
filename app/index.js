@@ -6,8 +6,11 @@ import { MuiThemeProvider } from 'material-ui'
 import { getMuiTheme } from 'material-ui/styles'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import configStore from './store'
 import routes from './router.js'
+
+injectTapEventPlugin()
 
 const initialState = {}
 const store = configStore(initialState)

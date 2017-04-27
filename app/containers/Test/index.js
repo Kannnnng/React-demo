@@ -22,6 +22,7 @@ class Test extends React.Component {
       message,
     } = this.props
 
+
     return (
       <div className={styles.divTest}>
         这是一段测试文本，点击按钮以后下面显示的信息会发生变化
@@ -29,7 +30,7 @@ class Test extends React.Component {
         <div>
           <RaisedButton
             label="点击我就会发送 action！"
-            onClick={this.handleOnClick}
+            onTouchTap={this.handleOnClick}
             primary
           />
         </div>
