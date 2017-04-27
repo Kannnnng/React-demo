@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // import { Link } from 'react-router-dom'
+import { RaisedButton } from 'material-ui'
 import * as acts from '../../actions/Test'
 import styles from './index.scss'
 
@@ -26,7 +27,11 @@ class Test extends React.Component {
         这是一段测试文本，点击按钮以后下面显示的信息会发生变化
         <div>{message}</div>
         <div>
-          <button onClick={this.handleOnClick}>点击我就会发送 action！</button>
+          <RaisedButton
+            label="点击我就会发送 action！"
+            onClick={this.handleOnClick}
+            primary
+          />
         </div>
       </div>
     )

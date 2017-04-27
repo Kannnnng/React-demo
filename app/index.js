@@ -2,6 +2,8 @@ import 'style-loader!css-loader!normalize.css/normalize.css'  // eslint-disable-
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { MuiThemeProvider } from 'material-ui'
+import { getMuiTheme } from 'material-ui/styles'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import configStore from './store'
@@ -10,13 +12,17 @@ import routes from './router.js'
 const initialState = {}
 const store = configStore(initialState)
 
+const muiTheme = getMuiTheme({})
+
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <HashRouter basename="/">
-          {routes}
-        </HashRouter>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <HashRouter basename="/">
+            {routes}
+          </HashRouter>
+        </MuiThemeProvider>
       </Provider>
     )
   }
