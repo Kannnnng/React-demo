@@ -13,6 +13,7 @@ module.exports = {
   output: {
     path: BUILD_PATH,
     filename: '[name].js',
+    chunkFilename: '[name].js',
   },
   // devtool: 'cheap-eval-source-map',
   devtool: 'cheap-module-eval-source-map',
@@ -39,7 +40,7 @@ module.exports = {
         test: /\.css$/i,
         loaders: [
           'style-loader',
-          'css-loader?importLoaders=1',
+          'css-loader?sourceMap',
         ],
         include: APP_PATH,
       },
@@ -53,12 +54,12 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2)$/i,
+        test: /\.(png|jpg|gif|woff|woff2|svg)$/i,
         loader: 'url-loader?limit=8192',
         include: APP_PATH,
       },
       {
-        test: /\.(mp4|ogg|svg)$/i,
+        test: /\.(mp4|ogg|mp3)$/i,
         loader: 'file-loader',
         include: APP_PATH,
       },

@@ -21,8 +21,8 @@ function configStore(initialState) {
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextReducer = rootReducer
-      store.replaceReducer(nextReducer)
+      const nextRootReducer = require('../reducers/index')  // eslint-disable-line
+      store.replaceReducer(nextRootReducer)
     })
   }
 

@@ -15,9 +15,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <HashRouter basename="/">
-          <div>
-            {routes}
-          </div>
+          {routes}
         </HashRouter>
       </Provider>
     )
