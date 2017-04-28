@@ -2,8 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-// import { Link } from 'react-router-dom'
-import { RaisedButton } from 'material-ui'
+import { RaisedButton, FontIcon } from 'material-ui'
 import * as acts from 'actions/Test'
 import styles from './index.scss'
 
@@ -29,6 +28,7 @@ class Test extends React.Component {
         <div>{message}</div>
         <div>
           <RaisedButton
+            icon={<FontIcon className="fa fa-heart" />}
             label="点击我就会发送 action！"
             onTouchTap={this.handleOnClick}
             primary

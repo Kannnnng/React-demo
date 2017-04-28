@@ -1,5 +1,4 @@
 import 'style-loader!css-loader!normalize.css/normalize.css'  // eslint-disable-line
-import 'style-loader!css-loader!font-awesome/css/font-awesome.min.css'  // eslint-disable-line
 
 import React from 'react'
 import ReactDOM from 'react-dom'

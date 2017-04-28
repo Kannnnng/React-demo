@@ -54,9 +54,13 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg|gif|ttf|otf|woff|woff2|svg)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         loader: 'url-loader?limit=8192',
         include: APP_PATH,
+      },
+      {
+        test: /\.(svg|ttf|woff|woff2)$/i,
+        loader: 'url-loader?limit=8192',
       },
       {
         test: /\.(mp4|ogg|mp3)$/i,
