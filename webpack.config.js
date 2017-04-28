@@ -4,6 +4,32 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
+var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
+
+var plugins = []  // eslint-disable-line
+
+if (process.env === 'pro') {
+  plugins.push(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+    }),
+    new webpack.NoErrorsPlugin(),
+    new SplitByPathPlugin([
+      {
+        name: 'vendor',
+        path: path.join(__dirname, 'node_modules'),
+      },
+    ], {
+      manifest: 'app-entry',
+    }),
+  )
+}
 
 module.exports = {
   entry: {
@@ -89,4 +115,5 @@ module.exports = {
       utils: path.resolve(APP_PATH, 'utils'),
     },
   },
+  plugins,
 }
