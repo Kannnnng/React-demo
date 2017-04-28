@@ -54,7 +54,7 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2|svg)$/i,
+        test: /\.(png|jpg|gif|ttf|otf|woff|woff2|svg)$/i,
         loader: 'url-loader?limit=8192',
         include: APP_PATH,
       },
@@ -67,5 +67,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', 'css', 'scss'],
+    alias: {
+      actions: path.resolve(APP_PATH, 'actions'),
+      components: path.resolve(APP_PATH, 'components'),
+      containers: path.resolve(APP_PATH, 'containers'),
+      images: path.resolve(APP_PATH, 'images'),
+      reducers: path.resolve(APP_PATH, 'reducers'),
+      store: path.resolve(APP_PATH, 'store'),
+    },
   },
 }

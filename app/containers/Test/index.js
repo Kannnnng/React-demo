@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // import { Link } from 'react-router-dom'
 import { RaisedButton } from 'material-ui'
-import * as acts from '../../actions/Test'
+import * as acts from 'actions/Test'
 import styles from './index.scss'
 
 class Test extends React.Component {
