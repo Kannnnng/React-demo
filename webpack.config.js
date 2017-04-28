@@ -84,7 +84,9 @@ module.exports = {
       containers: path.resolve(APP_PATH, 'containers'),
       images: path.resolve(APP_PATH, 'images'),
       reducers: path.resolve(APP_PATH, 'reducers'),
+      sources: path.resolve(APP_PATH, 'sources'),
       store: path.resolve(APP_PATH, 'store'),
+      utils: path.resolve(APP_PATH, 'utils'),
     },
   },
 }

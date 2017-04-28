@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack -p --config webpack.config.build.js",
-    "start": "webpack-dev-server --progress --env=dev",
+    "start": "webpack-dev-server --hot --inline --historyApiFallback --progress --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -43,6 +43,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
