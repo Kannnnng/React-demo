@@ -21,7 +21,14 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     inline: true,
-    port: 7000,
+    port: 9000,
+    noInfo: false,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:7000',
+        secure: false,
+      },
+    },
   },
   module: {
     loaders: [
