@@ -4,6 +4,32 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
+var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
+
+var plugins = []  // eslint-disable-line
+
+if (process.env === 'pro') {
+  plugins.push(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+    }),
+    new webpack.NoErrorsPlugin(),
+    new SplitByPathPlugin([
+      {
+        name: 'vendor',
+        path: path.join(__dirname, 'node_modules'),
+      },
+    ], {
+      manifest: 'app-entry',
+    }),
+  )
+}
 
 module.exports = {
   entry: {
@@ -21,7 +47,14 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     inline: true,
-    port: 7000,
+    port: 9000,
+    noInfo: false,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:7000',
+        secure: false,
+      },
+    },
   },
   module: {
     loaders: [
@@ -54,9 +87,13 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2|svg)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         loader: 'url-loader?limit=8192',
         include: APP_PATH,
+      },
+      {
+        test: /\.(svg|ttf|woff|woff2)$/i,
+        loader: 'url-loader?limit=8192',
       },
       {
         test: /\.(mp4|ogg|mp3)$/i,
@@ -67,5 +104,16 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', 'css', 'scss'],
+    alias: {
+      actions: path.resolve(APP_PATH, 'actions'),
+      components: path.resolve(APP_PATH, 'components'),
+      containers: path.resolve(APP_PATH, 'containers'),
+      images: path.resolve(APP_PATH, 'images'),
+      reducers: path.resolve(APP_PATH, 'reducers'),
+      sources: path.resolve(APP_PATH, 'sources'),
+      store: path.resolve(APP_PATH, 'store'),
+      utils: path.resolve(APP_PATH, 'utils'),
+    },
   },
+  plugins,
 }
