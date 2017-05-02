@@ -4,7 +4,7 @@
   "description": "基于webpack的react学习与演示项目",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -p --config webpack.config.build.js",
+    "build": "webpack -p --env=pro",
     "start": "webpack-dev-server --hot --inline --historyApiFallback --progress --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

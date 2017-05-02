@@ -16,6 +16,7 @@ if (process.env === 'pro') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
+        /* 消除压缩代码时的报警信息 */
         warnings: false,
       },
     }),
