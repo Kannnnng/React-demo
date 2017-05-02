@@ -13,7 +13,7 @@ var plugins = []  // eslint-disable-line
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   entry = {
-    'app': ['babel-polyfill', path.resolve(APP_PATH, 'index.js')],  // eslint-disable-line
+    app: ['babel-polyfill', path.resolve(APP_PATH, 'index.js')],
   }
   output = {
     path: BUILD_PATH,
@@ -55,7 +55,9 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   ]
 } else {
   entry = {
-    'app': ['webpack/hot/dev-server', 'babel-polyfill', path.resolve(APP_PATH, 'index.js')],  // eslint-disable-line
+    webpack: 'webpack/hot/only-dev-server',
+    babel: 'babel-polyfill',
+    app: path.resolve(APP_PATH, 'index.js'),
   }
   output = {
     path: BUILD_PATH,
@@ -80,8 +82,6 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     historyApiFallback: true,
-    hot: true,
-    inline: true,
     port: 9000,
     noInfo: false,
     proxy: {
