@@ -14,6 +14,7 @@ var devServer = {}  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
+  process.env.NODE_ENV = 'production'
   entry = {
     app: [
       'babel-polyfill',
@@ -56,11 +57,10 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
         name: 'vendor',
         path: path.join(__dirname, 'node_modules'),
       },
-    ], {
-      manifest: 'app-entry',
-    }),
+    ]),
   ]
 } else {
+  process.env.NODE_ENV = 'development'
   entry = {
     app: [
       'webpack/hot/only-dev-server',
