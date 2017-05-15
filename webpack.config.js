@@ -91,6 +91,10 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   }
   plugins = [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"',
+      BASE_URL: '"http://localhost:9000"',
+    }),
   ]
 }
 
