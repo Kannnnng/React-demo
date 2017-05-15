@@ -9,11 +9,16 @@ var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
 var cache = undefined  // eslint-disable-line
 var plugins = []  // eslint-disable-line
+var devtool = ''  // eslint-disable-line
+var devServer = {}  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   entry = {
-    app: ['babel-polyfill', path.resolve(APP_PATH, 'index.js')],
+    app: [
+      'babel-polyfill',
+      path.resolve(APP_PATH, 'index.js'),
+    ],
   }
   output = {
     path: BUILD_PATH,
@@ -21,6 +26,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     chunkFilename: '[name].[hash].js',
   }
   cache = false
+  devtool = ''
+  devServer = {}
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
     /* 在 webpack2.0 中已不需要 */
@@ -55,9 +62,11 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   ]
 } else {
   entry = {
-    webpack: 'webpack/hot/only-dev-server',
-    babel: 'babel-polyfill',
-    app: path.resolve(APP_PATH, 'index.js'),
+    app: [
+      'webpack/hot/only-dev-server',
+      'babel-polyfill',
+      path.resolve(APP_PATH, 'index.js'),
+    ],
   }
   output = {
     path: BUILD_PATH,
@@ -65,6 +74,21 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     chunkFilename: '[name].js',
   }
   cache = true
+  /* 源代码与编译后代码的匹配模式 */
+  // devtool: 'cheap-eval-source-map',
+  devtool = 'cheap-module-eval-source-map'
+  devServer = {
+    headers: { 'X-Custom-Header': 'yes' },
+    historyApiFallback: true,
+    noInfo: false,
+    port: 9000,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:7000',
+        secure: false,
+      },
+    },
+  }
   plugins = [
     new webpack.HotModuleReplacementPlugin(),
   ]
@@ -78,19 +102,11 @@ module.exports = {
   /* 设置缓存是否开启，当前设置是在开发环境下缓存开启 */
   cache,
   /* 源代码与编译后代码的匹配模式 */
-  // devtool: 'cheap-eval-source-map',
-  devtool: 'cheap-module-eval-source-map',
-  devServer: {
-    historyApiFallback: true,
-    port: 9000,
-    noInfo: false,
-    proxy: {
-      '/api/*': {
-        target: 'http://localhost:7000',
-        secure: false,
-      },
-    },
-  },
+  devtool,
+  /* 开发工具 */
+  devServer,
+  /* 插件 */
+  plugins,
   /* 针对不同的文件类型配置不同的 loader，并设置对应的配置项 */
   module: {
     loaders: [
@@ -153,5 +169,4 @@ module.exports = {
       utils: path.resolve(APP_PATH, 'utils'),
     },
   },
-  plugins,
 }
