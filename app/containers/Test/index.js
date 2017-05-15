@@ -13,7 +13,7 @@ class Test extends React.Component {
   }
 
   handleOnClick = () => {
-    this.props.actions.testAction()
+    this.props.actions.testAction(12345)
   }
 
   render() {
