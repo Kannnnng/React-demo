@@ -2,6 +2,6 @@
 /react-demo.sublime-workspace
 /npm-debug.log
 /.DS_Store
-/build
+#/build
 /app/.DS_Store
 /app/sources/.DS_Store
