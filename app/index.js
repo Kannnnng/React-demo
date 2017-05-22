@@ -1,12 +1,13 @@
 import 'style-loader!css-loader!normalize.css/normalize.css'  // eslint-disable-line
+import 'style-loader!css-loader!./index.css'  // eslint-disable-line
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import { MuiThemeProvider } from 'material-ui'
 import { getMuiTheme } from 'material-ui/styles'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import configStore from 'store'
 import routes from './router'
 
