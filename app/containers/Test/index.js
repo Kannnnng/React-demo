@@ -1,8 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { RaisedButton, FontIcon } from 'material-ui'
+import {
+  RaisedButton,
+  FontIcon,
+} from 'material-ui'
 import * as acts from 'actions/Test'
 import styles from './index.scss'
 

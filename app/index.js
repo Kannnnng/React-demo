@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import { MuiThemeProvider } from 'material-ui'
 import { getMuiTheme } from 'material-ui/styles'
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import configStore from 'store'
 import routes from './router'
@@ -22,9 +22,9 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <HashRouter basename="/">
+          <BrowserRouter basename="/">
             {routes}
-          </HashRouter>
+          </BrowserRouter>
         </MuiThemeProvider>
       </Provider>
     )
