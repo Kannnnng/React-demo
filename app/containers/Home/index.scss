@@ -11,5 +11,7 @@
 }
 
 .title {
-  left: 50%;
+  position: absolute;
+  left: calc(50% - width / 2);
+  top: 50%;
 }
