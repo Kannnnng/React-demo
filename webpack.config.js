@@ -18,6 +18,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   entry = {
     app: [
       'babel-polyfill',
+      path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
   }
@@ -63,8 +64,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   process.env.NODE_ENV = 'development'
   entry = {
     app: [
-      'webpack/hot/only-dev-server',
       'babel-polyfill',
+      path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
   }
@@ -80,7 +81,6 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   devServer = {
     headers: { 'X-Custom-Header': 'yes' },
     historyApiFallback: true,
-    noInfo: false,
     port: 9000,
     proxy: {
       '/api/*': {
@@ -90,10 +90,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     },
   }
   plugins = [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"',
-      BASE_URL: '"http://localhost:9000"',
     }),
   ]
 }
@@ -131,7 +129,6 @@ module.exports = {
           'style-loader',
           'css-loader?sourceMap',
         ],
-        include: APP_PATH,
       },
       {
         test: /\.scss$/i,
@@ -150,6 +147,7 @@ module.exports = {
       {
         test: /\.(svg|ttf|woff|woff2)$/i,
         loader: 'url-loader?limit=8192',
+        include: APP_PATH,
       },
       {
         test: /\.(mp4|ogg|mp3)$/i,

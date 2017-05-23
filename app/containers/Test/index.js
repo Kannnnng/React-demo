@@ -27,8 +27,7 @@ class Test extends React.Component {
 
     return (
       <div className={styles.divTest}>
-        这是一段测试文本，点击按钮以后下面显示的信息会发生变化
-        我来修改一下看看热替换
+        {'这是一段测试文本，点击按钮以后下面显示信息会发生变化'}
         <div>{message}</div>
         <div>
           <RaisedButton

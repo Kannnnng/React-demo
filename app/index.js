@@ -1,5 +1,4 @@
-import 'style-loader!css-loader!normalize.css/normalize.css'  // eslint-disable-line
-import 'style-loader!css-loader!./index.css'  // eslint-disable-line
+import 'normalize.css/normalize.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -10,6 +9,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import configStore from 'store'
 import routes from './router'
+
+import './index.css'
 
 injectTapEventPlugin()
 
