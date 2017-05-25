@@ -7,8 +7,8 @@ import Test from 'containers/Test' // 引入各容器组件
 const routes = (
   <div>
     <Route path='/' component={Home} exact />
-    <Route path='/test' component={Test} />
-    <Route path='/app' component={Profile} />
+    <Route path='/test' component={Test} exact />
+    <Route path='/app' component={Profile} exact />
   </div>
 )
 

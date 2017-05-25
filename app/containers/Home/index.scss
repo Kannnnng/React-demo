@@ -12,6 +12,9 @@
 
 .title {
   position: absolute;
-  left: calc(50% - width / 2);
   top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #FFF;
+  animation-duration: 2s;
 }
