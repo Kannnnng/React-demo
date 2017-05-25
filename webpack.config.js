@@ -65,6 +65,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   entry = {
     app: [
       'babel-polyfill',
+      'react-hot-loader/patch',
       path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
@@ -93,6 +94,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"',
     }),
+    new webpack.NamedModulesPlugin(),
   ]
 }
 

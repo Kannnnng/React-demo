@@ -8,13 +8,5 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.title {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  text-align: center;
-  color: #FFF;
-  animation-duration: 2s;
+  overflow-x: hidden;
 }
