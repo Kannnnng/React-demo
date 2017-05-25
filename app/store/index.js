@@ -9,21 +9,25 @@ const create = process.env.NODE_ENV === 'production' ? createStore : _create  //
 const logger = createLogger({ collapsed: true })
 
 function configStore(initialState) {
-  const createStoreWithMiddleware = compose(
-    applyMiddleware(
-      thunk,
-      logger,
-    ),
-  )(create)
+  let store = null
+  if (process.env.NODE_ENV === 'production') {
+    store = create(rootReducer, initialState)
+  } else {
+    const createStoreWithMiddleware = compose(
+      applyMiddleware(
+        thunk,
+        logger,
+      ),
+    )(create)
+    store = createStoreWithMiddleware(rootReducer, initialState)
 
-  const store = createStoreWithMiddleware(rootReducer, initialState)
-
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers/index')  // eslint-disable-line
-      store.replaceReducer(nextRootReducer)
-    })
+    if (module.hot) {
+      // Enable Webpack hot module replacement for reducers
+      module.hot.accept('../reducers', () => {
+        const nextRootReducer = require('../reducers/index')  // eslint-disable-line
+        store.replaceReducer(nextRootReducer)
+      })
+    }
   }
 
   return store

@@ -10,19 +10,26 @@ import './index.css'
 
 injectTapEventPlugin()
 
-const render = (Component) => {
+if (process.env.NODE_ENV === 'production') {
   ReactDOM.render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
+    <App />,
     document.getElementById('app')  // eslint-disable-line
   )
-}
+} else {
+  const render = (Component) => {
+    ReactDOM.render(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      document.getElementById('app')  // eslint-disable-line
+    )
+  }
 
-render(App)
+  render(App)
 
-if (module.hot) {
-  module.hot.accept('containers/App', () => {
-    render(App)
-  })
+  if (module.hot) {
+    module.hot.accept('containers/App', () => {
+      render(App)
+    })
+  }
 }
