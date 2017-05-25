@@ -10,3 +10,18 @@
   background-size: cover;
   overflow-x: hidden;
 }
+
+.centerBox {
+  width: 200px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+
+.title {
+  color: #FFF;
+  font-size: 16px;
+}
