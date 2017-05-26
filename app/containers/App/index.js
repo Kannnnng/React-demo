@@ -11,12 +11,14 @@ const store = configStore(initialState)
 
 const muiTheme = getMuiTheme({})
 
+const baseName = process.env.NODE_ENV === 'production' ? '/React-demo/' : '/'
+
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <BrowserRouter basename="/">
+          <BrowserRouter basename={baseName}>
             {routes}
           </BrowserRouter>
         </MuiThemeProvider>
