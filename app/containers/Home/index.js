@@ -54,7 +54,8 @@ class Home extends React.Component {
     } = this.state
 
     return (
-      <div className={`${styles.container} animated bounceInDown`}>
+      // <div className={`${styles.container} animated bounceInDown`}>
+      <div className={`${styles.container}`}>
         <div className={styles.centerBox}>
           <div className={styles.avatar} />
           <div
@@ -83,16 +84,20 @@ class Home extends React.Component {
           />
           <List>
             <ListItem
-              primaryText="跳转到测试页"
+              primaryText="测试"
               onTouchTap={this.handleOnClickCatalogList('/test')}
             />
             <ListItem
-              primaryText="跳转到个人页"
+              primaryText="个人介绍"
               onTouchTap={this.handleOnClickCatalogList('/pro')}
             />
             <ListItem
-              primaryText="跳转到我的博客"
+              primaryText="我的博客"
               onTouchTap={() => { window.location = 'https://kannnnng.github.io/Blog/' }}
+            />
+            <ListItem
+              primaryText="2048"
+              onTouchTap={this.handleOnClickCatalogList('/2048')}
             />
           </List>
         </Drawer>
