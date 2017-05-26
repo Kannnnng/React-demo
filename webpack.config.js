@@ -26,6 +26,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     path: BUILD_PATH,
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
+    /* 图片等文件的引用路径 */
     publicPath: '/React-demo/build/assets/',
   }
   cache = false
