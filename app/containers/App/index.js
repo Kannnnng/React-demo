@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-// import { HashRouter } from 'react-router-dom'
 import { getMuiTheme } from 'material-ui/styles'
 import { MuiThemeProvider } from 'material-ui'
 import { Provider } from 'react-redux'
