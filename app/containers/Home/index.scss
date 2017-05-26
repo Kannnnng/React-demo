@@ -12,16 +12,66 @@
 }
 
 .centerBox {
-  width: 200px;
-  height: 100px;
+  $width: 300px;
+  $height: 100px;
+  width: $width;
+  height: $height;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
+  margin-top: 0px - $height / 2;
+  margin-left: 0px - $width / 2;
+}
+
+.avatar {
+  position: absolute;
+  $width: 90px;
+  $height: $width;
+  width: $width;
+  height: $height;
+  top: -15px - $height;
+  left: 50%;
+  margin-left: -2px - $width / 2;
+  border-radius: $width / 2;
+  transform: scale(1, 0.9);
+  background-image: url('images/avatar.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid #FFF;
 }
 
 .title {
   color: #FFF;
+  font-size: 32px;
+  text-align: center;
+  font-family: Raleway, Verdana, sans-serif;
+  letter-spacing: 4px;
+}
+
+.titleText {
+  cursor: pointer;
+
+  &:hover {
+    color: #EA8F8F;
+  }
+}
+
+.titleUnderLine {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #9C9C9C;
+  opacity: 0.5;
+  margin-top: 15px;
+}
+
+.introduction {
+  color: #FFF;
   font-size: 16px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.catalog {
+  background-color: rgba(225, 245, 215, 0.8) !important;
 }

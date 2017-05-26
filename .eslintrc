@@ -5,6 +5,7 @@
     "react"
   ],
   "rules": {
+    "arrow-parens": "always",
     "comma-dangle": 1,
     "import/extensions": 0,
     "import/no-absolute-path": 0,
