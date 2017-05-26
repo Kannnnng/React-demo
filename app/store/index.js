@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import rootReducer from 'reducers'
 
@@ -15,7 +14,6 @@ function configStore(initialState) {
   } else {
     const createStoreWithMiddleware = compose(
       applyMiddleware(
-        thunk,
         logger,
       ),
     )(create)
