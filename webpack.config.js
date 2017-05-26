@@ -15,6 +15,7 @@ var devServer = {}  // eslint-disable-line
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   process.env.NODE_ENV = 'production'
+  process.env.BASE_NAME = '/React-demo/'
   entry = {
     app: [
       'babel-polyfill',
@@ -62,6 +63,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   ]
 } else {
   process.env.NODE_ENV = 'development'
+  process.env.BASE_NAME = '/'
   entry = {
     app: [
       'babel-polyfill',

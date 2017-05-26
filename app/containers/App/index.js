@@ -16,7 +16,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <BrowserRouter basename="/">
+          <BrowserRouter basename={process.env.BASE_NAME}>
             {routes}
           </BrowserRouter>
         </MuiThemeProvider>
