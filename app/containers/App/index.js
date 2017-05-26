@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+// import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { getMuiTheme } from 'material-ui/styles'
 import { MuiThemeProvider } from 'material-ui'
 import { Provider } from 'react-redux'
@@ -11,14 +12,21 @@ const store = configStore(initialState)
 
 const muiTheme = getMuiTheme({})
 
+let baseName = null
+if (process.env.NODE_ENV === 'production') {
+  baseName = '/React-demo/'
+} else {
+  baseName = '/'
+}
+
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <BrowserRouter basename={process.env.BASE_NAME}>
+          <HashRouter basename={baseName}>
             {routes}
-          </BrowserRouter>
+          </HashRouter>
         </MuiThemeProvider>
       </Provider>
     )

@@ -26,6 +26,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     path: BUILD_PATH,
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
+    publicPath: '/build/assets/',
   }
   cache = false
   devtool = ''
