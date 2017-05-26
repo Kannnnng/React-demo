@@ -12,19 +12,12 @@ const store = configStore(initialState)
 
 const muiTheme = getMuiTheme({})
 
-let baseName = null
-if (process.env.NODE_ENV === 'production') {
-  baseName = '/React-demo/'
-} else {
-  baseName = '/'
-}
-
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <HashRouter basename={baseName}>
+          <HashRouter basename="/">
             {routes}
           </HashRouter>
         </MuiThemeProvider>
