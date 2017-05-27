@@ -12,8 +12,8 @@
 }
 
 .box {
-  $width: 400px;
-  $height: 400px;
+  $width: 410px;
+  $height: 410px;
   width: $width;
   height: $height;
   position: absolute;
@@ -21,4 +21,29 @@
   left: 50%;
   margin-top: 0px - $height / 2;
   margin-left: 0px - $width / 2;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #776E65;
+}
+
+.chessMan {
+  width: 100px;
+  height: 100px;
+  float: left;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: #776E65;
+}
+
+.chessManText {
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  text-align: center;
+  font-size: 45px;
+  font-family: Raleway, Verdana, sans-serif;
+  font-weight: bold;
+  background-color: #BBADA0;
 }

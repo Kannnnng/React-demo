@@ -93,7 +93,7 @@ class Home extends React.Component {
             />
             <ListItem
               primaryText="我的博客"
-              onTouchTap={() => { window.location = 'https://kannnnng.github.io/Blog/' }}
+              onTouchTap={() => { window.location = 'https://kannnnng.github.io/Blog/' }}  //eslint-disable-line
             />
             <ListItem
               primaryText="2048"
