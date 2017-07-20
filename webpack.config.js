@@ -103,20 +103,6 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   ]
 }
 
-plugins.push(
-  new webpack.LoaderOptionsPlugin({
-    options: {
-      postcss: function postcssPlugins(bundler) {
-        return [
-          PostcssImport({ addDependencyTo: bundler }),
-          AutoPrefixer({ browsers: ['last 3 versions', 'ie >= 9'] }),
-          cssnano(),
-        ]
-      },
-    },
-  })  // eslint-disable-line
-)
-
 module.exports = {
   /* 入口文件 */
   entry,
@@ -155,7 +141,7 @@ module.exports = {
         test: /\.scss$/i,
         loaders: [
           'style-loader',
-          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:10]',
           'postcss-loader',
           'sass-loader',
         ],
