@@ -7,6 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
+import SearchToolBar from 'components/SearchToolBar'
 import styles from './index.scss'
 
 class Home extends React.Component {

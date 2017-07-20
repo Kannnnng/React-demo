@@ -1,6 +1,9 @@
 var path = require('path')  // eslint-disable-line
 var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
+var cssnano = require('cssnano')  // eslint-disable-line
+var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
+var PostcssImport = require('postcss-import')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
@@ -100,6 +103,20 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   ]
 }
 
+plugins.push(
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      postcss: function postcssPlugins(bundler) {
+        return [
+          PostcssImport({ addDependencyTo: bundler }),
+          AutoPrefixer({ browsers: ['last 3 versions', 'ie >= 9'] }),
+          cssnano(),
+        ]
+      },
+    },
+  })  // eslint-disable-line
+)
+
 module.exports = {
   /* 入口文件 */
   entry,
@@ -139,6 +156,7 @@ module.exports = {
         loaders: [
           'style-loader',
           'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+          'postcss-loader',
           'sass-loader',
         ],
         include: APP_PATH,
