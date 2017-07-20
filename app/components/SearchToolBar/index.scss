@@ -7,13 +7,15 @@
   border-radius: 28px;
   background-color: #3B9E46;
   transition: right 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19), bottom 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19), border-radius 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19), justify 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19),;
+  display: flex;
 
   .content {
-    width: 100%;
     height: 100%;
+    flex: 0 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    position: relative;
     z-index: 0;
 
     i {
@@ -26,11 +28,15 @@
     }
 
     input {
-      margin-left: 24px;
+      width: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
       font-size: 18px;
       letter-spacing: 0.6px;
       color: #FFF;
       outline: none;
+      transition: width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
   }
 
@@ -43,6 +49,6 @@
     opacity: 0;
     margin: 0;
     padding: 0;
-    z-index: 100;
+    z-index: 10;
   }
 }

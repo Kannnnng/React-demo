@@ -42,16 +42,15 @@ class SearchToolBar extends React.PureComponent {
       boxShadow: '0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12)',
     } : {}
     const contentStyle = show ? {
-      justifyContent: 'flex-start',
       zIndex: '100',
     } : {}
     const iStyle = show ? {
       marginLeft: '24px',
     } : {}
-    const buttonStyle = show ? {
-      zIndex: '0',
+    const inputStyle = show ? {
+      width: '300px',
+      marginLeft: '24px',
     } : {}
-
 
     return (
       <div
@@ -63,11 +62,14 @@ class SearchToolBar extends React.PureComponent {
           style={contentStyle}
         >
           <i style={iStyle} />
-          {show && <input type="text" placeholder="请输入想要检索的内容" />}
+          <input
+            type="text"
+            placeholder="请输入想要检索的内容"
+            style={inputStyle}
+          />
         </div>
         <button
           onClick={this.handleOnShowState}
-          style={buttonStyle}
         />
       </div>
     )
