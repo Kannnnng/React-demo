@@ -74,6 +74,15 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
+    vendors: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-router',
+      'material-ui',
+      'lodash',
+      'immutable',
+    ],
   }
   output = {
     path: BUILD_PATH,
@@ -101,6 +110,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     }),
     new webpack.NamedModulesPlugin(),
     // new BundleAnalyzerPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendors.js' }),  // 抽取公用块
   ]
 }
 
