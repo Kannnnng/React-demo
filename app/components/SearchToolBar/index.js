@@ -11,10 +11,12 @@ class SearchToolBar extends React.PureComponent {
 
   static defaultProps = {
     handleOnShowState: () => {},
+    handleOnSearchContentChange: () => {},
   }
 
   state = {
-    show: false,
+    show: null,
+    searchContent: '',
   }
 
   handleOnShowState = () => {
@@ -22,55 +24,53 @@ class SearchToolBar extends React.PureComponent {
       show,
     } = this.state
     this.setState({ show: !show })
-    this.props.handleOnShowState(show ? 'open' : 'close')
+    this.props.handleOnShowState(show ? 'close' : 'open')
+  }
+
+  handleOnSearchContentChange = (event) => {
+    this.setState({ searchContent: event.target.value })
+    this.props.handleOnSearchContentChange(event.target.value)
+  }
+
+  handleOnClickSearch = () => {
+    this.setState({ show: false })
+    this.props.handleOnSearchContentChange(true)
   }
 
   render() {
     const {
       button,
-      handleOnShowState,
-      handleOnSearchContentChange,
     } = this.props
     const {
       show,
+      searchContent,
     } = this.state
-    const containerStyle = show ? {
-      width: 'calc(100% - 240px)',
-      right: '0',
-      bottom: '0',
-      borderRadius: '4px',
-      boxShadow: '0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12)',
-    } : {}
+    const containerClassName = (
+      (show === null && `${styles.container}`) ||
+      (show === true && `${styles.container} ${styles.expandSearchToolBar}`) ||
+      (show === false && `${styles.container} ${styles.shrinkSearchToolBar}`)
+    )
     const contentStyle = show ? {
-      zIndex: '100',
+      zIndex: 100,
     } : {}
-    const iStyle = show ? {
-      marginLeft: '24px',
-    } : {}
-    const inputStyle = show ? {
-      width: '300px',
-      marginLeft: '24px',
-    } : {}
+    const iClassName = (
+      (show === true && `${styles.iAnimation}`) ||
+      (show === false && `${styles.iAntiAnimation}`)
+    )
 
     return (
-      <div
-        className={styles.container}
-        style={containerStyle}
-      >
-        <div
-          className={styles.content}
-          style={contentStyle}
-        >
-          <i style={iStyle} />
-          <input
+      <div className={containerClassName}>
+        <div className={styles.content} style={contentStyle}>
+          <i className={iClassName}><button onClick={this.handleOnClickSearch} /></i>
+          {show && <input
             type="text"
+            value={searchContent}
             placeholder="请输入想要检索的内容"
-            style={inputStyle}
-          />
+            onChange={this.handleOnSearchContentChange}
+          />}
         </div>
-        <button
-          onClick={this.handleOnShowState}
-        />
+        <button className={styles.showStateButton} onClick={this.handleOnShowState} />
+        {show && button && <div className={styles.rightButton}>{button}</div>}
       </div>
     )
   }

@@ -109,7 +109,10 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <SearchToolBar />
+        <SearchToolBar
+          handleOnShowState={(value) => console.log(value)}  //eslint-disable-line
+          handleOnSearchContentChange={(value) => console.log(value)}  //eslint-disable-line
+        />
       </div>
     )
   }
