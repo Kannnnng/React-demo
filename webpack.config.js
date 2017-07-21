@@ -3,7 +3,6 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var cssnano = require('cssnano')  // eslint-disable-line
 var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
-var PostcssImport = require('postcss-import')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
