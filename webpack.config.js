@@ -141,7 +141,7 @@ module.exports = {
         test: /\.scss$/i,
         loaders: [
           'style-loader',
-          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:10]',
+          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
           'postcss-loader',
           'sass-loader',
         ],

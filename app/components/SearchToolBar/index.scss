@@ -26,8 +26,8 @@ $boxShadowEnd : 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
       display: inline-block;
       width: 24px;
       height: 24px;
-      -webkit-mask-size: 24px 24px;
-      -webkit-mask-image: url('../../images/search.svg');
+      mask-size: 24px 24px;
+      mask-image: url('../../images/search.svg');
       background-color: #FFF;
 
       button {
