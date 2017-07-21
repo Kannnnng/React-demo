@@ -6,6 +6,7 @@ var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
@@ -99,6 +100,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       'process.env.NODE_ENV': '"development"',
     }),
     new webpack.NamedModulesPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 }
 
@@ -152,12 +154,12 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(svg|ttf|woff|woff2)$/i,
+        test: /\.(ttf|woff|woff2)$/i,
         loader: 'url-loader?limit=8192',
         include: APP_PATH,
       },
       {
-        test: /\.(mp4|ogg|mp3)$/i,
+        test: /\.(mp4|ogg|mp3|svg)$/i,
         loader: 'file-loader',
         include: APP_PATH,
       },
