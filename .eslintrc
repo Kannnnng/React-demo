@@ -23,7 +23,7 @@
     "react/no-array-index-key": 0,
     "react/prefer-stateless-function": 0,
     "react/require-default-props": 0,
-    "semi": [2, "never"],
-    "max-len": ["error", 120, 2],
+    "semi": ["error", "never"],
+    "max-len": ["error", 120, 2]
   }
 }

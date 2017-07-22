@@ -7,6 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
+import RoundProgressBar from 'components/RoundProgressBar'
 import SearchToolBar from 'components/SearchToolBar'
 import styles from './index.scss'
 
@@ -54,8 +55,15 @@ class Home extends React.Component {
       snackbarMessage,
     } = this.state
 
+    const RoundProgressBarContent = (
+      <div style={{ textAlign: 'center', color: '#FFF' }}>
+        <div style={{ fontSize: '16px' }}>出勤</div>
+        <div style={{ fontSize: '64px', marginTop: '12px' }}>24</div>
+        <div style={{ fontSize: '20px' }}>18%</div>
+      </div>
+    )
+
     return (
-      // <div className={`${styles.container} animated bounceInDown`}>
       <div className={`${styles.container}`}>
         <div className={styles.centerBox}>
           <div className={styles.avatar} />
@@ -108,6 +116,11 @@ class Home extends React.Component {
           message={snackbarMessage}
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
+        />
+        <RoundProgressBar
+          display={RoundProgressBarContent}
+          percent={75}
+          style={{ position: 'absolute', left: '0', bottom: '0' }}
         />
         <SearchToolBar
           handleOnShowState={(value) => console.log(value)}  //eslint-disable-line

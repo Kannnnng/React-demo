@@ -1,0 +1,54 @@
+$width: 160px;
+$height: $width;
+
+.container {
+  width: $width;
+  height: $height;
+}
+
+.content {
+  width: $width;
+  height: $height;
+  display: flex;
+  position: relative;
+}
+
+.leftRect,
+.rightRect {
+  width: $width / 2;
+  height: $height;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.leftArc,
+.rightArc {
+  width: $width;
+  height: $height;
+  border-radius: $width / 2;
+  border: solid 10px rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+}
+
+.leftArc {
+  float: left;
+  border-top: solid 10px #4DB553;
+  border-left: solid 10px #4DB553;
+  transform: rotateZ(-45deg);
+}
+
+.rightArc {
+  float: right;
+  border-right: solid 10px #4DB553;
+  border-bottom: solid 10px #4DB553;
+  transform: rotateZ(-45deg);
+}
+
+.displayArea {
+  position: absolute;
+  width: $width;
+  height: $height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
