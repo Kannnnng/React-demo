@@ -10,17 +10,16 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
-var cache = undefined  // eslint-disable-line
+var cache = null  // eslint-disable-line
 var plugins = []  // eslint-disable-line
-var devtool = ''  // eslint-disable-line
-var devServer = {}  // eslint-disable-line
+var devtool = undefined  // eslint-disable-line
+var devServer = undefined  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   process.env.NODE_ENV = 'production'
   entry = {
     app: [
-      'babel-polyfill',
       path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
@@ -33,8 +32,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     publicPath: '/React-demo/build/assets/',
   }
   cache = false
-  devtool = ''
-  devServer = {}
+  devtool = undefined
+  devServer = undefined
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
     /* 在 webpack2.0 中已不需要 */
@@ -48,41 +47,49 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     }),
     /* 压缩 JS 文件， */
     new webpack.optimize.UglifyJsPlugin({
+      /* 已经压缩过的文件不再次进行压缩 */
+      exclude: /\.min\.js$/,
       compress: {
         /* 消除产生警告的代码，此类代码多来自于引用的模块内部 */
         warnings: false,
       },
+      /* 去除注释 */
+      output: { comments: false },
     }),
     /* 尽量合并代码 */
     new webpack.optimize.AggressiveMergingPlugin(),
     /* 允许错误不打断程序的执行，这在生产环境中很重要 */
     new webpack.NoEmitOnErrorsPlugin(),
-    /* 按照路径的不同来分割代码 */
-    new SplitByPathPlugin([
-      {
-        name: 'vendor',
-        path: path.join(__dirname, 'node_modules'),
-      },
-    ]),
+    /* 按照路径的不同来分割代码，现在因为使用了 DLL 以后就不再需要这样做了 */
+    // new SplitByPathPlugin([
+    //   {
+    //     name: 'vendor',
+    //     path: path.join(__dirname, 'node_modules'),
+    //   },
+    // ]),
+    /* 引入 DLL 文件 */
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
+    }),
   ]
 } else {
   process.env.NODE_ENV = 'development'
   entry = {
     app: [
-      'babel-polyfill',
       'react-hot-loader/patch',
       path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
-    vendors: [
-      'react',
-      'react-dom',
-      'redux',
-      'react-router',
-      'material-ui',
-      'lodash',
-      'immutable',
-    ],
+    // vendors: [
+    //   'react',
+    //   'react-dom',
+    //   'redux',
+    //   'react-router',
+    //   'material-ui',
+    //   'lodash',
+    //   'immutable',
+    // ],
   }
   output = {
     path: BUILD_PATH,
@@ -109,8 +116,15 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       'process.env.NODE_ENV': '"development"',
     }),
     new webpack.NamedModulesPlugin(),
+    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
     // new BundleAnalyzerPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendors.js' }),  // 抽取公用块
+    /* 抽取指定的公共代码库并将其打包到一个单独的文件中 */
+    // new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendors.js' }),  // 抽取公用块
+    /* 引入 DLL 文件 */
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
+    }),
   ]
 }
 
@@ -146,6 +160,7 @@ module.exports = {
         loaders: [
           'style-loader',
           'css-loader?sourceMap',
+          'postcss-loader',
         ],
       },
       {

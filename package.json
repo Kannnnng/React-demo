@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --env=pro",
+    "dll": "webpack --progress --config webpack.dll.config.js",
     "start": "webpack-dev-server --hot --progress --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -54,7 +55,6 @@
     "material-ui": "^0.17.4",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
-    "normalize.css": "^6.0.0",
     "normalizr": "^3.2.2",
     "prop-types": "^15.5.6",
     "react": "^15.5.3",
