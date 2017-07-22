@@ -7,6 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
+import CountDown from 'components/CountDown'
 import RoundProgressBar from 'components/RoundProgressBar'
 import SearchToolBar from 'components/SearchToolBar'
 import styles from './index.scss'
@@ -23,6 +24,10 @@ class Home extends React.Component {
       openCatalog: false,
       openSnackbar: false,
       snackbarMessage: '',
+      /* 下面是仅供测试用的 state */
+      start: true,
+      limit: 300,
+      /* 上面是仅供测试用的 state */
     }
   }
 
@@ -117,6 +122,11 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
+        <CountDown
+          start={this.state.start}
+          limit={this.state.limit}
+        />
+        <button onClick={() => this.setState({ start: !this.state.start })}>点我</button>
         <RoundProgressBar
           display={RoundProgressBarContent}
           percent={75}

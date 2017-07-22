@@ -1,0 +1,17 @@
+$width: 230px;
+$height: 170px;
+
+.container {
+  width: $width;
+  height: $height;
+}
+
+.content {
+  width: $width;
+  height: $height;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
