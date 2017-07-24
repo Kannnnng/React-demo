@@ -5,6 +5,8 @@ import styles from './index.scss'
 
 class CountDown extends React.PureComponent {
   static propTypes = {
+    title: PropTypes.string,
+    button: PropTypes.element,
     start: PropTypes.bool,
     limit: PropTypes.number,
     style: PropTypes.object,
@@ -68,6 +70,8 @@ class CountDown extends React.PureComponent {
 
   render() {
     const {
+      title,
+      button,
       style,
     } = this.props
     const {
@@ -76,13 +80,24 @@ class CountDown extends React.PureComponent {
     const limitMoment = moment.duration(limit, 'seconds')
     const minutes = limitMoment.get('minutes')
     const seconds = limitMoment.get('seconds')
+    const minutesUnitPlace = minutes % 10
+    const minutesTenPlace = minutes > 9 ? parseInt(minutes / 10, 10) : 0
+    const secondsUnitPlace = seconds % 10
+    const secondsTenPlace = seconds > 9 ? parseInt(seconds / 10, 10) : 0
+    const minutesTenPlaceZeroStyle = !minutesTenPlace ? { color: '#454850' } : {}
 
     return (
       <div className={styles.container} style={style}>
         <div className={styles.content}>
-          <div>{'签到开启于2017年7月17日'}</div>
-          <div>{`${/^\d$/.test(minutes) ? `0${minutes}` : minutes}:${/^\d$/.test(seconds) ? `0${seconds}` : seconds}`}</div>
-          <div>{'立即关闭'}</div>
+          <div className={styles.title}>{title}</div>
+          <div className={styles.limit}>
+            <span style={minutesTenPlaceZeroStyle}>{minutesTenPlace}</span>
+            <span>{minutesUnitPlace}</span>
+            <span>{':'}</span>
+            <span>{secondsTenPlace}</span>
+            <span>{secondsUnitPlace}</span>
+          </div>
+          <div className={styles.button}>{button}</div>
         </div>
       </div>
     )

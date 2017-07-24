@@ -67,6 +67,14 @@ class Home extends React.Component {
         <div style={{ fontSize: '20px' }}>18%</div>
       </div>
     )
+    const countDownTitle = '签到开启于 2017.01.03 13:24:15\n限时5分钟，剩余'
+    const countDownButton = (
+      <button
+        className={styles.countDownButton}
+      >
+        {'立即关闭'}
+      </button>
+    )
 
     return (
       <div className={`${styles.container}`}>
@@ -123,10 +131,11 @@ class Home extends React.Component {
           open={openSnackbar}
         />
         <CountDown
+          title={countDownTitle}
+          button={countDownButton}
           start={this.state.start}
           limit={this.state.limit}
         />
-        <button onClick={() => this.setState({ start: !this.state.start })}>点我</button>
         <RoundProgressBar
           display={RoundProgressBarContent}
           percent={75}
