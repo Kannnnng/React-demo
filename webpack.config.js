@@ -162,25 +162,25 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loaders: ExtractTextPlugin.extract(
-          'style-loader',
-          [
+        loaders: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
             'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
             'postcss-loader',
           ].join('!')
-        ),
+        }),
         include: APP_PATH,
       },
       {
         test: /\.scss$/i,
-        loaders: ExtractTextPlugin.extract(
-          'style-loader',
-          [
+        loaders: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
             'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
             'postcss-loader',
             'sass-loader',
           ].join('!')
-        ),
+        }),
         include: APP_PATH,
       },
       {
