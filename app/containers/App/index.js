@@ -4,7 +4,7 @@ import { getMuiTheme } from 'material-ui/styles'
 import { MuiThemeProvider } from 'material-ui'
 import { Provider } from 'react-redux'
 import configStore from 'store'
-import routes from '../../router'
+import routes from 'app/router'
 
 const initialState = {}
 const store = configStore(initialState)

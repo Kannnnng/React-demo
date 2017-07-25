@@ -7,6 +7,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
+var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
@@ -20,7 +21,6 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   process.env.NODE_ENV = 'production'
   entry = {
     app: [
-      path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
   }
@@ -41,7 +41,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
     /* 在 webpack2.0 中已经不需要特别声明 */
     // new webpack.optimize.OccurenceOrderPlugin(),
-    /* 声明此时的环境是生产环境，这样能够避免开发环境中的一些错误或警告显示代码被打包到文件中 */
+    /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
@@ -72,13 +72,14 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       context: __dirname,
       manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
     }),
+    /* 将 CSS 代码单独抽离出来 */
+    new ExtractTextPlugin('styles.css'),
   ]
 } else {
   process.env.NODE_ENV = 'development'
   entry = {
     app: [
       'react-hot-loader/patch',
-      path.resolve(APP_PATH, 'index.css'),
       path.resolve(APP_PATH, 'index.js'),
     ],
     // vendors: [
@@ -98,8 +99,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
   }
   cache = true
   /* 源代码与编译后代码的匹配模式 */
-  // devtool: 'cheap-eval-source-map',
-  devtool = 'cheap-module-eval-source-map'
+  devtool = 'cheap-eval-source-map'
+  // devtool = 'cheap-module-eval-source-map'
   devServer = {
     headers: { 'X-Custom-Header': 'yes' },
     historyApiFallback: true,
@@ -112,9 +113,11 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     },
   }
   plugins = [
+    /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"',
     }),
+    /* 在组件热加载的时候显示更新的组件名而不是原本的组件 ID */
     new webpack.NamedModulesPlugin(),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
     // new BundleAnalyzerPlugin(),
@@ -125,6 +128,8 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       context: __dirname,
       manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
     }),
+    /* 将 CSS 代码单独抽离出来 */
+    new ExtractTextPlugin('styles.css'),
   ]
 }
 
@@ -157,20 +162,25 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loaders: [
+        loaders: ExtractTextPlugin.extract(
           'style-loader',
-          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
-          'postcss-loader',
-        ],
+          [
+            'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+            'postcss-loader',
+          ].join('!')
+        ),
+        include: APP_PATH,
       },
       {
         test: /\.scss$/i,
-        loaders: [
+        loaders: ExtractTextPlugin.extract(
           'style-loader',
-          'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
-          'postcss-loader',
-          'sass-loader',
-        ],
+          [
+            'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+            'postcss-loader',
+            'sass-loader',
+          ].join('!')
+        ),
         include: APP_PATH,
       },
       {
@@ -195,6 +205,7 @@ module.exports = {
     extensions: ['.js', '.jsx', 'css', 'scss'],
     /* 文件路径别名，方便在写代码时对模块的引用 */
     alias: {
+      app: APP_PATH,
       actions: path.resolve(APP_PATH, 'actions'),
       components: path.resolve(APP_PATH, 'components'),
       containers: path.resolve(APP_PATH, 'containers'),
