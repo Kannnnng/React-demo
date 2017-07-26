@@ -1,0 +1,160 @@
+$width: 407px;
+$height: 768px;
+
+.container {
+  position: relative;
+  width: $width;
+  height: $height;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #FAFAFA;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.header,
+.footer {
+  width: 100%;
+  height: 52px;
+  box-shadow: -3px 2px 2px 0 rgba(119, 151, 178, 0.16);
+  position: relative;
+  background-color: #FFF;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64px;
+  height: 100%;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  color: #3B9E46;
+  background-color: #FFF;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.searchInput {
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.libraryCell {
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.LibraryCellContainer {
+  display: flex;
+  width: 359px;
+  height: 64px;
+  border-radius: 4px;
+  background-color: #FFF;
+  overflow: hidden;
+}
+
+.cover {
+  flex: 0 0 64px;
+  height: 64px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.LibraryCellContent {
+  /* max-width: calc(100% - 144px); */
+  flex: 0 1 auto;
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.name {
+  /* max-width: 100%; */
+  flex-shrink: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: #333;
+}
+
+.libraryData {
+  margin-top: 12px;
+  span {
+    font-size: 12px;
+    color: #888;
+    margin-right: 16px;
+  }
+}
+
+.join {
+  flex: 0 0 64px;
+  height: 100%;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  color: #3B9E46;
+  background-color: #FFF;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search,
+.question,
+.quiz,
+.courseware {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  mask-size: 10px 10px;
+  background-color: #777;
+}
+
+.search {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  mask-size: 20px 20px;
+  mask-image: url('images/search.svg');
+}
+
+.question {
+  mask-image: url('images/choice.svg');
+}
+
+.quiz {
+  mask-image: url('images/file.svg');
+}
+
+.courseware {
+  mask-image: url('images/monitor.svg');
+}
+

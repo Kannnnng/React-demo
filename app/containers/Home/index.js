@@ -7,9 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-import CountDown from 'components/CountDown'
-import RoundProgressBar from 'components/RoundProgressBar'
-import SearchToolBar from 'components/SearchToolBar'
+import SelectLibrary from 'components/SelectLibrary'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -29,6 +27,29 @@ class Home extends React.Component {
       limit: 300,
       /* 上面是仅供测试用的 state */
     }
+
+    this.data = [
+      {
+        libraryId: '59561842279b042a29de5c90', // 题库ID
+        libraryName: '神经网络题库神经网络题库神经网络题库神经网络题库', // 题库名称
+        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg', // 题库创建者头像
+        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_012.jpg', // 题库封面
+        questionNumber: 122, // 题目数量
+        quizNumber: 16, // 组卷数量
+        coursewareNumber: 31, // 课件数量
+        accountId: 3, // 题目创建者ID
+      },
+      {
+        libraryId: '59561842279b042a29de5c91',
+        libraryName: '神经网络题库2',
+        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
+        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
+        questionNumber: 136,
+        quizNumber: 16,
+        coursewareNumber: 32,
+        accountId: 4,
+      },
+    ]
   }
 
   handleOnClickCatalog = () => {
@@ -59,22 +80,6 @@ class Home extends React.Component {
       openSnackbar,
       snackbarMessage,
     } = this.state
-
-    const RoundProgressBarContent = (
-      <div style={{ textAlign: 'center', color: '#FFF' }}>
-        <div style={{ fontSize: '16px' }}>出勤</div>
-        <div style={{ fontSize: '64px', marginTop: '12px' }}>24</div>
-        <div style={{ fontSize: '20px' }}>75%</div>
-      </div>
-    )
-    const countDownTitle = '签到开启于 2017.01.03 13:24:15\n限时5分钟，剩余'
-    const countDownButton = (
-      <button
-        className={styles.countDownButton}
-      >
-        {'立即关闭'}
-      </button>
-    )
 
     return (
       <div className={`${styles.container}`}>
@@ -130,20 +135,9 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <CountDown
-          title={countDownTitle}
-          button={countDownButton}
-          start={this.state.start}
-          limit={this.state.limit}
-        />
-        <RoundProgressBar
-          display={RoundProgressBarContent}
-          percent={75}
-          style={{ position: 'absolute', left: '0', bottom: '0' }}
-        />
-        <SearchToolBar
-          handleOnShowState={(value) => console.log(value)}  //eslint-disable-line
-          handleOnSearchContentChange={(value) => console.log(value)}  //eslint-disable-line
+        <SelectLibrary
+          data={this.data}
+          handleOnSelectLibrary={(value) => () => {}}
         />
       </div>
     )
