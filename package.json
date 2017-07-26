@@ -4,9 +4,10 @@
   "description": "基于webpack的react学习与演示项目",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --env=pro",
-    "dll": "webpack --progress --config webpack.dll.config.js",
-    "start": "webpack-dev-server --hot --progress --env=dev",
+    "build": "set NODE_ENV=production && webpack --progress --env=pro",
+    "build dev dll": "set NODE_ENV=development && webpack --progress --config webpack.dll.config.js",
+    "build pro dll": "set NODE_ENV=production && webpack --progress --config webpack.dll.config.js",
+    "start": "set NODE_ENV=development && webpack-dev-server --hot --progress --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

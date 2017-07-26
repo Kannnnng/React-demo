@@ -17,8 +17,7 @@ var devtool = undefined  // eslint-disable-line
 var devServer = undefined  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
-if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
-  process.env.NODE_ENV = 'production'
+if (process.env.NODE_ENV === 'production') {
   entry = {
     app: [
       path.resolve(APP_PATH, 'index.js'),
@@ -70,13 +69,12 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
+      manifest: path.resolve(BUILD_PATH, 'vendor.pro.manifest.json'),
     }),
     /* 将 CSS 代码单独抽离出来 */
     new ExtractTextPlugin('styles.css'),
   ]
 } else {
-  process.env.NODE_ENV = 'development'
   entry = {
     app: [
       'react-hot-loader/patch',
@@ -126,7 +124,7 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
+      manifest: path.resolve(BUILD_PATH, 'vendor.dev.manifest.json'),
     }),
   ]
 }
