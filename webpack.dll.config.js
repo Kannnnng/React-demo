@@ -34,7 +34,7 @@ module.exports = {
     library: '[name]_library',
   },
   plugins: [
-    /* 声明此时的环境是生产环境，这样能够避免开发环境中的一些错误或警告显示代码被打包到文件中 */
+    /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),

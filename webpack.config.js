@@ -128,8 +128,6 @@ if (process.argv[process.argv.length - 1].slice(6, 9) === 'pro') {
       context: __dirname,
       manifest: path.resolve(BUILD_PATH, 'vendor.manifest.json'),
     }),
-    /* 将 CSS 代码单独抽离出来 */
-    new ExtractTextPlugin('styles.css'),
   ]
 }
 
@@ -162,25 +160,46 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loaders: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
-            'postcss-loader',
-          ].join('!')
-        }),
+        loaders: (process.env.NODE_ENV === 'production' ?
+          (
+            ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+                'postcss-loader',
+              ].join('!'),
+            })
+          ) : (
+            [  // eslint-disable-line
+              'style-loader',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',  // eslint-disable-line
+              'postcss-loader',  // eslint-disable-line
+            ]  // eslint-disable-line
+          )
+        ),
         include: APP_PATH,
       },
       {
         test: /\.scss$/i,
-        loaders: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
-            'postcss-loader',
-            'sass-loader',
-          ].join('!')
-        }),
+        loaders: (process.env.NODE_ENV === 'production' ?
+          (
+            ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+                'postcss-loader',
+                'sass-loader',
+              ].join('!'),
+            })
+          ) : (
+            [  // eslint-disable-line
+              'style-loader',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',  // eslint-disable-line
+              'postcss-loader',  // eslint-disable-line
+              'sass-loader',  // eslint-disable-line
+            ]  // eslint-disable-line
+          )
+        ),
         include: APP_PATH,
       },
       {

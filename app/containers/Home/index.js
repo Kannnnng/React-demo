@@ -64,7 +64,7 @@ class Home extends React.Component {
       <div style={{ textAlign: 'center', color: '#FFF' }}>
         <div style={{ fontSize: '16px' }}>出勤</div>
         <div style={{ fontSize: '64px', marginTop: '12px' }}>24</div>
-        <div style={{ fontSize: '20px' }}>18%</div>
+        <div style={{ fontSize: '20px' }}>75%</div>
       </div>
     )
     const countDownTitle = '签到开启于 2017.01.03 13:24:15\n限时5分钟，剩余'
