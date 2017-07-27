@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
       path: path.resolve(BUILD_PATH, '[name].dev.manifest.json'),
       name: '[name]_library',
       context: __dirname,
-    })，
+    }),
   ]
 }
 
