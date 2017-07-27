@@ -7,7 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-import SelectLibrary from 'components/SelectLibrary'
+import QuestionPreview from 'components/QuestionPreview'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -30,103 +30,7 @@ class Home extends React.Component {
 
     this.data = [
       {
-        libraryId: '59561842279b042a29de5c90', // 题库ID
-        libraryName: '神经网络题库神经网络题库神经网络题库神经网络题库', // 题库名称
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg', // 题库创建者头像
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_012.jpg', // 题库封面
-        questionNumber: 122, // 题目数量
-        quizNumber: 16, // 组卷数量
-        coursewareNumber: 31, // 课件数量
-        accountId: 3, // 题目创建者ID
-        hasJoin: false,
-      },
-      {
-        libraryId: '59561842279b042a29de5c91',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c93',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c94',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c95',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c96',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c97',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c98',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
-      },
-      {
-        libraryId: '59561842279b042a29de5c99',
-        libraryName: '神经网络题库2',
-        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
-        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
-        questionNumber: 136,
-        quizNumber: 16,
-        coursewareNumber: 32,
-        accountId: 4,
-        hasJoin: true,
+
       },
     ]
   }
@@ -214,10 +118,8 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <SelectLibrary
-          open
+        <QuestionPreview
           data={this.data}
-          handleOnSelectLibrary={(value) => () => console.log(value, 123)}
         />
       </div>
     )

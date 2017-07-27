@@ -1,0 +1,45 @@
+.blackCoverContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+.topLeftButton,
+.topRightButton {
+  position: absolute;
+  width: 24px;
+  height: 4px;
+}
+
+.topLeftButton {
+  top: 16px;
+  left: 24px;
+}
+
+.topRightButton {
+  top: 16px;
+  right: 24px;
+}
+
+
+.MessGoBackButton {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+
+  i {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    mask-size: 24px 24px;
+    mask-image: url('images/left.svg');
+    background-color: #FFF;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import lodash from 'lodash'
-import { Dialog } from 'material-ui'
+import { Drawer } from 'material-ui'
 import { LibraryCell } from './LibraryCell'
 import styles from './index.scss'
 
@@ -70,12 +70,13 @@ class SelectLibrary extends React.Component {
     const {
       searchText,
     } = this.state
-    const dialogClassName = `${styles.dialog} ${className || ''}`
 
     return (
-      <Dialog
-        contentClassName={dialogClassName}
+      <Drawer
+        containerClassName={className}
+        width={410}
         open={open}
+        openSecondary
       >
         <div className={styles.container}>
           <div className={styles.header}>
@@ -103,7 +104,7 @@ class SelectLibrary extends React.Component {
             />
           </div>
         </div>
-      </Dialog>
+      </Drawer>
     )
   }
 }
