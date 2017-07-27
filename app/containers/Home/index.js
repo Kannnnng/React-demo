@@ -38,6 +38,7 @@ class Home extends React.Component {
         quizNumber: 16, // 组卷数量
         coursewareNumber: 31, // 课件数量
         accountId: 3, // 题目创建者ID
+        hasJoin: false,
       },
       {
         libraryId: '59561842279b042a29de5c91',
@@ -48,6 +49,18 @@ class Home extends React.Component {
         quizNumber: 16,
         coursewareNumber: 32,
         accountId: 4,
+        hasJoin: true,
+      },
+      {
+        libraryId: '59561842279b042a29de5c92',
+        libraryName: '神经网络题库2',
+        ownerImage: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_002.jpg',
+        cover: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_011.jpg',
+        questionNumber: 136,
+        quizNumber: 16,
+        coursewareNumber: 32,
+        accountId: 4,
+        hasJoin: true,
       },
     ]
   }
@@ -137,7 +150,7 @@ class Home extends React.Component {
         />
         <SelectLibrary
           data={this.data}
-          handleOnSelectLibrary={(value) => () => {}}
+          handleOnSelectLibrary={(value) => () => console.log(value, 123)}
         />
       </div>
     )

@@ -14,8 +14,9 @@ export function LibraryCell({
   className,
   handleOnSelectLibrary,
 }) {
-  const containerClassName = `${styles.LibraryCellContainer} ${className}`
+  const containerClassName = `${styles.LibraryCellContainer} ${className || ''}`
   const coverStyle = { backgroundImage: `url(${cover || defaultClassCover})` }
+  const joinClassName = `${styles.join} ${(hasJoin && styles.hasJoin) || ''}`
 
   return (
     <div className={containerClassName}>
@@ -34,8 +35,9 @@ export function LibraryCell({
         </div>
       </div>
       <button
-        className={styles.join}
+        className={joinClassName}
         onClick={handleOnSelectLibrary(libraryId)}
+        disabled={hasJoin && 'disabled'}
       >
         {hasJoin ? '已加入' : '加入'}
       </button>

@@ -1,18 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import lodash from 'lodash'
 import { LibraryCell } from './LibraryCell'
 import styles from './index.scss'
 
 class SelectLibrary extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    handleOnSelectLibrary: PropTypes.func,
     className: PropTypes.string,
+    handleOnSelectLibrary: PropTypes.func,
   }
 
   static defaultProps = {
     data: [],
-    style: {},
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.searchTextDebounceFunc = lodash.debounce((value) => (
+      this.setState({ searchTextDebounce: value })
+    ), 500)
+  }
+
+  state = {
+    searchText: '',
+    searchTextDebounce: '',
+  }
+
+  handleOnSearchTextChange = (event) => {
+    const value = event.target.value
+    this.setState({ searchText: value })
+    this.searchTextDebounceFunc(value)
   }
 
   renderLibraryCell() {
@@ -20,15 +39,19 @@ class SelectLibrary extends React.Component {
       data,
       handleOnSelectLibrary,
     } = this.props
+    const {
+      searchTextDebounce,
+    } = this.state
     return data.map((value) => (
-      <LibraryCell
+      (value.libraryName.indexOf(searchTextDebounce) !== -1) && <LibraryCell
         key={value.libraryId}
+        libraryId={value.libraryId}
         libraryName={value.libraryName}
         cover={value.cover}
         questionNumber={value.questionNumber}
         quizNumber={value.quizNumber}
         coursewareNumber={value.coursewareNumber}
-        hasJoin={false}
+        hasJoin={value.hasJoin}
         handleOnSelectLibrary={handleOnSelectLibrary}
         className={styles.libraryCell}
       />
@@ -39,7 +62,10 @@ class SelectLibrary extends React.Component {
     const {
       className,
     } = this.props
-    const containerClassName = `${styles.container} ${className}`
+    const {
+      searchText,
+    } = this.state
+    const containerClassName = `${styles.container} ${className || ''}`
 
     return (
       <div className={containerClassName}>
@@ -59,7 +85,13 @@ class SelectLibrary extends React.Component {
         </div>
         <div className={styles.footer}>
           <i className={styles.search} />
-          <input className={styles.searchInput} type="text" placeholder="过滤题库" />
+          <input
+            className={styles.searchInput}
+            type="text"
+            value={searchText}
+            placeholder="过滤题库"
+            onChange={this.handleOnSearchTextChange}
+          />
         </div>
       </div>
     )

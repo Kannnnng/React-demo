@@ -7,7 +7,7 @@ $height: 768px;
   height: $height;
   overflow-x: hidden;
   overflow-y: auto;
-  color: #FAFAFA;
+  background-color: #FAFAFA;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -85,8 +85,8 @@ $height: 768px;
 }
 
 .LibraryCellContent {
-  /* max-width: calc(100% - 144px); */
-  flex: 0 1 auto;
+  max-width: calc(100% - 144px);
+  flex: 1 1 auto;
   margin-left: 16px;
   display: flex;
   flex-direction: column;
@@ -95,8 +95,7 @@ $height: 768px;
 }
 
 .name {
-  /* max-width: 100%; */
-  flex-shrink: 1;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -106,6 +105,7 @@ $height: 768px;
 
 .libraryData {
   margin-top: 12px;
+
   span {
     font-size: 12px;
     color: #888;
@@ -124,6 +124,11 @@ $height: 768px;
   outline: none;
   border: none;
   cursor: pointer;
+}
+
+.hasJoin {
+  color: rgba(0, 0, 0, 0.26);
+  cursor: initial;
 }
 
 .search,
