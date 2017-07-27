@@ -1,6 +1,23 @@
 $width: 407px;
 $height: 768px;
 
+.dialog {
+  width: ($width + 15px) !important;
+  margin: 5px auto !important;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12) !important;
+
+  & > div {
+    border-radius: 4px !important;
+    overflow: hidden !important;
+
+    & > div {
+      padding: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+    }
+  }
+}
+
 .container {
   position: relative;
   width: $width;
@@ -8,7 +25,6 @@ $height: 768px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #FAFAFA;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 .header,

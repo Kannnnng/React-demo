@@ -149,6 +149,7 @@ class Home extends React.Component {
           open={openSnackbar}
         />
         <SelectLibrary
+          open
           data={this.data}
           handleOnSelectLibrary={(value) => () => console.log(value, 123)}
         />
