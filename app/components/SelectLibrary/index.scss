@@ -1,8 +1,7 @@
-$width: 407px;
 $height: 768px;
 
 .dialog {
-  width: ($width + 15px) !important;
+  width: 410px !important;
   margin: 5px auto !important;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12) !important;
 
@@ -12,23 +11,24 @@ $height: 768px;
 
     & > div {
       padding: 0 !important;
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
   }
 }
 
 .container {
-  position: relative;
-  width: $width;
-  height: $height;
-  overflow-x: hidden;
-  overflow-y: auto;
+  flex: 1 1 auto;
+  width: 100%;
   background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .header,
 .footer {
+  flex: 0 0 auto;
   width: 100%;
   height: 52px;
   box-shadow: -3px 2px 2px 0 rgba(119, 151, 178, 0.16);
@@ -37,12 +37,16 @@ $height: 768px;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  box-shadow: -3px -2px 2px 0 rgba(119, 151, 178, 0.16);
+}
+
+.content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 16px;
 }
 
 .close {

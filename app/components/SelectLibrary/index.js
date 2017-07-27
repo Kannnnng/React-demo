@@ -10,6 +10,7 @@ class SelectLibrary extends React.Component {
     open: PropTypes.bool,
     data: PropTypes.array,
     className: PropTypes.string,
+    handleOnClickClose: PropTypes.func,
     handleOnSelectLibrary: PropTypes.func,
   }
 
@@ -64,6 +65,7 @@ class SelectLibrary extends React.Component {
     const {
       open,
       className,
+      handleOnClickClose,
     } = this.props
     const {
       searchText,
@@ -79,7 +81,7 @@ class SelectLibrary extends React.Component {
           <div className={styles.header}>
             <button
               className={styles.close}
-              onClick={this.handleOnClickClose}
+              onClick={handleOnClickClose}
             >
               {'关闭'}
             </button>
