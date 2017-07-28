@@ -50,7 +50,7 @@ function AnswerMultipleChoice(props) {
             {letter[index]}
           </ItemLabel>
           <span dangerouslySetInnerHTML={{ __html: value.content }} />
-        </div>
+        </div>,
       )
       if (value.correctAnswer) {
         correctAnswer.push(letter[index])
@@ -68,7 +68,7 @@ function AnswerMultipleChoice(props) {
         >
           <img src={selected ? type2 : type22} alt="" />
           <span dangerouslySetInnerHTML={{ _lodashhtml: value.content }} />
-        </button>
+        </button>,
       )
     }
   })
