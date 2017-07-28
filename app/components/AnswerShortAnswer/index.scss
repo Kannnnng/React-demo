@@ -1,0 +1,88 @@
+.maskDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.limit {
+  font-size: 12px;
+  color: #333;
+  margin-left: 16px;
+  margin-top: -3px;
+}
+
+.limit ~ div textarea + div {
+  top: 170px !important;
+}
+
+.textArea {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.noBorder {
+  overflow: auto;
+  position: static;
+  margin-top: 0;
+}
+
+.noBorder > div {
+  position: static;
+}
+
+.noBorder textarea + div {
+  position: absolute;
+  top: 150px;
+  right: 15px;
+  z-index: 100;
+}
+
+.noBorder::before,
+.noBorder::after,
+.imagesUploaderContainer > div > div::before {
+  display: none;
+}
+
+.imagesUploaderContainer > div > div:first-child + div {
+  margin-top: 0;
+}
+
+.imagesUploader div:first-child {
+  padding-bottom: 0;
+}
+
+.imagesUploader ul li,
+.imagesUploader ul + div {
+  width: 40px;
+  height: 40px;
+}
+
+.content {
+  margin-left: 12px;
+  margin-right: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.imgList {
+  margin-left: 12px;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+.imgList button {
+  float: left;
+  outline: none;
+  overflow: hidden;
+}
+
+.imgList img {
+  width: 40px;
+  height: 40px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  float: left;
+}

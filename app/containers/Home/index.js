@@ -28,11 +28,7 @@ class Home extends React.Component {
       /* 上面是仅供测试用的 state */
     }
 
-    this.data = [
-      {
-
-      },
-    ]
+    this.data = {}
   }
 
   handleOnClickCatalog = () => {

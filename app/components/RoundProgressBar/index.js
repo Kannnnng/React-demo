@@ -22,12 +22,13 @@ function RoundProgressBar({
   display,
   percent,
   color,
+  width,
   style,
 }) {
   const tempPercent = parseInt(percent, 10)
   const { leftDeg, rightDeg } = getDegress(tempPercent)
-  const leftArcStyle = { transform: `rotateZ(${leftDeg}deg)`, borderColor: color }
-  const rightArcStyle = { transform: `rotateZ(${rightDeg}deg)`, borderColor: color }
+  const leftArcStyle = { transform: `rotateZ(${leftDeg}deg)`, borderTopColor: color, borderLeftColor: color, borderWidth: `${width}px` }
+  const rightArcStyle = { transform: `rotateZ(${rightDeg}deg)`, borderBottomColor: color, borderRightColor: color, borderWidth: `${width}px` }
 
   return (
     <div className={styles.container} style={style}>
@@ -50,6 +51,7 @@ RoundProgressBar.propTypes = {
   display: PropTypes.oneOf(PropTypes.element, PropTypes.array),
   percent: PropTypes.number,
   color: PropTypes.string,
+  width: PropTypes.number,
   style: PropTypes.object,
 }
 

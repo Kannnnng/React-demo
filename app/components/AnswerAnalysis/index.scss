@@ -1,0 +1,54 @@
+.analysisContainer {
+  margin-top: 8px;
+  margin-left: 12px;
+  margin-right: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.analysisTitle {
+  color: #666;
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.notes {
+  float: right;
+  font-size: 14px;
+  color: #1AAD19;
+}
+
+.notes:active {
+  color: #000;
+}
+
+.content {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+.content button img {
+  width: 112px;
+  height: 112px;
+}
+
+.wrongReasonContent {
+  width: 100%;
+  overflow: hidden;
+}
+
+.wrongReasonContent button {
+  height: 26px;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 26px;
+  border-radius: 3px;
+  border: solid 1px #888;
+  text-align: center;
+  font-size: 13px;
+  color: #333;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  float: left;
+  outline: none;
+}

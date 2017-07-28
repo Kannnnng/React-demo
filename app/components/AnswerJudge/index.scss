@@ -1,0 +1,73 @@
+.answerContentForShow {
+  height: 40px;
+  font-size: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.answerContentForShow div {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  color: #000;
+  font-size: 14px;
+  border: solid 1px #B5BBBC;
+  text-align: center;
+  line-height: 23px;
+}
+
+.answerContentForShow span {
+  position: relative;
+  top: 3px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: #333;
+  margin-left: 41px;
+}
+
+.answerContent {
+  display: block;
+  height: 40px;
+  font-size: 0;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.answerContent > img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10px;
+  left: 14px;
+}
+
+.answerContent > span {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: #333;
+  margin-left: 41px;
+}
+
+.rightAnswer {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  margin: 16px 12px 0 12px;
+  letter-spacing: normal;
+  color: #262626;
+}
+
+.right {
+  color: #3b9e46;
+}
+
+.wrong {
+  color: #f4333c;
+}

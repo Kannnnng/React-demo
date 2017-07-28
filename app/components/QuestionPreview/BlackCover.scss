@@ -1,0 +1,52 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+.topLeftButton,
+.topRightButton,
+.middleLeftButton,
+.middleRightButton {
+  position: absolute;
+}
+
+.topLeftButton,
+.topRightButton {
+  top: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+.topLeftButton {
+  left: 24px;
+}
+
+.topRightButton {
+  right: 24px;
+}
+
+.middleLeftButton,
+.middleRightButton {
+  top: 50%;
+  margin-top: -24px;
+}
+
+.middleLeftButton {
+  left: 8px;
+}
+
+.middleRightButton {
+  right: 8px;
+}
+
+.bottomToolBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+}

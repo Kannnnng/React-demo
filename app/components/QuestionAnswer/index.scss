@@ -1,0 +1,120 @@
+.container {
+  width: 100%;
+  margin-top: 14px;
+  overflow: scroll;
+}
+
+.subQuestionTitle {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  justify-content: space-between;
+  background-color: rgba(187, 187, 187, 0.16);
+}
+
+.subQuestionTitle > div {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.subQuestionCircleOrder {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: solid 1px #666;
+  line-height: 14px;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  margin-left: 12px;
+}
+
+.subQuestionIntroduction {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.subQuestionPages {
+  font-size: 16px;
+  color: #333;
+}
+
+.subQuestionPages > span {
+  flex-shrink: 0;
+}
+
+.subQuestionPrevBtn, .subQuestionNextBtn {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+}
+.subQuestionPrevBtn:disabled, .subQuestionNextBtn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+.subQuestionPrevBtn:active, .subQuestionNextBtn:active {
+  background-color: #ccc;
+}
+.right {
+  color: #3b9e46;
+}
+.wrong {
+  color: #f4333c;
+}
+.none {
+  color: #888888;
+}
+
+.markBtn {
+	width: 335px;
+	height: 47px;
+	border-radius: 5px;
+	background-color: #1aae18;
+	border: solid 1px rgba(5, 5, 5, 0.08);
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+
+.labelUnmarked {
+	width: 335px;
+	height: 25px;
+	font-family: PingFangSC;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: #ffffff;
+}
+
+label .text-style-1 {
+	font-family: SFUIDisplay;
+}
+
+.rightAnswer {
+	font-size: 14px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	margin: 16px 12px 0 12px;
+	letter-spacing: normal;
+	color: #262626;
+}
+
+.statistics {
+  font-size: 14px;
+  color: #262626;
+  margin-left: 12px;
+  margin-right: 12px;
+}

@@ -1,0 +1,59 @@
+.title {
+  height: 26px;
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+.chapter {
+  float: left;
+  height: 26px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  overflow: hidden;
+  padding-right: 8px;
+}
+
+.chapter img {
+  float: left;
+  height: 16px;
+  margin-left: 6px;
+  margin-top: 5px;
+}
+
+.chapter span {
+  float: left;
+  font-size: 13px;
+  color: #FFF;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+.level {
+  float: left;
+  height: 17px;
+  line-height: 17px;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  color: #4A4A4A;
+  margin-top: 5px;
+  margin-left: 4px;
+}
+
+.answer {
+  float: right;
+  margin-top: 6px;
+  margin-right: 11px;
+  font-size: 14px;
+  color: #3B9E46;
+}
+
+.content {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  padding: 8px;
+}
+
+.content img {
+  width: 100%;
+}
