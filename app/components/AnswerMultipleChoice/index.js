@@ -6,14 +6,11 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
-import { letter } from 'utils/constants'
-import type2 from 'images/type2.png'
-import type22 from 'images/type22.png'
 import lodash from 'lodash'
+import { letter } from 'utils/constants'
+// import type2 from 'images/type2.png'
+// import type22 from 'images/type22.png'
 import ItemLabel from 'components/ItemLabel'
-import messages from 'components/QuestionAnswer/messages'
-import { rightAnswer as rightAnswerStyle, right, wrong } from 'components/QuestionAnswer/styles.css'
 import styles from './index.scss'
 
 const findIndex = (array, id) =>
@@ -28,11 +25,11 @@ function AnswerMultipleChoice(props) {
     canAnswer,
     isAllCorrect,
     answer,
-    handleOnClickAnswer,
+    // handleOnClickAnswer,
   } = props
   const temp = []
   const correctAnswer = []
-  const myChoice = []
+  // const myChoice = []
   items.forEach((value, index) => {
     const selected = (findIndex(answer, value.id) >= 0)
     if (isAnswered && isAnswerOpen) {
@@ -55,21 +52,21 @@ function AnswerMultipleChoice(props) {
       if (value.correctAnswer) {
         correctAnswer.push(letter[index])
       }
-      if (selected) {
-        myChoice.push(letter[index])
-      }
+      // if (selected) {
+      //   myChoice.push(letter[index])
+      // }
     } else {
-      temp.push(
-        <button
-          className={styles.answerContent}
-          onClick={handleOnClickAnswer(value.id)}
-          key={index}
-          disabled={!canAnswer}
-        >
-          <img src={selected ? type2 : type22} alt="" />
-          <span dangerouslySetInnerHTML={{ _lodashhtml: value.content }} />
-        </button>,
-      )
+      // temp.push(
+      //   <button
+      //     className={styles.answerContent}
+      //     onClick={handleOnClickAnswer(value.id)}
+      //     key={index}
+      //     disabled={!canAnswer}
+      //   >
+      //     <img src={selected ? type2 : type22} alt="" />
+      //     <span dangerouslySetInnerHTML={{ _lodashhtml: value.content }} />
+      //   </button>,
+      // )
     }
   })
 
@@ -78,44 +75,20 @@ function AnswerMultipleChoice(props) {
     rightAnswer = null
   } else if (hasCorrectness) {
     rightAnswer = (
-      <div className={styles.rightAnswerStyle}>
-        <FormattedMessage
-          {...messages.resultCorrectAnswer}
-          values={{
-            correntAnswer: correctAnswer.join(''),
-          }}
-        />
-        {answer && <FormattedMessage
-          {...messages.resultMyAnswer}
-          values={{
-            answer: myChoice.join(''),
-          }}
-        />}
-        {isAllCorrect ?
-          <span className={right}>
-            <FormattedMessage
-              {...messages.answerRight}
-            />
-          </span>
-        : <span className={wrong}>
-          <FormattedMessage
-            {...messages.answerWrong}
-          />
-        </span>}
+      <div className={styles.rightAnswer}>
+        <span>{`正确答案是「${correctAnswer.join('')}」。`}</span>
+        {/* answer && <span>{`你的答案是「${myChoice.join('')}」。`}</span> */}
+        {/* isAllCorrect ?
+          <span className={styles.right}>{'回答正确'}</span> :
+          <span className={styles.wrong}>{'回答错误'}</span>
+        */}
       </div>
     )
   } else {
     rightAnswer = (
-      <div className={styles.rightAnswerStyle}>
-        <FormattedMessage
-          {...messages.resultNoCorrectAnswer}
-        />
-        {answer && <FormattedMessage
-          {...messages.resultMyAnswer}
-          values={{
-            answer: myChoice.join(''),
-          }}
-        />}
+      <div className={styles.rightAnswer}>
+        <span>{'本题无标答。'}</span>
+        {/* answer && <span>{`你的答案是「${myChoice.join('')}」。`}</span> */}
       </div>
     )
   }
@@ -136,7 +109,7 @@ AnswerMultipleChoice.propTypes = {
   hasCorrectness: PropTypes.bool,
   canAnswer: PropTypes.bool,
   isAllCorrect: PropTypes.bool,
-  handleOnClickAnswer: PropTypes.func,
+  // handleOnClickAnswer: PropTypes.func,
 }
 
 AnswerMultipleChoice.defaultProps = {

@@ -1,8 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getQuestionFlag } from 'containers/Answers/helper'
 import { questionPattern } from 'utils/constants'
 import styles from './index.scss'
+
+function getQuestionFlag(pattern, canAnswer) {
+  switch (pattern) {
+    case questionPattern.singleSelection:
+      return `(单选) ${canAnswer ? '请选择一个正确答案' : ''}`
+    case questionPattern.multipleChoice:
+      return `(多选) ${canAnswer ? '请选择一个或多个正确答案' : ''}`
+    case questionPattern.judge:
+      return `(判断) ${canAnswer ? '请选择一个正确答案' : ''}`
+    case questionPattern.fillInTheBlanks:
+      return `(填空) ${canAnswer ? '请依照题目中的填空位置填写答案' : ''}`
+    case questionPattern.shortAnswer:
+      return '(简答) '
+    default:
+      return null
+  }
+}
 
 function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) {
   const { pattern, answer } = question

@@ -6,11 +6,11 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import NoteSection from './NoteSection'
+// import NoteSection from './NoteSection'
 import KPointSection from './KPointSection'
 import AnalysisSection from './AnalysisSection'
-import TCommentSection from './TCommentSection'
-import WrongReason from './WrongReason'
+// import TCommentSection from './TCommentSection'
+// import WrongReason from './WrongReason'
 
 function AnswerAnalysis({
   data,
@@ -19,7 +19,7 @@ function AnswerAnalysis({
   canAnswer,
   subQuestionIndex,
 }) {
-  if (Object.prototype.toString.call(data).slice(8, -1) === 'Array') {
+  if (Object.prototype.toString.call(data) === '[object Array]') {
     const subData = data[subQuestionIndex]
     return (
       <AnswerAnalysis
@@ -44,11 +44,11 @@ function AnswerAnalysis({
 
   return (
     <div>
-      {data.teacherComment && <TCommentSection teacherComment={data.teacherComment} />}
+      {/* data.teacherComment && <TCommentSection teacherComment={data.teacherComment} /> */}
       <AnalysisSection review={data.review} />
       <KPointSection labels={data.labels} />
-      <WrongReason wrongReason={data.wrongReason} />
-      <NoteSection courseId={data.courseId} questionId={data.questionId} data={data.note} />
+      {/* <WrongReason wrongReason={data.wrongReason} /> */}
+      {/* <NoteSection courseId={data.courseId} questionId={data.questionId} data={data.note} /> */}
     </div>
   )
 }

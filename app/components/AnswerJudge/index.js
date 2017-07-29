@@ -6,8 +6,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import type1 from 'images/type1.png'
-import type11 from 'images/type11.png'
+// import type1 from 'images/type1.png'
+// import type11 from 'images/type11.png'
 import { letter } from 'utils/constants'
 import ItemLabel from 'components/ItemLabel'
 import styles from './index.scss'
@@ -21,11 +21,11 @@ function AnswerJudge(props) {
     canAnswer,
     hasCorrectness,
     correctAnswer,
-    handleOnClickAnswer,
+    // handleOnClickAnswer,
   } = props
   const temp = []
   const correctAnswerArray = []
-  const myChoice = []
+  // const myChoice = []
   const yesAndNo = ['是', '否']
   yesAndNo.forEach((value, index) => {
     if (isAnswered && isAnswerOpen) {
@@ -48,21 +48,21 @@ function AnswerJudge(props) {
       if (correctAnswer === !index) {
         correctAnswerArray.push(letter[index])
       }
-      if (!index === answer) {
-        myChoice.push(letter[index])
-      }
+      // if (!index === answer) {
+      //   myChoice.push(letter[index])
+      // }
     } else {
-      temp.push(
-        <button
-          className={styles.answerContent}
-          onClick={handleOnClickAnswer(!index)}
-          key={index}
-          disabled={!canAnswer}
-        >
-          <img src={!index === answer ? type1 : type11} alt="" />
-          <span>{value}</span>
-        </button>,
-      )
+      // temp.push(
+      //   <button
+      //     className={styles.answerContent}
+      //     onClick={handleOnClickAnswer(!index)}
+      //     key={index}
+      //     disabled={!canAnswer}
+      //   >
+      //     <img src={!index === answer ? type1 : type11} alt="" />
+      //     <span>{value}</span>
+      //   </button>,
+      // )
     }
   })
 
@@ -71,17 +71,20 @@ function AnswerJudge(props) {
     rightAnswer = null
   } else if (hasCorrectness) {
     rightAnswer = (
-      <div className={styles.rightAnswerStyle}>
+      <div className={styles.rightAnswer}>
         <span>{`正确答案是「${correctAnswerArray.join('')}」。`}</span>
-        {answer && <span>{`你的答案是「${answer}」。`}</span>}
-        {isAllCorrect ? <span className={styles.right}>{'回答正确'}</span> : <span className={styles.wrong}>{'回答错误'}</span>}
+        {/* answer && <span>{`你的答案是「${answer}」。`}</span> */}
+        {/* isAllCorrect ?
+          <span className={styles.right}>{'回答正确。'}</span> :
+          <span className={styles.wrong}>{'回答错误。'}</span>
+        */}
       </div>
     )
   } else {
     rightAnswer = (
-      <div className={styles.rightAnswerStyle}>
-        <span>{'本题无标答'}</span>
-        {answer && <span>{`你的答案是「${myChoice.join('')}」。`}</span>}
+      <div className={styles.rightAnswer}>
+        <span>{'本题无标答。'}</span>
+        {/* answer && <span>{`你的答案是「${myChoice.join('')}」。`}</span> */}
       </div>
     )
   }
@@ -102,7 +105,7 @@ AnswerJudge.propTypes = {
   correctAnswer: PropTypes.bool,
   canAnswer: PropTypes.bool,
   hasCorrectness: PropTypes.bool,
-  handleOnClickAnswer: PropTypes.func,
+  // handleOnClickAnswer: PropTypes.func,
 }
 
 export default AnswerJudge

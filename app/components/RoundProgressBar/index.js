@@ -27,8 +27,8 @@ function RoundProgressBar({
 }) {
   const tempPercent = parseInt(percent, 10)
   const { leftDeg, rightDeg } = getDegress(tempPercent)
-  const leftArcStyle = { transform: `rotateZ(${leftDeg}deg)`, borderTopColor: color, borderLeftColor: color, borderWidth: `${width}px` }
-  const rightArcStyle = { transform: `rotateZ(${rightDeg}deg)`, borderBottomColor: color, borderRightColor: color, borderWidth: `${width}px` }
+  const leftArcStyle = { transform: `rotateZ(${leftDeg}deg)`, borderTopColor: color, borderLeftColor: color, borderWidth: `${width}px` }  // eslint-disable-line
+  const rightArcStyle = { transform: `rotateZ(${rightDeg}deg)`, borderBottomColor: color, borderRightColor: color, borderWidth: `${width}px` }  // eslint-disable-line
 
   return (
     <div className={styles.container} style={style}>

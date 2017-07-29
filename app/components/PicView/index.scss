@@ -1,0 +1,57 @@
+.picView { /* stylelint-disable */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  z-index: 1201;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  position: fixed;
+}
+
+.closeBtn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  outline: none;
+}
+
+.imageBox {
+  width: 100vw;
+  height: 100vw;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+}
+
+.scrollImages {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  transition: left 0.3s;
+}
+
+.icon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin: 4px;
+  background-color: #fff;
+}
+
+.iconsBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 30px;
+}

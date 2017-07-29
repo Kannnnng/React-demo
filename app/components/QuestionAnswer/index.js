@@ -6,14 +6,14 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import lodash from 'lodash'
+// import lodash from 'lodash'
 import AnswerSingleSelection from 'components/AnswerSingleSelection'
 import AnswerMultipleChoice from 'components/AnswerMultipleChoice'
 import AnswerJudge from 'components/AnswerJudge'
 import AnswerFillInTheBlanks from 'components/AnswerFillInTheBlanks'
 import AnswerShortAnswer from 'components/AnswerShortAnswer'
 import { questionPattern, letter } from 'utils/constants'
-import { getNewImages } from 'containers/Answers/helper'
+// import { getNewImages } from 'containers/Answers/helper'
 import SubQuestionTitle from './SubQuestionTitle'
 import styles from './index.scss'
 
@@ -29,117 +29,115 @@ class QuestionAnswer extends React.Component {
     isAnswered: PropTypes.bool,
     canAnswer: PropTypes.bool,
     pattern: PropTypes.number,
-    onChange: PropTypes.func,
+    // onChange: PropTypes.func,
     subQuestionIndex: PropTypes.number,
     onSubQuestionChange: PropTypes.func,
   }
 
   static defaultProps = {
     answer: {},
-    myAnswer: [],
     isAnswerOpen: false,
     isAnswered: false,
-    pattern: 0,
     subQuestionIndex: 0,
   }
 
-  state = {
-    gallery: {},
-  }
+  // state = {
+  //   gallery: {},
+  // }
 
-  handleOnUpload = () => (file) => {
-    const { myAnswer } = this.props
-    if (file.size > 102400) {
-      alert('上传图片最大为100KB') //eslint-disable-line
-    } else {
-      const objectURL = URL.createObjectURL(file.nativeFile) //eslint-disable-line
-      let attaches
-      let files
-      if (myAnswer.attaches) {
-        attaches = [...myAnswer.attaches, objectURL]
-        files = [...myAnswer.files, file.nativeFile]
-      } else {
-        attaches = [objectURL]
-        files = [file.nativeFile]
-      }
-      const answer = {
-        ...myAnswer,
-        attaches,
-        files,
-      }
-      this.props.onChange(answer)
-    }
-  }
+  // handleOnUpload = () => (file) => {
+  //   const { myAnswer } = this.props
+  //   if (file.size > 102400) {
+  //     alert('上传图片最大为100KB') //eslint-disable-line
+  //   } else {
+  //     const objectURL = URL.createObjectURL(file.nativeFile) //eslint-disable-line
+  //     let attaches
+  //     let files
+  //     if (myAnswer.attaches) {
+  //       attaches = [...myAnswer.attaches, objectURL]
+  //       files = [...myAnswer.files, file.nativeFile]
+  //     } else {
+  //       attaches = [objectURL]
+  //       files = [file.nativeFile]
+  //     }
+  //     const answer = {
+  //       ...myAnswer,
+  //       attaches,
+  //       files,
+  //     }
+  //     this.props.onChange(answer)
+  //   }
+  // }
 
-  handleOnImageClick = () => (file, id) => {
-    const gallery = {
-      url: file.url,
-      id,
-    }
-    this.setState({ gallery })
-  }
+  // handleOnImageClick = () => (file, id) => {
+  //   const gallery = {
+  //     url: file.url,
+  //     id,
+  //   }
+  //   this.setState({ gallery })
+  // }
 
-  handleOnCloseGallery = () => () => {
-    this.setState({ gallery: {} })
-  }
+  // handleOnCloseGallery = () => () => {
+  //   this.setState({ gallery: {} })
+  // }
 
-  handleOnDeleteImage = () => (id) => {
-    const { myAnswer } = this.props
-    const attaches = myAnswer.attaches ? [...myAnswer.attaches] : []
-    const files = myAnswer.files ? [...myAnswer.files] : []
-    const objectURL = attaches.splice(id, 1)[0]
-    const fileIndex = lodash.findIndex(getNewImages(myAnswer), (o) => o === objectURL)
-    files.splice(fileIndex, 1)
-    if (objectURL.startsWith('blob:')) {
-      URL.revokeObjectURL(objectURL) //eslint-disable-line
-    }
-    this.props.onChange({
-      ...myAnswer,
-      attaches,
-      files,
-    })
-  }
+  // handleOnDeleteImage = () => (id) => {
+  //   const { myAnswer } = this.props
+  //   const attaches = myAnswer.attaches ? [...myAnswer.attaches] : []
+  //   const files = myAnswer.files ? [...myAnswer.files] : []
+  //   const objectURL = attaches.splice(id, 1)[0]
+  //   const fileIndex = lodash.findIndex(getNewImages(myAnswer), (o) => o === objectURL)
+  //   files.splice(fileIndex, 1)
+  //   if (objectURL.startsWith('blob:')) {
+  //     URL.revokeObjectURL(objectURL) //eslint-disable-line
+  //   }
+  //   this.props.onChange({
+  //     ...myAnswer,
+  //     attaches,
+  //     files,
+  //   })
+  // }
 
-  handleOnClickAnswer = (id) => (event) => {
-    event.preventDefault()
-    const { pattern, myAnswer } = this.props
-    let answer
-    switch (pattern) {
-      case questionPattern.singleSelection:
-        answer = [id]
-        break
-      case questionPattern.multipleChoice: {
-        answer = [...myAnswer]
-        const index = lodash.findIndex(myAnswer, (o) => o === id)
-        if (index >= 0) {
-          answer.splice(index, 1)
-        } else {
-          answer.push(id)
-        }
-        break
-      }
-      case questionPattern.judge:
-        answer = id
-        break
-      case questionPattern.fillInTheBlanks: {
-        answer = {
-          ...myAnswer,
-          [id]: event.target.value,
-        }
-        break
-      }
-      case questionPattern.shortAnswer: {
-        answer = {
-          ...myAnswer,
-          content: event.target.value,
-        }
-        break
-      }
-      default:
-        break
-    }
-    this.props.onChange(answer)
-  }
+  // handleOnClickAnswer = (id) => (event) => {
+  //   event.preventDefault()
+  //   const { pattern, myAnswer } = this.props
+  //   let answer
+  //   switch (pattern) {
+  //     case questionPattern.singleSelection:
+  //       answer = [id]
+  //       break
+  //     case questionPattern.multipleChoice: {
+  //       answer = [...myAnswer]
+  //       const index = lodash.findIndex(myAnswer, (o) => o === id)
+  //       if (index >= 0) {
+  //         answer.splice(index, 1)
+  //       } else {
+  //         answer.push(id)
+  //       }
+  //       break
+  //     }
+  //     case questionPattern.judge:
+  //       answer = id
+  //       break
+  //     case questionPattern.fillInTheBlanks: {
+  //       answer = {
+  //         ...myAnswer,
+  //         [id]: event.target.value,
+  //       }
+  //       break
+  //     }
+  //     case questionPattern.shortAnswer: {
+  //       answer = {
+  //         ...myAnswer,
+  //         content: event.target.value,
+  //       }
+  //       break
+  //     }
+  //     default:
+  //       break
+  //   }
+  //   this.props.onChange(answer)
+  // }
 
   renderAnswer() {
     let answerSection
@@ -214,8 +212,9 @@ class QuestionAnswer extends React.Component {
           <AnswerShortAnswer
             canAnswer={canAnswer}
             limit={answer.limit}
-            answer={myAnswer}
-            gallery={this.state.gallery}
+            // answer={myAnswer}
+            answer={candidateItems[0]}
+            // gallery={this.state.gallery}
             maxCount={3}
             textAreaPlaceHolder={'请填写你的答案'}
             functions={{
@@ -243,7 +242,7 @@ class QuestionAnswer extends React.Component {
       myAnswer: myAnswers,
       canAnswer,
       isAnswerOpen,
-      onChange,
+      // onChange,
       subQuestionIndex,
       onSubQuestionChange,
     } = this.props
@@ -272,12 +271,12 @@ class QuestionAnswer extends React.Component {
           isAnswered={question.isAnswered}
           canAnswer={canAnswer}
           pattern={question.pattern}
-          onChange={(state) => {
-            onChange({
-              ...myAnswers,
-              [question.id]: state,
-            })
-          }}
+          // onChange={(state) => {
+          //   onChange({
+          //     ...myAnswers,
+          //     [question.id]: state,
+          //   })
+          // }}
         />
       </div>
     )
@@ -289,33 +288,44 @@ class QuestionAnswer extends React.Component {
       items,
       hasCorrectness,
       answerCount,
-      studentCount,
+      // studentCount,
       correctRate,
       easyWrongOption,
+      referenceCount,
+      usageCount,
     } = answer
-    let temp = null
+    const temp = []
 
     switch (pattern) {
       case questionPattern.singleSelection:
       case questionPattern.multipleChoice:
       case questionPattern.AnswerFillInTheBlanks:
       case questionPattern.judge:
+        temp.push(<span key="referenceCount">{`本题被${referenceCount}位老师引用。共计使用${usageCount}次。学生作答${answerCount}人次。`}</span>)  // eslint-disable-line
         if (!hasCorrectness) {
-          temp = <span>{`本题共被作答${answerCount}次。你的答案与${studentCount}人相同。`}</span>
+          // temp = <span key="answerCount">{`本题共被作答${answerCount}次。你的答案与${studentCount}人相同。`}</span>
         } else {
-          const easyWrongOptionText = items.map((value, index) => {
-            if (easyWrongOption.indexOf(value) !== -1) {
-              if (pattern === questionPattern.judge) {
-                return index + 1
+          let easyWrongOptionText
+          if (pattern === questionPattern.judge) {
+            easyWrongOptionText = easyWrongOption.join('')
+          } else {
+            easyWrongOptionText = items.map((value, index) => {
+              /* 这里的代码存疑，items 里面的元素是对象，而对对象应用 indexOf 方法显然不合理 */
+              /* 而且之前这里讨论好的数据结构是，易错项里面是选项的 ID，通过比较选项的 ID 来确 */
+              /* 定哪一个选项是易错项 */
+              // if (easyWrongOption.indexOf(value) !== -1) {
+              if (easyWrongOption.indexOf(value.id) !== -1) {
+                if (pattern === questionPattern.judge) {
+                  return index + 1
+                }
+                return letter[index]
               }
-              return letter[index]
-            }
-            return null
-          }).join('')
-          temp = []
-          temp.push(<span>{`本题共被作答${answerCount}次。正确率${correctRate}%。`}</span>)
+              return null
+            }).join('')
+          }
+          temp.push(<span key="correctRate">{`正确率${correctRate}%。`}</span>)
           if (easyWrongOptionText) {
-            temp.push(<span>{`易错项为「${easyWrongOption}」。`}</span>)
+            temp.push(<span key="easyWrongOption">{`易错项为「${easyWrongOptionText}」。`}</span>)
           }
         }
         break

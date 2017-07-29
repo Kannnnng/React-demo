@@ -37,22 +37,21 @@
   height: 48px;
 
   i {
-    width: 16px;
-    height: 32px;
-    background-size: cover;
-    background-position: center;
+    width: 48px;
+    height: 48px;
+    mask-size: 48px 48px;
   }
 }
 
 .goLeftButton {
   i {
-    background-image: url('images/goLeft.png');
+    mask-image: url('images/goLeft.svg');
   }
 }
 
 .goRightButton {
   i {
-    background-image: url('images/goRight.png');
+    mask-image: url('images/goRight.svg');
   }
 }
 

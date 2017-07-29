@@ -4,17 +4,18 @@
 *
 */
 
-import React, { PropTypes } from 'react';
-import {
-  CellBody,
-  Form,
-  FormCell,
-  TextArea,
-} from 'react-weui';
-import ImagesUploader from 'components/ImagesUploader';
-import PicView from 'components/PicView';
-import styles from './styles.css';
-import lodash from 'lodash';
+import React from 'react'
+import PropTypes from 'prop-types'
+// import {
+//   CellBody,
+//   Form,
+//   FormCell,
+//   TextArea,
+// } from 'react-weui'
+import lodash from 'lodash'
+// import ImagesUploader from 'components/ImagesUploader'
+import PicView from 'components/PicView'
+import styles from './index.scss'
 
 function renderImg(data, handleOnShowPicView) {
   return lodash.reduce(data, (result, value, index) => (
@@ -24,50 +25,50 @@ function renderImg(data, handleOnShowPicView) {
         <img src={value} alt="" />
       </button>),
     ]
-  ), []);
+  ), [])
 }
 
-function mapAttachesToFiles(attaches) {
-  return lodash.map(attaches, (url) => ({ url }));
-}
+// function mapAttachesToFiles(attaches) {
+//   return lodash.map(attaches, (url) => ({ url }))
+// }
 
 class AnswerShortAnswer extends React.PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       show: false,
       currentIndex: 0,
-    };
+    }
   }
 
   handleOnShowPicView = (currentIndex) => () => {
     this.setState({
       show: true,
       currentIndex,
-    });
+    })
   }
 
 
   handleOnClosePicView = () => {
-    this.setState({ show: false });
+    this.setState({ show: false })
   }
 
   render() {
     const {
       answer,
       limit,
-      gallery,
+      // gallery,
       canAnswer,
-      functions,
+      // functions,
       flag,
-      maxCount,
-      textAreaPlaceHolder,
-    } = this.props;
+      // maxCount,
+      // textAreaPlaceHolder,
+    } = this.props
     const {
       show,
       currentIndex,
-    } = this.state;
+    } = this.state
     if (!canAnswer) {
       return (
         <div>
@@ -89,9 +90,9 @@ class AnswerShortAnswer extends React.PureComponent {
             closePicView={this.handleOnClosePicView}
           />}
         </div>
-      );
+      )
     }
-    return (
+    return {/* (
       <div style={{ position: 'relative' }}>
         {flag && <div className={styles.limit}>
           {limit ? `答题要求：限${limit}字` : '不限字数'}
@@ -123,7 +124,7 @@ class AnswerShortAnswer extends React.PureComponent {
           />
         </div>
       </div>
-    );
+    ) */}
   }
 }
 
@@ -131,19 +132,19 @@ AnswerShortAnswer.propTypes = {
   answer: PropTypes.object,
   canAnswer: PropTypes.bool,
   limit: PropTypes.number,
-  functions: PropTypes.object,
-  gallery: PropTypes.object,
+  // functions: PropTypes.object,
+  // gallery: PropTypes.object,
   flag: PropTypes.bool,
-  maxCount: PropTypes.number,
-  textAreaPlaceHolder: PropTypes.string,
-};
+  // maxCount: PropTypes.number,
+  // textAreaPlaceHolder: PropTypes.string,
+}
 
 AnswerShortAnswer.defaultProps = {
   answer: {},
-  functions: {},
+  // functions: {},
   flag: true,
-  maxCount: 6,
-  textAreaPlaceHolder: '',
-};
+  // maxCount: 6,
+  // textAreaPlaceHolder: '',
+}
 
-export default AnswerShortAnswer;
+export default AnswerShortAnswer
