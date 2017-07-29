@@ -114,9 +114,9 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <QuestionPreview
+        {/* <QuestionPreview
           data={this.data}
-        />
+        /> */}
       </div>
     )
   }

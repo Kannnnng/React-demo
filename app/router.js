@@ -1,9 +1,11 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Game2048 from 'containers/Game2048'
 import Home from 'containers/Home'
-import Profile from 'containers/Profile'
-import Test from 'containers/Test'
+import AsyncComponent from './AsyncComponent'
+
+const Game2048 = AsyncComponent(() => import('containers/Game2048'))
+const Profile = AsyncComponent(() => import('containers/Profile'))
+const Test = AsyncComponent(() => import('containers/Test'))
 
 const routes = (
   <div>
