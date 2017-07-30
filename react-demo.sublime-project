@@ -9,6 +9,7 @@
       ],
       "folder_exclude_patterns":
       [
+        "build",
         "node_modules",
       ],
       "path": "."
