@@ -57,7 +57,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const vendors = [
   'axios',
-  'babel-polyfill',
   'immutable',
   'lodash',
   'material-ui',
@@ -67,6 +66,7 @@ const vendors = [
   'prop-types',
   'react',
   'react-dom',
+  'react-loadable',
   'react-redux',
   'react-router-dom',
   'react-router-redux',
