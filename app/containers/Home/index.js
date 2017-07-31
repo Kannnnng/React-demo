@@ -7,6 +7,7 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
+import SearchToolBar from 'components/SearchToolBar'
 import QuestionPreview from 'components/QuestionPreview'
 import styles from './index.scss'
 
@@ -114,9 +115,10 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        {/* <QuestionPreview
+        <SearchToolBar />
+        <QuestionPreview
           data={this.data}
-        /> */}
+        />
       </div>
     )
   }

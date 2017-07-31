@@ -32,6 +32,12 @@ class SearchToolBar extends React.PureComponent {
     this.props.handleOnSearchContentChange(event.target.value)
   }
 
+  handleOnKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      this.handleOnClickSearch()
+    }
+  }
+
   handleOnClickSearch = () => {
     this.setState({ show: false })
     this.props.handleOnSearchContentChange(true)
@@ -67,6 +73,7 @@ class SearchToolBar extends React.PureComponent {
             value={searchContent}
             placeholder="请输入想要检索的内容"
             onChange={this.handleOnSearchContentChange}
+            onKeyDown={this.handleOnKeyDown}
           />}
         </div>
         <button className={styles.showStateButton} onClick={this.handleOnShowState} />
