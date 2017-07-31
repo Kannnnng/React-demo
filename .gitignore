@@ -1,7 +1,7 @@
 /node_modules
 /react-demo.sublime-workspace
 /npm-debug.log
-/.DS_Store
 /app/.DS_Store
 /app/sources/.DS_Store
 /app/components/.DS_Store
+.DS_Store
