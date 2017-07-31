@@ -142,7 +142,7 @@ class QuestionAnswer extends React.Component {
   renderAnswer() {
     let answerSection
     const {
-      pattern, answer, myAnswer,
+      pattern, answer, /* myAnswer, */
       isAnswered, isAnswerOpen, canAnswer,
     } = this.props
     const {
@@ -161,7 +161,7 @@ class QuestionAnswer extends React.Component {
             isAllCorrect={isAllCorrect}
             hasCorrectness={hasCorrectness}
             items={candidateItems}
-            answer={myAnswer}
+            // answer={myAnswer}
             handleOnClickAnswer={this.handleOnClickAnswer}
           />
         )
@@ -175,7 +175,7 @@ class QuestionAnswer extends React.Component {
             isAllCorrect={isAllCorrect}
             hasCorrectness={hasCorrectness}
             items={candidateItems}
-            answer={myAnswer}
+            // answer={myAnswer}
             handleOnClickAnswer={this.handleOnClickAnswer}
           />
         )
@@ -189,7 +189,7 @@ class QuestionAnswer extends React.Component {
             isAllCorrect={isAllCorrect}
             correctAnswer={correctAnswer}
             hasCorrectness={hasCorrectness}
-            answer={myAnswer}
+            // answer={myAnswer}
             handleOnClickAnswer={this.handleOnClickAnswer}
           />
         )
@@ -202,7 +202,7 @@ class QuestionAnswer extends React.Component {
             isAnswerOpen={isAnswerOpen}
             items={candidateItems}
             hasCorrectness={hasCorrectness}
-            answer={myAnswer}
+            // answer={myAnswer}
             handleOnClickAnswer={this.handleOnClickAnswer}
           />
         )
@@ -239,10 +239,11 @@ class QuestionAnswer extends React.Component {
   renderGroup() {
     const {
       answer: questions,
-      myAnswer: myAnswers,
+      // myAnswer: myAnswers,
       canAnswer,
-      isAnswerOpen,
       // onChange,
+      isAnswerOpen,
+      isAnswered,
       subQuestionIndex,
       onSubQuestionChange,
     } = this.props
@@ -254,11 +255,13 @@ class QuestionAnswer extends React.Component {
       studentCount: question.studentCount,
       correctRate: question.correctRate,
       easyWrongOption: question.easyWrongOption,
+      referenceCount: question.referenceCount,
+      usageCount: question.usageCount,
     }
     return (
       <div className={styles.subQuestion}>
         <SubQuestionTitle
-          canAnswer={canAnswer}
+          canAnswer={false}
           index={subQuestionIndex + 1}
           totalCount={questions.length}
           question={question}
@@ -266,9 +269,9 @@ class QuestionAnswer extends React.Component {
         />
         <QuestionAnswer
           answer={question.answer}
-          myAnswer={myAnswers[question.id]}
+          // myAnswer={myAnswers[question.id]}
           isAnswerOpen={isAnswerOpen}
-          isAnswered={question.isAnswered}
+          isAnswered={isAnswered}
           canAnswer={canAnswer}
           pattern={question.pattern}
           // onChange={(state) => {

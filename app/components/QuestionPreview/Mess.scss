@@ -12,6 +12,15 @@
   outline: none;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
+  color: #FFF;
+
+  &:active {
+    color: #AAA;
+
+    i {
+      background-color: #AAA;
+    }
+  }
 
   i {
     display: inline-block;
@@ -82,7 +91,6 @@
 
   span {
     font-size: 12px;
-    color: #FFF;
     position: relative;
     top: -4px;
   }

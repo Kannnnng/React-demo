@@ -57,7 +57,7 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
           }
           disabled={index <= 1}
         >
-          &lt
+          &lt;
         </button>
         <span>{`${index} / ${totalCount}`}</span>
         <button
@@ -70,7 +70,7 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
           }
           disabled={index >= totalCount}
         >
-          &gt
+          &gt;
         </button>
       </div>
     </div>

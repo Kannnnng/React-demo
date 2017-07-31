@@ -55,6 +55,8 @@
   cursor: pointer;
   font-weight: bold;
   outline: none;
+  border: none;
+  background-color: transparent;
 }
 .subQuestionPrevBtn:disabled, .subQuestionNextBtn:disabled {
   color: #ccc;
