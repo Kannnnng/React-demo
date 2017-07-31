@@ -1,9 +1,8 @@
 import React from 'react'
 import Loadable from 'react-loadable'
 import { Route } from 'react-router-dom'
-import LoadingComponent from 'containers/LoadingComponent'
-// import AsyncComponent from 'app/AsyncComponent'
 import Home from 'containers/Home'
+import LoadingComponent from 'containers/LoadingComponent'
 
 const Game2048 = Loadable({
   loader: () => import('containers/Game2048'),
@@ -19,10 +18,6 @@ const Test = Loadable({
   loader: () => import('containers/Test'),
   loading: LoadingComponent,
 })
-
-// const Game2048 = AsyncComponent(() => import('containers/Game2048'))
-// const Profile = AsyncComponent(() => import('containers/Profile'))
-// const Test = AsyncComponent(() => import('containers/Test'))
 
 const routes = (
   <div>
