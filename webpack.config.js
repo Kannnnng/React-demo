@@ -165,7 +165,7 @@ module.exports = {
             ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
-                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
                 'postcss-loader',
               ].join('!'),
             })
@@ -186,7 +186,7 @@ module.exports = {
             ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
-                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',
+                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
                 'postcss-loader',
                 'sass-loader',
               ].join('!'),
