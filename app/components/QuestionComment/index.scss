@@ -64,7 +64,7 @@
   width: 32px;
   height: 32px;
   border-radius: 16px;
-  background: transparent center center no-repeat;
+  background: transparent center no-repeat;
   background-size: cover;
   flex: 0 0 auto;
   margin-right: 8px;
@@ -79,8 +79,7 @@
   overflow: hidden;
 }
 
-.topTitle,
-.bottomTitle {
+.topTitle {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
@@ -174,12 +173,13 @@
 }
 
 .bottomTitle {
-  justify-content: flex-start;
+  flex: 1 1 auto;
   font-size: 12px;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 10px;
 }
 
 .commentInputListItem {
