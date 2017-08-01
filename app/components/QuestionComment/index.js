@@ -8,8 +8,8 @@ require('moment/locale/zh-cn')
 
 class QuestionComment extends React.PureComponent {
   static propTypes = {
-    comments: PropTypes.array,
-    data: PropTypes.object,
+    comments: PropTypes.array,  // 评论信息列表
+    data: PropTypes.object,  // 当前登录教师信息
   }
 
   constructor(props) {
@@ -19,26 +19,49 @@ class QuestionComment extends React.PureComponent {
   }
 
   state = {
-    shouldShowLikeAndOther: false,
+    thinking: '',
+    image: undefined,
+    comment: '',
   }
 
-  handleOnFocusCreateTime = () => {
-    console.log(321)
-    this.setState({ shouldShowLikeAndOther: true })
+  handleOnClickLike = (value) => () => {
+    /* value 为评论被点赞的教师的 ID */
   }
 
-  handleOnBlurCreateTime = () => {
-    console.log(123)
-    this.setState({ shouldShowLikeAndOther: false })
+  handleOnClickEllipses = () => {
+    /* 点击右上角垂直的三个点所要执行的操作 */
+  }
+
+  handleOnClickAddLink = () => {
+    /* 点击添加链接所要执行的操作 */
+  }
+
+  handleOnAddImages = (event) => {
+    const file = event.target.files[0]
+    this.setState({ image: file })
+    // const reader = new FileReader()  // eslint-disable-line
+    // reader.readAsDataURL(file)
+    // reader.onload = (_event) => {
+    //   console.log(_event.target.result, 123)
+    // }
+  }
+
+  handleOnInputThinking = (event) => {
+    this.setState({ thinking: event.target.value })
+  }
+
+  handleOnClickSave = () => {
+    /* 点击发送按钮所要执行的操作 */
+  }
+
+  handleOnAddComment = (event) => {
+    this.setState({ comment: event.target.value })
   }
 
   renderCommentList() {
     const {
       comments,
     } = this.props
-    const {
-      shouldShowLikeAndOther,
-    } = this.state
     return comments.map((value) => (
       <li key={value.id}>
         <div className={styles.avatar} style={{ backgroundImage: `url(${value.avatar || defaultAvatar})` }} />
@@ -49,16 +72,13 @@ class QuestionComment extends React.PureComponent {
               {value.like && <i />}
               {value.like && <span>{value.like}</span>}
             </div>
-            {!shouldShowLikeAndOther && <span
-              onMouseOver={this.handleOnFocusCreateTime}
-            >
-              {moment(Date.now()).fromNow()}
-            </span>}
-            {shouldShowLikeAndOther && <div>
-              <div onMouseOut={this.handleOnBlurCreateTime} />
-              <button><i /></button>
-              <button><i /></button>
-            </div>}
+            <span>
+              {moment(value.createTime).fromNow()}
+            </span>
+            <div>
+              <button onClick={this.handleOnClickLike(value.id)}><i /></button>
+              <button onClick={this.handleOnClickEllipses}><i /></button>
+            </div>
           </div>
           <div className={styles.bottomTitle}>
             {value.comment}
@@ -68,17 +88,62 @@ class QuestionComment extends React.PureComponent {
     ))
   }
 
+  renderCommentInput() {
+    const {
+      data,
+    } = this.props
+    const {
+      comment,
+    } = this.state
+    const contentClass = `${styles.content} ${styles.addComment}`
+    return (
+      <li key={data.id} className={styles.commentInputListItem}>
+        <div className={styles.avatar} style={{ backgroundImage: `url(${data.avatar || defaultAvatar})` }} />
+        <div className={contentClass}>
+          <input
+            type="text"
+            placeholder="添加评论"
+            onChange={this.handleOnAddComment}
+            value={comment}
+          />
+        </div>
+        <div className={styles.attached}>
+          <input
+            type="file"
+            accept="image/gif,image/jpeg,image/jpg,image/png,image/svg;capture=camera"
+            onChange={this.handleOnAddImages}
+          />
+          <i />
+          <button onClick={this.handleOnClickAddLink}><i /></button>
+        </div>
+        <button className={styles.saveComment} onClick={this.handleOnClickSave}>{'发送'}</button>
+      </li>
+    )
+  }
+
   render() {
+    const {
+      thinking,
+    } = this.state
+
+    console.log(this.state, 23435)
+
     return (
       <div className={styles.container}>
         <div className={styles.thinkingTitle}>
           {'出题思路'}
         </div>
         <div className={styles.thinkingInput}>
-          <input type="text" placeholder="描述出题思路更易于其他老师理解您这道题的用法" />
+          <input
+            type="text"
+            placeholder="描述出题思路更易于其他老师理解您这道题的用法"
+            onChange={this.handleOnInputThinking}
+            value={thinking}
+          />
         </div>
         <ul className={styles.commentList}>
           {this.renderCommentList()}
+          {this.renderCommentInput()}
         </ul>
       </div>
     )

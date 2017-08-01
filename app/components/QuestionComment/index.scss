@@ -1,3 +1,14 @@
+.buttonWithoutBorderAndOutline {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.iconWithSvg {
+  display: inline-block;
+}
+
 .container {
   width: calc(100% - 28px);
   height: 100%;
@@ -9,8 +20,10 @@
   color: #666;
 }
 
-.thinkingInput {
+.thinkingInput,
+.addComment {
   width: 100%;
+  height: auto !important;
   overflow: hidden;
   font-size: 0;
   margin-top: 12px;
@@ -37,6 +50,8 @@
 }
 
 .commentList {
+  margin-top: 30px;
+
   li {
     height: 48px;
     display: flex;
@@ -61,6 +76,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 
 .topTitle,
@@ -72,6 +88,17 @@
 
 .topTitle {
   justify-content: space-between;
+  margin-bottom: -10px;
+
+  &:hover {
+    & > span {
+      display: none;
+    }
+
+    & > div:last-child {
+      display: flex;
+    }
+  }
 
   & > div:first-child {
     flex: 1 1 auto;
@@ -79,8 +106,8 @@
     align-items: center;
 
     i {
+      @extend .iconWithSvg;
       margin-left: 8px;
-      display: inline-block;
       width: 12px;
       height: 12px;
       mask-size: 12px 12px;
@@ -106,7 +133,7 @@
 
   & > div:last-child {
     flex: 0 0 auto;
-    display: flex;
+    display: none;
     align-items: center;
     font-size: 0;
     position: relative;
@@ -120,25 +147,27 @@
     }
 
     button {
-      outline: none;
-      border: none;
-      background-color: transparent;
+      @extend .buttonWithoutBorderAndOutline;
       padding-left: 4px;
     }
 
     i {
-      display: inline-block;
+      @extend .iconWithSvg;
       width: 12px;
       height: 12px;
       mask-size: 12px 12px;
       background-color: #666;
+
+      &:active {
+        background-color: #3B9E46;
+      }
     }
 
-    i:first-child {
+    button:nth-child(1) i {
       mask-image: url('images/likeOutline.svg');
     }
 
-    i:last-child {
+    button:nth-child(2) i {
       mask-image: url('images/vertical.svg');
     }
   }
@@ -148,4 +177,86 @@
   justify-content: flex-start;
   font-size: 12px;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.commentInputListItem {
+  margin-top: 30px;
+  position: relative;
+}
+
+.attached {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+
+  button {
+    @extend .buttonWithoutBorderAndOutline;
+    width: 20px;
+    height: 20px;
+  }
+
+  i {
+    @extend .iconWithSvg;
+    width: 20px;
+    height: 20px;
+    mask-size: 20px 20px;
+    background-color: #4A4A4A;
+  }
+
+  i:nth-child(2) {
+    margin-left: 6px;
+    mask-image: url('images/camera.svg');
+  }
+
+  button:nth-child(3) {
+    margin-left: 26px;
+
+    i {
+      mask-image: url('images/link.svg');
+
+      &:active {
+        background-color: #3B9E46;
+      }
+    }
+  }
+
+  input {
+    position: absolute;
+    bottom: 1px;
+    left: 6px;
+    z-index: 100;
+    width: 0;
+    height: 20px;
+    padding-left: 20px;
+    overflow: hidden;
+    outline: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active {
+      & + i {
+        background-color: #3B9E46;
+      }
+    }
+  }
+}
+
+.saveComment {
+  @extend .buttonWithoutBorderAndOutline;
+  position: absolute;
+  bottom: -25px;
+  right: 0;
+  font-size: 14px;
+  color: #3B9E46;
+
+  &:active {
+    color: #666;
+  }
 }
