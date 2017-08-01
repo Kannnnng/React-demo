@@ -8,7 +8,7 @@ import {
   Snackbar,
 } from 'material-ui'
 import SearchToolBar from 'components/SearchToolBar'
-import QuestionPreview from 'components/QuestionPreview'
+import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -116,7 +116,7 @@ class Home extends React.Component {
           open={openSnackbar}
         />
         <SearchToolBar />
-        <QuestionPreview
+        <QuestionPreviewBoard
           data={this.data}
         />
       </div>

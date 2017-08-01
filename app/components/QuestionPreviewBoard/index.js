@@ -161,7 +161,7 @@ const answerAnalysis = {
   subQuestionIndex: undefined,
 }
 
-class QuestionPreview extends React.Component {
+class QuestionPreviewBoard extends React.Component {
   static propTypes = {
     data: PropTypes.object,
   }
@@ -238,4 +238,4 @@ class QuestionPreview extends React.Component {
   }
 }
 
-export default QuestionPreview
+export default QuestionPreviewBoard
