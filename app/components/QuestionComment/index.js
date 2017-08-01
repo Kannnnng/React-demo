@@ -12,6 +12,11 @@ class QuestionComment extends React.PureComponent {
     data: PropTypes.object,  // 当前登录教师信息
   }
 
+  static defaultProps = {
+    comments: [],
+    data: {},
+  }
+
   constructor(props) {
     super(props)
 
@@ -125,8 +130,6 @@ class QuestionComment extends React.PureComponent {
     const {
       thinking,
     } = this.state
-
-    console.log(this.state, 23435)
 
     return (
       <div className={styles.container}>
