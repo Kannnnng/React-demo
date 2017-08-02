@@ -41,7 +41,6 @@ class SearchToolBar extends React.PureComponent {
   }
 
   handleOnClickSearch = () => {
-    this.setState({ show: false })
     this.props.handleOnSearchContentChange(true)
   }
 
@@ -74,6 +73,7 @@ class SearchToolBar extends React.PureComponent {
           {show && <input
             type="text"
             value={searchContent}
+            autoFocus
             placeholder="请输入想要检索的内容"
             onChange={this.handleOnSearchContentChange}
             onKeyDown={this.handleOnKeyDown}

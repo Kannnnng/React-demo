@@ -118,10 +118,10 @@ class Home extends React.Component {
           open={openSnackbar}
         />
         <SearchToolBar />
-        <QuestionPreviewBoard
+        {/* <QuestionPreviewBoard
           open={openQuestionPreviewBoard}
           data={this.data}
-        />
+        /> */}
       </div>
     )
   }
