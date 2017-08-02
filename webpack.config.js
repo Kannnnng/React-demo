@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
   output = {
     path: BUILD_PATH,
     filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].chunk.js',
     /* 图片等文件的引用路径 */
     publicPath: '/React-demo/build/assets/',
   }
@@ -38,10 +38,10 @@ if (process.env.NODE_ENV === 'production') {
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
     /* 在 webpack2.0 中已不需要 */
-    // new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.DedupePlugin(),
     /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
     /* 在 webpack2.0 中已经不需要特别声明 */
-    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
@@ -101,7 +101,7 @@ if (process.env.NODE_ENV === 'production') {
   output = {
     path: BUILD_PATH,
     filename: '[name].js',
-    chunkFilename: '[name].js',
+    chunkFilename: '[name].chunk.js',
   }
   cache = true
   /* 源代码与编译后代码的匹配模式 */
