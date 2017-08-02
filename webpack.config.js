@@ -8,6 +8,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
+// var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
@@ -74,6 +75,11 @@ if (process.env.NODE_ENV === 'production') {
     }),
     /* 将 CSS 代码单独抽离出来 */
     new ExtractTextPlugin('styles.css'),
+    /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
+    /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
+    // new LodashModuleReplacementPlugin({
+    //   paths: true,
+    // }),
   ]
 } else {
   entry = {
@@ -174,7 +180,7 @@ module.exports = {
           ) : (
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path]_[local]_[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
             ]  // eslint-disable-line
           )
@@ -196,7 +202,7 @@ module.exports = {
           ) : (
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[local]_[hash:5]',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path]_[local]_[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
               'sass-loader',  // eslint-disable-line
             ]  // eslint-disable-line
