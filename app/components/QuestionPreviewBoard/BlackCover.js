@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './BlackCover.scss'
 
 function BlackCover({
+  className,
   children,
   topLeftButton,
   topRightButton,
@@ -10,8 +11,9 @@ function BlackCover({
   middleRightButton,
   bottomToolBar,
 }) {
+  const containerClassName = `${styles.container} ${className}`
   return (
-    <div className={styles.container}>
+    <div className={containerClassName}>
       {topLeftButton && <div className={styles.topLeftButton}>
         {topLeftButton}
       </div>}
@@ -33,12 +35,17 @@ function BlackCover({
 }
 
 BlackCover.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.element,
   topLeftButton: PropTypes.element,
   topRightButton: PropTypes.element,
   middleLeftButton: PropTypes.element,
   middleRightButton: PropTypes.element,
   bottomToolBar: PropTypes.element,
+}
+
+BlackCover.defaultProps = {
+  className: '',
 }
 
 export default BlackCover

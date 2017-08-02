@@ -163,6 +163,7 @@ const answerAnalysis = {
 
 class QuestionPreviewBoard extends React.Component {
   static propTypes = {
+    open: PropTypes.bool,
     data: PropTypes.object,  // 当前登陆教师的基本信息，如 ID，姓名，头像等
     comments: PropTypes.array,  // 其他教师对当前题目的评论
     questionContent: PropTypes.object,  // 题目内容，也就是题干
@@ -176,6 +177,10 @@ class QuestionPreviewBoard extends React.Component {
     handleOnClickCopy: PropTypes.func,  // 点击下方工具栏中复制按钮时执行的操作
     handleOnClickMove: PropTypes.func,  // 点击下方工具栏中移动按钮时执行的操作
     handleOnClickDelete: PropTypes.func,  // 点击下方工具栏中删除按钮时执行的操作
+  }
+
+  static defaultProps = {
+    open : false,
   }
 
   state = {
@@ -193,27 +198,30 @@ class QuestionPreviewBoard extends React.Component {
   }
 
   render() {
-    // const {
-    //   data,
-    //   comments,
-    //   questionContent,
-    //   questionAnswer,
-    //   answerAnalysis,
-    //   handleOnClickGoBack,
-    //   handleOnClickPrev,
-    //   handleOnClickNext,
-    //   handleOnClickEdit,
-    //   handleOnClickClone,
-    //   handleOnClickCopy,
-    //   handleOnClickMove,
-    //   handleOnClickDelete,
-    // } = this.props
+    const {
+      open,
+      // data,
+      // comments,
+      // questionContent,
+      // questionAnswer,
+      // answerAnalysis,
+      // handleOnClickGoBack,
+      // handleOnClickPrev,
+      // handleOnClickNext,
+      // handleOnClickEdit,
+      // handleOnClickClone,
+      // handleOnClickCopy,
+      // handleOnClickMove,
+      // handleOnClickDelete,
+    } = this.props
     const {
       subQuestionIndex,
     } = this.state
+    const blackCoverClassName = (!open && styles.hidden) || ''
 
     return (
       <BlackCover
+        className={blackCoverClassName}
         topLeftButton={<GoBack handleOnClick={() => console.log(456)} />}
         middleLeftButton={<GoLeft handleOnClick={() => console.log(123)} />}
         middleRightButton={<GoRight handleOnClick={() => console.log(123)} />}

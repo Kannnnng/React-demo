@@ -26,6 +26,7 @@ class Home extends React.Component {
       /* 下面是仅供测试用的 state */
       start: true,
       limit: 300,
+      openQuestionPreviewBoard: false,
       /* 上面是仅供测试用的 state */
     }
 
@@ -59,6 +60,7 @@ class Home extends React.Component {
       openCatalog,
       openSnackbar,
       snackbarMessage,
+      openQuestionPreviewBoard,
     } = this.state
 
     return (
@@ -117,6 +119,7 @@ class Home extends React.Component {
         />
         <SearchToolBar />
         <QuestionPreviewBoard
+          open={openQuestionPreviewBoard}
           data={this.data}
         />
       </div>
