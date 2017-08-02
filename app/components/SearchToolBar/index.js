@@ -7,11 +7,13 @@ class SearchToolBar extends React.PureComponent {
     button: PropTypes.element,
     handleOnShowState: PropTypes.func,
     handleOnSearchContentChange: PropTypes.func,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
     handleOnShowState: () => {},
     handleOnSearchContentChange: () => {},
+    className: '',
   }
 
   state = {
@@ -46,22 +48,23 @@ class SearchToolBar extends React.PureComponent {
   render() {
     const {
       button,
+      className,
     } = this.props
     const {
       show,
       searchContent,
     } = this.state
     const containerClassName = (
-      (show === null && `${styles.container}`) ||
-      (show === true && `${styles.container} ${styles.expandSearchToolBar}`) ||
-      (show === false && `${styles.container} ${styles.shrinkSearchToolBar}`)
+      (show === null && `${className} ${styles.container}`) ||
+      (show === true && `${className} ${styles.container} ${styles.expandSearchToolBar}`) ||
+      (show === false && `${className} ${styles.container} ${styles.shrinkSearchToolBar}`) || ''
     )
     const contentStyle = show ? {
       zIndex: 100,
     } : {}
     const iClassName = (
       (show === true && `${styles.iAnimation}`) ||
-      (show === false && `${styles.iAntiAnimation}`)
+      (show === false && `${styles.iAntiAnimation}`) || ''
     )
 
     return (
