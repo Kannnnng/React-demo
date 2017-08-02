@@ -117,7 +117,9 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <SearchToolBar />
+        <SearchToolBar
+          className={styles.searchToolBar}
+        />
         {/* <QuestionPreviewBoard
           open={openQuestionPreviewBoard}
           data={this.data}

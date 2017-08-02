@@ -58,9 +58,7 @@ class SearchToolBar extends React.PureComponent {
       (show === true && `${className} ${styles.container} ${styles.expandSearchToolBar}`) ||
       (show === false && `${className} ${styles.container} ${styles.shrinkSearchToolBar}`) || ''
     )
-    const contentStyle = show ? {
-      zIndex: 100,
-    } : {}
+    const contentClassName = show ? `${styles.content} ${styles.contentZIndex}` : `${styles.content}`
     const iClassName = (
       (show === true && `${styles.iAnimation}`) ||
       (show === false && `${styles.iAntiAnimation}`) || ''
@@ -68,16 +66,18 @@ class SearchToolBar extends React.PureComponent {
 
     return (
       <div className={containerClassName}>
-        <div className={styles.content} style={contentStyle}>
+        <div className={contentClassName}>
           <i className={iClassName}><button onClick={this.handleOnClickSearch} /></i>
-          {show && <input
-            type="text"
-            value={searchContent}
-            autoFocus
-            placeholder="请输入想要检索的内容"
-            onChange={this.handleOnSearchContentChange}
-            onKeyDown={this.handleOnKeyDown}
-          />}
+          {show && <div className={styles.inputWrap}>
+            <input
+              type="text"
+              value={searchContent}
+              autoFocus
+              placeholder="请输入想要检索的内容"
+              onChange={this.handleOnSearchContentChange}
+              onKeyDown={this.handleOnKeyDown}
+            />
+          </div>}
         </div>
         <button className={styles.showStateButton} onClick={this.handleOnShowState} />
         {show && button && <div className={styles.rightButton}>{button}</div>}

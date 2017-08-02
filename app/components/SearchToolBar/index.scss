@@ -3,97 +3,107 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 
 .container {
   position: fixed;
-  height: 56px;
-  background-color: #3B9E46;
-  overflow: hidden;
-  right: 24px;
   bottom: 24px;
+  right: 24px;
   width: 56px;
+  height: 56px;
   border-radius: 28px;
+  overflow: hidden;
+  background-color: #3B9E46;
   box-shadow: $boxShadowStart;
+}
 
-  .content {
-    height: 100%;
-    display: inline-flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    background-color: #3B9E46;
+.content {
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #3B9E46;
 
-    i {
-      flex: 0 0 auto;
-      margin-left: 16px;
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      mask-size: 24px 24px;
-      mask-image: url('../../images/search.svg');
-      background-color: #FFF;
+  i {
+    flex: 0 0 auto;
+    margin-left: 16px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    mask-size: 24px 24px;
+    mask-image: url('../../images/search.svg');
+    background-color: #FFF;
 
-      button {
-        display: block;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        margin: 0;
-        padding: 0;
-        border: none;
-
-        &:hover {
-          opacity: 1;
-          background-color: #FD67FF;
-          cursor: pointer;
-        }
-      }
-    }
-
-    input {
-      margin: 0 0 0 24px;
+    button {
+      display: block;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      margin: 0;
       padding: 0;
       border: none;
-      color: #FFF;
-      outline: none;
-      font-size: 18px;
-      letter-spacing: 0.6px;
-      background-color: #3B9E46;
 
-      &::-moz-placeholder {
-        color: #C8C8C8;
-      }
-      &::-webkit-input-placeholder {
-        color: #C8C8C8;
-      }
-      &::-ms-input-placeholder {
-        color: #C8C8C8;
+      &:hover {
+        opacity: 1;
+        background-color: #FD67FF;
+        cursor: pointer;
       }
     }
-  }
-
-  .showStateButton {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    margin: 0;
-    padding: 0;
-    border: none;
-    z-index: 10;
-  }
-
-  .rightButton {
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    top: calc((100% - 48px) / 2);
-    right: 24px;
-    z-index: 50;
   }
 }
 
+.inputWrap {
+  flex: 0 1 auto;
+  height: 100%;
+  margin: 0 0 0 16px;
+  display: inline-flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding: 0;
+    border: none;
+    color: #FFF;
+    outline: none;
+    font-size: 18px;
+    background-color: #3B9E46;
+
+    &::-moz-placeholder {
+      color: #C8C8C8;
+    }
+    &::-webkit-input-placeholder {
+      color: #C8C8C8;
+    }
+    &::-ms-input-placeholder {
+      color: #C8C8C8;
+    }
+  }
+}
+
+.showStateButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  z-index: 10;
+}
+
+.rightButton {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: calc((100% - 48px) / 2);
+  right: 24px;
+  z-index: 50;
+}
+
+.contentZIndex {
+  z-index: 100;
+}
+
 .animation {
-  animation-duration: 0.5s;
+  animation-duration: 5s;
   animation-timing-function: ease;
   animation-delay: 0s;
   animation-iteration-count: 1;
@@ -115,13 +125,6 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 @keyframes expandSearchToolBar {
-  0% {
-    right: 24px;
-    bottom: 24px;
-    width: 56px;
-    border-radius: 28px;
-    box-shadow: $boxShadowStart;
-  }
   50% {
     right: calc((100% - 240px) / 2);
     bottom: 0;
@@ -153,13 +156,6 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
     border-radius: 28px;
     box-shadow: $boxShadowStart;
   }
-  100% {
-    right: 24px;
-    bottom: 24px;
-    width: 56px;
-    border-radius: 28px;
-    box-shadow: $boxShadowStart;
-  }
 }
 
 .iAnimation {
@@ -175,9 +171,6 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 @keyframes iAnimation {
-  0% {
-    margin-left: 16px;
-  }
   50% {
     margin-left: 20px;
   }
@@ -192,8 +185,5 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
   }
   50% {
     margin-left: 20px;
-  }
-  100% {
-    margin-left: 16px;
   }
 }
