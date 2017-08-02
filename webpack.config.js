@@ -99,8 +99,10 @@ if (process.env.NODE_ENV === 'production') {
   }
   cache = true
   /* 源代码与编译后代码的匹配模式 */
-  devtool = 'cheap-eval-source-map'
-  // devtool = 'cheap-module-eval-source-map'
+  /* 前者的第一次编译速度快于后者，但后者生成的 sourceMap 能够直接定位到源代码 */
+  /* 而前者只能定位到编译后的代码 */
+  // devtool = 'cheap-eval-source-map'
+  devtool = 'cheap-module-eval-source-map'
   devServer = {
     headers: { 'X-Custom-Header': 'yes' },
     historyApiFallback: true,
