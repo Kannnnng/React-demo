@@ -10,7 +10,7 @@ export default function StudentCardContainer({
 }) {
   const foldButtonClassName = `${styles.foldButton} ${(!show && styles.foldButtonClose) || ''}`
   const StudentCardClassName = `${styles.floatLeft} ${styles.contentItem}`
-  // const contentStyle = { height:  }
+  const contentClassName = `${styles.content} ${(!show && styles.contentClose) || ''}`
 
   return (
     <div className={styles.container}>
@@ -23,10 +23,7 @@ export default function StudentCardContainer({
           <button />
         </i>
       </div>
-      <div
-        className={styles.content}
-        style={contentStyle}
-      >
+      <div className={contentClassName}>
         {studentList.map((value) => (
           <StudentCard
             key={value.id}
