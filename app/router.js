@@ -1,7 +1,6 @@
 import React from 'react'
 import Loadable from 'react-loadable'
 import { Route } from 'react-router-dom'
-import Home from 'containers/Home'
 import LoadingComponent from 'containers/LoadingComponent'
 
 const Game2048 = Loadable({
@@ -16,6 +15,11 @@ const Profile = Loadable({
 
 const Test = Loadable({
   loader: () => import('containers/Test'),
+  loading: LoadingComponent,
+})
+
+const Home = Loadable({
+  loader: () => import('containers/Home'),
   loading: LoadingComponent,
 })
 
