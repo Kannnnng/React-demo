@@ -8,7 +8,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
-// var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
     /* 在 webpack2.0 中已不需要 */
-    new webpack.optimize.DedupePlugin(),
+    // new webpack.optimize.DedupePlugin(),
     /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
     /* 在 webpack2.0 中已经不需要特别声明 */
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -77,9 +77,9 @@ if (process.env.NODE_ENV === 'production') {
     new ExtractTextPlugin('styles.css'),
     /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
-    // new LodashModuleReplacementPlugin({
-    //   paths: true,
-    // }),
+    new LodashModuleReplacementPlugin({
+      paths: true,
+    }),
   ]
 } else {
   entry = {
@@ -212,12 +212,12 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
-        loader: 'url-loader?limit=8192',
+        loader: 'url-loader?limit=4096',
         include: APP_PATH,
       },
       {
         test: /\.(ttf|woff|woff2)$/i,
-        loader: 'url-loader?limit=8192',
+        loader: 'url-loader?limit=4096',
         include: APP_PATH,
       },
       {
