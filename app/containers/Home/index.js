@@ -7,8 +7,8 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-import SearchToolBar from 'components/SearchToolBar'
-import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
+import StudentCardContainer from 'components/StudentCardContainer'
+import { studentList } from './Mock'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -24,9 +24,7 @@ class Home extends React.Component {
       openSnackbar: false,
       snackbarMessage: '',
       /* 下面是仅供测试用的 state */
-      start: true,
-      limit: 300,
-      openQuestionPreviewBoard: false,
+      showContainer: true,
       /* 上面是仅供测试用的 state */
     }
 
@@ -60,7 +58,6 @@ class Home extends React.Component {
       openCatalog,
       openSnackbar,
       snackbarMessage,
-      openQuestionPreviewBoard,
     } = this.state
 
     return (
@@ -117,13 +114,14 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <SearchToolBar
-          className={styles.searchToolBar}
+        <StudentCardContainer
+          show={this.state.showContainer}
+          title={'第一小组'}
+          studentList={studentList}
         />
-        {/* <QuestionPreviewBoard
-          open={openQuestionPreviewBoard}
-          data={this.data}
-        /> */}
+        <button onClick={() => this.setState({ showContainer: !this.state.showContainer })}>
+          {'点我'}
+        </button>
       </div>
     )
   }

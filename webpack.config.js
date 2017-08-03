@@ -180,7 +180,7 @@ module.exports = {
           ) : (
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path]-[local]-[hash:5]',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
             ]  // eslint-disable-line
           )
@@ -202,7 +202,7 @@ module.exports = {
           ) : (
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path]-[local]-[hash:5]',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
               'sass-loader',  // eslint-disable-line
             ]  // eslint-disable-line
