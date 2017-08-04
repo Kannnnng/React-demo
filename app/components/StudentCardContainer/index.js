@@ -7,6 +7,7 @@ export default function StudentCardContainer({
   show, // 展开还是折叠
   title, // 标题
   studentList,  // 学生信息集合
+  handleOnClickFoldButton,  // 折叠按钮点击后的触发事件
 }) {
   const foldButtonClassName = `${styles.foldButton} ${(!show && styles.foldButtonClose) || ''}`
   const StudentCardClassName = `${styles.floatLeft} ${styles.contentItem}`
@@ -20,7 +21,7 @@ export default function StudentCardContainer({
           <span>{title}</span>
         </div>
         <i className={foldButtonClassName}>
-          <button />
+          <button onClick={handleOnClickFoldButton} />
         </i>
       </div>
       <div className={contentClassName}>
@@ -43,10 +44,12 @@ StudentCardContainer.propTypes = {
   show: PropTypes.bool,
   title: PropTypes.string,
   studentList: PropTypes.array,
+  handleOnClickFoldButton: PropTypes.func,
 }
 
 StudentCardContainer.defaultProps = {
   show: true,
   title: '',
   studentList: [],
+  handleOnClickFoldButton: () => {},
 }

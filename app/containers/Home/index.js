@@ -120,7 +120,7 @@ class Home extends React.Component {
           studentList={studentList}
         />
         <button onClick={() => this.setState({ showContainer: !this.state.showContainer })}>
-          {'点我'}
+          {'点我查看'}
         </button>
       </div>
     )
