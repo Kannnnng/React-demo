@@ -15,6 +15,10 @@
   margin: 0 14px;
 }
 
+.title {
+  margin-bottom: 26px;
+}
+
 .thinkingTitle {
   font-size: 12px;
   color: #666;
@@ -40,17 +44,25 @@
     &::-moz-placeholder {
       color: rgba(0, 0, 0, 0.38);
     }
+
     &::-webkit-input-placeholder {
-      color:rgba(0, 0, 0, 0.38);
+      color: rgba(0, 0, 0, 0.38);
     }
+
     &::-ms-input-placeholder {
-      color:rgba(0, 0, 0, 0.38);
+      color: rgba(0, 0, 0, 0.38);
     }
   }
 }
 
+.thinkingText {
+  font-size: 16px;
+  color: #666;
+  margin-top: 12px;
+}
+
 .commentList {
-  margin-top: 30px;
+  margin-top: 24px;
 
   li {
     height: 48px;
@@ -106,6 +118,7 @@
 
     i {
       @extend .iconWithSvg;
+
       margin-left: 8px;
       width: 12px;
       height: 12px;
@@ -147,11 +160,13 @@
 
     button {
       @extend .buttonWithoutBorderAndOutline;
+
       padding-left: 4px;
     }
 
     i {
       @extend .iconWithSvg;
+
       width: 12px;
       height: 12px;
       mask-size: 12px 12px;
@@ -196,12 +211,14 @@
 
   button {
     @extend .buttonWithoutBorderAndOutline;
+
     width: 20px;
     height: 20px;
   }
 
   i {
     @extend .iconWithSvg;
+
     width: 20px;
     height: 20px;
     mask-size: 20px 20px;
@@ -250,6 +267,7 @@
 
 .saveComment {
   @extend .buttonWithoutBorderAndOutline;
+
   position: absolute;
   bottom: -25px;
   right: 0;

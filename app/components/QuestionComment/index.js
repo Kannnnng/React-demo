@@ -8,13 +8,16 @@ require('moment/locale/zh-cn')
 
 class QuestionComment extends React.PureComponent {
   static propTypes = {
+    title: PropTypes.element,  // 评论部分最顶上的标题元素
     comments: PropTypes.array,  // 评论信息列表
     data: PropTypes.object,  // 当前登录教师信息
+    thinking: PropTypes.string,  // 出题思路
   }
 
   static defaultProps = {
     comments: [],
     data: {},
+    thinking: '',
   }
 
   constructor(props) {
@@ -128,22 +131,35 @@ class QuestionComment extends React.PureComponent {
 
   render() {
     const {
-      thinking,
+      title,
+      thinking: thinkingFromProps,
+    } = this.props
+    const {
+      thinking: thinkingFromState,
     } = this.state
 
     return (
       <div className={styles.container}>
+        {title && <div className={styles.title}>
+          {title}
+        </div>}
         <div className={styles.thinkingTitle}>
           {'出题思路'}
         </div>
-        <div className={styles.thinkingInput}>
-          <input
-            type="text"
-            placeholder="描述出题思路更易于其他老师理解您这道题的用法"
-            onChange={this.handleOnInputThinking}
-            value={thinking}
-          />
-        </div>
+        {thinkingFromProps ? (
+          <div className={styles.thinkingText}>
+            {thinkingFromProps}
+          </div>
+        ) : (
+          <div className={styles.thinkingInput}>
+            <input
+              type="text"
+              placeholder="描述出题思路更易于其他老师理解您这道题的用法"
+              onChange={this.handleOnInputThinking}
+              value={thinkingFromState}
+            />
+          </div>
+        )}
         <ul className={styles.commentList}>
           {this.renderCommentList()}
           {this.renderCommentInput()}
