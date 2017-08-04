@@ -7,8 +7,15 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-import StudentCardContainer from 'components/StudentCardContainer'
-import { studentList } from './Mock'
+// import StudentCardContainer from 'components/StudentCardContainer'
+// import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
+import StudentInfomation from 'components/StudentInfomation'
+// import {
+//   studentList,
+//   questionContent,
+//   questionAnswer,
+//   answerAnalysis,
+// } from './Mock'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -114,14 +121,27 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <StudentCardContainer
-          show={this.state.showContainer}
-          title={'第一小组'}
-          studentList={studentList}
+        <StudentInfomation
+          open
+          avatar={'http://img95.699pic.com/photo/50035/0496.jpg_wh300.jpg'}
+          name={'闫守康'}
+          nickName={'木叶'}
+          gender={2}
+          school={'华中科技大学'}
+          college={'电子信息与通信学院'}
+          className={'通信工程1306班'}
+          studentId={'U201313791'}
+          order={'1'}
+          birthday={'1994-07-17'}
+          location={'湖北武汉'}
+          introduction={'好好学习，天天向上'}
+          education={'本科'}
+          job={'学生'}
+          email={'575664647@qq.com'}
+          QQ={'575664647'}
+          phone={'15527226921'}
+          style={{ width: '756px', height: '1008px' }}
         />
-        <button onClick={() => this.setState({ showContainer: !this.state.showContainer })}>
-          {'点我查看'}
-        </button>
       </div>
     )
   }

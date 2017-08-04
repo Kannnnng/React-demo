@@ -1,0 +1,146 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 375px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #FFF;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+.header {
+  width: 100%;
+  height: 240px;
+  position: relative;
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 35px;
+    display: block;
+  }
+}
+
+.headerBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(16px);
+  background: rgba(0, 0, 0, 0.3) center no-repeat;
+  background-size: cover;
+  z-index: 0;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline: none;
+  background: transparent url('images/cross.png') center no-repeat;
+  background-size: contain;
+  z-index: 100;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:active {
+    background-color: #666;
+  }
+}
+
+.avatar {
+  position: relative;
+  margin: 0 auto 0 auto;
+  width: 96px;
+  height: 96px;
+  border-radius: 48px;
+  background: transparent center no-repeat;
+  background-size: cover;
+  z-index: 100;
+}
+
+.name {
+  position: relative;
+  margin: 18px auto 0 auto;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  color: #FFF;
+  text-align: center;
+  z-index: 100;
+}
+
+.nickName {
+  position: relative;
+  margin: 5px auto 0 auto;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+  text-align: center;
+  z-index: 100;
+  color: #FFF;
+
+  span {
+    position: relative;
+  }
+}
+
+.gender {
+  position: absolute;
+  top: 1px;
+  right: -22px;
+  color: #17CED1;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.title {
+  margin: 8px auto 0 auto;
+  width: 375px;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  font-size: 14px;
+  color: #888;
+}
+
+.items {
+  margin: 0 auto 0 auto;
+  padding-left: 15px;
+  width: 375px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 17px;
+  color: #000;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    background-color: #E5E5E5;
+  }
+
+  :first-child {
+    display: inline-block;
+    width: 68px;
+  }
+
+  :nth-child(2) {
+    margin-left: 22px;
+  }
+
+  .noContent {
+    color: #B2B2B2;
+  }
+}
+
+.bottomLine {
+  border-bottom: solid 1px #E5E5E5;
+}
