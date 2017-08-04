@@ -7,15 +7,15 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-// import StudentCardContainer from 'components/StudentCardContainer'
+import StudentCardContainer from 'components/StudentCardContainer'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import StudentInfomation from 'components/StudentInfomation'
-// import {
-//   studentList,
+import {
+  studentList,
 //   questionContent,
 //   questionAnswer,
 //   answerAnalysis,
-// } from './Mock'
+} from './Mock'
 import styles from './index.scss'
 
 class Home extends React.Component {
@@ -121,7 +121,12 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <StudentInfomation
+        <StudentCardContainer
+          show
+          title={'一年级一班'}
+          studentList={studentList}
+        />
+        {/* <StudentInfomation
           open
           avatar={'http://img95.699pic.com/photo/50035/0496.jpg_wh300.jpg'}
           name={'闫守康'}
@@ -141,7 +146,7 @@ class Home extends React.Component {
           QQ={'575664647'}
           phone={'15527226921'}
           style={{ width: '756px', height: '1008px' }}
-        />
+        /> */}
       </div>
     )
   }

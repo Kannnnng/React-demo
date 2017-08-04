@@ -53,13 +53,9 @@
 }
 
 .content {
-  max-height: 768px;
+  /* display: none; */
   overflow: hidden;
-  transition: max-height 0.5s ease;
-}
-
-.contentClose {
-  max-height: 0;
+  transition: height 0.5s ease;
 }
 
 .floatLeft {
