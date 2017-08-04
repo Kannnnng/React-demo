@@ -29,6 +29,7 @@ export default class StudentInfomation extends React.PureComponent {
     QQ: PropTypes.string,  // QQ 号
     phone: PropTypes.string,  // 电话号码
     style: PropTypes.object,  // 外部样式
+    handleOnClickClose: PropTypes.func,  // 点击关闭按钮所要执行的回调函数
   }
 
   static defaultProps = {
@@ -78,6 +79,7 @@ export default class StudentInfomation extends React.PureComponent {
       QQ,
       phone,
       style,
+      handleOnClickClose,
     } = this.props
     const containerStyle = { ...style, display: `${open ? '' : 'none'}` }
     const headerBackgroundStyle = { backgroundImage: `url(${avatar})` }
@@ -102,7 +104,7 @@ export default class StudentInfomation extends React.PureComponent {
           />
           <button
             className={styles.closeButton}
-            onClick={undefined}
+            onClick={handleOnClickClose}
           />
           <div
             className={styles.avatar}
