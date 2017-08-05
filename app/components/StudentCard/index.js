@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import defaultAvatar from 'images/defaultAvatar.png'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 export default function StudentCard({
   id,  // 学生 ID

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StudentCard from 'components/StudentCard'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 function getContentHeight(
   count,

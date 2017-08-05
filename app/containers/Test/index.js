@@ -6,8 +6,8 @@ import {
   RaisedButton,
   FontIcon,
 } from 'material-ui'
-import * as acts from 'actions/Test'
-import styles from './index.scss'
+import * as acts from './actions'
+import styles from './styles.scss'
 
 class Test extends React.Component {
   static propTypes = {

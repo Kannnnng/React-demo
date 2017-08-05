@@ -11,7 +11,7 @@ import {
   GoRight,
   BottomToolBar,
 } from './Mess'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 const comments = [
   {

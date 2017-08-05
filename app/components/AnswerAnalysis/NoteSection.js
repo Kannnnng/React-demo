@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import lodash from 'lodash'
 import AnswerShortAnswer from 'components/AnswerShortAnswer'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 function NoteSection({ courseId, questionId, data = {} }) {
   return (

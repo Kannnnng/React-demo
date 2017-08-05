@@ -5,7 +5,7 @@ import {
   List,
   ListItem,
 } from 'material-ui'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 export default function StudentManagementSidebar({
   groupList,

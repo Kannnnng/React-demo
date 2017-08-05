@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 class CountDown extends React.PureComponent {
   static propTypes = {

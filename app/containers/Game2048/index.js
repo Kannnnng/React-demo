@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 /* 压缩并合并数字板 */
 function compressChessBoard(chessBoardLine) {

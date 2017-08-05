@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 class SearchToolBar extends React.PureComponent {
   static propTypes = {

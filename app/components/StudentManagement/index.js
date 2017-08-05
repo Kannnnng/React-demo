@@ -12,7 +12,7 @@ import StudentInfomation from 'components/StudentInfomation'
 import {
   getStudentFromGroupList,
 } from './helper'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 export default class StudentManagement extends React.PureComponent {
   static propTypes = {

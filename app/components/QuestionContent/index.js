@@ -13,7 +13,7 @@ import img4 from 'images/fillInTheBlanks.png'
 import img5 from 'images/shortAnswer.png'
 import img6 from 'images/group.png'
 import { questionPattern } from 'utils/constants'
-import styles from './index.scss'
+import styles from './styles.scss'
 
 function getQuestionFlag(pattern = 0) {
   switch (pattern) {
