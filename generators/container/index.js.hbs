@@ -1,0 +1,41 @@
+/*
+ *
+ * {{properCase name }}
+ *
+ */
+
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+{{#if wantSCSS}}
+import styles from './index.scss'
+{{/if}}
+
+class {{ properCase name }} extends React.{{{ component }}} {
+  render() {
+    return (
+      {{#if wantSCSS}}
+      <div className={{curly true}}styles.container{{curly}}>
+      {{else}}
+      <div>
+      {{/if}}
+      </div>
+    )
+  }
+}
+
+{{#if wantActionsAndReducer}}
+const mapStateToProps = select{{properCase name}}()
+{{/if}}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  }
+}
+
+{{#if wantActionsAndReducer}}
+export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }})
+{{else}}
+export default connect(null, mapDispatchToProps)({{ properCase name }})
+{{/if}}
