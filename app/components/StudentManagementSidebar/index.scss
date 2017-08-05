@@ -1,0 +1,52 @@
+.container {
+  width: 240px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #FFF;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+}
+
+.allStudents {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  mask-size: 24px 24px;
+  mask-image: url('images/student.svg');
+  background-color: #4A4A4A;
+}
+
+.studentGroups {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  mask-size: 24px 24px;
+  mask-image: url('images/group.svg');
+  background-color: #4A4A4A;
+}
+
+.count {
+  line-height: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+
+.editGroup {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+
+  & > div {
+    font-size: 14px;
+    color: #3B9E46;
+  }
+}
+
+.groupColor {
+  margin: 16px !important;
+  display: inline-block;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 2px;
+  background-color: #666;
+}

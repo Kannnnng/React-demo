@@ -7,11 +7,13 @@ import {
   ListItem,
   Snackbar,
 } from 'material-ui'
-import StudentCardContainer from 'components/StudentCardContainer'
+// import StudentCardContainer from 'components/StudentCardContainer'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
-import StudentInfomation from 'components/StudentInfomation'
+// import StudentInfomation from 'components/StudentInfomation'
+import StudentManagementSidebar from 'components/StudentManagementSidebar'
 import {
   studentList,
+  groupList,
 //   questionContent,
 //   questionAnswer,
 //   answerAnalysis,
@@ -121,11 +123,15 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <StudentCardContainer
+        <StudentManagementSidebar
+          groupList={groupList}
+          handleOnClickEditGroup={() => { console.log('测试') }}
+        />
+        {/* <StudentCardContainer
           show
           title={'一年级一班'}
           studentList={studentList}
-        />
+        /> */}
         {/* <StudentInfomation
           open
           avatar={'http://img95.699pic.com/photo/50035/0496.jpg_wh300.jpg'}
