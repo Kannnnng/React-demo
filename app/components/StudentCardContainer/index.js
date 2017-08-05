@@ -13,12 +13,16 @@ function getContentHeight(
 export default class StudentCardContainer extends React.Component {
   static propTypes = {
     title: PropTypes.string,  // 标题
+    color: PropTypes.string,  // 小组图标的颜色
     studentList: PropTypes.array,  // 学生信息集合
+    handleOnClickCard: PropTypes.func,  // 点击学生卡片时所执行的回调函数
   }
 
   static defaultProps = {
     title: '',
+    color: '#FF0009',
     studentList: [],
+    handleOnClickCard: () => () => {},
   }
 
   state = {
@@ -48,12 +52,15 @@ export default class StudentCardContainer extends React.Component {
   render() {
     const {
       title,
+      color,
       studentList,
+      handleOnClickCard,
     } = this.props
     const {
       show,
       contentHeight,
     } = this.state
+    const titleIconStyle = { backgroundColor: color }
     const foldButtonClassName = `${styles.foldButton} ${(!show && styles.foldButtonClose) || ''}`
     const StudentCardClassName = `${styles.floatLeft} ${styles.contentItem}`
     const contentStyle = contentHeight ? { height: contentHeight } : {}
@@ -62,7 +69,7 @@ export default class StudentCardContainer extends React.Component {
       <div className={styles.container}>
         <div className={styles.title}>
           <div className={styles.titleText}>
-            <i />
+            <i style={titleIconStyle} />
             <span>{title}</span>
           </div>
           <i className={foldButtonClassName}>
@@ -77,11 +84,13 @@ export default class StudentCardContainer extends React.Component {
           {studentList.map((value) => (
             <StudentCard
               key={value.id}
+              id={value.id}
               name={value.name}
               avatar={value.avatar}
               studentId={value.studentId}
               status={value.status}
               className={StudentCardClassName}
+              handleOnClickCard={handleOnClickCard}
             />
           ))}
         </div>

@@ -24,6 +24,12 @@ export default class {{ properCase name }} extends React.Component {
   }
 
   render() {
+    const {
+      data,
+    } = this.props
+    const {
+      data,
+    } = this.state
     return (
       {{#if wantSCSS}}
       <div className={{curly true}}styles.container{{curly}}>

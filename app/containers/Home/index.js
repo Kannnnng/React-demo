@@ -10,13 +10,14 @@ import PropTypes from 'prop-types'
 // import StudentCardContainer from 'components/StudentCardContainer'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 // import StudentInfomation from 'components/StudentInfomation'
-import StudentManagementSidebar from 'components/StudentManagementSidebar'
+// import StudentManagementSidebar from 'components/StudentManagementSidebar'
+import StudentManagement from 'components/StudentManagement'
 import {
   // studentList,
   groupList,
-//   questionContent,
-//   questionAnswer,
-//   answerAnalysis,
+  // questionContent,
+  // questionAnswer,
+  // answerAnalysis,
 } from './Mock'
 import styles from './index.scss'
 
@@ -65,6 +66,9 @@ class Home extends React.Component {
 
     return (
       <div className={`${styles.container}`}>
+        <StudentManagement
+          groupList={groupList}
+        />
         {/* <div className={styles.centerBox}>
           <div className={styles.avatar} />
           <div
@@ -117,10 +121,10 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         /> */}
-        <StudentManagementSidebar
+        {/* <StudentManagementSidebar
           groupList={groupList}
           handleOnClickEditGroup={() => { console.log('测试') }}
-        />
+        /> */}
         {/* <StudentCardContainer
           show
           title={'一年级一班'}

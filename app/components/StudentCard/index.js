@@ -4,11 +4,13 @@ import defaultAvatar from 'images/defaultAvatar.png'
 import styles from './index.scss'
 
 export default function StudentCard({
+  id,  // 学生 ID
   name,  // 学生姓名
   avatar,  // 学生头像
   studentId,  // 学生学号
   status,  // 学生状态，可能是签到状态
   className,  // container 的样式类名
+  handleOnClickCard,  // 点击学生卡片时所执行的回调函数
 }) {
   const containerClassName = `${styles.container} ${className}`
   const avatarStyle = { backgroundImage: `url(${avatar || defaultAvatar})` }
@@ -23,6 +25,10 @@ export default function StudentCard({
 
   return (
     <div className={containerClassName}>
+      <button
+        className={styles.topLayerButton}
+        onClick={handleOnClickCard(id)}
+      />
       <div className={styles.avatar} style={avatarStyle}>
         <div className={statusContainerClassName}>
           <i className={statusClassName} />
@@ -35,17 +41,21 @@ export default function StudentCard({
 }
 
 StudentCard.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string,
   avatar: PropTypes.string,
   studentId: PropTypes.string,
   status: PropTypes.string,
   className: PropTypes.string,
+  handleOnClickCard: PropTypes.func,
 }
 
 StudentCard.defaultProps = {
+  id: '',
   name: '',
   avatar: '',
   studentId: '',
   status: '',
   className: '',
+  handleOnClickCard: () => () => {},
 }
