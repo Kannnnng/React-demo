@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  AppBar,
-  Drawer,
-  List,
-  ListItem,
-  Snackbar,
-} from 'material-ui'
+// import {
+//   AppBar,
+//   Drawer,
+//   List,
+//   ListItem,
+//   Snackbar,
+// } from 'material-ui'
 // import StudentCardContainer from 'components/StudentCardContainer'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 // import StudentInfomation from 'components/StudentInfomation'
 import StudentManagementSidebar from 'components/StudentManagementSidebar'
 import {
-  studentList,
+  // studentList,
   groupList,
 //   questionContent,
 //   questionAnswer,
@@ -25,53 +25,47 @@ class Home extends React.Component {
     history: PropTypes.object,
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      openCatalog: false,
-      openSnackbar: false,
-      snackbarMessage: '',
-      /* 下面是仅供测试用的 state */
-      showContainer: true,
-      /* 上面是仅供测试用的 state */
-    }
-
-    this.data = {}
+  state = {
+    // openCatalog: false,
+    // openSnackbar: false,
+    // snackbarMessage: '',
+    /* 下面是仅供测试用的 state */
+    showContainer: true,
+    /* 上面是仅供测试用的 state */
   }
 
-  handleOnClickCatalog = () => {
-    this.setState({ openCatalog: !this.state.openCatalog })
-  }
+  // handleOnClickCatalog = () => {
+  //   this.setState({ openCatalog: !this.state.openCatalog })
+  // }
 
-  handleOnClickCatalogLeftIcon = () => {
-    this.setState({
-      openSnackbar: true,
-      snackbarMessage: '直接选下面的就可以啦',
-    })
-  }
+  // handleOnClickCatalogLeftIcon = () => {
+  //   this.setState({
+  //     openSnackbar: true,
+  //     snackbarMessage: '直接选下面的就可以啦',
+  //   })
+  // }
 
-  handleOnClickCatalogList = (data) => () => {
-    this.props.history.push(data)
-  }
+  // handleOnClickCatalogList = (data) => () => {
+  //   this.props.history.push(data)
+  // }
 
-  handleOnCloseSnackbar = () => {
-    this.setState({
-      openSnackbar: false,
-      snackbarMessage: '',
-    })
-  }
+  // handleOnCloseSnackbar = () => {
+  //   this.setState({
+  //     openSnackbar: false,
+  //     snackbarMessage: '',
+  //   })
+  // }
 
   render() {
-    const {
-      openCatalog,
-      openSnackbar,
-      snackbarMessage,
-    } = this.state
+    // const {
+    //   openCatalog,
+    //   openSnackbar,
+    //   snackbarMessage,
+    // } = this.state
 
     return (
       <div className={`${styles.container}`}>
-        <div className={styles.centerBox}>
+        {/* <div className={styles.centerBox}>
           <div className={styles.avatar} />
           <div
             className={styles.title}
@@ -122,7 +116,7 @@ class Home extends React.Component {
           message={snackbarMessage}
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
-        />
+        /> */}
         <StudentManagementSidebar
           groupList={groupList}
           handleOnClickEditGroup={() => { console.log('测试') }}
