@@ -63,8 +63,8 @@ module.exports = {
     if (data.wantSCSS) {
       actions.push({
         type: 'add',
-        path: '../app/components/{{properCase name}}/index.scss',
-        templateFile: './component/index.scss.hbs',
+        path: '../app/components/{{properCase name}}/styles.scss',
+        templateFile: './component/styles.scss.hbs',
         abortOnFail: true,
       })
     }

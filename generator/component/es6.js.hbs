@@ -1,16 +1,16 @@
 /**
-*
-* {{ properCase name }}
-*
-*/
+ *
+ * {{ properCase name }}
+ *
+ */
 
 import React from 'react'
 import PropTypes from 'prop-types'
 {{#if wantSCSS}}
-import styles from './index.scss'
+import styles from './styles'
 {{/if}}
 
-export default class {{ properCase name }} extends React.PureComponent {
+export default class {{ properCase name }} extends React.Component {
   static propTypes = {
     data: PropTypes.object,
   }

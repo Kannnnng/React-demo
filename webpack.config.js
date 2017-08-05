@@ -229,17 +229,13 @@ module.exports = {
   },
   resolve: {
     /* 可能用到的文件扩展名 */
-    extensions: ['.js', '.jsx', 'css', 'scss'],
+    extensions: ['.js', '.scss', '.jsx', '.css'],
     /* 文件路径别名，方便在写代码时对模块的引用 */
     alias: {
       app: APP_PATH,
-      actions: path.resolve(APP_PATH, 'actions'),
       components: path.resolve(APP_PATH, 'components'),
       containers: path.resolve(APP_PATH, 'containers'),
       images: path.resolve(APP_PATH, 'images'),
-      reducers: path.resolve(APP_PATH, 'reducers'),
-      sources: path.resolve(APP_PATH, 'sources'),
-      store: path.resolve(APP_PATH, 'store'),
       utils: path.resolve(APP_PATH, 'utils'),
     },
   },

@@ -1,4 +1,4 @@
-/*
+/**
  *
  * {{properCase name }}
  *
@@ -7,8 +7,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+{{#if wantActions}}
+import * as acts from './actions'
+{{/if}}
 {{#if wantSCSS}}
-import styles from './index.scss'
+import styles from './styles'
 {{/if}}
 
 class {{ properCase name }} extends React.{{{ component }}} {
