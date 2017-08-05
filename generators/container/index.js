@@ -34,7 +34,7 @@ module.exports = {
     // Generate index.js
     const actions = [{
       type: 'add',
-      path: '../../app/containers/{{properCase name}}/index.js',
+      path: '../app/containers/{{properCase name}}/index.js',
       templateFile: './container/index.js.hbs',
       abortOnFail: true,
     }]
@@ -43,7 +43,7 @@ module.exports = {
     if (data.wantSCSS) {
       actions.push({
         type: 'add',
-        path: '../../app/containers/{{properCase name}}/index.scss',
+        path: '../app/containers/{{properCase name}}/index.scss',
         templateFile: './container/index.scss.hbs',
         abortOnFail: true,
       })

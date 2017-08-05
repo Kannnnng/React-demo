@@ -54,7 +54,7 @@ module.exports = {
 
     const actions = [{
       type: 'add',
-      path: '../../app/components/{{properCase name}}/index.js',
+      path: '../app/components/{{properCase name}}/index.js',
       templateFile: componentTemplate,
       abortOnFail: true,
     }]
@@ -63,7 +63,7 @@ module.exports = {
     if (data.wantSCSS) {
       actions.push({
         type: 'add',
-        path: '../../app/components/{{properCase name}}/index.scss',
+        path: '../app/components/{{properCase name}}/index.scss',
         templateFile: './component/index.scss.hbs',
         abortOnFail: true,
       })

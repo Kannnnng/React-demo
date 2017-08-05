@@ -10,6 +10,7 @@
       "folder_exclude_patterns":
       [
         "build",
+        "generators",
         "node_modules",
       ],
       "path": "."
