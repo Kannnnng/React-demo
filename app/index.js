@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import { AppContainer } from 'react-hot-loader'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import App from 'containers/App'
 
 import './index.css'

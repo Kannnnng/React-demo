@@ -1,9 +1,9 @@
 import React from 'react'
-import { BrowserRouter, HashRouter } from 'react-router-dom'
-import { getMuiTheme } from 'material-ui/styles'
-import { MuiThemeProvider } from 'material-ui'
 import { Provider } from 'react-redux'
-import configStore from 'store'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
+import { MuiThemeProvider } from 'material-ui'
+import { getMuiTheme } from 'material-ui/styles'
+import configStore from 'app/store'
 import routes from 'app/router'
 
 const initialState = {}
