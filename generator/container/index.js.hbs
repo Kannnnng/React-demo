@@ -8,7 +8,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 {{#if wantActions}}
+import { bindActionCreators } from 'redux'
 import * as acts from './actions'
+{{/if}}
+{{#if wantReducer}}
+import select{{properCase name}} from './selector'
 {{/if}}
 {{#if wantSCSS}}
 import styles from './styles'
@@ -27,17 +31,21 @@ class {{ properCase name }} extends React.{{{ component }}} {
   }
 }
 
-{{#if wantActionsAndReducer}}
+{{#if wantReducer}}
 const mapStateToProps = select{{properCase name}}()
 {{/if}}
 
+{{#if wantActions}}
 function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
+  const actions = {
+    ...acts,
   }
+  const actionMap = { actions: bindActionCreators(actions, dispatch) }
+  return actionMap
 }
+{{/if}}
 
-{{#if wantActionsAndReducer}}
+{{#if wantReducer}}
 export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }})
 {{else}}
 export default connect(null, mapDispatchToProps)({{ properCase name }})
