@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import StudentCard from 'components/StudentCard'
 import styles from './index.scss'
 
-let contentRealHeight
+function getContentHeight(
+  count,
+  contentWidth,
+) {
+  return `${200 * Math.ceil(count / Math.floor(contentWidth / 152))}px`
+}
 
 export default class StudentCardContainer extends React.Component {
   static propTypes = {
@@ -18,26 +23,25 @@ export default class StudentCardContainer extends React.Component {
 
   state = {
     show: true,  // 展开还是折叠
-    contentHeight: undefined,
-  }
-
-  componentDidMount() {
-    window.content = this.content
-    console.log(this.content.offsetHeight, 123)
+    contentHeight: undefined,  // 字符串类型
   }
 
   handleOnClickFoldButton = () => {
     const {
+      studentList,
+    } = this.props
+    const {
       show,
     } = this.state
-    console.log(this.content.offsetHeight, 123)
+    const contentWidth = this.content.offsetWidth
+    const contentHeight = getContentHeight(studentList.length, contentWidth)
     this.setState({ show: !show })
     if (show) {
-      this.setState({ contentHeight: contentRealHeight })
+      this.setState({ contentHeight })
       window.setTimeout(() => { this.setState({ contentHeight: '0' }) }, 0)  // eslint-disable-line
     } else {
-      this.setState({ contentHeight: '0' })
-      window.setTimeout(() => { this.setState({ contentHeight: contentRealHeight }) }, 0)  // eslint-disable-line
+      this.setState({ contentHeight })
+      window.setTimeout(() => { this.setState({ contentHeight: 'auto' }) }, 500)  // eslint-disable-line
     }
   }
 
@@ -52,7 +56,7 @@ export default class StudentCardContainer extends React.Component {
     } = this.state
     const foldButtonClassName = `${styles.foldButton} ${(!show && styles.foldButtonClose) || ''}`
     const StudentCardClassName = `${styles.floatLeft} ${styles.contentItem}`
-    const contentStyle = contentHeight ? { height: `${contentHeight}px` } : {}
+    const contentStyle = contentHeight ? { height: contentHeight } : {}
 
     return (
       <div className={styles.container}>
