@@ -20,34 +20,23 @@ const store = configStore(initialState)
 /* material-ui 所需属性 */
 const muiTheme = getMuiTheme({})
 
-if (process.env.NODE_ENV === 'production') {
+const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
       <MuiThemeProvider muiTheme={muiTheme}>
-        <App />
+        <AppContainer>
+          <Component />
+        </AppContainer>
       </MuiThemeProvider>
     </Provider>,
     document.getElementById('app')  // eslint-disable-line
   )
-} else {
-  const render = (Component) => {
-    ReactDOM.render(
-      <Provider store={store}>
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <AppContainer>
-            <Component />
-          </AppContainer>
-        </MuiThemeProvider>
-      </Provider>,
-      document.getElementById('app')  // eslint-disable-line
-    )
-  }
+}
 
-  render(App)
+render(App)
 
-  if (module.hot) {
-    module.hot.accept('./app', () => {
-      render(App)
-    })
-  }
+if (module.hot) {
+  module.hot.accept('./app', () => {
+    render(App)
+  })
 }

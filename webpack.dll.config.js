@@ -64,8 +64,12 @@ if (process.env.NODE_ENV === 'production') {
 const vendors = [
   'axios',
   'immutable',
-  // 'lodash',  // 不再在此处统一引用，
-  'material-ui',
+  /* lodash 可以通过 lodash-webpack-plugin 这款插件实现精确引用，防止将整个 lodash */
+  /* 全部打包到最后的文件中 */
+  // 'lodash',
+  /* 不在此处统一引用，使用 import Button from 'material-ui/Button' 这样的引用语法 */
+  /* 可以避免将整个 material-ui 全部打包到最后的文件中 */
+  // 'material-ui',
   'md5',
   'moment',
   'normalizr',
@@ -79,6 +83,7 @@ const vendors = [
   'react-tap-event-plugin',
   'redux',
   'redux-actions',
+  'reselect',
 ]
 
 /* 处于生产环境时，由于 lodash-webpack-plugin 插件的使用，将会仅把代码中用到的 lodash 中 */
