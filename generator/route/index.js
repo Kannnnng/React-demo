@@ -1,80 +1,92 @@
 /**
  * Route Generator
  */
-const fs = require('fs');
-const componentExists = require('../utils/componentExists');
+const fs = require('fs')
+const componentExists = require('../utils/componentExists')
 
 function reducerExists(comp) {
   try {
-    fs.accessSync(`app/containers/${comp}/reducer.js`, fs.F_OK);
-    return true;
+    fs.accessSync(`app/containers/${comp}/reducer.js`, fs.F_OK)
+    return true
   } catch (e) {
-    return false;
+    return false
   }
 }
 
-function sagasExists(comp) {
-  try {
-    fs.accessSync(`app/containers/${comp}/sagas.js`, fs.F_OK);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+// function sagasExists(comp) {
+//   try {
+//     fs.accessSync(`app/containers/${comp}/sagas.js`, fs.F_OK)
+//     return true
+//   } catch (e) {
+//     return false
+//   }
+// }
 
 function trimTemplateFile(template) {
   // Loads the template file and trims the whitespace and then returns the content as a string.
-  return fs.readFileSync(`internals/generators/route/${template}`, 'utf8').replace(/\s*$/, '');
+  return fs.readFileSync(`generator/route/${template}`, 'utf8').replace(/\s*$/, '')
 }
 
 module.exports = {
   description: 'Add a route',
   prompts: [{
     type: 'input',
-    name: 'component',
-    message: 'Which component should the route show?',
+    name: 'container',
+    message: 'Which container should the route show?',
     validate: (value) => {
       if ((/.+/).test(value)) {
-        return componentExists(value) ? true : `"${value}" doesn't exist.`;
+        return componentExists(value) ? true : `"${value}" doesn't exist.`
       }
 
-      return 'The path is required';
+      return 'The path is required'
     },
   }, {
     type: 'input',
     name: 'path',
     message: 'Enter the path of the route.',
-    default: '/about',
+    default: '/home/:id',
     validate: (value) => {
       if ((/.+/).test(value)) {
-        return true;
+        return true
       }
 
-      return 'path is required';
+      return 'path is required'
     },
   }],
 
   // Add the route to the routes.js file above the error route
   // TODO smarter route adding
   actions: (data) => {
-    const actions = [];
-    if (reducerExists(data.component)) {
-      data.useSagas = sagasExists(data.component); // eslint-disable-line no-param-reassign
-      actions.push({
+    const actions = [
+      {
         type: 'modify',
         path: '../../app/routes.js',
-        pattern: /(\s{\n\s{0,}path: '\*',)/g,
-        template: trimTemplateFile('routeWithReducer.hbs'),
-      });
-    } else {
-      actions.push({
+        pattern: /(\nconst routes)/g,
+        template: trimTemplateFile('route.1.hbs'),
+      },
+      {
         type: 'modify',
         path: '../../app/routes.js',
-        pattern: /(\s{\n\s{0,}path: '\*',)/g,
-        template: trimTemplateFile('route.hbs'),
-      });
+        pattern: /(^\s*<\/div>)/g,
+        template: trimTemplateFile('route.2.hbs'),
+      },
+    ]
+
+    if (reducerExists(data.container)) {
+      actions.push({
+        type: 'modify',
+        path: '../../app/reducers.js',
+        pattern: /(\nconst reducers)/g,
+        template: trimTemplateFile('reducer.1.hbs'),
+      })
+      actions.push({
+        type: 'modify',
+        path: '../../app/reducers.js',
+        pattern: /(,\n\})/g,
+        template: trimTemplateFile('reducer.2.hbs'),
+      })
     }
 
-    return actions;
+    return actions
   },
-};
+}

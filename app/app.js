@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
-import routes from './router'
+import routes from './routes'
 
 const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter
 
