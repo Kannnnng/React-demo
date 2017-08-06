@@ -1,6 +1,6 @@
 import React from 'react'
 import Loadable from 'react-loadable'
-import { Route } from 'react-router-dom'
+import Route from 'react-router-dom/Route'
 import LoadingComponent from 'containers/LoadingComponent'
 
 const Game2048 = Loadable({

@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import combineReducers from 'redux/lib/combineReducers'
 import { routerReducer } from 'react-router-redux'
 import test from 'containers/Test/reducer'
 
