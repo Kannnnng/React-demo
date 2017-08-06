@@ -67,7 +67,7 @@ module.exports = {
       {
         type: 'modify',
         path: '../app/routes.js',
-        pattern: /(<\/div>\n\))/g,
+        pattern: /(\<\/div\>)/g,  // eslint-disable-line
         template: trimTemplateFile('./route.2.hbs'),
       },
     ]
