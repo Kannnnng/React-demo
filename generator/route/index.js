@@ -60,30 +60,30 @@ module.exports = {
     const actions = [
       {
         type: 'modify',
-        path: '../../app/routes.js',
+        path: '../app/routes.js',
         pattern: /(\nconst routes)/g,
-        template: trimTemplateFile('route.1.hbs'),
+        template: trimTemplateFile('./route.1.hbs'),
       },
       {
         type: 'modify',
-        path: '../../app/routes.js',
+        path: '../app/routes.js',
         pattern: /(^\s*<\/div>)/g,
-        template: trimTemplateFile('route.2.hbs'),
+        template: trimTemplateFile('./route.2.hbs'),
       },
     ]
 
     if (reducerExists(data.container)) {
       actions.push({
         type: 'modify',
-        path: '../../app/reducers.js',
+        path: '../app/reducers.js',
         pattern: /(\nconst reducers)/g,
-        template: trimTemplateFile('reducer.1.hbs'),
+        template: trimTemplateFile('./reducer.1.hbs'),
       })
       actions.push({
         type: 'modify',
-        path: '../../app/reducers.js',
+        path: '../app/reducers.js',
         pattern: /(,\n\})/g,
-        template: trimTemplateFile('reducer.2.hbs'),
+        template: trimTemplateFile('./reducer.2.hbs'),
       })
     }
 
