@@ -2,15 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
-import { MuiThemeProvider } from 'material-ui'
-import { getMuiTheme } from 'material-ui/styles'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import App from './app'
 import configStore from './store'
 
 import './styles'
 
-/* material-ui Tap Event Bug */
+/* 修复 material-ui 中 onTouch 事件的 BUG */
 injectTapEventPlugin()
 
 /* 创建 store */

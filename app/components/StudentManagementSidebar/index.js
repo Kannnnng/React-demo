@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  IconButton,
-  List,
-  ListItem,
-} from 'material-ui'
+import IconButton from 'material-ui/IconButton'
+import List from 'material-ui/List/List'
+import ListItem from 'material-ui/List/ListItem'
 import styles from './styles'
 
 export default function StudentManagementSidebar({

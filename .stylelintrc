@@ -2,9 +2,7 @@
   "extends": "stylelint-config-standard",
   "rules": {
     "color-hex-length": null,
-    "shorthand-property-no-redundant-values": null,
-    "length-zero-no-unit": null,
     "color-hex-case": null,
-    "rule-nested-empty-line-before": null,
+    "shorthand-property-no-redundant-values": null,
   }
 }
