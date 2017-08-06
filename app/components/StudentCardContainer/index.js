@@ -42,7 +42,7 @@ export default class StudentCardContainer extends React.Component {
     this.setState({ show: !show })
     if (show) {
       this.setState({ contentHeight })
-      window.setTimeout(() => { this.setState({ contentHeight: '0' }) }, 0)  // eslint-disable-line
+      window.setTimeout(() => { this.setState({ contentHeight: '0' }) }, 50)  // eslint-disable-line
     } else {
       this.setState({ contentHeight })
       window.setTimeout(() => { this.setState({ contentHeight: 'auto' }) }, 500)  // eslint-disable-line
