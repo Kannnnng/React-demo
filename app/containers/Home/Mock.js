@@ -196,7 +196,7 @@ export const answerAnalysis = {
 
 export const groupList = [
   {
-    name: 'A 心里大神',
+    name: 'A 心理大神吧',
     color: '#3B9E46',
     studentList: [
       {

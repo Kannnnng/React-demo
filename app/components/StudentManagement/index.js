@@ -27,12 +27,21 @@ export default class StudentManagement extends React.PureComponent {
   }
 
   state = {
+    clickedGroup: undefined,
     showStudentInfomation: false,
     studentInfomation: {},
   }
 
   handleOnClickEditGroup = () => {
     console.log('你点击了小组编辑按钮')  // eslint-disable-line
+  }
+
+  handleOnClickGroup = (value) => () => {
+    if (value === 'all') {
+      this.setState({ clickedGroup: undefined })
+    } else {
+      this.setState({ clickedGroup: value })
+    }
   }
 
   handleOnClickCard = (value) => () => {
@@ -54,6 +63,7 @@ export default class StudentManagement extends React.PureComponent {
       groupList,
     } = this.props
     const {
+      clickedGroup,
       showStudentInfomation,
       studentInfomation,
     } = this.state
@@ -64,17 +74,23 @@ export default class StudentManagement extends React.PureComponent {
         <StudentManagementSidebar
           groupList={groupList}
           handleOnClickEditGroup={this.handleOnClickEditGroup}
+          handleOnClickGroup={this.handleOnClickGroup}
         />
         <div className={contentClass}>
-          {groupList.map((value) => (
-            <StudentCardContainer
-              key={value.name}
-              title={value.name}
-              color={value.color}
-              studentList={value.studentList}
-              handleOnClickCard={this.handleOnClickCard}
-            />
-          ))}
+          {groupList.map((value, index) => {
+            if ((clickedGroup !== undefined && clickedGroup === index) || clickedGroup === undefined) {
+              return (
+                <StudentCardContainer
+                  key={value.name}
+                  title={value.name}
+                  color={value.color}
+                  studentList={value.studentList}
+                  handleOnClickCard={this.handleOnClickCard}
+                />
+              )
+            }
+            return undefined
+          })}
           <StudentInfomation
             open={showStudentInfomation}
             avatar={studentInfomation.avatar}
