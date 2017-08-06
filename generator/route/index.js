@@ -67,7 +67,7 @@ module.exports = {
       {
         type: 'modify',
         path: '../app/routes.js',
-        pattern: /(^\s*<\/div>)/g,
+        pattern: /(<\/div>\n\))/g,
         template: trimTemplateFile('./route.2.hbs'),
       },
     ]
