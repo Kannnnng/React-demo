@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import defaultAvatar from 'images/yeoman.png'
-import styles from './styles.scss'
+import styles from './styles'
 
 require('moment/locale/zh-cn')
 

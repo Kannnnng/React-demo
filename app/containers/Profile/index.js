@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './styles.scss'
+import styles from './styles'
 
 class Profile extends React.Component {
   static propTypes = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { questionPattern } from 'utils/constants'
-import styles from './styles.scss'
+import styles from './styles'
 
 function getQuestionFlag(pattern, canAnswer) {
   switch (pattern) {

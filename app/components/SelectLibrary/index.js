@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import lodash from 'lodash'
 import { Drawer } from 'material-ui'
 import { LibraryCell } from './LibraryCell'
-import styles from './styles.scss'
+import styles from './styles'
 
 class SelectLibrary extends React.Component {
   static propTypes = {

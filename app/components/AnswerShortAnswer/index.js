@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 import lodash from 'lodash'
 // import ImagesUploader from 'components/ImagesUploader'
 import PicView from 'components/PicView'
-import styles from './styles.scss'
+import styles from './styles'
 
 function renderImg(data, handleOnShowPicView) {
   return lodash.reduce(data, (result, value, index) => (

@@ -19,7 +19,7 @@ import {
   // questionAnswer,
   // answerAnalysis,
 } from './Mock'
-import styles from './styles.scss'
+import styles from './styles'
 
 class Home extends React.Component {
   static propTypes = {

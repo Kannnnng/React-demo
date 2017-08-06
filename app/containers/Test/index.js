@@ -7,7 +7,7 @@ import {
   FontIcon,
 } from 'material-ui'
 import * as acts from './actions'
-import styles from './styles.scss'
+import styles from './styles'
 
 class Test extends React.Component {
   static propTypes = {

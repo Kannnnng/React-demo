@@ -15,7 +15,7 @@ import AnswerShortAnswer from 'components/AnswerShortAnswer'
 import { questionPattern, letter } from 'utils/constants'
 // import { getNewImages } from 'containers/Answers/helper'
 import SubQuestionTitle from './SubQuestionTitle'
-import styles from './styles.scss'
+import styles from './styles'
 
 class QuestionAnswer extends React.Component {
   static propTypes = {

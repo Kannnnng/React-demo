@@ -7,7 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { forEach } from 'lodash'
-import styles from './styles.scss'
+import styles from './styles'
 
 class PicView extends React.Component {
   static propTypes = {

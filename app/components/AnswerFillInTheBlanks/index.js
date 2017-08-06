@@ -6,7 +6,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './styles.scss'
+import styles from './styles'
 
 function renderFillInTheBlanksContent(value/* , hasCorrectness */) {
   // if (hasCorrectness && value.myAnswer === value.correctAnswer) {

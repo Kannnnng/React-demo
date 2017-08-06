@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 // import type11 from 'images/type11.png'
 import { letter } from 'utils/constants'
 import ItemLabel from 'components/ItemLabel'
-import styles from './styles.scss'
+import styles from './styles'
 
 function AnswerJudge(props) {
   const {

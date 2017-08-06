@@ -11,7 +11,7 @@ import { letter } from 'utils/constants'
 // import type1 from 'images/type1.png'
 // import type11 from 'images/type11.png'
 import ItemLabel from 'components/ItemLabel'
-import styles from './styles.scss'
+import styles from './styles'
 
 const findIndex = (array, id) =>
   lodash.findIndex(array, (o) => o === id)
