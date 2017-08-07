@@ -6,9 +6,9 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import StudentManagementSidebar from 'components/StudentManagementSidebar'
-import StudentCardContainer from 'components/StudentCardContainer'
 import StudentInfomation from 'components/StudentInfomation'
+import StudentCardContainer from 'components/StudentCardContainer'
+import StudentManagementSidebar from 'components/StudentManagementSidebar'
 import {
   getStudentFromGroupList,
 } from './helper'
@@ -26,8 +26,8 @@ export default class StudentManagement extends React.PureComponent {
     groupList: [{ name: '', studentList: [{}] }],
   }
 
-  state = {
-    clickedGroup: undefined,
+  static state = {
+    clickedGroup: null,
     showStudentInfomation: false,
     studentInfomation: {},
   }
@@ -38,7 +38,7 @@ export default class StudentManagement extends React.PureComponent {
 
   handleOnClickGroup = (value) => () => {
     if (value === 'all') {
-      this.setState({ clickedGroup: undefined })
+      this.setState({ clickedGroup: null })
     } else {
       this.setState({ clickedGroup: value })
     }
@@ -79,7 +79,7 @@ export default class StudentManagement extends React.PureComponent {
         />
         <div className={contentClass}>
           {groupList.map((value, index) => {
-            if ((clickedGroup !== undefined && clickedGroup === index) || clickedGroup === undefined) {
+            if ((clickedGroup !== null && clickedGroup === index) || clickedGroup === null) {
               return (
                 <StudentCardContainer
                   key={value.name}
@@ -90,7 +90,7 @@ export default class StudentManagement extends React.PureComponent {
                 />
               )
             }
-            return undefined
+            return null
           })}
           <StudentInfomation
             open={showStudentInfomation}
