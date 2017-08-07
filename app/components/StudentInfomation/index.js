@@ -34,9 +34,8 @@ export default function StudentInfomation({
   const headerBackgroundStyle = { backgroundImage: `url(${avatar})` }
   const avatarStyle = headerBackgroundStyle
   const genderClassName = `${styles.gender} fa ${
-    (gender === 0 && 'fa-intersex') ||
     (gender === 1 && 'fa-venus') ||
-    (gender === 2 && 'fa-mars') || ''
+    (gender === 2 && 'fa-mars') || 'fa-intersex'
   }`
   const titleClassName = `${styles.title} ${styles.bottomLine}`
   const itemClassName = `${styles.items} ${styles.bottomLine}`
@@ -62,7 +61,7 @@ export default function StudentInfomation({
         <div className={styles.name}>{name}</div>
         <div className={styles.nickName}>
           <span>
-            {nickName}
+            {nickName && <span>{nickName}</span>}
             <i className={genderClassName} />
           </span>
         </div>

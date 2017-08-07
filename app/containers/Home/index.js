@@ -18,7 +18,7 @@ import {
   // questionContent,
   // questionAnswer,
   // answerAnalysis,
-} from './Mock'
+} from './mock'
 import styles from './styles'
 
 class Home extends React.Component {

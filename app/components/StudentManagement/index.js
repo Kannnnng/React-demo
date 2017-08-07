@@ -42,6 +42,7 @@ export default class StudentManagement extends React.PureComponent {
     } else {
       this.setState({ clickedGroup: value })
     }
+    this.setState({ showStudentInfomation: false })
   }
 
   handleOnClickCard = (value) => () => {

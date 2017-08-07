@@ -87,8 +87,14 @@
   z-index: 100;
   color: #FFF;
 
-  span {
+  > span {
     position: relative;
+
+    :first-child {
+      position: static;
+      top: 0;
+      right: 0;
+    }
   }
 }
 
@@ -130,11 +136,11 @@
 
   :first-child {
     display: inline-block;
-    width: 68px;
+    width: 80px;
   }
 
   :nth-child(2) {
-    margin-left: 22px;
+    margin-left: 34px;
   }
 
   .noContent {
