@@ -1,0 +1,72 @@
+.container {
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.progress {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #19AD19;
+  color: #FFF;
+  font-size: 18px;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+
+  > span {
+    font-size: 14px;
+  }
+}
+
+.ring {
+  width: 90px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 5px #19AD19;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  transform: rotate(0deg);
+  animation: ring 2s linear 0s infinite normal none;
+
+  &::before {
+    display: block;
+    content: '';
+    width: 90px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid 5px #19AD19;
+    transform: rotate(60deg);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+  }
+
+  &::after {
+    display: block;
+    content: '';
+    width: 90px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid 5px #19AD19;
+    transform: rotate(120deg);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+  }
+}
+
+@keyframes ring {
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

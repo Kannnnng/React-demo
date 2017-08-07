@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Loading from 'components/Loading'
+import styles from './styles'
 
 function LoadingComponent(props) {
   if (props.isLoading) {
@@ -9,7 +11,11 @@ function LoadingComponent(props) {
       return <div>Loader timed out!</div>
     } else if (props.pastDelay) {
       // Display a loading screen after a set delay.
-      return <div>Loading...</div>
+      return (
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      )
     }
     // Don't flash "Loading..." when we don't need to.
     return null

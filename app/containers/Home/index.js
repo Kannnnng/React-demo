@@ -11,10 +11,11 @@ import PropTypes from 'prop-types'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 // import StudentInfomation from 'components/StudentInfomation'
 // import StudentManagementSidebar from 'components/StudentManagementSidebar'
-import StudentManagement from 'components/StudentManagement'
+// import StudentManagement from 'components/StudentManagement'
+// import Loading from 'components/Loading'
 import {
   // studentList,
-  groupList,
+  // groupList,
   // questionContent,
   // questionAnswer,
   // answerAnalysis,
@@ -66,9 +67,12 @@ class Home extends React.Component {
 
     return (
       <div className={`${styles.container}`}>
-        <StudentManagement
+        {/* <Loading
+          progress={100}
+        /> */}
+        {/* <StudentManagement
           groupList={groupList}
-        />
+        /> */}
         {/* <div className={styles.centerBox}>
           <div className={styles.avatar} />
           <div

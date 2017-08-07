@@ -20,7 +20,7 @@ const comments = [
     avatar: 'https://avatars2.githubusercontent.com/u/22359680?v=4&s=460',
     createTime: 1501551970105,
     like: 3,
-    comment: '这是一段评论，老师你出这个题真是太他妈的操蛋了，我也是日了狗啦，哈哈',
+    comment: '这是一段评论，哈哈',
   },
   {
     id: '002',
@@ -28,7 +28,7 @@ const comments = [
     avatar: 'https://avatars2.githubusercontent.com/u/22359680?v=4&s=460',
     createTime: 1501552970105,
     like: 3,
-    comment: '这是一段评论，老师你出这个题真是太他妈的操蛋了，我也是日了狗啦，哈哈',
+    comment: '这是一段评论，哈哈',
   },
   {
     id: '003',
@@ -36,7 +36,7 @@ const comments = [
     avatar: 'https://avatars2.githubusercontent.com/u/22359680?v=4&s=460',
     createTime: 1501543970105,
     like: 3,
-    comment: '这是一段评论，老师你出这个题真是太他妈的操蛋了，我也是日了狗啦，哈哈',
+    comment: '这是一段评论，哈哈',
   },
   {
     id: '004',
@@ -44,7 +44,7 @@ const comments = [
     avatar: 'https://avatars2.githubusercontent.com/u/22359680?v=4&s=460',
     createTime: 1501544970105,
     like: 3,
-    comment: '这是一段评论，老师你出这个题真是太他妈的操蛋了，我也是日了狗啦，哈哈',
+    comment: '这是一段评论，哈哈',
   },
 ]
 
