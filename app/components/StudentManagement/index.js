@@ -26,7 +26,7 @@ export default class StudentManagement extends React.PureComponent {
     groupList: [{ name: '', studentList: [{}] }],
   }
 
-  static state = {
+  state = {
     clickedGroup: null,
     showStudentInfomation: false,
     studentInfomation: {},
