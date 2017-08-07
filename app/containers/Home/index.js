@@ -32,7 +32,6 @@ class Home extends React.Component {
     // openSnackbar: false,
     // snackbarMessage: '',
     /* 下面是仅供测试用的 state */
-    showContainer: true,
     /* 上面是仅供测试用的 state */
   }
 

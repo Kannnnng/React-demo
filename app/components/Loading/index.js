@@ -26,5 +26,5 @@ Loading.propTypes = {
 }
 
 Loading.default = {
-  progress: undefined,
+  progress: null,
 }
