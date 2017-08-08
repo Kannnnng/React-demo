@@ -5,7 +5,7 @@ import AppContainer from 'react-hot-loader/lib/AppContainer'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import App from './app'
+import Routes from './routes'
 import configStore from './store'
 
 import './styles'
@@ -33,10 +33,10 @@ const render = (Component) => {
   )
 }
 
-render(App)
+render(Routes)
 
 if (module.hot) {
-  module.hot.accept('./app', () => {
-    render(App)
+  module.hot.accept('./routes', () => {
+    render(Routes)
   })
 }

@@ -40,7 +40,9 @@ function mapDispatchToProps(dispatch) {
   const actions = {
     ...acts,
   }
-  const actionMap = { actions: bindActionCreators(actions, dispatch) }
+  const actionMap = {
+    actions: bindActionCreators(actions, dispatch)
+  }
   return actionMap
 }
 {{/if}}

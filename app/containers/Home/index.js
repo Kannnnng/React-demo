@@ -65,7 +65,7 @@ class Home extends React.Component {
     // } = this.state
 
     return (
-      <div className={`${styles.container}`}>
+      <div className={styles.container}>
         {/* <Loading
           progress={100}
         /> */}

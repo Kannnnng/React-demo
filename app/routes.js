@@ -1,5 +1,7 @@
 import React from 'react'
 import Loadable from 'react-loadable'
+import BrowserRouter from 'react-router-dom/BrowserRouter'
+import HashRouter from 'react-router-dom/HashRouter'
 import Route from 'react-router-dom/Route'
 import LoadingComponent from 'containers/LoadingComponent'
 
@@ -32,4 +34,16 @@ const routes = (
   </div>
 )
 
-export default routes
+const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter
+
+class Routes extends React.Component {
+  render() {
+    return (
+      <Router basename="/">
+        {routes}
+      </Router>
+    )
+  }
+}
+
+export default Routes
