@@ -1,7 +1,6 @@
 var path = require('path')  // eslint-disable-line
 var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
-var cssnano = require('cssnano')  // eslint-disable-line
 var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
@@ -41,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
     // new webpack.optimize.DedupePlugin(),
     /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
     /* 在 webpack2.0 中已经不需要特别声明 */
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
