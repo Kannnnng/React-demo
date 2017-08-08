@@ -5,25 +5,30 @@ import styles from './styles'
 
 function LoadingComponent(props) {
   if (props.isLoading) {
-    // While our other component is loading...
+    /* 加载中 */
     if (props.timedOut) {
-      // In case we've timed out loading our other component.
-      return <div>Loader timed out!</div>
+      /* 加载超时 */
+      return (
+        <div>
+          {'加载超时！'}
+        </div>
+      )
     } else if (props.pastDelay) {
-      // Display a loading screen after a set delay.
+      /* 加载中 */
       return (
         <div className={styles.container}>
           <Loading />
         </div>
       )
     }
-    // Don't flash "Loading..." when we don't need to.
+    /* 不是以上两种状态，则表明状态没有发生变化，因此不需要返回任何数据，页面也不需要发生改变 */
     return null
   } else if (props.error) {
-    // If we aren't loading, maybe
-    return <div>Error! Component failed to load</div>
+    /* 加载失败 */
+    console.error('组件加载失败，错误信息如下：', props.error)  // eslint-disable-line
+    return null
   }
-  // This case shouldn't happen... but we'll return null anyways.
+  /* 按理来说不应该发生这种情况，但是还是返回 null 防止发生意外 */
   return null
 }
 
@@ -31,7 +36,7 @@ LoadingComponent.propTypes = {
   isLoading: PropTypes.bool,
   timedOut: PropTypes.bool,
   pastDelay: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.object,
 }
 
 export default LoadingComponent

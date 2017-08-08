@@ -23,7 +23,7 @@ export default class StudentManagement extends React.PureComponent {
   }
 
   static defaultProps = {
-    groupList: [{ name: '', studentList: [{}] }],
+    groupList: [],
   }
 
   state = {
