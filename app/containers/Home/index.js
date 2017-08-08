@@ -12,7 +12,7 @@ import {
 // import StudentInfomation from 'components/StudentInfomation'
 // import StudentManagementSidebar from 'components/StudentManagementSidebar'
 // import StudentManagement from 'components/StudentManagement'
-import Loading from 'components/Loading'
+// import Loading from 'components/Loading'
 import {
   // studentList,
   // groupList,
@@ -66,9 +66,9 @@ class Home extends React.Component {
 
     return (
       <div className={styles.container}>
-        <Loading
+        {/* <Loading
           progress={100}
-        />
+        /> */}
         {/* <StudentManagement
           groupList={groupList}
         /> */}
