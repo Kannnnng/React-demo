@@ -8,10 +8,12 @@ const fs = require('fs')
 
 const pageComponents = fs.readdirSync('app/components')
 const pageContainers = fs.readdirSync('app/containers')
-const components = pageComponents.concat(pageContainers)
 
-function componentExists(comp) {
-  return components.indexOf(comp) >= 0
+function componentExists(comp, target) {
+  if (target === 'component') {
+    return pageComponents.indexOf(comp) >= 0
+  }
+  return pageContainers.indexOf(comp) >= 0
 }
 
 module.exports = componentExists

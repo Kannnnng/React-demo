@@ -25,7 +25,6 @@ function LoadingComponent(props) {
     return null
   } else if (props.error) {
     /* 加载失败 */
-    console.error('组件加载失败，错误信息如下：', props.error)  // eslint-disable-line
     return null
   }
   /* 按理来说不应该发生这种情况，但是还是返回 null 防止发生意外 */
