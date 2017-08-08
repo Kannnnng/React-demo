@@ -9,8 +9,9 @@
       ],
       "folder_exclude_patterns":
       [
+        "assets",
         "build",
-        // "generators",
+        "generator",
         "node_modules",
       ],
       "path": "."
