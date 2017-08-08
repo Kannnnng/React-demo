@@ -6,6 +6,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
+
 if (process.env.NODE_ENV === 'production') {
   output = {
     path: BUILD_PATH,
