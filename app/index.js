@@ -16,7 +16,6 @@ injectTapEventPlugin()
 const initialState = {}
 const store = configStore(initialState)
 
-
 const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
