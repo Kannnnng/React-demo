@@ -134,7 +134,11 @@ class Draggable extends React.PureComponent {  // eslint-disable-line
   }
 
   handleOnMoveCard = (value1, value2) => {
-    console.log(value1, value2, 123)
+    const cards = this.state.cards.concat([])
+    const temp = cards[value1]
+    cards[value1] = cards[value2]
+    cards[value2] = temp
+    this.setState({ cards })
   }
 
   render() {
