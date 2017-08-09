@@ -76,6 +76,8 @@ const vendors = [
   'normalizr',
   'prop-types',
   'react',
+  'react-dnd',
+  'react-dnd-html5-backend',
   'react-dom',
   'react-loadable',
   'react-redux',
