@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  AppBar,
-  Drawer,
-  List,
-  ListItem,
-  Snackbar,
-} from 'material-ui'
+import AppBar from 'material-ui/AppBar'
+import Drawer from 'material-ui/Drawer'
+import List from 'material-ui/List/List'
+import ListItem from 'material-ui/List/ListItem'
+import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import StudentCardContainer from 'components/StudentCardContainer'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 // import StudentInfomation from 'components/StudentInfomation'
 // import StudentManagementSidebar from 'components/StudentManagementSidebar'
 // import StudentManagement from 'components/StudentManagement'
 // import Loading from 'components/Loading'
+import Draggable from 'components/Draggable'
 import {
   // studentList,
   // groupList,
@@ -124,6 +123,7 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
+        <Draggable />
         {/* <StudentManagementSidebar
           groupList={groupList}
           handleOnClickEditGroup={() => { console.log('测试') }}
