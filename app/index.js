@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import Provider from 'react-redux/lib/components/Provider'
 import AppContainer from 'react-hot-loader/lib/AppContainer'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import Routes from './routes'
 import configStore from './store'
@@ -17,13 +16,11 @@ injectTapEventPlugin()
 const initialState = {}
 const store = configStore(initialState)
 
-/* material-ui 所需属性 */
-const muiTheme = getMuiTheme({})
 
 const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider>
         <AppContainer>
           <Component />
         </AppContainer>
