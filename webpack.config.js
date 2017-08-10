@@ -1,5 +1,6 @@
 var path = require('path')  // eslint-disable-line
 var webpack = require('webpack')  // eslint-disable-line
+var HappyPack = require('happypack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
@@ -81,6 +82,12 @@ if (process.env.NODE_ENV === 'production') {
     new LodashModuleReplacementPlugin({
       paths: true,
     }),
+    /* 通过多线程的方式快速编译代码 */
+    new HappyPack({
+      id: 'js',
+      threads: 4,
+      loaders: ['babel-loader'],
+    }),
   ]
 } else {
   entry = {
@@ -139,6 +146,12 @@ if (process.env.NODE_ENV === 'production') {
       context: __dirname,
       manifest: path.resolve(BUILD_PATH, 'vendor.dev.manifest.json'),
     }),
+    /* 通过多线程的方式快速编译代码 */
+    new HappyPack({
+      id: 'js',
+      threads: 4,
+      loaders: ['babel-loader'],
+    }),
   ]
 }
 
@@ -166,7 +179,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/i,
-        loaders: ['babel-loader'],
+        loaders: ['happypack/loader?id=js'],
         include: APP_PATH,
       },
       {

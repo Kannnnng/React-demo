@@ -35,6 +35,7 @@
     "eslint-plugin-react": "^6.10.3",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.1",
+    "happypack": "^4.0.0-beta.2",
     "lodash-webpack-plugin": "^0.11.4",
     "node-sass": "^4.5.2",
     "plop": "^1.8.0",
