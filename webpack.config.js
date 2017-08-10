@@ -85,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 4,
+      threads: 6,
       loaders: ['babel-loader'],
     }),
   ]
@@ -149,7 +149,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 4,
+      threads: 6,
       loaders: ['babel-loader'],
     }),
   ]
