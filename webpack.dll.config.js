@@ -22,7 +22,9 @@ if (process.env.NODE_ENV === 'production') {
     // new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
     }),
     /* 压缩 JS 文件， */
     new webpack.optimize.UglifyJsPlugin({

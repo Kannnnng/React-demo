@@ -13,8 +13,8 @@ var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
 var cache = null  // eslint-disable-line
 var plugins = []  // eslint-disable-line
-var devtool = undefined  // eslint-disable-line
-var devServer = undefined  // eslint-disable-line
+var devtool = null  // eslint-disable-line
+var devServer = null  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.env.NODE_ENV === 'production') {
@@ -32,8 +32,8 @@ if (process.env.NODE_ENV === 'production') {
     publicPath: '/React-demo/build/assets/',
   }
   cache = false
-  devtool = undefined
-  devServer = undefined
+  devtool = null
+  devServer = null
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
     /* 在 webpack2.0 中已不需要 */
@@ -43,7 +43,9 @@ if (process.env.NODE_ENV === 'production') {
     // new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      },
     }),
     /* 压缩 JS 文件， */
     new webpack.optimize.UglifyJsPlugin({
@@ -122,7 +124,9 @@ if (process.env.NODE_ENV === 'production') {
   plugins = [
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"',
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      },
     }),
     /* 在组件热加载的时候显示更新的组件名而不是原本的组件 ID */
     new webpack.NamedModulesPlugin(),
