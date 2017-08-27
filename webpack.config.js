@@ -210,7 +210,7 @@ module.exports = {
               use: [
                 'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
                 'postcss-loader',
-              ].join('!'),
+              ],
             })
           ) : (
             [  // eslint-disable-line
@@ -232,7 +232,7 @@ module.exports = {
                 'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
                 'postcss-loader',
                 'sass-loader',
-              ].join('!'),
+              ],
             })
           ) : (
             [  // eslint-disable-line
