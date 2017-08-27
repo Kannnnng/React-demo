@@ -96,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 6,
+      threads: 4,
       loaders: ['babel-loader?cacheDirectory'],
     }),
     /* 使用 Gzip 压缩 JS 文件和 CSS 文件 */
@@ -168,7 +168,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 6,
+      threads: 4,
       loaders: ['babel-loader?cacheDirectory'],
     }),
   ]
