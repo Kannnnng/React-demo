@@ -6,6 +6,7 @@ var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
+var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
@@ -45,16 +46,26 @@ if (process.env.NODE_ENV === 'production') {
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
       },
     }),
     /* 压缩 JS 文件， */
     new webpack.optimize.UglifyJsPlugin({
+      /* 最紧凑的输出 */
+      beautify: false,
+      /* 删除所有的注释 */
+      comments: false,
       /* 已经压缩过的文件不再次进行压缩 */
       exclude: /\.min\.js$/,
       compress: {
         /* 消除产生警告的代码，此类代码多来自于引用的模块内部 */
         warnings: false,
+        // 删除所有的 `console` 语句，还可以兼容ie浏览器
+        drop_console: true,
+        /* 内嵌定义了但是只用到一次的变量 */
+        collapse_vars: true,
+        /* 提取出出现多次但是没有定义成变量去引用的静态值 */
+        reduce_vars: true,
       },
       /* 去除注释 */
       output: { comments: false },
@@ -86,7 +97,15 @@ if (process.env.NODE_ENV === 'production') {
     new HappyPack({
       id: 'js',
       threads: 6,
-      loaders: ['babel-loader'],
+      loaders: ['babel-loader?cacheDirectory'],
+    }),
+    /* 使用 Gzip 压缩 JS 文件和 CSS 文件 */
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css)$/,
+      threshold: 10240,
+      minRatio: 0.8,
     }),
   ]
 } else {
@@ -132,7 +151,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify('development'),
       },
     }),
     /* 在组件热加载的时候显示更新的组件名而不是原本的组件 ID */
@@ -150,7 +169,7 @@ if (process.env.NODE_ENV === 'production') {
     new HappyPack({
       id: 'js',
       threads: 6,
-      loaders: ['babel-loader'],
+      loaders: ['babel-loader?cacheDirectory'],
     }),
   ]
 }
@@ -254,5 +273,9 @@ module.exports = {
       images: path.resolve(APP_PATH, 'images'),
       utils: path.resolve(APP_PATH, 'utils'),
     },
+    /* 打包文件时优先使用 ES2015 的代码 */
+    mainFields: ['jsnext:main', 'main'],
+    /* 直接写明 node_modules 的全路径 */
+    modules: [path.resolve(ROOT_PATH, 'node_modules')],
   },
 }

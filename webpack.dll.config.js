@@ -3,6 +3,7 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
+var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
 
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
@@ -23,16 +24,26 @@ if (process.env.NODE_ENV === 'production') {
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
       },
     }),
     /* 压缩 JS 文件， */
     new webpack.optimize.UglifyJsPlugin({
+      /* 最紧凑的输出 */
+      beautify: false,
+      /* 删除所有的注释 */
+      comments: false,
       /* 已经压缩过的文件不再次进行压缩 */
       exclude: /\.min\.js$/,
       compress: {
         /* 消除产生警告的代码，此类代码多来自于引用的模块内部 */
         warnings: false,
+        // 删除所有的 `console` 语句，还可以兼容ie浏览器
+        drop_console: true,
+        /* 内嵌定义了但是只用到一次的变量 */
+        collapse_vars: true,
+        /* 提取出出现多次但是没有定义成变量去引用的静态值 */
+        reduce_vars: true,
       },
       /* 去除注释 */
       output: { comments: false },
@@ -46,6 +57,14 @@ if (process.env.NODE_ENV === 'production') {
       path: path.resolve(BUILD_PATH, '[name].pro.manifest.json'),
       name: '[name]_library',
       context: __dirname,
+    }),
+    /* 使用 Gzip 压缩 JS 文件和 CSS 文件 */
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.(js|css)$/,
+      threshold: 10240,
+      minRatio: 0.8,
     }),
   ]
 } else {
@@ -105,4 +124,8 @@ module.exports = {
   },
   output,
   plugins,
+  resolve: {
+    /* 直接写明 node_modules 的全路径 */
+    modules: [path.resolve(ROOT_PATH, 'node_modules')],
+  },
 }
