@@ -13,9 +13,9 @@ var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
-var cache = null  // eslint-disable-line
+var cache = true  // eslint-disable-line
 var plugins = []  // eslint-disable-line
-var devtool = null  // eslint-disable-line
+var devtool = false  // eslint-disable-line
 var devServer = null  // eslint-disable-line
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     publicPath: '/React-demo/build/assets/',
   }
   cache = false
-  devtool = null
+  devtool = false
   devServer = null
   plugins = [
     /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
@@ -273,8 +273,6 @@ module.exports = {
       images: path.resolve(APP_PATH, 'images'),
       utils: path.resolve(APP_PATH, 'utils'),
     },
-    /* 打包文件时优先使用 ES2015 的代码 */
-    mainFields: ['jsnext:main', 'main'],
     /* 直接写明 node_modules 的全路径 */
     modules: [path.resolve(ROOT_PATH, 'node_modules')],
   },
