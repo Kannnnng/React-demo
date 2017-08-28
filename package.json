@@ -8,7 +8,7 @@
     "build:devDll": "export NODE_ENV=development && webpack --progress --config webpack.dll.config.js",
     "build:proDll": "export NODE_ENV=production && webpack --progress --config webpack.dll.config.js",
     "generate": "plop --plopfile generator/index.js",
-    "start": "export NODE_ENV=development && webpack-dev-server --inline --hot --progress",
+    "start": "export NODE_ENV=development && webpack-dev-server --hot --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
