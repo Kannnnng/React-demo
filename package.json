@@ -4,11 +4,11 @@
   "description": "基于webpack的react学习与演示项目",
   "main": "index.js",
   "scripts": {
-    "build": "set NODE_ENV=production && export NODE_ENV=production && webpack --progress",
-    "build:devDll": "set NODE_ENV=development && export NODE_ENV=development && webpack --progress --config webpack.dll.config.js",
-    "build:proDll": "set NODE_ENV=production && export NODE_ENV=production && webpack --progress --config webpack.dll.config.js",
+    "build": "export NODE_ENV=production && webpack --progress",
+    "build:devDll": "export NODE_ENV=development && webpack --progress --config webpack.dll.config.js",
+    "build:proDll": "export NODE_ENV=production && webpack --progress --config webpack.dll.config.js",
     "generate": "plop --plopfile generator/index.js",
-    "start": "set NODE_ENV=development && export NODE_ENV=development && webpack-dev-server --inline --hot --progress",
+    "start": "export NODE_ENV=development && webpack-dev-server --inline --hot --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -92,7 +92,8 @@ const vendors = [
   /* 不在此处统一引用，使用 import Button from 'material-ui/Button' 这样的引用语法 */
   /* 可以避免将整个 material-ui 全部打包到最后的文件中 */
   // 'material-ui',
-  'md5',
+  /* md5 这个库在代码中暂时没用到 */
+  // 'md5',
   'moment',
   'normalizr',
   'prop-types',
