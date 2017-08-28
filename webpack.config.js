@@ -4,7 +4,6 @@ var HappyPack = require('happypack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
-var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
@@ -14,7 +13,7 @@ var output = {}  // eslint-disable-line
 var cache = true  // eslint-disable-line
 var plugins = []  // eslint-disable-line
 var devtool = false  // eslint-disable-line
-var devServer = null  // eslint-disable-line
+var devServer = {}  // eslint-disable-line
 
 process.env.NODE_ENV = process.argv.pop() === 'pro' ? 'production' : 'development'
 
@@ -35,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   }
   cache = false
   devtool = false
-  devServer = null
+  devServer = {}
   plugins = [
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
@@ -85,14 +84,6 @@ if (process.env.NODE_ENV === 'production') {
       id: 'js',
       threads: 4,
       loaders: ['babel-loader?cacheDirectory'],
-    }),
-    /* 使用 Gzip 压缩 JS 文件和 CSS 文件 */
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|css)$/,
-      threshold: 10240,
-      minRatio: 0.8,
     }),
   ]
 } else {
@@ -185,7 +176,6 @@ module.exports = {
       {
         test: /\.css$/i,
         loaders: (process.env.NODE_ENV === 'production' ?
-          (
             ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
@@ -193,13 +183,12 @@ module.exports = {
                 'postcss-loader',
               ],
             })
-          ) : (
+          :
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
               'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
             ]  // eslint-disable-line
-          )
         ),
         include: APP_PATH,
       },

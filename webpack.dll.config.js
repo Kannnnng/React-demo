@@ -3,7 +3,6 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
-var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
 
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
@@ -53,14 +52,6 @@ if (process.env.NODE_ENV === 'production') {
       path: path.resolve(BUILD_PATH, '[name].pro.manifest.json'),
       name: '[name]_library',
       context: __dirname,
-    }),
-    /* 使用 Gzip 压缩 JS 文件和 CSS 文件 */
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|css)$/,
-      threshold: 10240,
-      minRatio: 0.8,
     }),
   ]
 } else {
