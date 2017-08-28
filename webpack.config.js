@@ -73,7 +73,7 @@ if (process.env.NODE_ENV === 'production') {
       manifest: path.resolve(BUILD_PATH, 'vendor.pro.manifest.json'),
     }),
     /* 将 CSS 代码单独抽离出来 */
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('styles.[hash].css'),
     /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
     new LodashModuleReplacementPlugin({
@@ -199,7 +199,7 @@ module.exports = {
             ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
-                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
+                'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[hash:5]',
                 'postcss-loader',
                 'sass-loader',
               ],
@@ -207,7 +207,7 @@ module.exports = {
           ) : (
             [  // eslint-disable-line
               'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
+              'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
               'postcss-loader',  // eslint-disable-line
               'sass-loader',  // eslint-disable-line
             ]  // eslint-disable-line
