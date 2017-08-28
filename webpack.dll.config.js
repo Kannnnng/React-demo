@@ -15,12 +15,6 @@ if (process.env.NODE_ENV === 'production') {
     library: '[name]_library',
   }
   plugins = [
-    /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
-    /* 在 webpack2.0 中已不需要 */
-    // new webpack.optimize.DedupePlugin(),
-    /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
-    /* 在 webpack2.0 中已经不需要特别声明 */
-    // new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env': {
@@ -98,8 +92,9 @@ const vendors = [
   'normalizr',
   'prop-types',
   'react',
-  'react-dnd',
-  'react-dnd-html5-backend',
+  /* 实现拖拽效果的两个库，在目前的项目中可以暂时不使用 */
+  // 'react-dnd',
+  // 'react-dnd-html5-backend',
   'react-dom',
   'react-loadable',
   'react-redux',

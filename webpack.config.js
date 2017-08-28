@@ -5,7 +5,6 @@ var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
-var SplitByPathPlugin = require('webpack-split-by-path')  // eslint-disable-line
 var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
@@ -37,12 +36,6 @@ if (process.env.NODE_ENV === 'production') {
   devtool = false
   devServer = null
   plugins = [
-    /* 去除重复的依赖包的代码，取而代之的是运行的时候请求一个封装函数 */
-    /* 在 webpack2.0 中已不需要 */
-    // new webpack.optimize.DedupePlugin(),
-    /* 根据 id 的使用频率和分布来得出最短的 id 分配给使用频率高的模块 */
-    /* 在 webpack2.0 中已经不需要特别声明 */
-    // new webpack.optimize.OccurenceOrderPlugin(),
     /* 可以在编译时期创建全局变量 */
     new webpack.DefinePlugin({
       'process.env': {
@@ -74,13 +67,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.AggressiveMergingPlugin(),
     /* 允许错误不打断程序的执行，这在生产环境中很重要 */
     new webpack.NoEmitOnErrorsPlugin(),
-    /* 按照路径的不同来分割代码，现在因为使用了 DLL 以后就不再需要这样做了 */
-    // new SplitByPathPlugin([
-    //   {
-    //     name: 'vendor',
-    //     path: path.join(__dirname, 'node_modules'),
-    //   },
-    // ]),
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
@@ -115,15 +101,6 @@ if (process.env.NODE_ENV === 'production') {
       'react-hot-loader/patch',
       path.resolve(APP_PATH, 'index.js'),
     ],
-    // vendors: [
-    //   'react',
-    //   'react-dom',
-    //   'redux',
-    //   'react-router',
-    //   'material-ui',
-    //   'lodash',
-    //   'immutable',
-    // ],
   }
   output = {
     path: BUILD_PATH,
@@ -163,8 +140,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.NamedModulesPlugin(),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
     // new BundleAnalyzerPlugin(),
-    /* 抽取指定的公共代码库并将其打包到一个单独的文件中 */
-    // new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendors.js' }),  // 抽取公用块
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
