@@ -6,7 +6,6 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import lodash from 'lodash'
 import findDOMNode from 'react-dom/lib/findDOMNode'
 import DragDropContext from 'react-dnd/lib/DragDropContext'
 import DragSource from 'react-dnd/lib/DragSource'

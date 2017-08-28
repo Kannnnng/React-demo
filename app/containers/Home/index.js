@@ -11,7 +11,7 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import StudentManagementSidebar from 'components/StudentManagementSidebar'
 // import StudentManagement from 'components/StudentManagement'
 // import Loading from 'components/Loading'
-import Draggable from 'components/Draggable'
+// import Draggable from 'components/Draggable'
 import {
   // studentList,
   // groupList,
