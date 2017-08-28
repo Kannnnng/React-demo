@@ -4,11 +4,11 @@
   "description": "基于webpack的react学习与演示项目",
   "main": "index.js",
   "scripts": {
-    "build": "export NODE_ENV=production && webpack --progress",
-    "build:devDll": "export NODE_ENV=development && webpack --progress --config webpack.dll.config.js",
-    "build:proDll": "export NODE_ENV=production && webpack --progress --config webpack.dll.config.js",
+    "build": "webpack --progress --env pro",
+    "build:devDll": "webpack --progress --config webpack.dll.config.js --env dev",
+    "build:proDll": "webpack --progress --config webpack.dll.config.js --env pro",
     "generate": "plop --plopfile generator/index.js",
-    "start": "export NODE_ENV=development && webpack-dev-server --hot --progress",
+    "start": "webpack-dev-server --hot --progress --env dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -51,7 +51,7 @@
     "url-loader": "^0.5.8",
     "webpack": "^2.7.0",
     "webpack-bundle-analyzer": "^2.8.3",
-    "webpack-dev-server": "^2.4.2",
+    "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "axios": "^0.16.1",

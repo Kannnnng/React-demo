@@ -2,7 +2,6 @@ var path = require('path')  // eslint-disable-line
 var webpack = require('webpack')  // eslint-disable-line
 var HappyPack = require('happypack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
-var AutoPrefixer = require('autoprefixer')  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable-line
@@ -16,6 +15,8 @@ var cache = true  // eslint-disable-line
 var plugins = []  // eslint-disable-line
 var devtool = false  // eslint-disable-line
 var devServer = null  // eslint-disable-line
+
+process.env.NODE_ENV = process.argv.pop() === 'pro' ? 'production' : 'development'
 
 /* 如果当前环境是生产环境，就配置一些特定的插件，优化生产环境下的代码 */
 if (process.env.NODE_ENV === 'production') {

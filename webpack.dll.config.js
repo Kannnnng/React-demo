@@ -8,6 +8,8 @@ var CompressionPlugin = require('compression-webpack-plugin')  // eslint-disable
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
 
+process.env.NODE_ENV = process.argv.pop() === 'pro' ? 'production' : 'development'
+
 if (process.env.NODE_ENV === 'production') {
   output = {
     path: BUILD_PATH,
