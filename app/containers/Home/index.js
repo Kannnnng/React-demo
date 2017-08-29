@@ -123,7 +123,7 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <Draggable />
+        {/* <Draggable /> */}
         {/* <StudentManagementSidebar
           groupList={groupList}
           handleOnClickEditGroup={() => { console.log('测试') }}
