@@ -12,6 +12,7 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import StudentManagement from 'components/StudentManagement'
 // import Loading from 'components/Loading'
 // import Draggable from 'components/Draggable'
+import DiscusstionHeader from 'components/DiscusstionHeader'
 import {
   // studentList,
   // groupList,
@@ -154,6 +155,9 @@ class Home extends React.Component {
           phone={'15527226921'}
           style={{ width: '756px', height: '1008px' }}
         /> */}
+        <DiscusstionHeader
+          data={{}}
+        />
       </div>
     )
   }
