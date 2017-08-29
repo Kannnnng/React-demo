@@ -77,6 +77,19 @@
   background-color: #3B9E46;
 }
 
+.discusstionToggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    position: relative;
+    top: 3px;
+    left: -3px;
+  }
+}
+
 .typeText {
   font-size: 12px;
   font-weight: 500;

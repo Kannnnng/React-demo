@@ -29,6 +29,8 @@ export default class DiscusstionHeader extends React.PureComponent {
     const {
       stateData,
     } = this.state
+    const discusstionToggleClassName = `${styles.showTypeButton} ${styles.discusstionToggle}`
+
     return (
       <div className={styles.container}>
         <div className={styles.leftArea}>
@@ -60,9 +62,9 @@ export default class DiscusstionHeader extends React.PureComponent {
               <span className={styles.typeText}>{'图片墙'}</span>
             </button>
           </div>
-          <div className={styles.showTypeButton}>
+          <div className={discusstionToggleClassName}>
             <Toggle
-              thumbStyle={{ backgroundColor: '#4DB553' }}
+              thumbStyle={{ backgroundColor: '#4db553' }}
               thumbSwitchedStyle={{ backgroundColor: '#3B9E46' }}
             />
             <span className={styles.typeText}>{'图片墙'}</span>
