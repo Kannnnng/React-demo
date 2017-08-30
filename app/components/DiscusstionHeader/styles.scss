@@ -99,11 +99,11 @@
 
 .speakContentIcon,
 .keyWordIcon,
-.PicsIcon {
+.picsIcon {
   display: inline-block;
   width: 32px;
   height: 32px;
-  background-color:transparent;
+  background-color: transparent;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -117,6 +117,6 @@
   background-image: url('images/keywords.png');
 }
 
-.PicsIcon {
+.picsIcon {
   background-image: url('images/pictures.png');
 }

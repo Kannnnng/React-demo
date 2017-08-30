@@ -20,7 +20,7 @@ export default class {{ properCase name }} extends React.Component {
   }
 
   state = {
-    data: {},
+    stateData: {},
   }
 
   render() {
@@ -28,7 +28,7 @@ export default class {{ properCase name }} extends React.Component {
       data,
     } = this.props
     const {
-      data,
+      stateData,
     } = this.state
     return (
       {{#if wantSCSS}}
