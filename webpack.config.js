@@ -103,7 +103,7 @@ if (process.env.NODE_ENV === 'production') {
   /* 源代码与编译后代码的匹配模式 */
   /* Hot reloading code is just one line in the beginning and one line in the */
   /* end of each module so you might not need source maps at all */
-  devtool = 'eval'
+  devtool = 'inline-source-map'
   /* 前者的第一次编译速度快于后者，但后者生成的 sourceMap 能够直接定位到源代码 */
   /* 而前者只能定位到编译后的代码 */
   // devtool = 'cheap-eval-source-map'
@@ -112,6 +112,7 @@ if (process.env.NODE_ENV === 'production') {
     headers: { 'X-Custom-Header': 'yes' },
     /* 设置为 true 后所有的跳转都将指向 index.html */
     historyApiFallback: true,
+    host: 'localhost',
     port: 9000,
     proxy: {
       '/api/*': {
