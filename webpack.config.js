@@ -73,7 +73,10 @@ if (process.env.NODE_ENV === 'production') {
       manifest: path.resolve(BUILD_PATH, 'vendor.pro.manifest.json'),
     }),
     /* 将 CSS 代码单独抽离出来 */
-    new ExtractTextPlugin('styles.[hash].css'),
+    new ExtractTextPlugin({
+      allChunks: true,
+      filename: 'styles.[hash].css',
+    }),
     /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
     new LodashModuleReplacementPlugin({
