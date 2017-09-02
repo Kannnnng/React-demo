@@ -141,7 +141,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 2,
+      threads: 4,
       loaders: ['babel-loader?cacheDirectory'],
     }),
   ]
@@ -217,7 +217,7 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         loader: 'url-loader?limit=4096',
         include: APP_PATH,
       },
@@ -227,7 +227,7 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(mp4|ogg|mp3|svg)$/i,
+        test: /\.(mp4|ogg|mp3)$/i,
         loader: 'file-loader',
         include: APP_PATH,
       },
