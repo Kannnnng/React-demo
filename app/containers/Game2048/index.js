@@ -137,7 +137,7 @@ class Game2048 extends React.Component {
   }
 
   renderChessBoard() {
-    return this.state.chessBoard.map((value, index) => <div className={styles.chessMan} key={index}><div className={styles.chessManText}>{value || ''}</div></div>)
+    return this.state.chessBoard.map((value, index) => <div className={styles.chessMan} key={index}><div className={styles.chessManText}>{value || ''}</div></div>)  // eslint-disable-line
   }
 
   render() {

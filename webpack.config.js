@@ -176,7 +176,7 @@ module.exports = {
     loaders: [
       {
         enforce: 'pre',
-        test: /\.jsx$/i,
+        test: /\.(js|jsx)$/i,
         loaders: ['eslint-loader'],
         exclude: NODE_MODULES_PATH,
       },
