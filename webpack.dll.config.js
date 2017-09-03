@@ -108,6 +108,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = {
+  context: __dirname,
   entry: {
     vendor: vendors,
   },

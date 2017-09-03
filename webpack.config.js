@@ -151,6 +151,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
+  context: __dirname,
   /* 入口文件 */
   entry,
   /* 出口文件 */
