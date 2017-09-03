@@ -1,8 +1,10 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "block-no-empty": true,
     "color-hex-length": null,
-    "color-hex-case": null,
-    "shorthand-property-no-redundant-values": null,
+    "color-hex-case": "upper",
+    "shorthand-property-no-redundant-values": true,
+    "unit-no-unknown": true,
   }
 }
