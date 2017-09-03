@@ -8,6 +8,7 @@ var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disab
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
@@ -77,6 +78,9 @@ if (process.env.NODE_ENV === 'production') {
     new ExtractTextPlugin({
       allChunks: true,
       filename: 'styles.[hash].css',
+    }),
+    new OptimizeCssAssetsPlugin({
+      cssProcessorOptions: { discardComments: { removeAll: true } },
     }),
     /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
