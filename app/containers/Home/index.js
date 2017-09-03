@@ -112,7 +112,7 @@ class Home extends React.Component {
               onTouchTap={() => { window.location = 'https://kannnnng.github.io/Blog/' }}  //eslint-disable-line
             />
             <ListItem
-              primaryText="2048"
+              primaryText="2048小游戏"
               onTouchTap={this.handleOnClickCatalogList('/2048')}
             />
           </List>

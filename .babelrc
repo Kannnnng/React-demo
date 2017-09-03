@@ -14,6 +14,5 @@
       "moduleName": "babel-runtime",
       "useESModules": true,
     }],
-    "react-hot-loader/babel",
   ],
 }
