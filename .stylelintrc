@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "block-closing-brace-newline-before": "always",
     "block-no-empty": true,
     "color-hex-length": null,
     "color-hex-case": "upper",
