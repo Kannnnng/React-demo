@@ -182,7 +182,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/i,
-        loaders: (process.env.NODE_ENV === 'production' ? ['happypack/loader?id=js'] : ['babel-loader?cacheDirectory']),
+        loaders: (process.env.NODE_ENV === 'production' ? ['happypack/loader?id=js'] : ['react-hot-loader/webpack', 'babel-loader?cacheDirectory']),  // eslint-disable-line
         exclude: NODE_MODULES_PATH,
       },
       {
