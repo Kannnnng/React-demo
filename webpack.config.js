@@ -4,6 +4,7 @@ var HappyPack = require('happypack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
+var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     publicPath: '/React-demo/build/assets/',
   }
   cache = false
-  devtool = false
+  devtool = 'source-map'
   devServer = {}
   plugins = [
     /* 可以在编译时期创建全局变量 */
@@ -86,7 +87,7 @@ if (process.env.NODE_ENV === 'production') {
     new HappyPack({
       id: 'js',
       threads: 2,
-      loaders: ['babel-loader?cacheDirectory'],
+      loaders: ['babel-loader'],
     }),
   ]
 } else {
@@ -112,11 +113,13 @@ if (process.env.NODE_ENV === 'production') {
   // devtool = 'cheap-eval-source-map'
   // devtool = 'cheap-module-eval-source-map'
   devServer = {
-    headers: { 'X-Custom-Header': 'yes' },
+    /* 暂时使用不到这个设置 */
+    // headers: { 'X-Custom-Header': 'yes' },
     /* 设置为 true 后所有的跳转都将指向 index.html */
     historyApiFallback: true,
     host: 'localhost',
     port: 9000,
+    /* 请求代理 */
     proxy: {
       '/api/*': {
         target: 'http://localhost:7000',
@@ -142,11 +145,11 @@ if (process.env.NODE_ENV === 'production') {
       manifest: path.resolve(BUILD_PATH, 'vendor.dev.manifest.json'),
     }),
     /* 通过多线程的方式快速编译代码 */
-    new HappyPack({
-      id: 'js',
-      threads: 2,
-      loaders: ['babel-loader?cacheDirectory'],
-    }),
+    // new HappyPack({
+    //   id: 'js',
+    //   threads: 2,
+    //   loaders: ['babel-loader?cacheDirectory'],
+    // }),
   ]
 }
 
@@ -171,12 +174,12 @@ module.exports = {
         enforce: 'pre',
         test: /\.jsx$/i,
         loaders: ['eslint-loader'],
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(js|jsx)$/i,
-        loaders: ['happypack/loader?id=js'],
-        include: APP_PATH,
+        loaders: (process.env.NODE_ENV === 'production' ? ['happypack/loader?id=js'] : ['babel-loader?cacheDirectory']),
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.css$/i,
@@ -195,7 +198,7 @@ module.exports = {
               'postcss-loader',  // eslint-disable-line
             ]  // eslint-disable-line
         ),
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.scss$/i,
@@ -218,22 +221,22 @@ module.exports = {
             ]  // eslint-disable-line
           )
         ),
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
         loader: 'url-loader?limit=4096',
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(ttf|woff|woff2)$/i,
         loader: 'url-loader?limit=4096',
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(mp4|ogg|mp3)$/i,
         loader: 'file-loader',
-        include: APP_PATH,
+        exclude: NODE_MODULES_PATH,
       },
     ],
   },
@@ -249,6 +252,6 @@ module.exports = {
       utils: path.resolve(APP_PATH, 'utils'),
     },
     /* 直接写明 node_modules 的全路径 */
-    modules: [path.resolve(ROOT_PATH, 'node_modules')],
+    modules: [NODE_MODULES_PATH],
   },
 }
