@@ -174,12 +174,13 @@ module.exports = {
   /* 针对不同的文件类型配置不同的 loader，并设置对应的配置项 */
   module: {
     loaders: [
-      {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/i,
-        loaders: ['eslint-loader'],
-        exclude: NODE_MODULES_PATH,
-      },
+      /* 暂时先把 Eslint 关掉，这玩意太蛋疼了 */
+      // {
+      //   enforce: 'pre',
+      //   test: /\.(js|jsx)$/i,
+      //   loaders: ['eslint-loader'],
+      //   exclude: NODE_MODULES_PATH,
+      // },
       {
         test: /\.(js|jsx)$/i,
         loaders: (process.env.NODE_ENV === 'production' ? ['happypack/loader?id=js'] : ['react-hot-loader/webpack', 'babel-loader?cacheDirectory']),  // eslint-disable-line

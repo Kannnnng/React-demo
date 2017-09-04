@@ -12,7 +12,8 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import StudentManagement from 'components/StudentManagement'
 // import Loading from 'components/Loading'
 // import Draggable from 'components/Draggable'
-import DiscusstionHeader from 'components/DiscusstionHeader'
+// import DiscusstionHeader from 'components/DiscusstionHeader'
+import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
 import {
   // studentList,
   // groupList,
@@ -86,7 +87,7 @@ class Home extends React.Component {
           </div>
           <div className={styles.titleUnderLine} />
           <div className={styles.introduction}>
-            这里是我的个人博客
+            这里是我的个人博客123
           </div>
         </div>
         <Drawer
@@ -155,8 +156,69 @@ class Home extends React.Component {
           phone={'15527226921'}
           style={{ width: '756px', height: '1008px' }}
         /> */}
-        <DiscusstionHeader
+        {/* <DiscusstionHeader
           data={{}}
+        /> */}
+        <DiscussionBottomToolBar
+          attendeeCount={110}
+          messageCount={110}
+          groupList={[
+            {
+              id: 1,
+              name: '分组1',
+              color: '#ff4520',
+              studentIds: [
+                5,
+                6,
+                7,
+                8,
+              ],
+            },
+            {
+              id: 2,
+              name: '分组2',
+              color: '#f8e71c',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 3,
+              name: '分组2',
+              color: '#00ccde',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 4,
+              name: '分组2',
+              color: '#7ed321',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 5,
+              name: '分组2',
+              color: '#bd10e0',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+          ]}
         />
       </div>
     )
