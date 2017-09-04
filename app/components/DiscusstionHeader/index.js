@@ -55,7 +55,8 @@ export default function DiscusstionHeader({
         <div className={discusstionToggleClassName}>
           <Toggle
             defaultToggled={isDiscusstionOpening}
-            thumbStyle={{ backgroundColor: '#4DB553' }}
+            thumbStyle={{ backgroundColor: '#FFF' }}
+            trackStyle={{ backgroundColor: 'rgba(34, 31, 31, 0.26)' }}
             thumbSwitchedStyle={{ backgroundColor: '#4DB553' }}
             trackSwitchedStyle={{ backgroundColor: '#3B9E46' }}
             onToggle={handleOnToggleDiscusstion}
