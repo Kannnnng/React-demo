@@ -31,6 +31,14 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     this.setState({ checkedGroupId: value })
   }
 
+  handleOnClickSettingButton = () => {
+    console.log('你点击了设置按钮')  // eslint-disable-line
+  }
+
+  handleOnClickExportButton = () => {
+    console.log('你点击了导出按钮')  // eslint-disable-line
+  }
+
   render() {
     const {
       attendeeCount,
@@ -66,7 +74,34 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
             </div>
           ))}
         </div>
-        <div className={styles.rightArea}>456</div>
+        <div className={styles.rightArea}>
+          <div className={styles.setting}>
+            <RaisedButton
+              label={''}
+              className={styles.settingButton}
+              backgroundColor={'transparent'}
+              buttonStyle={{ height: '100%', lineHeight: '0' }}
+              overlayStyle={{ fontSize: '0', lineHeight: '1' }}
+              onClick={this.handleOnClickSettingButton}
+            >
+              <FontIcon className="fa fa-sliders" />
+              <span>{'配置'}</span>
+            </RaisedButton>
+          </div>
+          <div className={styles.export}>
+            <RaisedButton
+              label={''}
+              className={styles.exportButton}
+              backgroundColor={'transparent'}
+              buttonStyle={{ height: '100%', lineHeight: '0' }}
+              overlayStyle={{ fontSize: '0', lineHeight: '1' }}
+              onClick={this.handleOnClickExportButton}
+            >
+              <FontIcon className="fa fa-external-link" />
+              <span>{'导出'}</span>
+            </RaisedButton>
+          </div>
+        </div>
       </div>
     )
   }

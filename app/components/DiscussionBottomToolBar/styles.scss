@@ -75,3 +75,40 @@
   display: flex;
   align-items: center;
 }
+
+.setting,
+.export {
+  width: 24px;
+  height: 100%;
+}
+
+.settingButton,
+.exportButton {
+  background-color: transparent !important;
+  min-width: 0 !important;
+  width: 24px !important;
+  height: 100% !important;
+
+  button div > span div {
+    background-color: #FFF !important;
+  }
+
+  button div div span {
+    font-size: 12px;
+    color: #FFF !important;
+
+    &:last-child {
+      position: relative;
+      top: 3px;
+    }
+  }
+}
+
+.exportButton span:first-child {
+  position: relative;
+  top: 2px;
+}
+
+.export {
+  margin-left: 16px;
+}
