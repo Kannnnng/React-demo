@@ -2,7 +2,8 @@ var plugins = [  // eslint-disable-line
   require('autoprefixer')({  // eslint-disable-line
     browsers: ['last 3 versions'],
   }),
-  require('stylelint')(),  // eslint-disable-line
+  /* 有时间再慢慢修改 */
+  // require('stylelint')(),  // eslint-disable-line
 ]
 
 /* 已经使用 optimize-css-assets-webpack-plugin 进行 CSS 代码的压缩工作 */

@@ -1,10 +1,12 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "block-closing-brace-newline-before": "always",
+    "block-closing-brace-newline-before": null,
     "block-no-empty": true,
     "color-hex-length": null,
     "color-hex-case": "upper",
+    "comment-empty-line-before": "never",
+    "rule-empty-line-before": "always-multi-line",
     "shorthand-property-no-redundant-values": true,
     "unit-no-unknown": true,
   }

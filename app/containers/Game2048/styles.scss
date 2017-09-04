@@ -14,13 +14,14 @@
 .box {
   $width: 410px;
   $height: 410px;
+
   width: $width;
   height: $height;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 0px - $height / 2;
-  margin-left: 0px - $width / 2;
+  margin-top: 0 - $height / 2;
+  margin-left: 0 - $width / 2;
   overflow: hidden;
   border-radius: 5px;
   padding: 5px;
