@@ -5,10 +5,10 @@ var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disable-line
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')  // eslint-disable-line
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 
 var entry = {}  // eslint-disable-line
 var output = {}  // eslint-disable-line
