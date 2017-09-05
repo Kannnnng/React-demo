@@ -2,7 +2,7 @@ var plugins = [  // eslint-disable-line
   require('autoprefixer')({  // eslint-disable-line
     browsers: ['last 3 versions'],
   }),
-  /* 有时间再慢慢修改 */
+  /* 先把 Stylelint 关掉，因为提示的警告太多了……有时间再慢慢修改 */
   // require('stylelint')(),  // eslint-disable-line
 ]
 
