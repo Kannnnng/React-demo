@@ -79,6 +79,7 @@ if (process.env.NODE_ENV === 'production') {
       allChunks: true,
       filename: 'styles.[hash].css',
     }),
+    /* 与 extract-text-webpack-plugin 协同工作，压缩 CSS 代码 */
     new OptimizeCssAssetsPlugin({
       cssProcessorOptions: { discardComments: { removeAll: true } },
     }),
