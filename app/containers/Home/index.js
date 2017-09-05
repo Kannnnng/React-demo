@@ -218,7 +218,202 @@ class Home extends React.Component {
                 12,
               ],
             },
+            {
+              id: 6,
+              name: '分组1',
+              color: '#ff4520',
+              studentIds: [
+                5,
+                6,
+                7,
+                8,
+              ],
+            },
+            {
+              id: 7,
+              name: '分组2',
+              color: '#f8e71c',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 8,
+              name: '分组2',
+              color: '#00ccde',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 9,
+              name: '分组2',
+              color: '#7ed321',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 10,
+              name: '分组2',
+              color: '#bd10e0',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 11,
+              name: '分组1',
+              color: '#ff4520',
+              studentIds: [
+                5,
+                6,
+                7,
+                8,
+              ],
+            },
+            {
+              id: 12,
+              name: '分组2',
+              color: '#f8e71c',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 13,
+              name: '分组2',
+              color: '#00ccde',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 14,
+              name: '分组2',
+              color: '#7ed321',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 15,
+              name: '分组2',
+              color: '#bd10e0',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 16,
+              name: '分组1',
+              color: '#ff4520',
+              studentIds: [
+                5,
+                6,
+                7,
+                8,
+              ],
+            },
+            {
+              id: 17,
+              name: '分组2',
+              color: '#f8e71c',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 18,
+              name: '分组2',
+              color: '#00ccde',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
+            {
+              id: 19,
+              name: '分组2',
+              color: '#7ed321',
+              studentIds: [
+                9,
+                10,
+                11,
+                12,
+              ],
+            },
           ]}
+          studentGroupList={{
+            1: [
+              {
+                id: 1,
+                name: '张1包',
+                avatar: '',
+                messagesCount: 1,
+              },
+              {
+                id: 2,
+                name: '张2包',
+                avatar: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_005.jpg',
+                messagesCount: 2,
+              },
+              {
+                id: 3,
+                name: '张3包',
+                avatar: '',
+                messagesCount: 3,
+              },
+              {
+                id: 4,
+                name: '张4包',
+                avatar: '',
+                messagesCount: 4,
+              },
+              {
+                id: 5,
+                name: '张5包',
+                avatar: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_005.jpg',
+                messagesCount: 5,
+              },
+              {
+                id: 6,
+                name: '张6包',
+                avatar: 'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_005.jpg',
+                messagesCount: 0,
+              },
+            ],
+          }}
+          style={{ top: '300px' }}
         />
       </div>
     )

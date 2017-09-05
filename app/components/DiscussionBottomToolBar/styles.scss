@@ -46,7 +46,11 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-}
+  max-width: calc(100% - 280px);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}/* 小组很多的情况不知道怎么显示，目前暂时将没显示出来的小组隐藏掉 */
 
 .groupButtonContainer {
   width: 40px;
@@ -105,10 +109,156 @@
 }
 
 .exportButton span:first-child {
-  position: relative;
   top: 2px;
-}
+}/* 导出图标莫名其妙地比配置图标高一点，用这个样式来抵消一下 */
 
 .export {
   margin-left: 16px;
+}
+
+.selectPanel {
+  position: absolute;
+  top: -165px;
+  left: 0;
+  width: 100%;
+  height: 165px;
+  background-color: rgba(255, 36, 22, 0.1);
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.selectPanelHeader {
+  width: 100%;
+  padding-top: 16px;
+  position: relative;
+}
+
+.groupName {
+  position: absolute;
+  top: 14px;
+  left: 17px;
+
+  > * {
+    vertical-align: middle;
+  }
+
+  :nth-child(1) {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background-color: #FF0009;
+  }/* 小组的默认颜色是红色 */
+
+  :nth-child(2) {
+    font-size: 14px;
+    color: #FFF;
+  }
+}
+
+.selectPanelTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    vertical-align: middle;
+  }
+
+  :nth-child(1) {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('images/invertedTriangle.png');
+    margin-right: 6px;
+  }
+
+  :nth-child(2) {
+    font-size: 16px;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    text-decoration: underline;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:active {
+      color: #333;
+    }
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 17px;
+}
+
+.selectPanelBody {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 25px;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  > * {
+    flex: none;
+  }
+}
+
+/* 下面是 StudentDiscussionAvatar 组件中用到的样式 */
+
+.studentDiscussionAvatarContainer {
+  width: 64px;
+  height: 86px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.studentDiscussionAvatarButton {
+  background-color: transparent !important;
+  min-width: 0 !important;
+  width: 64px !important;
+  height: 86px !important;
+  box-shadow: none !important;
+}
+
+.studentDiscussionAvatar {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: solid 5px #FFF;
+  border-radius: 50%;
+  background-image: url('images/yeoman.png');
+  margin-bottom: 6px;
+  padding: 15px;
+  box-sizing: border-box;
+
+  > span {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    background-color: #FFF;
+    opacity: 0.8;
+    line-height: 24px;
+  }
+
+  & + * {
+    font-size: 18px;
+    color: #FFF;
+  }
 }
