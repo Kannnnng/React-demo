@@ -14,13 +14,13 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
-import {
+// import {
   // studentList,
   // groupList,
   // questionContent,
   // questionAnswer,
   // answerAnalysis,
-} from './mock'
+// } from './mock'
 import styles from './styles'
 
 class Home extends React.Component {
@@ -190,182 +190,6 @@ class Home extends React.Component {
               id: 3,
               name: '分组2',
               color: '#00ccde',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 4,
-              name: '分组2',
-              color: '#7ed321',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 5,
-              name: '分组2',
-              color: '#bd10e0',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 6,
-              name: '分组1',
-              color: '#ff4520',
-              studentIds: [
-                5,
-                6,
-                7,
-                8,
-              ],
-            },
-            {
-              id: 7,
-              name: '分组2',
-              color: '#f8e71c',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 8,
-              name: '分组2',
-              color: '#00ccde',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 9,
-              name: '分组2',
-              color: '#7ed321',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 10,
-              name: '分组2',
-              color: '#bd10e0',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 11,
-              name: '分组1',
-              color: '#ff4520',
-              studentIds: [
-                5,
-                6,
-                7,
-                8,
-              ],
-            },
-            {
-              id: 12,
-              name: '分组2',
-              color: '#f8e71c',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 13,
-              name: '分组2',
-              color: '#00ccde',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 14,
-              name: '分组2',
-              color: '#7ed321',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 15,
-              name: '分组2',
-              color: '#bd10e0',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 16,
-              name: '分组1',
-              color: '#ff4520',
-              studentIds: [
-                5,
-                6,
-                7,
-                8,
-              ],
-            },
-            {
-              id: 17,
-              name: '分组2',
-              color: '#f8e71c',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 18,
-              name: '分组2',
-              color: '#00ccde',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
-              ],
-            },
-            {
-              id: 19,
-              name: '分组2',
-              color: '#7ed321',
               studentIds: [
                 9,
                 10,

@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import StudentDiscussionAvatar from './StudentDiscussionAvatar'
+import DiscussionBottomToolBarTips from './DiscussionBottomToolBarTips'
 import styles from './styles'
 
 export default class DiscussionBottomToolBar extends React.PureComponent {
@@ -207,6 +208,13 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
             ))}
           </div>
         </div>
+        <DiscussionBottomToolBarTips
+          type={'student'}
+          name={'YSK'}
+          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
+          messagesCount={34}
+          handleOnClickCancel={() => { console.log('测试1') }}
+        />
       </div>
     )
   }

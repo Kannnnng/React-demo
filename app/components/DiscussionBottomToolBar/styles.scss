@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
 
-  :first-child {
+  > :first-child {
     color: #FFF !important;
     top: -2px;
   }
@@ -28,15 +28,15 @@
     background-position: center;
   }
 
-  :nth-child(2),
-  :nth-child(4) {
+  > :nth-child(2),
+  > :nth-child(4) {
     font-size: 16px;
     color: #EEE;
     padding-left: 3px;
     padding-right: 4px;
   }
 
-  :nth-child(2) {
+  > :nth-child(2) {
     padding-right: 16px;
   }
 }
@@ -142,7 +142,7 @@
     vertical-align: middle;
   }
 
-  :nth-child(1) {
+  > :nth-child(1) {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -150,7 +150,7 @@
     background-color: #FF0009;
   }/* 小组的默认颜色是红色 */
 
-  :nth-child(2) {
+  > :nth-child(2) {
     font-size: 14px;
     color: #FFF;
   }
@@ -165,7 +165,7 @@
     vertical-align: middle;
   }
 
-  :nth-child(1) {
+  > :nth-child(1) {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -176,7 +176,7 @@
     margin-right: 6px;
   }
 
-  :nth-child(2) {
+  > :nth-child(2) {
     font-size: 16px;
     color: #FFF;
     margin: 0;
@@ -260,5 +260,47 @@
   & + * {
     font-size: 18px;
     color: #FFF;
+  }
+}
+
+/* 下面是 DiscussionBottomToolBarTips 组件中用到的样式 */
+
+.DiscussionBottomToolBarTipsContainer {
+  position: relative;
+  top: -106px;
+  left: 0;
+  width: 100%;
+  height: 42px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.DiscussionBottomToolBarTipsContent {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  border-radius: 19px;
+  background-color: #FFF;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+
+  > :nth-child(1) {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);
+    margin-left: 10px;
+    margin-right: 8px;
+  }
+
+  > :nth-child(2) {
+    font-size: 14px;
+    color: #333;
+  }
+
+  > :nth-child(3) > div {
+    font-size: 0;
   }
 }
