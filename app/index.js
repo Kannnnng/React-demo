@@ -4,7 +4,7 @@ import Provider from 'react-redux/lib/components/Provider'
 import AppContainer from 'react-hot-loader/lib/AppContainer'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import Routes from './routes'
+import Routes from './containers/Home'
 import configStore from './store'
 
 import './styles'
@@ -32,7 +32,7 @@ const render = (Component) => {
 render(Routes)
 
 if (module.hot) {
-  module.hot.accept('./routes', () => {
+  module.hot.accept('./containers/Home', () => {
     render(Routes)
   })
 }

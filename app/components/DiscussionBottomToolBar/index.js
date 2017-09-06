@@ -14,6 +14,7 @@ import StudentDiscussionAvatar from './StudentDiscussionAvatar'
 import styles from './styles'
 
 export default class DiscussionBottomToolBar extends React.PureComponent {
+
   static propTypes = {
     attendeeCount: PropTypes.number,
     messageCount: PropTypes.number,
@@ -39,9 +40,13 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     style: {},
   }
 
-  state = {
-    checkedGroupId: null,
-    showSelectPanel: false,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      checkedGroupId: null,
+      showSelectPanel: false,
+    }
   }
 
   handleOnClickGroupButton = (value) => () => {

@@ -24,16 +24,21 @@ import {
 import styles from './styles'
 
 class Home extends React.Component {
+
   static propTypes = {
     history: PropTypes.object,
   }
 
-  state = {
-    openCatalog: false,
-    openSnackbar: false,
-    snackbarMessage: '',
-    /* 下面是仅供测试用的 state */
-    /* 上面是仅供测试用的 state */
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      openCatalog: false,
+      openSnackbar: false,
+      snackbarMessage: '',
+      /* 下面是仅供测试用的 state */
+      /* 上面是仅供测试用的 state */
+    }
   }
 
   handleOnClickCatalog = () => {
@@ -87,7 +92,7 @@ class Home extends React.Component {
           </div>
           <div className={styles.titleUnderLine} />
           <div className={styles.introduction}>
-            这里是我的个人博客123
+            这里是我的个人博客
           </div>
         </div>
         <Drawer
