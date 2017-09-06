@@ -104,6 +104,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               style={checkedGroupId === value.id ? { backgroundColor: 'rgba(255, 36, 22, 0.1)' } : null}
             >
               <RaisedButton
+                label={'label'}
+                labelStyle={{ display: 'none' }}
                 className={styles.groupButton}
                 backgroundColor={value.color}
                 buttonStyle={{ height: '24px', lineHeight: '1' }}
@@ -115,6 +117,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
         <div className={styles.rightArea}>
           <div className={styles.setting}>
             <RaisedButton
+              label={'label'}
+              labelStyle={{ display: 'none' }}
               className={styles.settingButton}
               backgroundColor={'transparent'}
               buttonStyle={{ height: '100%', lineHeight: '0' }}
@@ -127,6 +131,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
           </div>
           <div className={styles.export}>
             <RaisedButton
+              label={'label'}
+              labelStyle={{ display: 'none' }}
               className={styles.exportButton}
               backgroundColor={'transparent'}
               buttonStyle={{ height: '100%', lineHeight: '0' }}
