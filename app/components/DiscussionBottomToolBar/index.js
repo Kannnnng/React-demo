@@ -152,7 +152,6 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       })
     } else if (checkedGroupId) {
       bottomToolBarTipsInfo = groupList.find((value) => checkedGroupId === value.id)
-      console.log(bottomToolBarTipsInfo, 123)
       bottomToolBarTipsInfo.messagesCount = bottomToolBarTipsInfo.studentInfo.reduce((result, value) => result + value.messagesCount, 0)  // eslint-disable-line
     }
 

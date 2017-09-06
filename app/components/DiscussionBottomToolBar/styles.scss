@@ -101,11 +101,11 @@
   }
 
   button div div span {
-    font-size: 12px;
     color: #FFF !important;
+    font-size: 12px;
+    white-space: nowrap;
 
     &:last-child {
-      position: relative;
       top: 3px;
     }
   }
