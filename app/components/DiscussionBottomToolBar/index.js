@@ -18,7 +18,19 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
   static propTypes = {
     attendeeCount: PropTypes.number,
     messageCount: PropTypes.number,
-    groupList: PropTypes.array,
+    groupList: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        name: PropTypes.string,
+        color: PropTypes.string,
+        studentInfo: PropTypes.arrayOf(
+          PropTypes.shape({
+            studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            messageCount: PropTypes.number,
+          }),
+        ),
+      }),
+    ),
     studentGroupList: PropTypes.objectOf(
       PropTypes.arrayOf(
         PropTypes.shape({
@@ -29,14 +41,39 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
         }),
       ),
     ),  // 按照小组分好了的学生列表信息
+    handleOnClickSettingButton: PropTypes.func,
+    handleOnClickExportButton: PropTypes.func,
     style: PropTypes.object,
   }
 
   static defaultProps = {
     attendeeCount: 0,
     messageCount: 0,
-    groupList: [],
-    studentGroupList: [],
+    groupList: [
+      {
+        id: 0,
+        name: '',
+        color: 'red',
+        studentInfo: [
+          {
+            studentId: 0,
+            messagesCount: 0,
+          },
+        ],
+      },
+    ],
+    studentGroupList: {
+      0: [
+        {
+          id: 0,
+          name: '',
+          avatar: '',
+          messagesCount: 0,
+        },
+      ],
+    },
+    handleOnClickSettingButton: () => {},
+    handleOnClickExportButton: () => {},
     style: {},
   }
 
@@ -50,14 +87,6 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       checkedGroupId: value,
       showSelectPanel: true,
     })
-  }
-
-  handleOnClickSettingButton = () => {
-    console.log('你点击了设置按钮')  // eslint-disable-line
-  }
-
-  handleOnClickExportButton = () => {
-    console.log('你点击了导出按钮')  // eslint-disable-line
   }
 
   handleOnClickOnlyShowOneGroup = () => {
@@ -123,7 +152,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               backgroundColor={'transparent'}
               buttonStyle={{ height: '100%', lineHeight: '0' }}
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
-              onClick={this.handleOnClickSettingButton}
+              onClick={this.props.handleOnClickSettingButton}
             >
               <FontIcon className="fa fa-sliders" />
               <span>{'配置'}</span>
@@ -137,7 +166,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               backgroundColor={'transparent'}
               buttonStyle={{ height: '100%', lineHeight: '0' }}
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
-              onClick={this.handleOnClickExportButton}
+              onClick={this.props.handleOnClickExportButton}
             >
               <FontIcon className="fa fa-external-link" />
               <span>{'导出'}</span>
