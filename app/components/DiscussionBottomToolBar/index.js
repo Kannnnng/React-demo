@@ -80,27 +80,49 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   state = {
     checkedGroupId: null,
+    checkedStudentId: null,
+    onlyShowOneGroup: false,
     showSelectPanel: false,
+    showBottomToolBarTips: false,
   }
 
   handleOnClickGroupButton = (value) => () => {
     this.setState({
       checkedGroupId: value,
       showSelectPanel: true,
+      showBottomToolBarTips: false,
     })
   }
 
   handleOnClickOnlyShowOneGroup = () => {
-    console.log('你点击了只显示本组发言按钮')  // eslint-disable-line
+    this.setState({
+      onlyShowOneGroup: true,
+      showSelectPanel: false,
+      showBottomToolBarTips: true,
+    })
   }
 
   handleOnClickCloseSelectPanel = () => {
-    console.log('你点击了关闭小组选择面板按钮')  // eslint-disable-line
+    if (this.state.onlyShowOneGroup || this.state.checkedGroupId) {
+      this.setState({ showBottomToolBarTips: true })
+    }
     this.setState({ showSelectPanel: false })
   }
 
   handleOnClickAvatar = (value) => () => {
-    console.log('你点击了 ID 为' + value + '的学生头像')  // eslint-disable-line
+    this.setState({
+      checkedStudentId: value,
+      showSelectPanel: false,
+      showBottomToolBarTips: true,
+    })
+  }
+
+  handleOnClickCancel = () => {
+    this.setState({
+      checkedGroupId: null,
+      checkedStudentId: null,
+      showBottomToolBarTips: false,
+    })
   }
 
   render() {
@@ -113,10 +135,26 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     } = this.props
     const {
       checkedGroupId,
+      checkedStudentId,
       showSelectPanel,
+      showBottomToolBarTips,
     } = this.state
     const checkedGroup = groupList.find((value) => value.id === checkedGroupId) || {}
     const checkedGroupStudentList = studentGroupList[checkedGroupId] || []
+    const bottomToolBarTipsType = (checkedStudentId && 'student') || (checkedGroupId && 'group') || undefined
+
+    let bottomToolBarTipsInfo = {}
+
+    if (checkedStudentId) {
+      lodash.find(studentGroupList, (value) => {
+        bottomToolBarTipsInfo = value.find((item) => item.id === checkedStudentId)
+        return bottomToolBarTipsInfo !== undefined
+      })
+    } else if (checkedGroupId) {
+      bottomToolBarTipsInfo = groupList.find((value) => checkedGroupId === value.id)
+      console.log(bottomToolBarTipsInfo, 123)
+      bottomToolBarTipsInfo.messagesCount = bottomToolBarTipsInfo.studentInfo.reduce((result, value) => result + value.messagesCount, 0)  // eslint-disable-line
+    }
 
     return (
       <div className={styles.container} style={style}>
@@ -178,7 +216,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
           <div className={styles.selectPanelHeader}>
             <div className={styles.groupName}>
               <span style={{ backgroundColor: `${checkedGroup.color}` }} />
-              <span>{` ${checkedGroup.name} (${lodash.get(checkedGroup, 'studentIds.length')}人)`}</span>
+              <span>{` ${checkedGroup.name} (${lodash.get(checkedGroup, 'studentInfo.length')}人)`}</span>
             </div>
             <div className={styles.selectPanelTitle}>
               <span />
@@ -209,11 +247,12 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
           </div>
         </div>
         <DiscussionBottomToolBarTips
-          type={'student'}
-          name={'YSK'}
-          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
-          messagesCount={34}
-          handleOnClickCancel={() => { console.log('测试1') }}
+          type={bottomToolBarTipsType}
+          name={bottomToolBarTipsInfo.name}
+          avatar={bottomToolBarTipsInfo.avatar || bottomToolBarTipsInfo.color}
+          messagesCount={bottomToolBarTipsInfo.messagesCount}
+          handleOnClickCancel={this.handleOnClickCancel}
+          style={showBottomToolBarTips ? null : { top: '-45px' }}
         />
       </div>
     )

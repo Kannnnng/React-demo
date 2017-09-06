@@ -168,33 +168,45 @@ class Home extends React.Component {
               id: 1,
               name: '分组1',
               color: '#ff4520',
-              studentIds: [
-                5,
-                6,
-                7,
-                8,
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
               ],
             },
             {
               id: 2,
               name: '分组2',
               color: '#f8e71c',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
+              studentInfo: [
+                {
+                  id: 3,
+                  messagesCount: 12,
+                },
+                {
+                  id: 4,
+                  messagesCount: 10,
+                },
               ],
             },
             {
               id: 3,
               name: '分组2',
               color: '#00ccde',
-              studentIds: [
-                9,
-                10,
-                11,
-                12,
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
               ],
             },
           ]}
