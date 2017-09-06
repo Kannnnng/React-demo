@@ -25,6 +25,10 @@ import styles from './styles'
 
 class Home extends React.Component {
 
+  static propTypes = {
+    history: PropTypes.object,
+  }
+
   constructor(props) {
     super(props)
 
@@ -88,7 +92,7 @@ class Home extends React.Component {
           </div>
           <div className={styles.titleUnderLine} />
           <div className={styles.introduction}>
-            这里是我的个人博客123
+            这里是我的个人博客
           </div>
         </div>
         <Drawer
@@ -419,10 +423,6 @@ class Home extends React.Component {
       </div>
     )
   }
-}
-
-Home.propTypes = {
-  history: PropTypes.object,
 }
 
 export default Home

@@ -15,6 +15,31 @@ import styles from './styles'
 
 export default class DiscussionBottomToolBar extends React.PureComponent {
 
+  static propTypes = {
+    attendeeCount: PropTypes.number,
+    messageCount: PropTypes.number,
+    groupList: PropTypes.array,
+    studentGroupList: PropTypes.objectOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          name: PropTypes.string,
+          avatar: PropTypes.string,
+          messagesCount: PropTypes.number,  // 该学生所发送的讨论总数
+        }),
+      ),
+    ),  // 按照小组分好了的学生列表信息
+    style: PropTypes.object,
+  }
+
+  static defaultProps = {
+    attendeeCount: 0,
+    messageCount: 0,
+    groupList: [],
+    studentGroupList: [],
+    style: {},
+  }
+
   constructor(props) {
     super(props)
 
@@ -154,29 +179,4 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       </div>
     )
   }
-}
-
-DiscussionBottomToolBar.propTypes = {
-  attendeeCount: PropTypes.number,
-  messageCount: PropTypes.number,
-  groupList: PropTypes.array,
-  studentGroupList: PropTypes.objectOf(
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        name: PropTypes.string,
-        avatar: PropTypes.string,
-        messagesCount: PropTypes.number,  // 该学生所发送的讨论总数
-      }),
-    ),
-  ),  // 按照小组分好了的学生列表信息
-  style: PropTypes.object,
-}
-
-DiscussionBottomToolBar.defaultProps = {
-  attendeeCount: 0,
-  messageCount: 0,
-  groupList: [],
-  studentGroupList: [],
-  style: {},
 }

@@ -18,13 +18,13 @@ const store = configStore(initialState)
 
 const render = (Component) => {
   ReactDOM.render(
-    <AppContainer>
-      <Provider store={store}>
-        <MuiThemeProvider>
+    <Provider store={store}>
+      <MuiThemeProvider>
+        <AppContainer>
           <Component />
-        </MuiThemeProvider>
-      </Provider>
-    </AppContainer>,
+        </AppContainer>
+      </MuiThemeProvider>
+    </Provider>,
     document.getElementById('app')  // eslint-disable-line
   )
 }
