@@ -1,29 +1,39 @@
 import React from 'react'
-import Loadable from 'react-loadable'
+import HotLoader from 'react-hot-component-loader'
+// import Loadable from 'react-loadable'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
 import HashRouter from 'react-router-dom/HashRouter'
 import Route from 'react-router-dom/Route'
 import LoadingComponent from 'containers/LoadingComponent'
 
-const Game2048 = Loadable({
-  loader: () => import('containers/Game2048'),
-  loading: LoadingComponent,
-})
+const Game2048 = HotLoader(
+  () => import('containers/Game2048'),
+  {
+    LoadingComponent,
+  },
+)
 
-const Profile = Loadable({
-  loader: () => import('containers/Profile'),
-  loading: LoadingComponent,
-})
+const Profile = HotLoader(
+  () => import('containers/Profile'),
+  {
+    LoadingComponent,
+  },
+)
 
-const Test = Loadable({
-  loader: () => import('containers/Test'),
-  loading: LoadingComponent,
-})
+const Test = HotLoader(
+  () => import('containers/Test'),
+  {
+    LoadingComponent,
+  },
+)
 
-const Home = Loadable({
-  loader: () => import('containers/Home'),
-  loading: LoadingComponent,
-})
+const Home = HotLoader(
+  () => import('containers/Home'),
+  {
+    LoadingComponent,
+  },
+)
+
 
 const routes = (
   <div>
