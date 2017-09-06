@@ -40,13 +40,9 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     style: {},
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      checkedGroupId: null,
-      showSelectPanel: false,
-    }
+  state = {
+    checkedGroupId: null,
+    showSelectPanel: false,
   }
 
   handleOnClickGroupButton = (value) => () => {

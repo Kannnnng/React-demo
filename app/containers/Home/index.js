@@ -29,16 +29,12 @@ class Home extends React.Component {
     history: PropTypes.object,
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      openCatalog: false,
-      openSnackbar: false,
-      snackbarMessage: '',
-      /* 下面是仅供测试用的 state */
-      /* 上面是仅供测试用的 state */
-    }
+  state = {
+    openCatalog: false,
+    openSnackbar: false,
+    snackbarMessage: '',
+    /* 下面是仅供测试用的 state */
+    /* 上面是仅供测试用的 state */
   }
 
   handleOnClickCatalog = () => {
