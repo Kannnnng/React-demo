@@ -196,7 +196,307 @@ class Home extends React.Component {
             },
             {
               id: 3,
-              name: '分组2',
+              name: '分组3',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 4,
+              name: '分组4',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 5,
+              name: '分组5',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 6,
+              name: '分组6',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 7,
+              name: '分组7',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 8,
+              name: '分组8',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 9,
+              name: '分组9',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 10,
+              name: '分组10',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 11,
+              name: '分组11',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 12,
+              name: '分组12',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 13,
+              name: '分组13',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 14,
+              name: '分组14',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 15,
+              name: '分组15',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 16,
+              name: '分组16',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 17,
+              name: '分组17',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 18,
+              name: '分组18',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 19,
+              name: '分组19',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 20,
+              name: '分组20',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 21,
+              name: '分组21',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 22,
+              name: '分组22',
+              color: '#00ccde',
+              studentInfo: [
+                {
+                  id: 1,
+                  messagesCount: 12,
+                },
+                {
+                  id: 2,
+                  messagesCount: 10,
+                },
+              ],
+            },
+            {
+              id: 23,
+              name: '分组23',
               color: '#00ccde',
               studentInfo: [
                 {

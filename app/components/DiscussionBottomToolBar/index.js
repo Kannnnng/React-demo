@@ -78,12 +78,46 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     style: {},
   }
 
+  constructor(props) {
+    super(props)
+
+    this.shouldRerender = false
+  }
+
   state = {
+    centerAreaStyle: null,
     checkedGroupId: null,
     checkedStudentId: null,
-    onlyShowOneGroup: false,
+    onlyShowOneGroupId: null,
     showSelectPanel: false,
     showBottomToolBarTips: false,
+  }
+
+  componentDidMount() {
+    window.setTimeout(() => {
+      if (this.centerArea.scrollWidth > this.centerArea.clientWidth) {
+        this.setState({ centerAreaStyle: { justifyContent: 'flex-start' } })  // eslint-disable-line
+      }
+    }, 10)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.groupList.length !== this.props.groupList.length) {
+      this.shouldRerender = true
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.shouldRerender) {
+      this.shouldRerender = false
+      window.setTimeout(() => {
+        if (this.centerArea.scrollWidth > this.centerArea.clientWidth) {
+          this.setState({ centerAreaStyle: { justifyContent: 'flex-start' } })  // eslint-disable-line
+        } else {
+          this.setState({ centerAreaStyle: null })  // eslint-disable-line
+        }
+      }, 10)
+    }
   }
 
   handleOnClickGroupButton = (value) => () => {
@@ -96,14 +130,15 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   handleOnClickOnlyShowOneGroup = () => {
     this.setState({
-      onlyShowOneGroup: true,
+      checkedStudentId: null,
+      onlyShowOneGroupId: this.state.checkedGroupId,
       showSelectPanel: false,
       showBottomToolBarTips: true,
     })
   }
 
   handleOnClickCloseSelectPanel = () => {
-    if (this.state.onlyShowOneGroup || this.state.checkedGroupId) {
+    if (this.state.onlyShowOneGroupId || this.state.checkedStudentId) {
       this.setState({ showBottomToolBarTips: true })
     }
     this.setState({ showSelectPanel: false })
@@ -119,10 +154,14 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   handleOnClickCancel = () => {
     this.setState({
-      checkedGroupId: null,
       checkedStudentId: null,
+      onlyShowOneGroupId: null,
       showBottomToolBarTips: false,
     })
+  }
+
+  handleOnWheel = (event) => {
+    this.centerArea.scrollLeft += event.deltaY
   }
 
   render() {
@@ -134,8 +173,10 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       style,
     } = this.props
     const {
+      centerAreaStyle,
       checkedGroupId,
       checkedStudentId,
+      onlyShowOneGroupId,
       showSelectPanel,
       showBottomToolBarTips,
     } = this.state
@@ -150,8 +191,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
         bottomToolBarTipsInfo = value.find((item) => item.id === checkedStudentId)
         return bottomToolBarTipsInfo !== undefined
       })
-    } else if (checkedGroupId) {
-      bottomToolBarTipsInfo = groupList.find((value) => checkedGroupId === value.id)
+    } else if (onlyShowOneGroupId) {
+      bottomToolBarTipsInfo = groupList.find((value) => onlyShowOneGroupId === value.id)
       bottomToolBarTipsInfo.messagesCount = bottomToolBarTipsInfo.studentInfo.reduce((result, value) => result + value.messagesCount, 0)  // eslint-disable-line
     }
 
@@ -163,7 +204,12 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
           <i className={styles.chat} />
           <span>{messageCount}</span>
         </div>
-        <div className={styles.centerArea}>
+        <div
+          className={styles.centerArea}
+          ref={(node) => { this.centerArea = node }}
+          style={centerAreaStyle}
+          onWheel={this.handleOnWheel}
+        >
           {groupList.map((value) => (
             <div
               key={value.id}

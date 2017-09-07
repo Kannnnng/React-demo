@@ -15,7 +15,11 @@ export default function DiscussionBottomToolBarTips({
   return (
     <div className={styles.DiscussionBottomToolBarTipsContainer} style={style}>
       <span className={styles.DiscussionBottomToolBarTipsContent}>
-        <span style={type === 'student' ? { backgroundImage: `url(${avatar || defaultAvatar})` } : { backgroundColor: `${avatar}` }} />
+        <span
+          style={type === 'student' ?
+            { backgroundImage: `url(${avatar || defaultAvatar})` } :
+            { backgroundColor: `${avatar}` }}
+        />
         <span>{`正在显示${name}的${messagesCount}条发言`}</span>
         <FlatButton
           backgroundColor={'transparent'}

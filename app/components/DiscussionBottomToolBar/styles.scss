@@ -46,13 +46,17 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  max-width: calc(100% - 280px);
+  width: calc(100% - 280px);
   margin-left: auto;
   margin-right: auto;
-  overflow: hidden;
+  overflow: auto;
   background-color: #333;
   position: relative;
   z-index: 10;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }/* 小组很多的情况不知道怎么显示，目前暂时将没显示出来的小组隐藏掉 */
 
 .groupButtonContainer {
