@@ -13,7 +13,8 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import Loading from 'components/Loading'
 // import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
-import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
+// import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
+import PicElement from 'components/PicElement'
 // import {
   // studentList,
   // groupList,
@@ -126,6 +127,12 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
+        <PicElement
+          id={1}
+          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
+          name={'YSK'}
+          picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
+        />
         {/* <Draggable /> */}
         {/* <StudentManagementSidebar
           groupList={groupList}
@@ -160,7 +167,7 @@ class Home extends React.Component {
         {/* <DiscusstionHeader
           data={{}}
         /> */}
-        <DiscussionBottomToolBar
+        {/* <DiscussionBottomToolBar
           attendeeCount={110}
           messageCount={110}
           groupList={[
@@ -551,7 +558,7 @@ class Home extends React.Component {
             ],
           }}
           style={{ top: '300px' }}
-        />
+        /> */}
       </div>
     )
   }
