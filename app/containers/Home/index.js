@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List/List'
@@ -14,7 +15,7 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
 // import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
-import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
+import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
 import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
 import {
   GoBack,
@@ -144,11 +145,18 @@ class Home extends React.Component {
             handleOnClick={() => { console.log('测试3') }}
           />}
         >
-          <DiscussionPicModeElement
+          <DiscussionPicPreview
+            avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
+            content={'12345678123456781234567812345678123456781234567812345678123456781234567812345678'}
+            date={moment().format('HH:mm:ss')}
             id={1}
-            avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
+            isAgree={false}
             name={'YSK'}
-            picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
+            pictures={[
+              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
+              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
+              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
+            ]}
           />
         </BlackCover>
         {/* <Draggable /> */}

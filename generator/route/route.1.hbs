@@ -1,5 +1,7 @@
-const {{ properCase container }} = Loadable({
-  loader: () => import('containers/{{ properCase container }}'),
-  loading: LoadingComponent,
-})
+const {{ properCase container }} = HotLoader(
+  () => import('containers/{{ properCase container }}'),
+  {
+    LoadingComponent,
+  },
+)
 $1
