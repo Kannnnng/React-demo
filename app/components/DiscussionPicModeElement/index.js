@@ -1,6 +1,6 @@
 /**
  *
- * PicElement
+ * DiscussionPicModeElement
  *
  */
 
@@ -8,7 +8,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles'
 
-export default function PicElement({
+export default function DiscussionPicModeElement({
   avatar,
   name,
   picture,
@@ -27,14 +27,14 @@ export default function PicElement({
   )
 }
 
-PicElement.propTypes = {
+DiscussionPicModeElement.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   style: PropTypes.object,
 }
 
-PicElement.default = {
+DiscussionPicModeElement.default = {
   avatar: '',
   name: '',
   picture: '',

@@ -14,7 +14,13 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
 // import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
-import PicElement from 'components/PicElement'
+import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
+import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
+import {
+  GoBack,
+  GoLeft,
+  GoRight,
+} from 'components/QuestionPreviewBoard/Mess'
 // import {
   // studentList,
   // groupList,
@@ -127,12 +133,24 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <PicElement
-          id={1}
-          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
-          name={'YSK'}
-          picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
-        />
+        <BlackCover
+          topLeftButton={<GoBack
+            handleOnClick={() => { console.log('测试1') }}
+          />}
+          middleLeftButton={<GoLeft
+            handleOnClick={() => { console.log('测试2') }}
+          />}
+          middleRightButton={<GoRight
+            handleOnClick={() => { console.log('测试3') }}
+          />}
+        >
+          <DiscussionPicModeElement
+            id={1}
+            avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
+            name={'YSK'}
+            picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
+          />
+        </BlackCover>
         {/* <Draggable /> */}
         {/* <StudentManagementSidebar
           groupList={groupList}
