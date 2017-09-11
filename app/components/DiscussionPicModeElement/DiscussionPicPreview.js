@@ -49,7 +49,7 @@ export default function DiscussionPicPreview({
             ]}
             labelStyle={{ fontSize: '16px', color: `#${isAgree ? '3B9E46' : '666'}`, display: 'inline-flex', alignItems: 'center', padding: '0' }}  // eslint-disable-line
             onClick={handleOnClickSetTop(id)}
-            style={{ minWidth: '0', width: '62px', height: '22px', lineHeight: '0' }}
+            style={{ minWidth: '0', width: `${isAgree ? '75px' : '62px'}`, height: '22px', lineHeight: '0' }}
           />
         </div>
         <div>
