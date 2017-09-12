@@ -15,13 +15,14 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
 // import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
-import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
-import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
-import {
-  GoBack,
-  GoLeft,
-  GoRight,
-} from 'components/QuestionPreviewBoard/Mess'
+// import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
+// import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
+import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
+// import {
+//   GoBack,
+//   GoLeft,
+//   GoRight,
+// } from 'components/QuestionPreviewBoard/Mess'
 // import {
   // studentList,
   // groupList,
@@ -134,7 +135,13 @@ class Home extends React.Component {
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
         />
-        <BlackCover
+        <DiscussionPicModeElement
+          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
+          name={'YSK'}
+          picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
+          handleOnClick={() => { console.log('测试') }}
+        />
+        {/* <BlackCover
           topLeftButton={<GoBack
             handleOnClick={() => { console.log('测试1') }}
           />}
@@ -150,7 +157,7 @@ class Home extends React.Component {
             content={'12345678123456781234567812345678123456781234567812345678123456781234567812345678'}
             date={moment().format('HH:mm:ss')}
             id={1}
-            isAgree={false}
+            isAgree
             name={'YSK'}
             pictures={[
               'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
@@ -158,7 +165,7 @@ class Home extends React.Component {
               'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
             ]}
           />
-        </BlackCover>
+        </BlackCover> */}
         {/* <Draggable /> */}
         {/* <StudentManagementSidebar
           groupList={groupList}

@@ -13,9 +13,11 @@ export default function DiscussionPicModeElement({
   name,
   picture,
   style,
+  handleOnClick,
 }) {
   return (
     <div className={styles.container} style={style}>
+      <button className={styles.maskButton} onClick={handleOnClick} />
       <img src={picture} alt="讨论附带图片" />
       <div className={styles.bottomInfo}>
         <span style={avatar ? { backgroundImage: `url(${avatar})` } : null} />
@@ -32,6 +34,7 @@ DiscussionPicModeElement.propTypes = {
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   style: PropTypes.object,
+  handleOnClick: PropTypes.func,
 }
 
 DiscussionPicModeElement.default = {
@@ -39,4 +42,5 @@ DiscussionPicModeElement.default = {
   name: '',
   picture: '',
   style: null,
+  handleOnClick: () => {},
 }
