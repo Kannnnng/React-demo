@@ -7,7 +7,12 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
 
-process.env.NODE_ENV = process.argv.pop() === 'pro' ? 'production' : 'development'
+/* 获取启动命令中的当前环境设置 */
+var envIndex = process.argv.indexOf('--env')  // eslint-disable-line
+var env = envIndex !== -1 ? process.argv[envIndex + 1] : undefined  // eslint-disable-line
+
+/* 根据启动命令中的环境设置改变 NODE_ENV 的值 */
+process.env.NODE_ENV = env === 'pro' ? 'production' : 'development'
 
 if (process.env.NODE_ENV === 'production') {
   output = {
