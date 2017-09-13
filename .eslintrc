@@ -1,27 +1,29 @@
 {
   "extends": [
     "airbnb",
-    "plugin:jsx-a11y/recommended"
+    "plugin:import/react",
+    "plugin:import/recommended",
+    "plugin:import/stage-0",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
   ],
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
   },
   "parser": "babel-eslint",
-  "plugins": [
-    "import",
-    "jsx-a11y",
-    "react"
-  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+  },
   "rules": {
-    "arrow-parens": 0,
-    "comma-dangle": 1,
-    "func-names": 0,
-    "import/extensions": 0,
-    "import/no-absolute-path": 0,
-    "import/no-duplicates": 0,
-    "import/no-extraneous-dependencies": 0,
+    "arrow-parens": ["error", "always"],
+    "comma-dangle": ["error", "only-multiline"],
+    "func-names": ["error", "never"],
+    "import/extensions": ["error", "never"],
+    "import/no-absolute-path": 2,
+    "import/no-duplicates": 2,
+    "import/no-extraneous-dependencies": 2,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "import/no-unresolved": 0,
@@ -38,6 +40,6 @@
     "react/prefer-stateless-function": 0,
     "react/require-default-props": 0,
     "semi": ["error", "never"],
-    "spaced-comment": ["error", "always"]
-  }
+    "spaced-comment": ["error", "always"],
+  },
 }
