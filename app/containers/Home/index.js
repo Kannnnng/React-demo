@@ -106,24 +106,24 @@ class Home extends React.Component {
           openSecondary
         >
           <AppBar
-            title="目录"
+            title='目录'
             onLeftIconButtonTouchTap={this.handleOnClickCatalogLeftIcon}
           />
           <List>
             <ListItem
-              primaryText="测试"
+              primaryText='测试'
               onTouchTap={this.handleOnClickCatalogList('/test')}
             />
             <ListItem
-              primaryText="个人介绍"
+              primaryText='个人介绍'
               onTouchTap={this.handleOnClickCatalogList('/pro')}
             />
             <ListItem
-              primaryText="我的博客"
+              primaryText='我的博客'
               onTouchTap={() => { window.location = 'https://kannnnng.github.io/Blog/' }}  //eslint-disable-line
             />
             <ListItem
-              primaryText="2048小游戏"
+              primaryText='2048小游戏'
               onTouchTap={this.handleOnClickCatalogList('/2048')}
             />
           </List>

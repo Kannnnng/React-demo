@@ -16,6 +16,7 @@
   "parserOptions": {
     "ecmaVersion": 6,
   },
+  "root": true,
   "rules": {
     "arrow-parens": ["error", "always"],
     "comma-dangle": ["error", "only-multiline"],
