@@ -94,8 +94,9 @@ const vendors = [
   // 'react-dnd',
   // 'react-dnd-html5-backend',
   'react-dom',
-  'react-hot-component-loader',
-  'react-hot-loader',
+  /* 莫名其妙地，将这两个包添加到 DLL 中热替换就失败了 */
+  // 'react-hot-component-loader',
+  // 'react-hot-loader',
   'react-redux',
   'react-router-dom',
   'react-router-redux',

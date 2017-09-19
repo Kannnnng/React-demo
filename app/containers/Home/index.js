@@ -97,7 +97,7 @@ class Home extends React.Component {
           </div>
           <div className={styles.titleUnderLine} />
           <div className={styles.introduction}>
-            这里是我的个人博客
+            这里是我的个人博客123
           </div>
         </div>
         <Drawer

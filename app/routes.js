@@ -34,13 +34,20 @@ const Home = HotLoader(
   },
 )
 
+const Example = HotLoader(
+  () => import('containers/Example'),
+  {
+    LoadingComponent,
+  },
+)
 
 const routes = (
   <div>
-    <Route path="/" component={Home} exact strict />
-    <Route path="/test" component={Test} exact strict />
-    <Route path="/pro" component={Profile} exact strict />
-    <Route path="/2048" component={Game2048} exact strict />
+    <Route path='/' component={Home} exact strict />
+    <Route path='/test' component={Test} exact strict />
+    <Route path='/pro' component={Profile} exact strict />
+    <Route path='/2048' component={Game2048} exact strict />
+    <Route path='/example' component={Example} exact strict />
   </div>
 )
 
@@ -49,7 +56,7 @@ const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRoute
 class Routes extends React.Component {
   render() {
     return (
-      <Router basename="/">
+      <Router basename='/'>
         {routes}
       </Router>
     )
