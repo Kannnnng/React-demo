@@ -15,15 +15,14 @@ module.exports = {
       if ((/.+/).test(value)) {
         return componentExists(value, 'container') ? 'A container with this name already exists' : true
       }
-
       return 'The name is required'
     },
   }, {
     type: 'list',
     name: 'component',
     message: 'Select a base component:',
-    default: 'PureComponent',
-    choices: () => ['PureComponent', 'Component'],
+    default: 'Component',
+    choices: () => ['Stateless Function', 'PureComponent', 'Component'],
   }, {
     type: 'confirm',
     name: 'wantSCSS',
@@ -52,12 +51,22 @@ module.exports = {
   }],
   actions: (data) => {
     // Generate index.js
-    const actions = [{
-      type: 'add',
-      path: '../app/containers/{{properCase name}}/index.js',
-      templateFile: './container/index.js.hbs',
-      abortOnFail: true,
-    }]
+    let actions
+    if (data.component === 'Stateless Function') {
+      actions = [{
+        type: 'add',
+        path: '../app/containers/{{properCase name}}/index.js',
+        templateFile: './container/stateless.js.hbs',
+        abortOnFail: true,
+      }]
+    } else {
+      actions = [{
+        type: 'add',
+        path: '../app/containers/{{properCase name}}/index.js',
+        templateFile: './container/index.js.hbs',
+        abortOnFail: true,
+      }]
+    }
 
     // If they want a SCSS file, add index.scss
     if (data.wantSCSS) {
