@@ -13,12 +13,9 @@ export default function Example({
 }) {
   return (
     <div className={styles.container}>
-      <div className={styles.leftArea}>
-        123123123123123131231123123121231312312
-      </div>
-      <div className={styles.rightArea}>
-        123123123123123131231123123121231312312
-      </div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   )
 }
