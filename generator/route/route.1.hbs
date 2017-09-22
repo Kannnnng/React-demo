@@ -1,7 +1,2 @@
-const {{ properCase container }} = HotLoader(
-  () => import('containers/{{ properCase container }}'),
-  {
-    LoadingComponent,
-  },
-)
+const {{ properCase container }} = LoadComponent(() => import('containers/{{ properCase container }}'))
 $1

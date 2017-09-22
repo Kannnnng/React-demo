@@ -1,45 +1,31 @@
 import React from 'react'
 import HotLoader from 'react-hot-component-loader'
-// import Loadable from 'react-loadable'
+import Loadable from 'react-loadable'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
 import HashRouter from 'react-router-dom/HashRouter'
 import Route from 'react-router-dom/Route'
 import LoadingComponent from 'containers/LoadingComponent'
 
-const Game2048 = HotLoader(
-  () => import('containers/Game2048'),
-  {
-    LoadingComponent,
-  },
-)
+const LoadComponent = (loader) => {
+  if (process.env.NODE_ENV === 'production') {
+    return Loadable({
+      loader,
+      LoadingComponent,
+    })
+  }
+  return HotLoader(
+    loader,
+    {
+      LoadingComponent,
+    }
+  )
+}
 
-const Profile = HotLoader(
-  () => import('containers/Profile'),
-  {
-    LoadingComponent,
-  },
-)
-
-const Test = HotLoader(
-  () => import('containers/Test'),
-  {
-    LoadingComponent,
-  },
-)
-
-const Home = HotLoader(
-  () => import('containers/Home'),
-  {
-    LoadingComponent,
-  },
-)
-
-const Example = HotLoader(
-  () => import('containers/Example'),
-  {
-    LoadingComponent,
-  },
-)
+const Game2048 = LoadComponent(() => import('containers/Game2048'))
+const Profile = LoadComponent(() => import('containers/Profile'))
+const Test = LoadComponent(() => import('containers/Test'))
+const Home = LoadComponent(() => import('containers/Home'))
+const Example = LoadComponent(() => import('containers/Example'))
 
 const routes = (
   <div>
@@ -53,14 +39,10 @@ const routes = (
 
 const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter
 
-class Routes extends React.Component {
-  render() {
-    return (
-      <Router basename='/'>
-        {routes}
-      </Router>
-    )
-  }
+export default function Routes() {
+  return (
+    <Router basename='/'>
+      {routes}
+    </Router>
+  )
 }
-
-export default Routes

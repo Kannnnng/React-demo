@@ -6,6 +6,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
+var CleanWebpackPlugin = require('clean-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')  // eslint-disable-line
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
@@ -100,6 +101,20 @@ if (process.env.NODE_ENV === 'production') {
       threads: 2,
       loaders: ['babel-loader'],
     }),
+    /* 每次编译生产环境代码时先将之前的文件删除掉 */
+    new CleanWebpackPlugin(
+      [
+        'build/app.*.js',
+        'build/*.chunk.js',
+        'build/vendor.*.pro.dll.js',
+        'build/vendor.pro.manifest.json',
+        'build/styles.*.css',
+      ],
+      {
+        verbose: true,
+        dry: false,
+      }
+    )
   ]
 } else {
   entry = {
@@ -238,7 +253,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
-        loader: 'url-loader?limit=4096',
+        loader: 'url-loader?limit=4096&name=assets/[hash].[ext]',
         exclude: NODE_MODULES_PATH,
       },
       {
