@@ -3,6 +3,7 @@ var webpack = require('webpack')  // eslint-disable-line
 var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
+var CleanWebpackPlugin = require('clean-webpack-plugin')  // eslint-disable-line
 
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
@@ -58,6 +59,20 @@ if (process.env.NODE_ENV === 'production') {
       name: '[name]_library',
       context: __dirname,
     }),
+    /* 每次编译生产环境代码时先将之前的文件删除掉 */
+    new CleanWebpackPlugin(
+      [
+        'build/app.*.js',
+        'build/*.chunk.js',
+        'build/vendor.*.pro.dll.js',
+        'build/vendor.pro.manifest.json',
+        'build/styles.*.css',
+      ],
+      {
+        verbose: true,
+        dry: false,
+      }
+    ),
   ]
 } else {
   output = {
