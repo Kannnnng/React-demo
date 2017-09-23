@@ -10,7 +10,7 @@ const LoadComponent = (loader) => {
   if (process.env.NODE_ENV === 'production') {
     return Loadable({
       loader,
-      LoadingComponent,
+      loading: LoadingComponent,
     })
   }
   return HotLoader(
