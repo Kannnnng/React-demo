@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].chunk.js',
     /* 图片等文件的引用路径 */
-    publicPath: '/React-demo/build/assets/',
+    publicPath: '/React-demo/build/',
   }
   cache = false
   devtool = 'source-map'
