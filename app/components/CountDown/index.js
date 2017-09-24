@@ -12,6 +12,14 @@ class CountDown extends React.PureComponent {
     style: PropTypes.object,
   }
 
+  static defaultProps = {
+    title: '倒计时组件',
+    button: null,
+    start: true,
+    limit: 300,
+    style: null,
+  }
+
   constructor(props) {
     super(props)
 
@@ -52,6 +60,10 @@ class CountDown extends React.PureComponent {
       window.clearInterval(this.timer)  //eslint-disable-line
       this.handleOnSetTimer(nextLimit)
     }
+  }
+
+  componentWillUnmount() {
+    window.clearTimeout(this.timer)
   }
 
   handleOnSetTimer = (limit) => {

@@ -6,24 +6,42 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import CountDown from 'components/CountDown'
 import styles from './styles'
 
-export default function Example({
-  data,
-}) {
-  return (
-    <div className={styles.container}>
-      <div>1231231213123212312e323234234</div>
-      <div>1231231</div>
-      <div>123131</div>
-    </div>
-  )
-}
+export default class Example extends React.Component {
+  static propTypes = {
 
-Example.propTypes = {
-  data: PropTypes.object,
-}
+  }
 
-Example.default = {
-  data: {},
+  static defaultProps = {
+
+  }
+
+  state = {
+    countDownStart: true,
+  }
+
+  render() {
+    const {
+
+    } = this.props
+    const {
+      countDownStart,
+    } = this.state
+
+    return (
+      <div className={styles.container}>
+        <div className={styles.countDownComponent}>
+          <CountDown
+            title={'倒计时组件'}
+            // button={}
+            start={countDownStart}
+            limit={300}
+            // style={}
+          />
+        </div>
+      </div>
+    )
+  }
 }

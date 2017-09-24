@@ -23,6 +23,18 @@ import styles from './styles'
 {{/if}}
 
 class {{ properCase name }} extends React.{{{ component }}} {
+  static propTypes = {
+    data: PropTypes.object,
+  }
+
+  static defaultProps = {
+    data: {},
+  }
+
+  state = {
+    stateData: {},
+  }
+
   render() {
     return (
       {{#if wantSCSS}}
