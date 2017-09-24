@@ -10,9 +10,44 @@ import lodash from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
-import StudentDiscussionAvatar from './StudentDiscussionAvatar'
+import { cosCurve } from '../../utils/constants'
 import DiscussionBottomToolBarTips from './DiscussionBottomToolBarTips'
-import styles from './styles'
+import StudentDiscussionAvatar from './StudentDiscussionAvatar'
+import styles from './styles.scss'
+
+function smoothScrolling(
+  _context,
+  target,
+  delta,
+  timer,
+  count,
+  deltaSum,
+) {
+  const context = _context
+  if (delta > 0) {
+    /* 在正向滑动的时候，Chrome 浏览器 DOM 元素属性 scrollLeft 与很小的正数相加的时候没反应 */
+    /* 只好手动将正常滑动的滑动数值在原来的基础之上增加 100 */
+    context[deltaSum] = context[deltaSum] > 0 ?
+      (context[deltaSum] + delta + 100) :
+      (delta + 100)
+  } else {
+    context[deltaSum] = context[deltaSum] > 0 ?
+      (delta) :
+      (context[deltaSum] + delta)
+  }
+  window.clearInterval(context[timer])
+  context[count] = 0
+  context[timer] = window.setInterval(() => {
+    if (context[count] > 99) {
+      window.clearInterval(context[timer])
+      context[count] = 0
+      context[deltaSum] = 0
+    } else {
+      context[target].scrollLeft += context[deltaSum] * cosCurve[context[count]]  // eslint-disable-line
+      context[count] += 1
+    }
+  }, 5)
+}
 
 export default class DiscussionBottomToolBar extends React.PureComponent {
 
@@ -44,37 +79,41 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     ),  // 按照小组分好了的学生列表信息
     handleOnClickSettingButton: PropTypes.func,
     handleOnClickExportButton: PropTypes.func,
+    handleOnOnlyShowOneStudentOrGroup: PropTypes.func,
     style: PropTypes.object,
   }
 
   static defaultProps = {
     attendeeCount: 0,
     messageCount: 0,
-    groupList: [
-      {
-        id: 0,
-        name: '',
-        color: 'red',
-        studentInfo: [
-          {
-            studentId: 0,
-            messagesCount: 0,
-          },
-        ],
-      },
-    ],
-    studentGroupList: {
-      0: [
-        {
-          id: 0,
-          name: '',
-          avatar: '',
-          messagesCount: 0,
-        },
-      ],
-    },
+    groupList: [],
+    // groupList: [
+    //   {
+    //     id: 0,
+    //     name: '',
+    //     color: 'red',
+    //     studentInfo: [
+    //       {
+    //         studentId: 0,
+    //         messagesCount: 0,
+    //       },
+    //     ],
+    //   },
+    // ],
+    studentGroupList: {},
+    // studentGroupList: {
+    //   0: [
+    //     {
+    //       id: 0,
+    //       name: '',
+    //       avatar: '',
+    //       messagesCount: 0,
+    //     },
+    //   ],
+    // },
     handleOnClickSettingButton: () => {},
     handleOnClickExportButton: () => {},
+    handleOnOnlyShowOneStudentOrGroup: () => {},
     style: {},
   }
 
@@ -82,6 +121,12 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     super(props)
 
     this.shouldRerender = false
+    this.wheelCenterAreaTimer = null
+    this.wheelCenterAreaCount = 0
+    this.wheelCenterAreaDeltaSum = 0
+    this.wheelSelectPanelBodyTimer = null
+    this.wheelSelectPanelBodyCount = 0
+    this.wheelSelectPanelBodyDeltaSum = 0
   }
 
   state = {
@@ -94,15 +139,15 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.setTimeout(() => {
-      if (this.centerArea.scrollWidth > this.centerArea.clientWidth) {
+    if (this.centerArea.scrollWidth > this.centerArea.clientWidth) {
+      window.setTimeout(() => {
         this.setState({ centerAreaStyle: { justifyContent: 'flex-start' } })  // eslint-disable-line
-      }
-    }, 10)
+      }, 10)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.groupList.length !== this.props.groupList.length) {
+    if (lodash.get(nextProps, 'groupList.length') !== lodash.get(this.props, 'groupList.length')) {
       this.shouldRerender = true
     }
   }
@@ -135,6 +180,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       showSelectPanel: false,
       showBottomToolBarTips: true,
     })
+    this.props.handleOnOnlyShowOneStudentOrGroup('group', this.state.checkedGroupId)
   }
 
   handleOnClickCloseSelectPanel = () => {
@@ -150,6 +196,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       showSelectPanel: false,
       showBottomToolBarTips: true,
     })
+    this.props.handleOnOnlyShowOneStudentOrGroup('student', value)
   }
 
   handleOnClickCancel = () => {
@@ -158,14 +205,36 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       onlyShowOneGroupId: null,
       showBottomToolBarTips: false,
     })
+    this.props.handleOnOnlyShowOneStudentOrGroup(false)
   }
 
-  handleOnWheel = (event) => {
-    this.centerArea.scrollLeft += event.deltaY
+  /* 将默认的上下滚动改为左右滚动 */
+  handleOnWheelCenterArea = (event) => {
+    smoothScrolling(
+      this,
+      'centerArea',
+      event.deltaY,
+      'wheelCenterAreaTimer',
+      'wheelCenterAreaCount',
+      'wheelCenterAreaDeltaSum',
+    )
+  }
+
+  /* 将默认的上下滚动改为左右滚动 */
+  handleOnWheelSelectPanelBody = (event) => {
+    smoothScrolling(
+      this,
+      'selectPanelBody',
+      event.deltaY,
+      'wheelSelectPanelBodyTimer',
+      'wheelSelectPanelBodyCount',
+      'wheelSelectPanelBodyDeltaSum',
+    )
   }
 
   render() {
     const {
+      isDefault,
       attendeeCount,
       messageCount,
       groupList,
@@ -180,12 +249,13 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       showSelectPanel,
       showBottomToolBarTips,
     } = this.state
-    const checkedGroup = groupList.find((value) => value.id === checkedGroupId) || {}
-    const checkedGroupStudentList = studentGroupList[checkedGroupId] || []
+
+    const groupListIsEmpty = lodash.isEmpty(groupList)
+    const checkedGroup = groupListIsEmpty ? null : groupList.find((value) => value.id === checkedGroupId)  // eslint-disable-line
+    const checkedGroupStudentList = groupListIsEmpty ? null : studentGroupList[checkedGroupId]
     const bottomToolBarTipsType = (checkedStudentId && 'student') || (checkedGroupId && 'group') || undefined
 
     let bottomToolBarTipsInfo = {}
-
     if (checkedStudentId) {
       lodash.find(studentGroupList, (value) => {
         bottomToolBarTipsInfo = value.find((item) => item.id === checkedStudentId)
@@ -193,7 +263,6 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       })
     } else if (onlyShowOneGroupId) {
       bottomToolBarTipsInfo = groupList.find((value) => onlyShowOneGroupId === value.id)
-      bottomToolBarTipsInfo.messagesCount = bottomToolBarTipsInfo.studentInfo.reduce((result, value) => result + value.messagesCount, 0)  // eslint-disable-line
     }
 
     return (
@@ -208,9 +277,9 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
           className={styles.centerArea}
           ref={(node) => { this.centerArea = node }}
           style={centerAreaStyle}
-          onWheel={this.handleOnWheel}
+          onWheel={this.handleOnWheelCenterArea}
         >
-          {groupList.map((value) => (
+          {lodash.map(groupList, ((value) => (
             <div
               key={value.id}
               className={styles.groupButtonContainer}
@@ -225,7 +294,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
                 onClick={this.handleOnClickGroupButton(value.id)}
               />
             </div>
-          ))}
+          )))}
         </div>
         <div className={styles.rightArea}>
           <div className={styles.setting}>
@@ -234,7 +303,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               labelStyle={{ display: 'none' }}
               className={styles.settingButton}
               backgroundColor={'transparent'}
-              buttonStyle={{ height: '100%', lineHeight: '0' }}
+              buttonStyle={{ height: '100%', lineHeight: '0', padding: '0 5px' }}
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
               onClick={this.props.handleOnClickSettingButton}
             >
@@ -248,7 +317,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               labelStyle={{ display: 'none' }}
               className={styles.exportButton}
               backgroundColor={'transparent'}
-              buttonStyle={{ height: '100%', lineHeight: '0' }}
+              buttonStyle={{ height: '100%', lineHeight: '0', padding: '0 5px' }}
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
               onClick={this.props.handleOnClickExportButton}
             >
@@ -259,10 +328,10 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
         </div>
         <div className={styles.selectPanel} style={showSelectPanel ? null : { top: '0', height: '0' }}>
           <div className={styles.selectPanelHeader}>
-            <div className={styles.groupName}>
+            {checkedGroup && <div className={styles.groupName}>
               <span style={{ backgroundColor: `${checkedGroup.color}` }} />
-              <span>{` ${checkedGroup.name} (${lodash.get(checkedGroup, 'studentInfo.length')}人)`}</span>
-            </div>
+              <span>{` ${checkedGroup.name} (${lodash.get(checkedGroup, 'students.length')}人)`}</span>
+            </div>}
             <div className={styles.selectPanelTitle}>
               <span />
               <button onClick={this.handleOnClickOnlyShowOneGroup}>{'只看本组发言'}</button>
@@ -278,8 +347,12 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               </IconButton>
             </div>
           </div>
-          <div className={styles.selectPanelBody}>
-            {checkedGroupStudentList.map((value) => (
+          <div
+            className={styles.selectPanelBody}
+            ref={(node) => { this.selectPanelBody = node }}
+            onWheel={this.handleOnWheelSelectPanelBody}
+          >
+            {lodash.map(checkedGroupStudentList, ((value) => (
               <StudentDiscussionAvatar
                 key={value.id}
                 id={value.id}
@@ -288,7 +361,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
                 messagesCount={value.messagesCount}
                 handleOnClickAvatar={this.handleOnClickAvatar}
               />
-            ))}
+            )))}
           </div>
         </div>
         <DiscussionBottomToolBarTips
