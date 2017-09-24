@@ -199,7 +199,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     return (
       <div className={styles.container} style={style}>
         <div className={styles.leftArea}>
-          <FontIcon className="fa fa-child" />
+          <FontIcon className='fa fa-child' />
           <span>{attendeeCount}</span>
           <i className={styles.chat} />
           <span>{messageCount}</span>
@@ -238,7 +238,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
               onClick={this.props.handleOnClickSettingButton}
             >
-              <FontIcon className="fa fa-sliders" />
+              <FontIcon className='fa fa-sliders' />
               <span>{'配置'}</span>
             </RaisedButton>
           </div>
@@ -252,7 +252,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
               overlayStyle={{ fontSize: '0', lineHeight: '1' }}
               onClick={this.props.handleOnClickExportButton}
             >
-              <FontIcon className="fa fa-external-link" />
+              <FontIcon className='fa fa-external-link' />
               <span>{'导出'}</span>
             </RaisedButton>
           </div>
@@ -274,7 +274,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
                 tooltipPosition={'bottom-left'}
                 style={{ padding: '0', width: '24px', height: '24px' }}
               >
-                <FontIcon className="fa fa-times" color="#FFF" />
+                <FontIcon className='fa fa-times' color='#FFF' />
               </IconButton>
             </div>
           </div>
