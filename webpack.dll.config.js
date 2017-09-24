@@ -84,6 +84,17 @@ if (process.env.NODE_ENV === 'production') {
       name: '[name]_library',
       context: __dirname,
     }),
+    /* 每次编译生产环境代码时先将之前的文件删除掉 */
+    new CleanWebpackPlugin(
+      [
+        'build/vendor.*.dev.dll.js',
+        'build/vendor.dev.manifest.json',
+      ],
+      {
+        verbose: true,
+        dry: false,
+      }
+    ),
   ]
 }
 
