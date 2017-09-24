@@ -62,11 +62,8 @@ if (process.env.NODE_ENV === 'production') {
     /* 每次编译生产环境代码时先将之前的文件删除掉 */
     new CleanWebpackPlugin(
       [
-        'build/app.*.js',
-        'build/*.chunk.js',
         'build/vendor.*.pro.dll.js',
         'build/vendor.pro.manifest.json',
-        'build/styles.*.css',
       ],
       {
         verbose: true,
