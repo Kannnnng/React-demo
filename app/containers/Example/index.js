@@ -7,9 +7,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FlatButton from 'material-ui/FlatButton'
+// import { normalize, schema } from 'normalizr'
 import CountDown from 'components/CountDown'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
+import MockData from './mock'
 import styles from './styles'
+
+// const studentGroupList = new schema.Array(new schema.Entity('studentGroupList'))
 
 export default class Example extends React.Component {
   static propTypes = {
@@ -52,13 +56,15 @@ export default class Example extends React.Component {
         </div>
         <div>
           <DiscussionBottomToolBar
-            attendeeCount={}
-            messageCount={}
-            groupList={}
-            studentGroupList={}
-            handleOnClickSettingButton={}
-            handleOnClickExportButton={}
-            handleOnOnlyShowOneStudentOrGroup={}
+            attendeeCount={MockData.attendeeCount}
+            messageCount={MockData.messageCount}
+            groupList={MockData.groupList}
+            studentGroupList={MockData.studentGroupList}
+            handleOnClickSettingButton={() => (console.log('你点击了设置按钮'))}
+            handleOnClickExportButton={() => (console.log('你点击了导出按钮'))}
+            handleOnOnlyShowOneStudentOrGroup={(type, id) => (
+              console.log(`你点击了一个${type === 'student' ? '学生' : '小组'}，ID 为 ${id}`)
+            )}
           />
         </div>
       </div>
