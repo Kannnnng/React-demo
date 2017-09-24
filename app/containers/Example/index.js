@@ -52,7 +52,13 @@ export default class Example extends React.Component {
         </div>
         <div>
           <DiscussionBottomToolBar
-
+            attendeeCount={}
+            messageCount={}
+            groupList={}
+            studentGroupList={}
+            handleOnClickSettingButton={}
+            handleOnClickExportButton={}
+            handleOnOnlyShowOneStudentOrGroup={}
           />
         </div>
       </div>

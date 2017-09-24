@@ -10,7 +10,7 @@ import lodash from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
-import { cosCurve } from '../../utils/constants'
+import { cosCurve } from 'utils/constants'
 import DiscussionBottomToolBarTips from './DiscussionBottomToolBarTips'
 import StudentDiscussionAvatar from './StudentDiscussionAvatar'
 import styles from './styles.scss'
@@ -234,7 +234,6 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   render() {
     const {
-      isDefault,
       attendeeCount,
       messageCount,
       groupList,
