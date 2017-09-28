@@ -1,7 +1,7 @@
-import { Map, fromJS } from 'immutable'  // eslint-disable-line
+import { fromJS } from 'immutable'  // eslint-disable-line
 import { handleActions } from 'redux-actions'
 
-const initialState = Map({
+const initialState = fromJS({
   message: '这是一段测试代码',
 })
 
