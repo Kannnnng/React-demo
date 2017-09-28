@@ -37,6 +37,11 @@ function smoothScrolling(
   }
   window.cancelAnimationFrame(context[timer])
   context[count] = 0
+  context[deltaSum] = (
+    (context[deltaSum] > 1000 && 1000) ||
+    (context[deltaSum] < -1000 && -1000) ||
+    (context[deltaSum])
+  )
   context[timer] = window.requestAnimationFrame(function fn() {
     if (context[count] > 99) {
       window.cancelAnimationFrame(context[timer])

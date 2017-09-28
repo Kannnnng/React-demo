@@ -17,7 +17,7 @@ export default Mock.mock({
     },
   ],
   'studentGroupList|5': {
-    '10001|200': [
+    '10001|100': [
       {
         'id|+1': 20000,
         name: '@CNAME',
