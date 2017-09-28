@@ -35,18 +35,19 @@ function smoothScrolling(
       (delta) :
       (context[deltaSum] + delta)
   }
-  window.clearInterval(context[timer])
+  window.cancelAnimationFrame(context[timer])
   context[count] = 0
-  context[timer] = window.setInterval(() => {
+  context[timer] = window.requestAnimationFrame(function fn() {
     if (context[count] > 99) {
-      window.clearInterval(context[timer])
+      window.cancelAnimationFrame(context[timer])
       context[count] = 0
       context[deltaSum] = 0
     } else {
-      context[target].scrollLeft += context[deltaSum] * cosCurve[context[count]]  // eslint-disable-line
+      context[target].scrollBy(context[deltaSum] * cosCurve[context[count]], 0)
       context[count] += 1
+      context[timer] = window.requestAnimationFrame(fn)
     }
-  }, 5)
+  })
 }
 
 export default class DiscussionBottomToolBar extends React.PureComponent {

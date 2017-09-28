@@ -3,7 +3,7 @@ import Mock from 'mockjs'
 export default Mock.mock({
   'attendeeCount|100': 1,
   'messageCount|100': 1,
-  'groupList|30': [
+  'groupList|5': [
     {
       name: '@CTITLE(3)小组',
       'id|+1': 10000,
@@ -17,7 +17,7 @@ export default Mock.mock({
     },
   ],
   'studentGroupList|5': {
-    '10001|5-20': [
+    '10001|200': [
       {
         'id|+1': 20000,
         name: '@CNAME',
