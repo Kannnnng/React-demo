@@ -9,7 +9,7 @@ import configStore from './store'
 import './styles'
 
 /* 修复 material-ui 中 onTouch 事件的 BUG */
-injectTapEventPlugin()
+// injectTapEventPlugin()
 
 /* 创建 store */
 const initialState = {}

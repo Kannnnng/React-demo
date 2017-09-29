@@ -120,6 +120,7 @@ const vendors = [
   /* 莫名其妙地，将这两个包添加到 DLL 中热替换就失败了 */
   // 'react-hot-component-loader',
   // 'react-hot-loader',
+  'react-loadable',
   'react-redux',
   'react-router-dom',
   'react-router-redux',
