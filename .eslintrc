@@ -40,7 +40,7 @@
     "react/no-array-index-key": 1,
     "react/no-danger": 1,
     "react/prefer-stateless-function": 1,
-    "react/require-default-props": 1,
+    "react/require-default-props": 0,
     "semi": ["error", "never"],
     "spaced-comment": ["error", "always"],
   },
