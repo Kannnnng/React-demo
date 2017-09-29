@@ -28,7 +28,7 @@
     "import/no-extraneous-dependencies": 0,
     "import/no-named-as-default": 2,
     "import/no-named-as-default-member": 2,
-    "import/no-unresolved": ["error", { ignore: ['styles$', '^containers', '^components'] }],
+    "import/no-unresolved": ["error", { ignore: ['styles$', '^containers', '^components', '^utils'] }],
     "import/prefer-default-export": 2,
     "jsx-quotes": ["error", "prefer-single"],
     "linebreak-style": 0,

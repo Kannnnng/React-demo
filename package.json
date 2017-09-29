@@ -7,6 +7,7 @@
     "build": "webpack --progress --env pro",
     "build:devDll": "webpack --progress --config webpack.dll.config.js --env dev",
     "build:proDll": "webpack --progress --config webpack.dll.config.js --env pro",
+    "eslint": "eslint --ext .js app",
     "generate": "plop --plopfile generator/index.js",
     "start": "webpack-dev-server --inline --hot --progress --env dev",
     "test": "echo \"Error: no test specified\" && exit 1"
