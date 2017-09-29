@@ -114,6 +114,8 @@ if (process.env.NODE_ENV === 'production') {
         dry: false,
       }
     ),
+    /* 开启作用域提升功能 */
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 } else {
   entry = {
@@ -144,6 +146,8 @@ if (process.env.NODE_ENV === 'production') {
     /* 设置为 true 后所有的跳转都将指向 index.html */
     historyApiFallback: true,
     host: 'localhost',
+    hot: true,
+    inline: true,
     port: 9000,
     /* 请求代理 */
     proxy: {
@@ -176,6 +180,8 @@ if (process.env.NODE_ENV === 'production') {
     //   threads: 2,
     //   loaders: ['babel-loader?cacheDirectory'],
     // }),
+    /* 开启作用域提升功能 */
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 }
 

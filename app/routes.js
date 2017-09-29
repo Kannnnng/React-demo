@@ -11,6 +11,7 @@ const LoadComponent = (loader) => {
     return Loadable({
       loader,
       loading: LoadingComponent,
+      delay: 500,
     })
   }
   return HotLoader(
@@ -21,11 +22,21 @@ const LoadComponent = (loader) => {
   )
 }
 
-const Game2048 = LoadComponent(() => import('containers/Game2048'))
-const Profile = LoadComponent(() => import('containers/Profile'))
-const Test = LoadComponent(() => import('containers/Test'))
-const Home = LoadComponent(() => import('containers/Home'))
-const Example = LoadComponent(() => import('containers/Example'))
+const Game2048 = LoadComponent(() => (
+  import(/* webpackChunkName: "Game2048" */'containers/Game2048'))
+)
+const Profile = LoadComponent(() => (
+  import(/* webpackChunkName: "Profile" */'containers/Profile'))
+)
+const Test = LoadComponent(() => (
+  import(/* webpackChunkName: "Test" */'containers/Test'))
+)
+const Home = LoadComponent(() => (
+  import(/* webpackChunkName: "Home" */'containers/Home'))
+)
+const Example = LoadComponent(() => (
+  import(/* webpackChunkName: "Example" */'containers/Example'))
+)
 
 const routes = (
   <div>

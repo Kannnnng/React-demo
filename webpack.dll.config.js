@@ -70,6 +70,8 @@ if (process.env.NODE_ENV === 'production') {
         dry: false,
       }
     ),
+    /* 开启作用域提升功能 */
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 } else {
   output = {
@@ -95,6 +97,8 @@ if (process.env.NODE_ENV === 'production') {
         dry: false,
       }
     ),
+    /* 开启作用域提升功能 */
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 }
 
