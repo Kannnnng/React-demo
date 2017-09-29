@@ -48,7 +48,11 @@ function smoothScrolling(
       context[count] = 0
       context[deltaSum] = 0
     } else {
-      context[target].scrollBy(context[deltaSum] * cosCurve[context[count]], 0)
+      if (context[target].scrollBy) {
+        context[target].scrollBy(context[deltaSum] * cosCurve[context[count]], 0)
+      } else {
+        context[target].scrollLeft += context[deltaSum] * cosCurve[context[count]]
+      }
       context[count] += 1
       context[timer] = window.requestAnimationFrame(fn)
     }
