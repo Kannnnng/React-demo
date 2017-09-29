@@ -2,14 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Provider from 'react-redux/lib/components/Provider'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 import Routes from './routes'
 import configStore from './store'
 
 import './styles'
-
-/* 修复 material-ui 中 onTouch 事件的 BUG */
-// injectTapEventPlugin()
 
 /* 创建 store */
 const initialState = {}
