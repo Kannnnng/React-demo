@@ -97,9 +97,9 @@ class SelectLibrary extends React.Component {
             <i className={styles.search} />
             <input
               className={styles.searchInput}
-              type="text"
+              type='text'
               value={searchText}
-              placeholder="过滤题库"
+              placeholder='过滤题库'
               onChange={this.handleOnSearchTextChange}
             />
           </div>

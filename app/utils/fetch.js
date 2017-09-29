@@ -12,7 +12,7 @@ const http = axios.create({
 function axiosGet(path, fetchConfig) {
   return http
     .get(path, fetchConfig)
-    .then(response => response.data)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error)  // eslint-disable-line
     })
@@ -21,7 +21,7 @@ function axiosGet(path, fetchConfig) {
 function axiosPost(path, params, fetchConfig) {
   return http
     .post(path, params, fetchConfig)
-    .then(response => response.data)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error)  // eslint-disable-line
     })
@@ -30,7 +30,7 @@ function axiosPost(path, params, fetchConfig) {
 function axiosPut(path, params, fetchConfig) {
   return http
     .put(path, params, fetchConfig)
-    .then(response => response.data)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error)  // eslint-disable-line
     })
@@ -39,7 +39,7 @@ function axiosPut(path, params, fetchConfig) {
 function axiosDelete(path, fetchConfig) {
   return http
     .delete(path, fetchConfig)
-    .then(response => response.data)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error)  // eslint-disable-line
     })

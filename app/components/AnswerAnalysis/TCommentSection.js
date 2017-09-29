@@ -4,7 +4,7 @@ import styles from './styles'
 
 function TCommentSection({ teacherComment }) {
   return (
-    <div className={styles.analysisContainer} key="teacherComment">
+    <div className={styles.analysisContainer} key='teacherComment'>
       <div className={styles.analysisTitle}>
         <span>{'教师点评'}</span>
       </div>

@@ -70,10 +70,10 @@ class SearchToolBar extends React.PureComponent {
           <i className={iClassName}><button onClick={this.handleOnClickSearch} /></i>
           {show && <div className={styles.inputWrap}>
             <input
-              type="text"
+              type='text'
               value={searchContent}
               autoFocus
-              placeholder="请输入想要检索的内容"
+              placeholder='请输入想要检索的内容'
               onChange={this.handleOnSearchContentChange}
               onKeyDown={this.handleOnKeyDown}
             />

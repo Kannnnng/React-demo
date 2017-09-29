@@ -18,7 +18,7 @@ export default function DiscussionPicModeElement({
   return (
     <div className={styles.container} style={style}>
       <button className={styles.maskButton} onClick={handleOnClick} />
-      <img src={picture} alt="讨论附带图片" />
+      <img src={picture} alt='讨论附带图片' />
       <div className={styles.bottomInfo}>
         <span style={avatar ? { backgroundImage: `url(${avatar})` } : null} />
         <span>

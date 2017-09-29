@@ -22,7 +22,7 @@ function renderImg(data, handleOnShowPicView) {
     [
       ...result,
       (<button key={index} onClick={handleOnShowPicView(index)}>
-        <img src={value} alt="" />
+        <img src={value} alt='' />
       </button>),
     ]
   ), [])

@@ -25,7 +25,7 @@ export default function DiscussionPicPreview({
   return (
     <div className={styles.discussionPicPreviewContainer} style={style}>
       <div className={styles.discussionPicPreviewTopInfo}>
-        <img src={avatar} alt="头像" />
+        <img src={avatar} alt='头像' />
         <div>
           <div>{name}</div>
           <div>{date}</div>
@@ -35,7 +35,7 @@ export default function DiscussionPicPreview({
         <div>{content}</div>
         <div className={styles.discussionPicPreviewPics}>
           {pictures.map((value, index) => (
-            <img key={index} src={value} alt="讨论附带图片" />
+            <img key={index} src={value} alt='讨论附带图片' />
           ))}
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function DiscussionPicPreview({
           <FlatButton
             backgroundColor={'transparent'}
             label={[
-              <i key={'icon'} className="material-icons">{'thumb_up'}</i>,
+              <i key={'icon'} className='material-icons'>{'thumb_up'}</i>,
               <span key={'text'}>{isAgree ? '取消赞' : '点赞'}</span>,
             ]}
             labelStyle={{ fontSize: '16px', color: `#${isAgree ? '3B9E46' : '666'}`, display: 'inline-flex', alignItems: 'center', padding: '0' }}  // eslint-disable-line
@@ -56,7 +56,7 @@ export default function DiscussionPicPreview({
           <FlatButton
             backgroundColor={'transparent'}
             label={[
-              <i key={'icon'} className="material-icons">{'delete'}</i>,
+              <i key={'icon'} className='material-icons'>{'delete'}</i>,
               <span key={'text'}>{'删除'}</span>,
             ]}
             labelStyle={{ fontSize: '16px', color: '#666', display: 'inline-flex', alignItems: 'center', padding: '0' }}

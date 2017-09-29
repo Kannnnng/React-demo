@@ -109,16 +109,16 @@ class QuestionComment extends React.PureComponent {
         <div className={styles.avatar} style={{ backgroundImage: `url(${data.avatar || defaultAvatar})` }} />
         <div className={contentClass}>
           <input
-            type="text"
-            placeholder="添加评论"
+            type='text'
+            placeholder='添加评论'
             onChange={this.handleOnAddComment}
             value={comment}
           />
         </div>
         <div className={styles.attached}>
           <input
-            type="file"
-            accept="image/gif,image/jpeg,image/jpg,image/png,image/svg;capture=camera"
+            type='file'
+            accept='image/gif,image/jpeg,image/jpg,image/png,image/svg;capture=camera'
             onChange={this.handleOnAddImages}
           />
           <i />
@@ -153,8 +153,8 @@ class QuestionComment extends React.PureComponent {
         ) : (
           <div className={styles.thinkingInput}>
             <input
-              type="text"
-              placeholder="描述出题思路更易于其他老师理解您这道题的用法"
+              type='text'
+              placeholder='描述出题思路更易于其他老师理解您这道题的用法'
               onChange={this.handleOnInputThinking}
               value={thinkingFromState}
             />

@@ -57,7 +57,7 @@ class Profile extends React.Component {
         <ul>
           {hobbies.map((value, index) => <li key={index}>{value}</li>)}
         </ul>
-        <input type="text" ref={(node) => { this.hobby = node }} />
+        <input type='text' ref={(node) => { this.hobby = node }} />
         <button onClick={this.handleOnAddHobby}>添加爱好</button>
       </div>
     )

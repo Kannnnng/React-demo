@@ -24,21 +24,21 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
   const { pattern, answer } = question
   const { isAllCorrect, limit } = answer
   let style = {}
-  const text = [(<span key="sqt-prefix">{getQuestionFlag(pattern, canAnswer)}</span>)]
+  const text = [(<span key='sqt-prefix'>{getQuestionFlag(pattern, canAnswer)}</span>)]
   if (canAnswer) {
     if (pattern === questionPattern.shortAnswer) {
-      text.push(<span key="sqt-limit">{limit ? `限${limit}字` : '不限字数'}</span>)
+      text.push(<span key='sqt-limit'>{limit ? `限${limit}字` : '不限字数'}</span>)
     }
   } else if (isAllCorrect === true) {
-    text.push(<span key="sqt-result" className={styles.right}>{'回答正确'}</span>)
+    text.push(<span key='sqt-result' className={styles.right}>{'回答正确'}</span>)
     style = { backgroundColor: 'rgba(77, 181, 83, 0.16)' }
   } else if (isAllCorrect === false) {
-    text.push(<span key="sqt-result" className={styles.wrong}>{'回答错误'}</span>)
+    text.push(<span key='sqt-result' className={styles.wrong}>{'回答错误'}</span>)
     style = {
       backgroundColor: 'rgba(244, 51, 60, 0.16)',
     }
   } else {
-    text.push(<span key="sqt-result" className={styles.none}>{'未作答'}</span>)
+    text.push(<span key='sqt-result' className={styles.none}>{'未作答'}</span>)
   }
   return (
     <div className={styles.subQuestionTitle} style={style}>

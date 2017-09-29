@@ -71,7 +71,7 @@ class PicView extends React.Component {
       images.push(
         <img
           key={i}
-          alt=""
+          alt=''
           src={img}
           style={{ left: `${-(currentIndex) + i}00%` }}
           className={styles.scrollImages}

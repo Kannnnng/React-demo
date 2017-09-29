@@ -29,8 +29,8 @@ class Test extends React.Component {
         <div>{message}</div>
         <div>
           <RaisedButton
-            icon={<FontIcon className="fa fa-heart" />}
-            label="点击我就会发送 action！"
+            icon={<FontIcon className='fa fa-heart' />}
+            label='点击我就会发送 action！'
             onTouchTap={this.handleOnClick}
             primary
           />

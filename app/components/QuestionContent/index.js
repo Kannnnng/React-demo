@@ -59,7 +59,7 @@ class QuestionContent extends React.Component {
       <div className={styles.container}>
         <div className={styles.title}>
           <div className={styles.chapter} style={{ backgroundColor: flag.bgc }}>
-            <img src={flag.img} alt="" />
+            <img src={flag.img} alt='' />
             <span>{`${flag.pattern} ${title.serialNumber}`}</span>
           </div>
           <div className={styles.level}>

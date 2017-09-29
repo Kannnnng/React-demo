@@ -326,9 +326,9 @@ class QuestionAnswer extends React.Component {
               return null
             }).join('')
           }
-          temp.push(<span key="correctRate">{`正确率${correctRate}%。`}</span>)
+          temp.push(<span key='correctRate'>{`正确率${correctRate}%。`}</span>)
           if (easyWrongOptionText) {
-            temp.push(<span key="easyWrongOption">{`易错项为「${easyWrongOptionText}」。`}</span>)
+            temp.push(<span key='easyWrongOption'>{`易错项为「${easyWrongOptionText}」。`}</span>)
           }
         }
         break
