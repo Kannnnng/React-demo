@@ -7,7 +7,7 @@
     "build": "webpack --progress --env pro",
     "build:devDll": "webpack --progress --config webpack.dll.config.js --env dev",
     "build:proDll": "webpack --progress --config webpack.dll.config.js --env pro",
-    "eslint": "eslint --fix --ext .js --format './node_modules/eslint-friendly-formatter/index.js' app",
+    "eslint": "eslint --fix --ext .js --format './node_modules/eslint-formatter-pretty' app;exit 0",
     "generate": "plop --plopfile generator/index.js",
     "start": "webpack-dev-server --inline --hot --progress --env dev",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -35,7 +35,7 @@
     "cssnano": "~3.10.0",
     "eslint": "~4.7.2",
     "eslint-config-airbnb": "~15.1.0",
-    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-formatter-pretty": "^1.3.0",
     "eslint-loader": "~1.9.0",
     "eslint-plugin-import": "~2.7.0",
     "eslint-plugin-jsx-a11y": "~5.1.1",
