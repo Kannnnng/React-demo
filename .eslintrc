@@ -22,7 +22,7 @@
     "arrow-parens": ["error", "always"],
     "comma-dangle": ["error", "only-multiline"],
     "func-names": ["error", "never"],
-    "import/extensions": ["error", "never"],
+    "import/extensions": ["error", { ignore: ['images/.+\..+'] }],
     "import/no-absolute-path": 2,
     "import/no-duplicates": 2,
     "import/no-extraneous-dependencies": 0,

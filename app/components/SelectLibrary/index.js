@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer'
 import { LibraryCell } from './LibraryCell'
 import styles from './styles'
 
-class SelectLibrary extends React.Component {
+export default class SelectLibrary extends React.Component {
   static propTypes = {
     open: PropTypes.bool,
     data: PropTypes.array,
@@ -108,5 +108,3 @@ class SelectLibrary extends React.Component {
     )
   }
 }
-
-export default SelectLibrary

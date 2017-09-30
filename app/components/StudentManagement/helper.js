@@ -1,4 +1,4 @@
-export function getStudentFromGroupList(
+export default function getStudentFromGroupList(
   groupList,
   id,
 ) {

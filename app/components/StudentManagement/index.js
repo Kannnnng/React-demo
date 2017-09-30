@@ -9,9 +9,7 @@ import PropTypes from 'prop-types'
 import StudentInfomation from 'components/StudentInfomation'
 import StudentCardContainer from 'components/StudentCardContainer'
 import StudentManagementSidebar from 'components/StudentManagementSidebar'
-import {
-  getStudentFromGroupList,
-} from './helper'
+import getStudentFromGroupList from './helper'
 import styles from './styles'
 
 export default class StudentManagement extends React.PureComponent {
