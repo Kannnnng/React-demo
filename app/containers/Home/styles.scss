@@ -4,51 +4,51 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url('images/background.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   overflow-x: hidden;
+  background-image: url('images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .centerBox {
   $width: 300px;
   $height: 100px;
-
-  width: $width;
-  height: $height;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 0px - $height / 2;
-  margin-left: 0px - $width / 2;
+
+  width: $width;
+  height: $height;
+  margin-top: 0 - $height / 2;
+  margin-left: 0 - $width / 2;
 }
 
 .avatar {
   position: absolute;
-  $width: 90px;
-  $height: $width;
+  top: -15px - $height;
+  left: 50%;
 
   width: $width;
   height: $height;
-  top: -15px - $height;
-  left: 50%;
   margin-left: -2px - $width / 2;
-  border-radius: $width / 2;
   transform: scale(1, 0.9);
-  background-image: url('images/avatar.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   border: 1px solid #FFF;
+  border-radius: $width / 2;
+  background-image: url('images/avatar.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  $width: 90px;
+  $height: $width;
 }
 
 .title {
-  color: #FFF;
+  font-family: Raleway, Verdana, sans-serif;
   font-size: 32px;
   text-align: center;
-  font-family: Raleway, Verdana, sans-serif;
   letter-spacing: 4px;
+  color: #FFF;
 }
 
 .titleText {
@@ -63,16 +63,16 @@
 .titleUnderLine {
   width: 100%;
   height: 0;
-  border-top: 1px solid #9C9C9C;
-  opacity: 0.5;
   margin-top: 15px;
+  opacity: 0.5;
+  border-top: 1px solid #9C9C9C;
 }
 
 .introduction {
-  color: #FFF;
   font-size: 16px;
   margin-top: 15px;
   text-align: center;
+  color: #FFF;
 }
 
 .catalog {

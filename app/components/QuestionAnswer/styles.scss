@@ -1,40 +1,40 @@
 .container {
+  overflow: auto;
   width: 100%;
   margin-top: 14px;
-  overflow: auto;
 }
 
 .subQuestionTitle {
   display: flex;
   flex-direction: row;
-  height: 40px;
   justify-content: space-between;
+  height: 40px;
   background-color: rgba(187, 187, 187, 0.16);
 }
 
 .subQuestionTitle > div {
   display: flex;
   flex-direction: row;
-  height: 40px;
   justify-content: center;
   align-items: center;
+  height: 40px;
 }
 
 .subQuestionCircleOrder {
+  font-size: 10px;
+  line-height: 14px;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
-  border: solid 1px #666;
-  line-height: 14px;
-  text-align: center;
-  font-size: 10px;
-  color: #666;
   margin-left: 12px;
+  text-align: center;
+  color: #666;
+  border: solid 1px #666;
+  border-radius: 50%;
 }
 
 .subQuestionIntroduction {
-  margin-left: 10px;
   font-size: 14px;
+  margin-left: 10px;
   color: #333;
 }
 
@@ -47,24 +47,27 @@
   flex-shrink: 0;
 }
 
-.subQuestionPrevBtn, .subQuestionNextBtn {
+.subQuestionPrevBtn,
+.subQuestionNextBtn {
+  font-weight: bold;
+  line-height: 40px;
   width: 40px;
   height: 40px;
-  line-height: 40px;
-  text-align: center;
   cursor: pointer;
-  font-weight: bold;
-  outline: none;
+  text-align: center;
   border: none;
+  outline: none;
   background-color: transparent;
 }
 
-.subQuestionPrevBtn:disabled, .subQuestionNextBtn:disabled {
-  color: #CCC;
+.subQuestionPrevBtn:disabled,
+.subQuestionNextBtn:disabled {
   cursor: not-allowed;
+  color: #CCC;
 }
 
-.subQuestionPrevBtn:active, .subQuestionNextBtn:active {
+.subQuestionPrevBtn:active,
+.subQuestionNextBtn:active {
   background-color: #CCC;
 }
 
@@ -81,27 +84,27 @@
 }
 
 .markBtn {
+  font-size: 18px;
   width: 335px;
   height: 47px;
+  text-align: center;
+  color: #FFF;
+  border: solid 1px rgba(5, 5, 5, 0.08);
   border-radius: 5px;
   background-color: #1AAE18;
-  border: solid 1px rgba(5, 5, 5, 0.08);
-  text-align: center;
-  font-size: 18px;
-  color: #FFF;
 }
 
 .labelUnmarked {
-  width: 335px;
-  height: 25px;
   font-family: PingFangSC;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: normal;
+  width: 335px;
+  height: 25px;
   text-align: center;
+  letter-spacing: normal;
   color: #FFFFFF;
 }
 
@@ -114,14 +117,14 @@ label .text-style-1 {
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  margin: 16px 12px 0 12px;
+  margin: 16px 12px 0;
   letter-spacing: normal;
   color: #262626;
 }
 
 .statistics {
   font-size: 14px;
-  color: #262626;
-  margin-left: 12px;
   margin-right: 12px;
+  margin-left: 12px;
+  color: #262626;
 }
