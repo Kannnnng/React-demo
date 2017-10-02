@@ -10,6 +10,7 @@
     "eslint": "eslint --fix --ext .js --format './node_modules/eslint-formatter-pretty' app;exit 0",
     "generate": "plop --plopfile generator/index.js",
     "start": "webpack-dev-server --inline --hot --progress --env dev",
+    "stylelint": "stylelint 'app/**/*.scss' --syntax scss --fix;exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
