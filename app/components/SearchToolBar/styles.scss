@@ -67,9 +67,11 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
     &::-moz-placeholder {
       color: #C8C8C8;
     }
+
     &::-webkit-input-placeholder {
       color: #C8C8C8;
     }
+
     &::-ms-input-placeholder {
       color: #C8C8C8;
     }
@@ -125,6 +127,7 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 @keyframes expandSearchToolBar {
+
   50% {
     right: calc((100% - 240px) / 2);
     bottom: 0;
@@ -132,6 +135,7 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
     border-radius: 28px;
     box-shadow: $boxShadowStart;
   }
+
   100% {
     right: 0;
     bottom: 0;
@@ -142,6 +146,7 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 @keyframes shrinkSearchToolBar {
+
   0% {
     right: 0;
     bottom: 0;
@@ -149,6 +154,7 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     box-shadow: $boxShadowEnd;
   }
+
   50% {
     right: calc((100% - 240px) / 2);
     bottom: 0;
@@ -171,18 +177,22 @@ $boxShadowEnd: 0 8px 8px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 @keyframes iAnimation {
+
   50% {
     margin-left: 20px;
   }
+
   100% {
     margin-left: 24px;
   }
 }
 
 @keyframes iAntiAnimation {
+
   0% {
     margin-left: 24px;
   }
+
   50% {
     margin-left: 20px;
   }

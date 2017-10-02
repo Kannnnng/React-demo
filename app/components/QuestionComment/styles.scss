@@ -102,6 +102,7 @@
   margin-bottom: -10px;
 
   &:hover {
+
     & > span {
       display: none;
     }
@@ -258,6 +259,7 @@
     }
 
     &:active {
+
       & + i {
         background-color: #3B9E46;
       }

@@ -58,60 +58,65 @@
   border: none;
   background-color: transparent;
 }
+
 .subQuestionPrevBtn:disabled, .subQuestionNextBtn:disabled {
-  color: #ccc;
+  color: #CCC;
   cursor: not-allowed;
 }
+
 .subQuestionPrevBtn:active, .subQuestionNextBtn:active {
-  background-color: #ccc;
+  background-color: #CCC;
 }
+
 .right {
-  color: #3b9e46;
+  color: #3B9E46;
 }
+
 .wrong {
-  color: #f4333c;
+  color: #F4333C;
 }
+
 .none {
   color: #888888;
 }
 
 .markBtn {
-	width: 335px;
-	height: 47px;
-	border-radius: 5px;
-	background-color: #1aae18;
-	border: solid 1px rgba(5, 5, 5, 0.08);
+  width: 335px;
+  height: 47px;
+  border-radius: 5px;
+  background-color: #1AAE18;
+  border: solid 1px rgba(5, 5, 5, 0.08);
   text-align: center;
   font-size: 18px;
-  color: #fff;
+  color: #FFF;
 }
 
 .labelUnmarked {
-	width: 335px;
-	height: 25px;
-	font-family: PingFangSC;
-	font-size: 18px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: normal;
-	letter-spacing: normal;
-	text-align: center;
-	color: #ffffff;
+  width: 335px;
+  height: 25px;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 label .text-style-1 {
-	font-family: SFUIDisplay;
+  font-family: SFUIDisplay;
 }
 
 .rightAnswer {
-	font-size: 14px;
-	font-weight: normal;
-	font-style: normal;
-	font-stretch: normal;
-	margin: 16px 12px 0 12px;
-	letter-spacing: normal;
-	color: #262626;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  margin: 16px 12px 0 12px;
+  letter-spacing: normal;
+  color: #262626;
 }
 
 .statistics {
