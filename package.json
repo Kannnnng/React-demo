@@ -11,7 +11,7 @@
     "generate": "plop --plopfile generator/index.js",
     "start": "webpack-dev-server --inline --hot --progress --env dev",
     "stylelint": "stylelint ./app/**/*.scss --syntax scss --fix && exit 0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "keywords": [
     "react",
