@@ -126,8 +126,10 @@ const vendors = [
   // 'react-hot-loader',
   'react-loadable',
   'react-redux',
-  'react-router-dom',
-  'react-router-redux',
+  /* 将 react-router 相关的三个包移出，实现按需打包 */
+  // 'react-router',
+  // 'react-router-dom',
+  // 'react-router-redux',
   'redux',
   'redux-actions',
   /* 不在此处统一引用，因为这个工具库还是有点大，使用 ES6 模块化引用可以防止不必要的代码被 */

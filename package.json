@@ -78,6 +78,7 @@
     "react-hot-loader": "~3.0.0",
     "react-loadable": "~4.0.3",
     "react-redux": "~5.0.4",
+    "react-router": "~4.2.0",
     "react-router-dom": "~4.2.2",
     "react-router-redux": "~4.0.8",
     "redux": "~3.6.0",
