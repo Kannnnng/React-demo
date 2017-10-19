@@ -1,3 +1,6 @@
+$width: 300px;
+$height: 100px;
+
 .container {
   position: absolute;
   top: 0;
@@ -12,9 +15,6 @@
 }
 
 .centerBox {
-  $width: 300px;
-  $height: 100px;
-
   position: absolute;
   top: 50%;
   left: 50%;
