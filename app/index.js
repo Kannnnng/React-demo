@@ -2,10 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Provider from 'react-redux/lib/components/Provider'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import InjectTapEventPlugin from 'react-tap-event-plugin'
 import Routes from './routes'
 import configStore from './store'
 
 import './styles'
+
+InjectTapEventPlugin()
 
 /* 创建 store */
 const initialState = {}

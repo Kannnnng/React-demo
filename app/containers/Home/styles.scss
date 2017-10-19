@@ -25,6 +25,9 @@ $height: 100px;
 }
 
 .avatar {
+  $width: 100px;
+  $height: 100px;
+
   position: absolute;
   top: -15px - $height;
   left: 50%;
