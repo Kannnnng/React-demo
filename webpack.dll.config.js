@@ -73,6 +73,14 @@ if (process.env.NODE_ENV === 'production') {
     ),
     /* 开启作用域提升功能 */
     new webpack.optimize.ModuleConcatenationPlugin(),
+    /* 加入通过模板自动生成 HTML 文件功能 */
+    new HtmlWebpackPlugin({
+      template: path.resolve(APP_PATH, 'utils/appprotemplate.ejs'),
+      filename: path.resolve(BUILD_PATH, 'index.ejs'),
+      inject: false,
+      title: 'React-demo',
+      minify: false,
+    }),
   ]
 } else {
   output = {
@@ -106,7 +114,7 @@ if (process.env.NODE_ENV === 'production') {
       filename: path.resolve(ROOT_PATH, 'index.html'),
       inject: false,
       title: 'React-demo',
-      minify: true,
+      minify: false,
     }),
   ]
 }

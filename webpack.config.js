@@ -5,6 +5,7 @@ var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disable-line
+var HtmlWebpackPlugin = require('html-webpack-plugin')  // eslint-disable-line
 var CleanWebpackPlugin = require('clean-webpack-plugin')  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')  // eslint-disable-line
@@ -116,6 +117,14 @@ if (process.env.NODE_ENV === 'production') {
     ),
     /* 开启作用域提升功能 */
     new webpack.optimize.ModuleConcatenationPlugin(),
+    /* 加入通过模板自动生成 HTML 文件功能 */
+    new HtmlWebpackPlugin({
+      template: path.resolve(BUILD_PATH, 'index.ejs'),
+      filename: path.resolve(BUILD_PATH, 'index.html'),
+      inject: false,
+      title: 'React-demo',
+      minify: true,
+    }),
   ]
 } else {
   entry = {
