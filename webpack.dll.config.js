@@ -103,6 +103,10 @@ if (process.env.NODE_ENV === 'production') {
     /* 加入通过模板自动生成 HTML 文件功能 */
     new HtmlWebpackPlugin({
       template: path.resolve(APP_PATH, 'utils/apptemplate.ejs'),
+      filename: path.resolve(ROOT_PATH, 'index.html'),
+      inject: false,
+      title: 'React-demo',
+      minify: true,
     }),
   ]
 }
