@@ -128,7 +128,7 @@ export default function StudentInfomation({
           </span>
         ) : noContentElement}
       </div>
-      <div className={styles.items}>
+      <div className={styles.items} style={{ height: 'auto' }}>
         <span>{'简历'}</span>
         {introduction ? (
           <span>

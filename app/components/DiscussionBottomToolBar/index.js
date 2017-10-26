@@ -220,6 +220,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   /* 将默认的上下滚动改为左右滚动 */
   handleOnWheelCenterArea = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     smoothScrolling(
       this,
       'centerArea',
@@ -232,6 +234,8 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
 
   /* 将默认的上下滚动改为左右滚动 */
   handleOnWheelSelectPanelBody = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     smoothScrolling(
       this,
       'selectPanelBody',

@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton'
 // import { normalize, schema } from 'normalizr'
 import CountDown from 'components/CountDown'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
+import StudentManagement from 'components/StudentManagement'
 import MockData from './mock'
 import styles from './styles'
 
@@ -54,12 +55,17 @@ export default class Example extends React.Component {
             limit={3000}
           />
         </div>
-        <div>
+        <div style={{ marginTop: '20px' }}>
+          <StudentManagement
+            groupList={MockData.StudentManagement.groupList}
+          />
+        </div>
+        <div style={{ marginTop: '180px' }}>
           <DiscussionBottomToolBar
-            attendeeCount={MockData.attendeeCount}
-            messageCount={MockData.messageCount}
-            groupList={MockData.groupList}
-            studentGroupList={MockData.studentGroupList}
+            attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}
+            messageCount={MockData.DiscussionBottomToolBar.messageCount}
+            groupList={MockData.DiscussionBottomToolBar.groupList}
+            studentGroupList={MockData.DiscussionBottomToolBar.studentGroupList}
             handleOnClickSettingButton={() => (console.log('你点击了设置按钮'))}
             handleOnClickExportButton={() => (console.log('你点击了导出按钮'))}
             handleOnOnlyShowOneStudentOrGroup={(type, id) => (

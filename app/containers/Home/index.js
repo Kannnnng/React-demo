@@ -10,9 +10,6 @@ import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 // import StudentInfomation from 'components/StudentInfomation'
 // import StudentManagementSidebar from 'components/StudentManagementSidebar'
-// import StudentManagement from 'components/StudentManagement'
-// import Loading from 'components/Loading'
-// import Draggable from 'components/Draggable'
 // import DiscusstionHeader from 'components/DiscusstionHeader'
 // import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
 // import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
@@ -77,9 +74,6 @@ class Home extends React.Component {
 
     return (
       <div className={styles.container}>
-        {/* <Loading
-          progress={100}
-        /> */}
         {/* <StudentManagement
           groupList={groupList}
         /> */}
@@ -97,7 +91,7 @@ class Home extends React.Component {
           </div>
           <div className={styles.titleUnderLine} />
           <div className={styles.introduction}>
-            这里是我的个人博客123
+            这里是我的个人博客
           </div>
         </div>
         <Drawer
@@ -125,6 +119,10 @@ class Home extends React.Component {
             <ListItem
               primaryText='2048小游戏'
               onTouchTap={this.handleOnClickCatalogList('/2048')}
+            />
+            <ListItem
+              primaryText='组件示例'
+              onTouchTap={this.handleOnClickCatalogList('/example')}
             />
           </List>
         </Drawer>
@@ -166,37 +164,6 @@ class Home extends React.Component {
             ]}
           />
         </BlackCover> */}
-        {/* <Draggable /> */}
-        {/* <StudentManagementSidebar
-          groupList={groupList}
-          handleOnClickEditGroup={() => { console.log('测试') }}
-        /> */}
-        {/* <StudentCardContainer
-          show
-          title={'一年级一班'}
-          studentList={studentList}
-        /> */}
-        {/* <StudentInfomation
-          open
-          avatar={'http://img95.699pic.com/photo/50035/0496.jpg_wh300.jpg'}
-          name={'闫守康'}
-          nickName={'木叶'}
-          gender={2}
-          school={'华中科技大学'}
-          college={'电子信息与通信学院'}
-          className={'通信工程1306班'}
-          studentId={'U201313791'}
-          order={'1'}
-          birthday={'1994-07-17'}
-          location={'湖北武汉'}
-          introduction={'好好学习，天天向上'}
-          education={'本科'}
-          job={'学生'}
-          email={'575664647@qq.com'}
-          QQ={'575664647'}
-          phone={'15527226921'}
-          style={{ width: '756px', height: '1008px' }}
-        /> */}
         {/* <DiscusstionHeader
           data={{}}
         /> */}
