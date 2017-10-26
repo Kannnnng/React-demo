@@ -94,7 +94,6 @@ if (process.env.NODE_ENV === 'production') {
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
     new LodashModuleReplacementPlugin({
       paths: true,
-      flattening: true,
     }),
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
