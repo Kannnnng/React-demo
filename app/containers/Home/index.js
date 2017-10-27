@@ -5,6 +5,7 @@ import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import Snackbar from 'material-ui/Snackbar/Snackbar'
+import Test from 'components/Test'
 import styles from './styles'
 
 export default class Home extends React.Component {
@@ -107,6 +108,9 @@ export default class Home extends React.Component {
           message={snackbarMessage}
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
+        />
+        <Test
+          onSubmit={(value) => (console.log(value, 123))}
         />
       </div>
     )

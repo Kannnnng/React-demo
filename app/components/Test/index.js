@@ -6,9 +6,11 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Field, reduxForm, propTypes } from 'redux-form'
 
-export default class Test extends React.PureComponent {
+class Test extends React.PureComponent {
   static propTypes = {
+    ...propTypes,
     data: PropTypes.object,
   }
 
@@ -16,37 +18,44 @@ export default class Test extends React.PureComponent {
     data: {},
   }
 
-  state = {
-    data: {
-      a: 'test1',
-      b: 123,
-      c: true,
-      d: [1, 2, 3],
-      e: {
-        f: 123,
-        g: 'test2',
-        h: [4, 5, 6],
-      },
-    },
-  }
+  state = {}
 
-  handleOnClick = () => {
-    const data = this.state.data
-    data.b = 456
-    this.setState({ data, test: 'test' })
-  }
 
   render() {
     const {
-      data,
-    } = this.state
+      handleSubmit,
+      form,
+    } = this.props
     return (
       <div>
-        {JSON.stringify(data)}
-        <button onClick={this.handleOnClick}>
-          {'点我修改'}
-        </button>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor='firstName'>First Name</label>
+            <Field name='firstName' component='input' type='text' />
+          </div>
+          <div>
+            <label htmlFor='lastName'>Last Name</label>
+            <Field name='lastName' component='input' type='text' />
+          </div>
+          <div>
+            <label htmlFor='email'>Email</label>
+            <Field
+              name='email'
+              component='input'
+              type='email'
+              onChange={(event, value) => {
+                console.log(value, 111)
+                event.preventDefault()
+              }}
+            />
+          </div>
+          <button type='submit'>Submit</button>
+        </form>
       </div>
     )
   }
 }
+
+export default reduxForm({
+  form: 'test',
+})(Test)

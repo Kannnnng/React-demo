@@ -164,9 +164,12 @@ const vendors = [
 /* 到 DLL 文件中 */
 /* 处于开发环境时将 Mockjs 也打包到 DLL 文件中 */
 /* 处于开发环境时将 redux-logger 也打包到 DLL 文件中 */
+/* 处于开发环境时将 redux-form 也打包到 DLL 文件中，因此引用 redux-form 一般就是全部引用 */
+/* 很少估计也是懒得单个引用 */
 if (process.env.NODE_ENV !== 'production') {
   vendors.push('lodash')
   vendors.push('mockjs')
+  vendors.push('redux-form')
   vendors.push('redux-logger')
 }
 
