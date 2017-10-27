@@ -15,6 +15,12 @@ export default Mock.mock({
     name: '@CNAME()',
     picture: Mock.Random.dataImage('100x100', 'picture'),
   },
+  RoundProgressBar: {
+    display: '进度显示器',
+    'percent|0-100': 1,
+    color: '@COLOR()',
+    'width|5-20': 1,
+  },
   StudentManagement: {
     'groupList|3': [
       {

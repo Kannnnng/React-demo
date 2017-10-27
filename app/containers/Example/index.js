@@ -21,6 +21,7 @@ import {
   GoLeft,
   GoRight,
 } from 'components/QuestionPreviewBoard/Mess'
+import RoundProgressBar from 'components/RoundProgressBar'
 import SelectLibrary from 'components/SelectLibrary'
 import SearchToolBar from 'components/SearchToolBar'
 import StudentManagement from 'components/StudentManagement'
@@ -91,6 +92,12 @@ export default class Example extends React.Component {
             name={MockData.DiscussionPicModeElement.name}
             picture={MockData.DiscussionPicModeElement.picture}
             handleOnClick={() => { console.log('你点击了一张图片消息') }}
+          />
+          <RoundProgressBar
+            display={MockData.RoundProgressBar.display}
+            percent={MockData.RoundProgressBar.percent}
+            color={MockData.RoundProgressBar.color}
+            width={MockData.RoundProgressBar.width}
           />
         </div>
         <div style={{ marginTop: '20px' }}>

@@ -48,7 +48,7 @@ function RoundProgressBar({
 }
 
 RoundProgressBar.propTypes = {
-  display: PropTypes.oneOf(PropTypes.element, PropTypes.array),
+  display: PropTypes.node,
   percent: PropTypes.number,
   color: PropTypes.string,
   width: PropTypes.number,
