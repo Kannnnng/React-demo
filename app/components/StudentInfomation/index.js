@@ -30,7 +30,7 @@ export default function StudentInfomation({
   style,
   handleOnClickClose,
 }) {
-  const containerStyle = { ...style, display: `${open ? '' : 'none'}` }
+  const containerStyle = { ...style, display: (open ? '' : 'none') }
   const headerBackgroundStyle = { backgroundImage: `url(${avatar})` }
   const avatarStyle = headerBackgroundStyle
   const genderClassName = `${styles.gender} fa ${

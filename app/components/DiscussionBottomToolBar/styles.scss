@@ -1,39 +1,39 @@
 .container {
+  position: relative;
   width: 100%;
   height: 48px;
   background-color: #333;
-  position: relative;
 }
 
 .leftArea {
   position: absolute;
   top: 0;
   left: 16px;
-  height: 100%;
   display: flex;
   align-items: center;
+  height: 100%;
 
   > :first-child {
-    color: #FFF !important;
     top: -2px;
+    color: #FFF !important;
   }
 
   .chat {
     display: inline-block;
     width: 24px;
     height: 24px;
-    background-size: cover;
-    background-repeat: no-repeat;
     background-image: url('images/chat.png');
+    background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
   }
 
   > :nth-child(2),
   > :nth-child(4) {
     font-size: 16px;
-    color: #EEE;
-    padding-left: 3px;
     padding-right: 4px;
+    padding-left: 3px;
+    color: #EEE;
   }
 
   > :nth-child(2) {
@@ -42,17 +42,17 @@
 }
 
 .centerArea {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: calc(100% - 280px);
-  margin-left: auto;
-  margin-right: auto;
-  overflow: auto;
-  background-color: #333;
   position: relative;
   z-index: 10;
+  display: flex;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 280px);
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #333;
 
   &::-webkit-scrollbar {
     display: none;
@@ -60,32 +60,32 @@
 }/* 小组很多的情况不知道怎么显示，目前暂时将没显示出来的小组隐藏掉 */
 
 .groupButtonContainer {
-  width: 40px;
-  height: 100%;
-  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 40px;
+  height: 100%;
+  background-color: transparent;
 }
 
 .groupButton {
-  min-width: 0 !important;
-  width: 24px !important;
-  height: 24px !important;
-  border-radius: 3px !important;
-  margin-left: 8px !important;
-  margin-right: 8px !important;
   overflow: hidden !important;
+  width: 24px !important;
+  min-width: 0 !important;
+  height: 24px !important;
+  margin-right: 8px !important;
+  margin-left: 8px !important;
+  border-radius: 3px !important;
 }
 
 .rightArea {
   position: absolute;
+  z-index: 100;
   top: 0;
   right: 16px;
-  height: 100%;
   display: flex;
   align-items: center;
-  z-index: 100;
+  height: 100%;
 }
 
 .setting,
@@ -96,19 +96,19 @@
 
 .settingButton,
 .exportButton {
-  background-color: transparent !important;
-  min-width: 0 !important;
   width: 35px !important;
+  min-width: 0 !important;
   height: 100% !important;
+  background-color: transparent !important;
 
   button div > span div {
     background-color: #FFF !important;
   }
 
   button div div span {
-    color: #FFF !important;
     font-size: 12px;
     white-space: nowrap;
+    color: #FFF !important;
 
     &:last-child {
       top: 3px;
@@ -128,17 +128,17 @@
   position: absolute;
   top: -165px;
   left: 0;
+  overflow: hidden;
   width: 100%;
   height: 165px;
-  background-color: rgba(255, 36, 22, 0.1);
-  overflow: hidden;
   transition: all 0.5s ease;
+  background-color: rgba(255, 36, 22, 0.1);
 }
 
 .selectPanelHeader {
+  position: relative;
   width: 100%;
   padding-top: 16px;
-  position: relative;
 }
 
 .groupName {
@@ -177,23 +177,23 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    background-size: cover;
+    margin-right: 6px;
+    background-image: url('images/invertedTriangle.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('images/invertedTriangle.png');
-    margin-right: 6px;
+    background-size: cover;
   }
 
   > :nth-child(2) {
     font-size: 16px;
-    color: #FFF;
     margin: 0;
     padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #FFF;
     border: none;
     outline: none;
-    text-decoration: underline;
     background-color: transparent;
-    cursor: pointer;
 
     &:active {
       color: #333;
@@ -203,19 +203,20 @@
 
 .closeButton {
   position: absolute;
+  z-index: 100;
   top: 14px;
   right: 17px;
 }
 
 .selectPanelBody {
   display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
   justify-content: flex-start;
   align-items: center;
   margin-top: 25px;
-  margin-left: 5px;
   margin-right: 5px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  margin-left: 5px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -231,44 +232,44 @@
 .studentDiscussionAvatarContainer {
   width: 64px;
   height: 86px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
-  margin-left: 16px;
   margin-right: 16px;
+  margin-left: 16px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
 }
 
 .studentDiscussionAvatarButton {
-  background-color: transparent !important;
-  min-width: 0 !important;
   width: 64px !important;
+  min-width: 0 !important;
   height: 86px !important;
+  background-color: transparent !important;
   box-shadow: none !important;
 }
 
 .studentDiscussionAvatar {
   display: inline-block;
+  box-sizing: border-box;
   width: 64px;
   height: 64px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  margin-bottom: 6px;
+  padding: 15px;
   border: solid 5px #FFF;
   border-radius: 50%;
   background-image: url('images/yeoman.png');
-  margin-bottom: 6px;
-  padding: 15px;
-  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   > span {
+    font-size: 14px;
+    line-height: 24px;
     display: inline-block;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    font-size: 14px;
-    color: #333;
     text-align: center;
-    background-color: #FFF;
     opacity: 0.8;
-    line-height: 24px;
+    color: #333;
+    border-radius: 50%;
+    background-color: #FFF;
   }
 
   & + * {
@@ -281,16 +282,16 @@
 
 .DiscussionBottomToolBarTipsContainer {
   position: relative;
+  z-index: 1;
   top: -106px;
   left: 0;
-  width: 100%;
-  height: 42px;
-  background-color: transparent;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 1;
+  width: 100%;
+  height: 42px;
   transition: all 0.5s ease;
+  background-color: transparent;
 }
 
 .DiscussionBottomToolBarTipsContent {
@@ -305,13 +306,13 @@
     display: inline-block;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
-    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);
-    margin-left: 10px;
     margin-right: 8px;
-    background-size: cover;
+    margin-left: 10px;
+    border-radius: 50%;
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.03);
   }
 
   > :nth-child(2) {
