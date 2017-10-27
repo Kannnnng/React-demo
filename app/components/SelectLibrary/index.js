@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import lodash from 'lodash'
 import Drawer from 'material-ui/Drawer'
+import FlatButton from 'material-ui/FlatButton'
 import LibraryCell from './LibraryCell'
 import styles from './styles'
 
@@ -80,12 +81,16 @@ export default class SelectLibrary extends React.Component {
       >
         <div className={styles.container}>
           <div className={styles.header}>
-            <button
-              className={styles.close}
+            <FlatButton
+              label={'关闭'}
               onClick={handleOnClickClose}
-            >
-              {'关闭'}
-            </button>
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                height: '100%',
+              }}
+            />
             <div className={styles.title}>
               {'选择题库加入小组'}
             </div>
