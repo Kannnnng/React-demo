@@ -58,6 +58,19 @@ export default Mock.mock({
       Mock.Random.dataImage('100x100', 'picture')
     ],
   },
+  SelectLibrary: {
+    'data|5-8': [
+      {
+        libraryId: '@GUID()',
+        libraryName: '@CTITLE()题库',
+        cover: Mock.Random.dataImage('100x100', 'cover'),
+        'questionNumber|1-100': 1,
+        'quizNumber|1-100': 1,
+        'coursewareNumber|1-100': 1,
+        'hasJoin|1': true,
+      }
+    ],
+  },
   DiscussionBottomToolBar: {
     'attendeeCount|100': 1,
     'messageCount|100': 1,

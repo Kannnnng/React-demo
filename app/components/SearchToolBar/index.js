@@ -8,12 +8,14 @@ class SearchToolBar extends React.PureComponent {
     handleOnShowState: PropTypes.func,
     handleOnSearchContentChange: PropTypes.func,
     className: PropTypes.string,
+    style: PropTypes.object,
   }
 
   static defaultProps = {
     handleOnShowState: () => {},
     handleOnSearchContentChange: () => {},
     className: '',
+    style: null,
   }
 
   state = {
@@ -48,6 +50,7 @@ class SearchToolBar extends React.PureComponent {
     const {
       button,
       className,
+      style,
     } = this.props
     const {
       show,
@@ -65,7 +68,7 @@ class SearchToolBar extends React.PureComponent {
     )
 
     return (
-      <div className={containerClassName}>
+      <div className={containerClassName} style={style}>
         <div className={contentClassName}>
           <i className={iClassName}><button onClick={this.handleOnClickSearch} /></i>
           {show && <div className={styles.inputWrap}>

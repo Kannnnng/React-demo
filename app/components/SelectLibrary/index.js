@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import lodash from 'lodash'
 import Drawer from 'material-ui/Drawer'
-import { LibraryCell } from './LibraryCell'
+import LibraryCell from './LibraryCell'
 import styles from './styles'
 
 export default class SelectLibrary extends React.Component {

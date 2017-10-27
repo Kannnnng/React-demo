@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import defaultClassCover from 'images/default-class.png'
+import defaultClassCover from 'images/defaultClass.png'
 import styles from './styles'
 
-export function LibraryCell({
+export default function LibraryCell({
   libraryId,
   libraryName,
   cover,
