@@ -97,4 +97,15 @@ export default Mock.mock({
     checkedTab: /speakContent|keyWord|Pics/,
     'isDiscussionOpening|1': true,
   },
+  DiscussionPicPreview: {
+    avatar: Mock.Random.dataImage('100x100', 'avatar'),
+    content: '@CPARAGRAPH()',
+    date: '@TIME()',
+    id: '@GUID()',
+    'isAgree|1': true,
+    name: '@CNAME()',
+    'pictures|1-3': [
+      Mock.Random.dataImage('100x100', 'picture')
+    ],
+  },
 })

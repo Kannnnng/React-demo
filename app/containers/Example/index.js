@@ -8,10 +8,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FlatButton from 'material-ui/FlatButton'
 // import { normalize, schema } from 'normalizr'
+import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
 import CountDown from 'components/CountDown'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
 import DiscussionHeader from 'components/DiscussionHeader'
-// import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
+import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
+import {
+  GoBack,
+  GoLeft,
+  GoRight,
+} from 'components/QuestionPreviewBoard/Mess'
 import StudentManagement from 'components/StudentManagement'
 import MockData from './mock'
 import styles from './styles'
@@ -84,6 +90,29 @@ export default class Example extends React.Component {
             )}
           />
         </div>
+        <iframe title='DiscussionPicPreview' style={{ width: '100%', height: '600px' }}>
+          <BlackCover
+            topLeftButton={<GoBack
+              handleOnClick={() => { console.log('你点击了返回按钮') }}
+            />}
+            middleLeftButton={<GoLeft
+              handleOnClick={() => { console.log('你点击了前进按钮') }}
+            />}
+            middleRightButton={<GoRight
+              handleOnClick={() => { console.log('你点击了后退') }}
+            />}
+          >
+            <DiscussionPicPreview
+              avatar={MockData.DiscussionPicPreview.avatar}
+              content={MockData.DiscussionPicPreview.content}
+              date={MockData.DiscussionPicPreview.date}
+              id={MockData.DiscussionPicPreview.id}
+              isAgree={MockData.DiscussionPicPreview.isAgree}
+              name={MockData.DiscussionPicPreview.name}
+              pictures={MockData.DiscussionPicPreview.pictures}
+            />
+          </BlackCover>
+        </iframe>
       </div>
     )
   }

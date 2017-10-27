@@ -1,26 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
-// import BlackCover from 'components/QuestionPreviewBoard/BlackCover'
 import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
-// import {
-//   GoBack,
-//   GoLeft,
-//   GoRight,
-// } from 'components/QuestionPreviewBoard/Mess'
-// import {
-  // studentList,
-  // groupList,
-  // questionContent,
-  // questionAnswer,
-  // answerAnalysis,
-// } from './mock'
 import styles from './styles'
 
 class Home extends React.Component {
@@ -133,34 +119,6 @@ class Home extends React.Component {
           picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
           handleOnClick={() => { console.log('测试') }}
         />
-        {/* <BlackCover
-          topLeftButton={<GoBack
-            handleOnClick={() => { console.log('测试1') }}
-          />}
-          middleLeftButton={<GoLeft
-            handleOnClick={() => { console.log('测试2') }}
-          />}
-          middleRightButton={<GoRight
-            handleOnClick={() => { console.log('测试3') }}
-          />}
-        >
-          <DiscussionPicPreview
-            avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
-            content={'12345678123456781234567812345678123456781234567812345678123456781234567812345678'}
-            date={moment().format('HH:mm:ss')}
-            id={1}
-            isAgree
-            name={'YSK'}
-            pictures={[
-              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
-              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
-              'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg',
-            ]}
-          />
-        </BlackCover> */}
-        {/* <DiscusstionHeader
-          data={{}}
-        /> */}
       </div>
     )
   }
