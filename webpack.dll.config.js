@@ -160,8 +160,12 @@ const vendors = [
 /* 的每一个小部分打包到最后的输出文件中，这样最后的输出文件中就只存在使用到的 lodash 中的函 */
 /* 数，减少文件体积，但是在开发过程中，没有使用上面那个插件，因此还是需要将 lodash 整个打包 */
 /* 到 DLL 文件中 */
+/* 处于开发环境时将 Mockjs 也打包到 DLL 文件中 */
+/* 处于开发环境时将 redux-logger 也打包到 DLL 文件中 */
 if (process.env.NODE_ENV !== 'production') {
   vendors.push('lodash')
+  vendors.push('mockjs')
+  vendors.push('redux-logger')
 }
 
 module.exports = {
