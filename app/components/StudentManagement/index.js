@@ -12,7 +12,7 @@ import StudentManagementSidebar from 'components/StudentManagementSidebar'
 import getStudentFromGroupList from './helper'
 import styles from './styles'
 
-export default class StudentManagement extends React.PureComponent {
+export default class StudentManagement extends React.Component {
   static propTypes = {
     groupList: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,

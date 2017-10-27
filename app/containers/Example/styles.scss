@@ -8,11 +8,18 @@
 .countDownComponent {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 
-  > * {
+  > *:nth-child(1) {
     border-radius: 5px;
     background-color: #666;
+  }
+
+  > *:nth-child(2) {
+    overflow: hidden;
+    margin-left: 20px;
+    border-radius: 5px;
   }
 }
 

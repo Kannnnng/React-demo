@@ -13,6 +13,7 @@ import CountDown from 'components/CountDown'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
 import DiscussionHeader from 'components/DiscussionHeader'
 import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
+import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
 import {
   GoBack,
   GoLeft,
@@ -62,14 +63,20 @@ export default class Example extends React.Component {
         </div>
         <div className={styles.countDownComponent}>
           <CountDown
-            title={'倒计时组件'}
+            title={MockData.CountDown.title}
             button={<FlatButton
               label={countDownStart ? '暂停' : '开始'}
               primary
               onClick={this.handleOnClickCountDownStartButton}
             />}
             start={countDownStart}
-            limit={3000}
+            limit={MockData.CountDown.limit}
+          />
+          <DiscussionPicModeElement
+            avatar={MockData.DiscussionPicModeElement.avatar}
+            name={MockData.DiscussionPicModeElement.name}
+            picture={MockData.DiscussionPicModeElement.picture}
+            handleOnClick={() => { console.log('你点击了一张图片消息') }}
           />
         </div>
         <div style={{ marginTop: '20px' }}>

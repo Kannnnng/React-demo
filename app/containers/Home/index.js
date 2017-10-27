@@ -5,10 +5,9 @@ import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import Snackbar from 'material-ui/Snackbar/Snackbar'
-// import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import styles from './styles'
 
-class Home extends React.Component {
+export default class Home extends React.Component {
 
   static propTypes = {
     history: PropTypes.object,
@@ -113,5 +112,3 @@ class Home extends React.Component {
     )
   }
 }
-
-export default Home
