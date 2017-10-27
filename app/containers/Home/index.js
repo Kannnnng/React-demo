@@ -6,7 +6,6 @@ import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import Snackbar from 'material-ui/Snackbar/Snackbar'
 // import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
-import DiscussionPicModeElement from 'components/DiscussionPicModeElement'
 import styles from './styles'
 
 class Home extends React.Component {
@@ -54,9 +53,6 @@ class Home extends React.Component {
 
     return (
       <div className={styles.container}>
-        {/* <StudentManagement
-          groupList={groupList}
-        /> */}
         <div className={styles.centerBox}>
           <div className={styles.avatar} />
           <div
@@ -112,12 +108,6 @@ class Home extends React.Component {
           message={snackbarMessage}
           onRequestClose={this.handleOnCloseSnackbar}
           open={openSnackbar}
-        />
-        <DiscussionPicModeElement
-          avatar={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_003.jpg'}
-          name={'YSK'}
-          picture={'https://www.teachermate.com.cn/legacy/assets/images/cover/cover_006.jpg'}
-          handleOnClick={() => { console.log('测试') }}
         />
       </div>
     )
