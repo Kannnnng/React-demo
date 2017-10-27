@@ -64,7 +64,7 @@ export default Mock.mock({
     'groupList|3': [
       {
         name: '@CTITLE(3)',
-        color: '@UPPER("@COLOR()")',
+        color: '@UPPER(@COLOR)',
         'studentList|5': [
           {
             key: '@GUID()',
@@ -86,13 +86,15 @@ export default Mock.mock({
             email: '@EMAIL()',
             QQ: /[1-9]{9}/,
             phone: /(139|131|138|152|155|186)\d{8}/,
-            'status|1': [
-              'late',
-              'skipClasses',
-            ],
+            status: /late|skipClasses/,
           },
         ],
       },
     ],
+  },
+  DiscussionHeader: {
+    title: '@CTITLE()',
+    checkedTab: /speakContent|keyWord|Pics/,
+    'isDiscussionOpening|1': true,
   },
 })

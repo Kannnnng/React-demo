@@ -1,6 +1,6 @@
 /**
  *
- * DiscusstionHeader
+ * DiscussionHeader
  *
  */
 
@@ -9,14 +9,14 @@ import PropTypes from 'prop-types'
 import Toggle from 'material-ui/Toggle'
 import styles from './styles'
 
-export default function DiscusstionHeader({
+export default function DiscussionHeader({
   title,
   checkedTab,
-  isDiscusstionOpening,
-  handleOnToggleDiscusstion,  // 第二个参数代表当前的开关状态
+  isDiscussionOpening,
+  handleOnToggleDiscussion,  // 第二个参数代表当前的开关状态
   handleOnGoBack,
 }) {
-  const discusstionToggleClassName = `${styles.showTypeButton} ${styles.discusstionToggle}`
+  const discussionToggleClassName = `${styles.showTypeButton} ${styles.discussionToggle}`
   const speakContentClassName = `${styles.showTypeButton}${checkedTab === 'speakContent' ? ` ${styles.showTypeButtonChecked}` : ''}`  // eslint-disable-line
   const keyWordClassName = `${styles.showTypeButton}${checkedTab === 'keyWord' ? ` ${styles.showTypeButtonChecked}` : ''}`  // eslint-disable-line
   const picsClassName = `${styles.showTypeButton}${checkedTab === 'Pics' ? ` ${styles.showTypeButtonChecked}` : ''}`
@@ -52,34 +52,34 @@ export default function DiscusstionHeader({
             <span className={styles.typeText}>{'图片墙'}</span>
           </button>
         </div>
-        <div className={discusstionToggleClassName}>
+        <div className={discussionToggleClassName}>
           <Toggle
-            defaultToggled={isDiscusstionOpening}
+            defaultToggled={isDiscussionOpening}
             thumbStyle={{ backgroundColor: '#FFF' }}
             trackStyle={{ backgroundColor: 'rgba(34, 31, 31, 0.26)' }}
             thumbSwitchedStyle={{ backgroundColor: '#4DB553' }}
             trackSwitchedStyle={{ backgroundColor: '#3B9E46' }}
-            onToggle={handleOnToggleDiscusstion}
+            onToggle={handleOnToggleDiscussion}
           />
-          <span className={styles.typeText}>{isDiscusstionOpening ? '讨论开启中' : '讨论关闭'}</span>
+          <span className={styles.typeText}>{isDiscussionOpening ? '讨论开启中' : '讨论关闭'}</span>
         </div>
       </div>
     </div>
   )
 }
 
-DiscusstionHeader.propTypes = {
+DiscussionHeader.propTypes = {
   title: PropTypes.string,
   checkedTab: PropTypes.oneOf(['speakContent', 'keyWord', 'Pics']),
-  isDiscusstionOpening: PropTypes.bool,
-  handleOnToggleDiscusstion: PropTypes.func,
+  isDiscussionOpening: PropTypes.bool,
+  handleOnToggleDiscussion: PropTypes.func,
   handleOnGoBack: PropTypes.func,
 }
 
-DiscusstionHeader.defaultProps = {
+DiscussionHeader.defaultProps = {
   title: '',
   checkedTab: 'speakContent',
-  isDiscusstionOpening: false,
-  handleOnToggleDiscusstion: () => {},
+  isDiscussionOpening: false,
+  handleOnToggleDiscussion: () => {},
   handleOnGoBack: () => {},
 }

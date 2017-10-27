@@ -39,8 +39,8 @@
       height: 24px;
       cursor: pointer;
       background-color: #FFF;
-      mask-size: 24px 24px;
       mask-image: url('images/left.svg');
+      mask-size: 24px 24px;
     }
   }
 }
@@ -77,7 +77,7 @@
   background-color: #3B9E46;
 }
 
-.discusstionToggle {
+.discussionToggle {
   display: flex;
   flex-direction: column;
   justify-content: center;

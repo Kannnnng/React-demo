@@ -11,6 +11,7 @@ export default function StudentManagementSidebar({
   handleOnClickGroup,
 }) {
   const allStudentsCount = groupList.reduce((result, value) => result + value.studentList.length, 0)
+
   return (
     <div className={styles.container}>
       <List>

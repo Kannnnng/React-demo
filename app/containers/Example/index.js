@@ -10,6 +10,8 @@ import FlatButton from 'material-ui/FlatButton'
 // import { normalize, schema } from 'normalizr'
 import CountDown from 'components/CountDown'
 import DiscussionBottomToolBar from 'components/DiscussionBottomToolBar'
+import DiscussionHeader from 'components/DiscussionHeader'
+// import DiscussionPicPreview from 'components/DiscussionPicModeElement/DiscussionPicPreview'
 import StudentManagement from 'components/StudentManagement'
 import MockData from './mock'
 import styles from './styles'
@@ -43,6 +45,15 @@ export default class Example extends React.Component {
 
     return (
       <div className={styles.container}>
+        <div>
+          <DiscussionHeader
+            title={MockData.DiscussionHeader.title}
+            checkedTab={MockData.DiscussionHeader.checkedTab}
+            isDiscussionOpening={MockData.DiscussionHeader.isDiscussionOpening}
+            handleOnToggleDiscussion={(event, status) => (console.log(`现在的讨论状态是${status ? '开启' : '关闭'}`))}
+            handleOnGoBack={() => (console.log('你点击了返回按钮'))}
+          />
+        </div>
         <div className={styles.countDownComponent}>
           <CountDown
             title={'倒计时组件'}
