@@ -107,7 +107,9 @@ if (process.env.NODE_ENV === 'production') {
       }
     ),
     /* 开启作用域提升功能 */
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    /* 在开发环境中开启这个功能，我自己感觉会导致与 react-hot-loader 有冲突，总是会发生一些 */
+    /* 问题，所以现在只在生产环境中开启这个功能 */
+    // new webpack.optimize.ModuleConcatenationPlugin(),
     /* 加入通过模板自动生成 HTML 文件功能 */
     new HtmlWebpackPlugin({
       template: path.resolve(APP_PATH, 'utils/apptemplate.ejs'),
