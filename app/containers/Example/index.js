@@ -77,20 +77,7 @@ export default class Example extends React.Component {
             groupList={MockData.StudentManagement.groupList}
           />
         </div>
-        <div style={{ marginTop: '180px' }}>
-          <DiscussionBottomToolBar
-            attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}
-            messageCount={MockData.DiscussionBottomToolBar.messageCount}
-            groupList={MockData.DiscussionBottomToolBar.groupList}
-            studentGroupList={MockData.DiscussionBottomToolBar.studentGroupList}
-            handleOnClickSettingButton={() => (console.log('你点击了设置按钮'))}
-            handleOnClickExportButton={() => (console.log('你点击了导出按钮'))}
-            handleOnOnlyShowOneStudentOrGroup={(type, id) => (
-              console.log(`你点击了一个${type === 'student' ? '学生' : '小组'}，ID 为 ${id}`)
-            )}
-          />
-        </div>
-        <iframe title='DiscussionPicPreview' style={{ width: '100%', height: '600px' }}>
+        <div className={styles.blackCoverComponent}>
           <BlackCover
             topLeftButton={<GoBack
               handleOnClick={() => { console.log('你点击了返回按钮') }}
@@ -112,7 +99,20 @@ export default class Example extends React.Component {
               pictures={MockData.DiscussionPicPreview.pictures}
             />
           </BlackCover>
-        </iframe>
+        </div>
+        <div style={{ marginTop: '180px' }}>
+          <DiscussionBottomToolBar
+            attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}
+            messageCount={MockData.DiscussionBottomToolBar.messageCount}
+            groupList={MockData.DiscussionBottomToolBar.groupList}
+            studentGroupList={MockData.DiscussionBottomToolBar.studentGroupList}
+            handleOnClickSettingButton={() => (console.log('你点击了设置按钮'))}
+            handleOnClickExportButton={() => (console.log('你点击了导出按钮'))}
+            handleOnOnlyShowOneStudentOrGroup={(type, id) => (
+              console.log(`你点击了一个${type === 'student' ? '学生' : '小组'}，ID 为 ${id}`)
+            )}
+          />
+        </div>
       </div>
     )
   }
