@@ -222,44 +222,42 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loaders: (process.env.NODE_ENV === 'production' ?
-            ExtractTextPlugin.extract({
-              fallback: 'style-loader',
-              use: [
-                'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
-                'postcss-loader',
-              ],
-            })
-          :
-            [  // eslint-disable-line
-              'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
-              'postcss-loader',  // eslint-disable-line
-            ]  // eslint-disable-line
-        ),
+        loaders: (process.env.NODE_ENV === 'production' ? (
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[hash:5]',
+              'postcss-loader',
+            ],
+          })
+        ) : (
+          [
+            'style-loader',
+            'css-loader?camelCase&modules&sourceMap&importLoaders=1&localIdentName=[path][local]-[hash:5]',
+            'postcss-loader',
+          ]
+        )),
         exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.scss$/i,
-        loaders: (process.env.NODE_ENV === 'production' ?
-          (
-            ExtractTextPlugin.extract({
-              fallback: 'style-loader',
-              use: [
-                'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[hash:5]',
-                'postcss-loader',
-                'sass-loader',
-              ],
-            })
-          ) : (
-            [  // eslint-disable-line
-              'style-loader',  // eslint-disable-line
-              'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[path][local]-[hash:5]',  // eslint-disable-line
-              'postcss-loader',  // eslint-disable-line
-              'sass-loader',  // eslint-disable-line
-            ]  // eslint-disable-line
-          )
-        ),
+        loaders: (process.env.NODE_ENV === 'production' ? (
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[hash:5]',
+              'postcss-loader',
+              'sass-loader',
+            ],
+          })
+        ) : (
+          [
+            'style-loader',
+            'css-loader?camelCase&modules&sourceMap&importLoaders=2&localIdentName=[path][local]-[hash:5]',
+            'postcss-loader',
+            'sass-loader',
+          ]
+        )),
         exclude: NODE_MODULES_PATH,
       },
       {
