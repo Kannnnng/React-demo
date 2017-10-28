@@ -2,7 +2,7 @@
   "name": "react-demo",
   "version": "1.0.0",
   "description": "基于webpack的react学习与演示项目",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
     "build": "webpack --progress --env pro",
     "build:devDll": "webpack --progress --config webpack.dll.config.js --env dev",
