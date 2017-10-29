@@ -7,11 +7,11 @@
     "build": "webpack --progress --env pro",
     "build:devDll": "webpack --progress --config webpack.dll.config.js --env dev",
     "build:proDll": "webpack --progress --config webpack.dll.config.js --env pro",
-    "eslint": "eslint ./app --fix --ext .js --format ./node_modules/eslint-formatter-pretty && exit 0",
+    "eslint": "eslint ./app --fix --ext .js --format ./node_modules/eslint-formatter-pretty",
     "generate": "plop --plopfile generator/index.js",
     "start": "webpack-dev-server --inline --hot --progress --env dev",
-    "stylelint": "stylelint ./app/**/*.scss --syntax scss --fix && exit 0",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "stylelint": "stylelint ./app/**/*.scss --syntax scss --fix",
+    "test": "echo \"Error: no test specified\""
   },
   "keywords": [
     "react",
