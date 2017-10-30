@@ -1,6 +1,10 @@
 /**
  *
- * {{properCase name }}
+ * Name: {{ properCase name }}
+ * Date: {{ date }}
+ * Description: {{ description }}
+ * Author: {{ author }}
+ * Organization: {{ organization }}
  *
  */
 
@@ -22,7 +26,18 @@ import select{{properCase name}} from './selector'
 import styles from './styles'
 {{/if}}
 
-class {{ properCase name }} extends React.{{{ component }}} {
+{{#if wantActions}}
+{{#if wantReducer}}
+@connect(mapStateToProps, mapDispatchToProps)
+{{else}}
+@connect(null, mapDispatchToProps)
+{{/if}}
+{{else}}
+{{#if wantReducer}}
+@connect(mapStateToProps, null)
+{{/if}}
+{{/if}}
+export default class {{ properCase name }} extends React.{{{ component }}} {
   static propTypes = {
     data: PropTypes.object,
   }
@@ -62,14 +77,4 @@ function mapDispatchToProps(dispatch) {
   return actionMap
 }
 
-{{#if wantReducer}}
-export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }})
-{{else}}
-export default connect(null, mapDispatchToProps)({{ properCase name }})
 {{/if}}
-{{else}}
-{{#if wantReducer}}
-export default connect(mapStateToProps, null)({{ properCase name }})
-{{/if}}
-{{/if}}
-

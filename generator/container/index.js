@@ -18,6 +18,21 @@ module.exports = {
       return 'The name is required'
     },
   }, {
+    type: 'input',
+    name: 'description',
+    message: 'What is its function?',
+    default: 'This is a container component',
+  }, {
+    type: 'input',
+    name: 'author',
+    message: 'What is its author?',
+    default: 'Einskang',
+  }, {
+    type: 'input',
+    name: 'organization',
+    message: 'What is its organization?',
+    default: 'HUST',
+  }, {
     type: 'list',
     name: 'component',
     message: 'Select a base component:',
@@ -113,6 +128,9 @@ module.exports = {
         abortOnFail: true,
       })
     }
+
+    /* add create time */
+    data.date = new Date().toString()
 
     return actions
   },
