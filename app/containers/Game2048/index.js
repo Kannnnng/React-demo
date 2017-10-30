@@ -23,12 +23,15 @@ function compressChessBoard(chessBoardLine) {
   return newChessBoardLine
 }
 
-class Game2048 extends React.Component {
+/* 初始表数据 */
+const initChessBoard = Array(16).fill(null).map(() => Math.random() > 0.5 ? 2 : null)
+
+export default class Game2048 extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      chessBoard: [2, null, 2, null, 2, null, null, null, 2, null, 2, null, 2, null, 2, 4],
+      chessBoard: initChessBoard,
     }
   }
 
@@ -43,7 +46,7 @@ class Game2048 extends React.Component {
   }
 
   handleOnClickReset = () => {
-    this.setState({ chessBoard: [2, null, 2, null, 2, null, null, null, 2, null, 2, null, 2, null, 2, 4] })  //eslint-disable-line
+    this.setState({ chessBoard: initChessBoard })  //eslint-disable-line
   }
 
   handleOnKeyDown = (event) => {
@@ -151,5 +154,3 @@ class Game2048 extends React.Component {
     )
   }
 }
-
-export default Game2048
