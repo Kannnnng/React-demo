@@ -5,6 +5,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var HtmlWebpackPlugin = require('html-webpack-plugin')  // eslint-disable-line
 var CleanWebpackPlugin = require('clean-webpack-plugin')  // eslint-disable-line
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin  // eslint-disable-line
 
 var output = undefined  // eslint-disable-line
 var plugins = undefined  // eslint-disable-line
@@ -81,6 +82,8 @@ if (process.env.NODE_ENV === 'production') {
       title: 'React-demo',
       minify: false,
     }),
+    /* 禁止打包匹配文件 */
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ]
 } else {
   output = {
@@ -118,6 +121,10 @@ if (process.env.NODE_ENV === 'production') {
       title: 'React-demo',
       minify: false,
     }),
+    /* 禁止打包匹配文件 */
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
+    new BundleAnalyzerPlugin(),
   ]
 }
 
