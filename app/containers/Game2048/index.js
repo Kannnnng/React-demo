@@ -3,24 +3,24 @@ import styles from './styles'
 
 /* 压缩并合并数字板 */
 function compressChessBoard(chessBoardLine) {
-  const newChessBoardLine = chessBoardLine
   let hasMerged = false
-  for (let index = 0, i = 0, len = newChessBoardLine.length; i < len; i++) {
-    if (newChessBoardLine[i]) {
+  let index = 0
+  for (let i = 0, len = chessBoardLine.length; i < len; i++) {
+    if (chessBoardLine[i]) {
       if (i !== index) {
-        newChessBoardLine[index] = newChessBoardLine[i]
-        newChessBoardLine[i] = null
+        chessBoardLine[index] = chessBoardLine[i]
+        chessBoardLine[i] = null
       }
-      if (!hasMerged && newChessBoardLine[index - 1] === newChessBoardLine[index]) {
-        newChessBoardLine[index - 1] += newChessBoardLine[index]
-        newChessBoardLine[index] = null
+      if (!hasMerged && chessBoardLine[index] === chessBoardLine[index + 1]) {
+        chessBoardLine[index] += chessBoardLine[index + 1]
+        chessBoardLine[index + 1] = null
         hasMerged = true
       } else {
         index++
       }
     }
   }
-  return newChessBoardLine
+  return chessBoardLine
 }
 
 /* 初始表数据 */
@@ -126,7 +126,7 @@ export default class Game2048 extends React.Component {
         break
     }
 
-    /* 当 */
+    /* 找出数字版上所有空格的索引值 */
     const nullIndex = newChessBoard.reduce((total, value, index) => {
       if (!value) {
         total.push(index)
@@ -134,13 +134,20 @@ export default class Game2048 extends React.Component {
       return total
     }, [])
     /* 将数字板上的随机一个空格处替换为数字 2 */
-    newChessBoard[nullIndex[Math.round(Math.random() * nullIndex.length)]] = 2
+    newChessBoard[nullIndex[Math.floor(Math.random() * nullIndex.length)]] = 2
 
     this.setState({ chessBoard: newChessBoard })
   }
 
   renderChessBoard() {
-    return this.state.chessBoard.map((value, index) => <div className={styles.chessMan} key={index}><div className={styles.chessManText}>{value || ''}</div></div>)  // eslint-disable-line
+    return this.state.chessBoard.map((value, index) => (
+      // eslint-disable-next-line
+      <div className={styles.chessMan} key={index}>
+        <div className={styles.chessManText}>
+          {value || ''}
+        </div>
+      </div>
+    ))
   }
 
   render() {
