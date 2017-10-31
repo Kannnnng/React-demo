@@ -22,6 +22,7 @@ import {
   GoRight,
 } from 'components/QuestionPreviewBoard/Mess'
 import RoundProgressBar from 'components/RoundProgressBar'
+import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import SelectLibrary from 'components/SelectLibrary'
 import SearchToolBar from 'components/SearchToolBar'
 import StudentManagement from 'components/StudentManagement'
@@ -99,6 +100,16 @@ export default class Example extends React.Component {
             color={MockData.RoundProgressBar.color}
             width={MockData.RoundProgressBar.width}
           />
+          <IconButton
+            onClick={this.handleOnShowSelectLibrary}
+            tooltip={'打开题库选择器'}
+            style={{ backgroundColor: 'red', borderRadius: '5px' }}
+          >
+            <FontIcon
+              className={'fa fa-folder-open-o'}
+              color={'#FFF'}
+            />
+          </IconButton>
         </div>
         <div style={{ marginTop: '20px' }}>
           <StudentManagement
@@ -110,16 +121,6 @@ export default class Example extends React.Component {
             topLeftButton={<GoBack
               handleOnClick={() => { console.log('你点击了返回按钮') }}
             />}
-            topRightButton={<IconButton
-              onClick={this.handleOnShowSelectLibrary}
-              tooltip={'打开题库选择器'}
-              style={{ padding: '0', width: 'auto', height: 'auto', overflow: 'hidden' }}
-            >
-              <FontIcon
-                className={'fa fa-folder-open-o'}
-                color={'#FFF'}
-              />
-            </IconButton>}
             middleLeftButton={<GoLeft
               handleOnClick={() => { console.log('你点击了前进按钮') }}
             />}
@@ -146,7 +147,25 @@ export default class Example extends React.Component {
             handleOnSelectLibrary={(id) => () => (console.log(`你选择了 ID 为 ${id} 的题库`))}
           />
         </div>
-        <div style={{ marginTop: '180px' }}>
+        {/* <div>
+          <QuestionPreviewBoard
+            open
+            data
+            comments
+            questionContent
+            questionAnswer
+            answerAnalysis
+            handleOnClickGoBack
+            handleOnClickPrev
+            handleOnClickNext
+            handleOnClickEdit
+            handleOnClickClone
+            handleOnClickCopy
+            handleOnClickMove
+            handleOnClickDelete
+          />
+        </div>*/}
+        <div style={{ paddingTop: '180px', backgroundColor: '#463333' }}>
           <DiscussionBottomToolBar
             attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}
             messageCount={MockData.DiscussionBottomToolBar.messageCount}
