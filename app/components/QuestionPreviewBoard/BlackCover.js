@@ -10,10 +10,11 @@ function BlackCover({
   middleLeftButton,
   middleRightButton,
   bottomToolBar,
+  style,
 }) {
   const containerClassName = `${styles.container} ${className}`
   return (
-    <div className={containerClassName}>
+    <div className={containerClassName} style={style}>
       {topLeftButton && <div className={styles.topLeftButton}>
         {topLeftButton}
       </div>}
@@ -42,6 +43,7 @@ BlackCover.propTypes = {
   middleLeftButton: PropTypes.element,
   middleRightButton: PropTypes.element,
   bottomToolBar: PropTypes.element,
+  style: PropTypes.object,
 }
 
 BlackCover.defaultProps = {

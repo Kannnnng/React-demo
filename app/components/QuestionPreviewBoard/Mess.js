@@ -71,6 +71,21 @@ GoRight.propTypes = {
   handleOnClick: PropTypes.func,
 }
 
+export function Close({
+  handleOnClick,
+}) {
+  return (
+    <Button
+      className={styles.closeButton}
+      handleOnClick={handleOnClick}
+    />
+  )
+}
+
+Close.propTypes = {
+  handleOnClick: PropTypes.func,
+}
+
 export function BottomToolBar({
   handleOnEdit,
   handleOnClone,

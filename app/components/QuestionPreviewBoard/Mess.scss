@@ -1,6 +1,7 @@
 .goBackButton,
 .goLeftButton,
 .goRightButton,
+.closeButton,
 .editButton,
 .cloneButton,
 .copyButton,
@@ -8,11 +9,11 @@
 .deleteButton {
   margin: 0;
   padding: 0;
+  cursor: pointer;
+  color: #FFF;
   border: none;
   outline: none;
   background-color: rgba(0, 0, 0, 0);
-  cursor: pointer;
-  color: #FFF;
 
   &:active {
     color: #AAA;
@@ -28,7 +29,8 @@
   }
 }
 
-.goBackButton {
+.goBackButton,
+.closeButton {
   width: 24px;
   height: 24px;
 
@@ -36,8 +38,15 @@
     width: 24px;
     height: 24px;
     mask-size: 24px 24px;
-    mask-image: url('images/left.svg');
   }
+}
+
+.goBackButton i {
+  mask-image: url('images/left.svg');
+}
+
+.closeButton i {
+  mask-image: url('images/cross.png');
 }
 
 .goLeftButton,
@@ -67,10 +76,10 @@
 }
 
 .bottomToolBarContainer {
+  overflow: hidden;
   width: 100%;
   height: 48px;
   background-color: #4A4A4A;
-  overflow: hidden;
 }
 
 .editButton,
@@ -78,9 +87,9 @@
 .copyButton,
 .moveButton,
 .deleteButton {
+  float: left;
   width: 24px;
   height: 36px;
-  float: left;
   margin-top: 6px;
   margin-left: 25px;
   text-align: center;

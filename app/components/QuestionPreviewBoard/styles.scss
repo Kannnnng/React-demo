@@ -1,14 +1,10 @@
-.hidden {
-  display: none;
-}
-
 .content {
+  display: flex;
   width: 800px;
   height: calc(100% - 48px);
-  background-color: #FFF;
-  margin-left: auto;
   margin-right: auto;
-  display: flex;
+  margin-left: auto;
+  background-color: #FFF;
 }
 
 .leftContent,
