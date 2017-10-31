@@ -60,7 +60,7 @@ export default Mock.mock({
     id: '@GUID()',
     'isAgree|1': true,
     name: '@CNAME()',
-    'pictures|1-3': [
+    pictures: [
       Mock.Random.dataImage('100x100', 'picture')
     ],
   },

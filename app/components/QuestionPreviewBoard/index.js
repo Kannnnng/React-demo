@@ -164,7 +164,7 @@ const answerAnalysis = {
 class QuestionPreviewBoard extends React.Component {
   static propTypes = {
     open: PropTypes.bool,
-    data: PropTypes.object,  // 当前登陆教师的基本信息，如 ID，姓名，头像等
+    teacher: PropTypes.object,  // 当前登陆教师的基本信息，如 ID，姓名，头像等
     comments: PropTypes.array,  // 其他教师对当前题目的评论
     questionContent: PropTypes.object,  // 题目内容，也就是题干
     questionAnswer: PropTypes.object,  // 题目答案部分，数据结构比较复杂，且题组与单题的数据结构差异较大，查看《PC端题目预览组件所需数据结构.txt》
@@ -188,7 +188,7 @@ class QuestionPreviewBoard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.data.id !== nextProps.data.id) {
+    if (this.props.teacher.id !== nextProps.teacher.id) {
       this.setState({ subQuestionIndex: 0 })
     }
   }
@@ -200,7 +200,7 @@ class QuestionPreviewBoard extends React.Component {
   render() {
     const {
       open,
-      data,
+      teacher,
       comments,
       questionContent,
       questionAnswer,
@@ -261,7 +261,7 @@ class QuestionPreviewBoard extends React.Component {
           <div className={styles.rightContent}>
             <QuestionComment
               comments={comments}
-              data={{}}
+              teacher={{}}
             />
           </div>
         </div>
