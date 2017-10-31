@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import FlatButton from 'material-ui/FlatButton'
 import defaultClassCover from 'images/defaultClass.png'
 import styles from './styles'
 
@@ -16,7 +17,6 @@ export default function LibraryCell({
 }) {
   const containerClassName = `${styles.LibraryCellContainer} ${className || ''}`
   const coverStyle = { backgroundImage: `url(${cover || defaultClassCover})` }
-  const joinClassName = `${styles.join} ${(hasJoin && styles.hasJoin) || ''}`
 
   return (
     <div className={containerClassName}>
@@ -34,13 +34,12 @@ export default function LibraryCell({
           <span>{coursewareNumber}</span>
         </div>
       </div>
-      <button
-        className={joinClassName}
-        onClick={handleOnSelectLibrary(libraryId)}
+      <FlatButton
+        label={hasJoin ? '已加入' : '加入'}
         disabled={hasJoin && 'disabled'}
-      >
-        {hasJoin ? '已加入' : '加入'}
-      </button>
+        onClick={handleOnSelectLibrary(libraryId)}
+        style={{ height: '100%', color: hasJoin ? 'rgba(0, 0, 0, 0.26)' : '#3B9E46' }}
+      />
     </div>
   )
 }

@@ -99,24 +99,6 @@
   }
 }
 
-.join {
-  font-size: 14px;
-  height: 100%;
-  cursor: pointer;
-  text-align: center;
-  vertical-align: middle;
-  color: #3B9E46;
-  border: none;
-  outline: none;
-  background-color: #FFF;
-  flex: 0 0 64px;
-}
-
-.hasJoin {
-  cursor: initial;
-  color: rgba(0, 0, 0, 0.26);
-}
-
 .search,
 .question,
 .quiz,
