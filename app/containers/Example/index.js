@@ -147,7 +147,7 @@ export default class Example extends React.Component {
             handleOnSelectLibrary={(id) => () => (console.log(`你选择了 ID 为 ${id} 的题库`))}
           />
         </div>
-        <div className={styles.questionPreviewBoardComponent}>
+        {/* <div className={styles.questionPreviewBoardComponent}>
           <QuestionPreviewBoard
             open
             data
@@ -164,7 +164,7 @@ export default class Example extends React.Component {
             handleOnClickMove
             handleOnClickDelete
           />
-        </div>
+        </div>*/}
         <div style={{ marginTop: '20px', paddingTop: '160px', backgroundColor: '#463333' }}>
           <DiscussionBottomToolBar
             attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}

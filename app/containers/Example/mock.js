@@ -84,7 +84,7 @@ export default Mock.mock({
       {
         name: '@CTITLE(3)小组',
         'id|+1': 10000,
-        color: '@UPPER("@COLOR()")',
+        color: '@UPPER(@COLOR)',
         'students|10': [
           {
             'studentId|+1': 20000,

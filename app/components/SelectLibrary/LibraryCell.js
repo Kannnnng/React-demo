@@ -36,7 +36,7 @@ export default function LibraryCell({
       </div>
       <FlatButton
         label={hasJoin ? '已加入' : '加入'}
-        disabled={hasJoin && 'disabled'}
+        disabled={hasJoin}
         onClick={handleOnSelectLibrary(libraryId)}
         style={{ height: '100%', color: hasJoin ? 'rgba(0, 0, 0, 0.26)' : '#3B9E46' }}
       />

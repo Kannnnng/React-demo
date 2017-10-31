@@ -16,14 +16,13 @@ import StudentDiscussionAvatar from './StudentDiscussionAvatar'
 import styles from './styles.scss'
 
 function smoothScrolling(
-  _context,
+  context,
   target,
   delta,
   timer,
   count,
   deltaSum,
 ) {
-  const context = _context
   if (delta > 0) {
     /* 在正向滑动的时候，Chrome 浏览器 DOM 元素属性 scrollLeft 与很小的正数相加的时候没反应 */
     /* 只好手动将正常滑动的滑动数值在原来的基础之上增加 100 */
@@ -68,7 +67,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         name: PropTypes.string,
-        color: PropTypes.string,
+        color: PropTypes.string.isRequired,
         studentInfo: PropTypes.arrayOf(
           PropTypes.shape({
             studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -97,30 +96,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
     attendeeCount: 0,
     messageCount: 0,
     groupList: [],
-    // groupList: [
-    //   {
-    //     id: 0,
-    //     name: '',
-    //     color: 'red',
-    //     studentInfo: [
-    //       {
-    //         studentId: 0,
-    //         messagesCount: 0,
-    //       },
-    //     ],
-    //   },
-    // ],
     studentGroupList: {},
-    // studentGroupList: {
-    //   0: [
-    //     {
-    //       id: 0,
-    //       name: '',
-    //       avatar: '',
-    //       messagesCount: 0,
-    //     },
-    //   ],
-    // },
     handleOnClickSettingButton: () => {},
     handleOnClickExportButton: () => {},
     handleOnOnlyShowOneStudentOrGroup: () => {},
