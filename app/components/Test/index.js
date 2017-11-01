@@ -20,38 +20,35 @@ class Test extends React.PureComponent {
 
   state = {}
 
-
   render() {
     const {
       handleSubmit,
       form,
     } = this.props
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor='firstName'>First Name</label>
-            <Field name='firstName' component='input' type='text' />
-          </div>
-          <div>
-            <label htmlFor='lastName'>Last Name</label>
-            <Field name='lastName' component='input' type='text' />
-          </div>
-          <div>
-            <label htmlFor='email'>Email</label>
-            <Field
-              name='email'
-              component='input'
-              type='email'
-              onChange={(event, value) => {
-                console.log(value, 111)
-                event.preventDefault()
-              }}
-            />
-          </div>
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor='firstName'>First Name</label>
+          <Field name='firstName' component='input' type='text' />
+        </div>
+        <div>
+          <label htmlFor='lastName'>Last Name</label>
+          <Field name='lastName' component='input' type='text' />
+        </div>
+        <div>
+          <label htmlFor='email'>Email</label>
+          <Field
+            name='email'
+            component='input'
+            type='email'
+            onChange={(event, value) => {
+              console.log(value, 111)
+              event.preventDefault()
+            }}
+          />
+        </div>
+        <button type='submit'>Submit</button>
+      </form>
     )
   }
 }
