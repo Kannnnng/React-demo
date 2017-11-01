@@ -147,24 +147,24 @@ export default class Example extends React.Component {
             handleOnSelectLibrary={(id) => () => (console.log(`你选择了 ID 为 ${id} 的题库`))}
           />
         </div>
-        {/* <div className={styles.questionPreviewBoardComponent}>
+        <div className={styles.questionPreviewBoardComponent}>
           <QuestionPreviewBoard
             open
-            data
-            comments
-            questionContent
-            questionAnswer
-            answerAnalysis
-            handleOnClickGoBack
-            handleOnClickPrev
-            handleOnClickNext
-            handleOnClickEdit
-            handleOnClickClone
-            handleOnClickCopy
-            handleOnClickMove
-            handleOnClickDelete
+            teacher={{}}
+            comments={MockData.QuestionPreviewBoard.comments}
+            questionContent={MockData.QuestionPreviewBoard.questionContent}
+            questionAnswer={MockData.QuestionPreviewBoard.questionAnswer}
+            answerAnalysis={MockData.QuestionPreviewBoard.answerAnalysis}
+            handleOnClickGoBack={() => console.log('你点击了返回按钮')}
+            handleOnClickPrev={() => console.log('你点击了前一题按钮')}
+            handleOnClickNext={() => console.log('你点击了后一题按钮')}
+            handleOnClickEdit={() => console.log('你点击了编辑按钮')}
+            handleOnClickClone={() => console.log('你点击了克隆按钮')}
+            handleOnClickCopy={() => console.log('你点击了复制按钮')}
+            handleOnClickMove={() => console.log('你点击了移动按钮')}
+            handleOnClickDelete={() => console.log('你点击了删除按钮')}
           />
-        </div>*/}
+        </div>
         <div style={{ marginTop: '20px', paddingTop: '160px', backgroundColor: '#463333' }}>
           <DiscussionBottomToolBar
             attendeeCount={MockData.DiscussionBottomToolBar.attendeeCount}

@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import moment from 'moment'
 
 export default Mock.mock({
   DiscussionHeader: {
@@ -61,7 +62,7 @@ export default Mock.mock({
     'isAgree|1': true,
     name: '@CNAME()',
     pictures: [
-      Mock.Random.dataImage('100x100', 'picture')
+      Mock.Random.dataImage('100x100', 'picture'),
     ],
   },
   SelectLibrary: {
@@ -76,6 +77,84 @@ export default Mock.mock({
         'hasJoin|1': true,
       }
     ],
+  },
+  QuestionPreviewBoard: {
+    'comments|3-5': [
+      {
+        id: '@GUID()',
+        name: '@CNAME()',
+        avatar: Mock.Random.dataImage('100x100', 'avatar'),
+        createTime: `${moment().format('YYYY-MM-DD')} @TIME()`,
+        'like|0-100': 1,
+        comment: '@CSENTENCE()',
+      }
+    ],
+    questionContent: {
+      content: `<p>这是一段测试文本<span>这是一个行内元素</span><img src="${Mock.Random.dataImage('100x100', 'picture')}" alt="" /></p>`,  // eslint-disable-line
+      title: {
+        'pattern|1-6': 1,
+        'difficulty|1-5': 1,
+        serialNumber: /[A-Z]\d{5}/,
+      },
+    },
+    questionAnswer: {
+      answer: {
+        easyWrongOption: /A?B?C?D?/,
+        'hasCorrectness|1': true,
+        'answerCount|0-100': 1,
+        'studentCount|0-100': 1,
+        'correctRate|0-100': 1,
+        'referenceCount|0-100': 1,
+        'usageCount|0-100': 1,
+        'correctAnswer|1': true,
+        'strict|1': true,
+        'isRequired|1': true,
+        'limit|0-100': 1,
+        items: () => {
+          const correctAnswerIndex = Math.floor(Math.random() * 4)
+          const result = []
+          for (let index = 0; index < 4; index++) {
+            result.push({
+              id: '@GUID()',
+              content: '@TITLE()',
+              correctAnswer: index === correctAnswerIndex,
+              'myAnswer|1': true,
+              'attaches|1-3': [
+                Mock.Random.dataImage('100x100', 'picture'),
+              ],
+              isCorrect: () => this.myAnswer === this.correctAnswer,
+            })
+          }
+          return result
+        },
+        'isAllCorrect|1': true,
+      },
+      'isAnswerOpen|1': true,
+      'isAnswered|1': true,
+      'canAnswer|1': true,
+      pattern: '@../questionContent/title/pattern',
+      'subQuestionIndex|0-1000': 1,
+      id: '@GUID()',
+      'limit|0-100': 1,
+      serialNumber: '@../questionContent/title/serialNumber',
+      difficulty: '@../questionContent/title/difficulty',
+      'oddTime|0-100': 1,
+    },
+    answerAnalysis: {
+      data: {
+        'labels|3-5': [
+          {
+            id: '@GUID()',
+            text: '@CSENTENCE()',
+          },
+        ],
+        review: '@CSENTENCE()',
+      },
+      'isAnswered|1': true,
+      'isAnswerOpen|1': true,
+      'canAnswer|1': true,
+      'subQuestionIndex|0-1000': 1,
+    },
   },
   DiscussionBottomToolBar: {
     'attendeeCount|100': 1,
