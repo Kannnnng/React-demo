@@ -122,7 +122,7 @@ if (process.env.NODE_ENV === 'production') {
       filename: path.resolve(BUILD_PATH, 'index.html'),
       inject: false,
       title: 'React-demo',
-      minify: true,
+      minify: false,
     }),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
     new BundleAnalyzerPlugin(),
