@@ -84,6 +84,8 @@ if (process.env.NODE_ENV === 'production') {
     }),
     /* 禁止打包匹配文件 */
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
+    // new BundleAnalyzerPlugin(),
   ]
 } else {
   output = {

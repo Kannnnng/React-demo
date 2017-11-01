@@ -124,6 +124,8 @@ if (process.env.NODE_ENV === 'production') {
       title: 'React-demo',
       minify: true,
     }),
+    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
+    new BundleAnalyzerPlugin(),
   ]
 } else {
   entry = {
