@@ -13,9 +13,9 @@
 <body>
   <div id="app"></div>
   <script type="text/javascript" src="https://tajs.qq.com/stats?sId=63803765" charset="UTF-8"></script>
-  <script type="text/javascript" src="./assets/loading.js"></script>
+  <script type="text/javascript" src="./build/loading.js"></script>
   <% for (var file in htmlWebpackPlugin.files.js) { %>
-  <script type="text/javascript" src="./<%= htmlWebpackPlugin.files.js[file] %>"></script>
+  <script type="text/javascript" src="./build/<%= htmlWebpackPlugin.files.js[file] %>"></script>
   <% } %>
   <%= "\<\% for (var file in htmlWebpackPlugin.files.js) { \%\>" %>
   <%= '<script type="text/javascript" src="./\<\%= htmlWebpackPlugin.files.js[file] \%\>"></script>' %>
