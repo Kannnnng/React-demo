@@ -5,6 +5,7 @@ var ROOT_PATH = path.resolve(__dirname)  // eslint-disable-line
 var APP_PATH = path.resolve(ROOT_PATH, 'app')  // eslint-disable-line
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build')  // eslint-disable-line
 var NODE_MODULES_PATH = path.resolve(ROOT_PATH, 'node_modules')  // eslint-disable-line
+var CopyWebpackPlugin = require('copy-webpack-plugin')  // eslint-disable-line
 var HtmlWebpackPlugin = require('html-webpack-plugin')  // eslint-disable-line
 var CleanWebpackPlugin = require('clean-webpack-plugin')  // eslint-disable-line
 var ExtractTextPlugin = require('extract-text-webpack-plugin')  // eslint-disable-line
@@ -124,6 +125,19 @@ if (process.env.NODE_ENV === 'production') {
       title: 'React-demo',
       minify: false,
     }),
+    /* 复制指定文件到指定文件夹 */
+    new CopyWebpackPlugin([
+      /* 复制图片到 build 文件夹 */
+      {
+        from: 'assets/*.[png|jpg|jpeg|gif|svg]',
+        to: 'build/assets',
+      },
+      /* 复制其他 JS 文件到 build 文件夹 */
+      {
+        from: 'assets/*.[js]',
+        to: 'build',
+      },
+    ]),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
     // new BundleAnalyzerPlugin(),
   ]
