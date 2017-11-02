@@ -168,55 +168,57 @@ export default Mock.mock({
     'groupList|5': [
       {
         name: '@CTITLE(3)小组',
-        'id|+1': 10000,
+        'id|+1': 1000,
         color: '@UPPER(@COLOR)',
-        'students|10': [
-          {
-            studentId: Random.increment(1000),
-            'messageCount|0-10': 1,
-          },
-        ],
+        students: Mock.mock({
+          'default|5-20': [
+            {
+              'studentId|+1': 1000,
+              'messageCount|0-10': 1,
+            },
+          ],
+        }).default,
       },
     ],
     'studentGroupList|5': {
-      '10000|5-20': [
+      '1000|5-20': [
         {
-          id: Random.increment(1000),
+          'id|+1': 1000,
           name: '@CNAME()',
           avatar: Random.dataImage('100x100', 'avatar'),
-          messagesCount: Random.integer(0, 100),
+          'messagesCount|0-100': 1,
         },
       ],
-      '10001|5-20': [
+      '1001|5-20': [
         {
-          id: Random.increment(1000),
+          'id|+1': 1000,
           name: '@CNAME()',
           avatar: Random.dataImage('100x100', 'avatar'),
-          messagesCount: Random.integer(0, 100),
+          'messagesCount|0-100': 1,
         },
       ],
-      '10002|5-20': [
+      '1002|5-20': [
         {
-          id: Random.increment(1000),
+          'id|+1': 1000,
           name: '@CNAME()',
           avatar: Random.dataImage('100x100', 'avatar'),
-          messagesCount: Random.integer(0, 100),
+          'messagesCount|0-100': 1,
         },
       ],
-      '10003|5-20': [
+      '1003|5-20': [
         {
-          id: Random.increment(1000),
+          'id|+1': 1000,
           name: '@CNAME()',
           avatar: Random.dataImage('100x100', 'avatar'),
-          messagesCount: Random.integer(0, 100),
+          'messagesCount|0-100': 1,
         },
       ],
-      '10004|5-20': [
+      '1004|5-20': [
         {
-          id: Random.increment(1000),
+          'id|+1': 1000,
           name: '@CNAME()',
           avatar: Random.dataImage('100x100', 'avatar'),
-          messagesCount: Random.integer(0, 100),
+          'messagesCount|0-100': 1,
         },
       ],
     },

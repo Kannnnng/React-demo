@@ -252,6 +252,7 @@ export default class DiscussionBottomToolBar extends React.PureComponent {
       })
     } else if (onlyShowOneGroupId) {
       bottomToolBarTipsInfo = groupList.find((value) => onlyShowOneGroupId === value.id)
+      bottomToolBarTipsInfo.messagesCount = studentGroupList[onlyShowOneGroupId].reduce((result, value) => result + value.messagesCount, 0)  // eslint-disable-line
     }
 
     return (
