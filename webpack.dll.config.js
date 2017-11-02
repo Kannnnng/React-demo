@@ -124,9 +124,12 @@ if (process.env.NODE_ENV === 'production') {
       minify: false,
     }),
     /* 禁止打包匹配文件 */
+    new webpack.IgnorePlugin(/^\.\/.*$/, /lodash-es$/),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin(/^\.\/cjs\/react\.production\.min\.js$/, /react$/),
+    new webpack.IgnorePlugin(/^\.\/cjs\/react-dom\.production\.min\.js$/, /react-dom$/),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ]
 }
 
