@@ -9,6 +9,7 @@
 
 .leftContent,
 .rightContent {
+  overflow: auto;
   width: 50%;
   height: calc(100% - 14px);
   padding-top: 14px;
