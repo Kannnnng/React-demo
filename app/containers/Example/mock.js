@@ -1,26 +1,26 @@
-import Mock from 'mockjs'
+import Mock, { Random } from 'mockjs'
 import moment from 'moment'
 
 export default Mock.mock({
   DiscussionHeader: {
     title: '@CTITLE()',
     checkedTab: /speakContent|keyWord|Pics/,
-    'isDiscussionOpening|1': true,
+    isDiscussionOpening: Random.boolean(),
   },
   CountDown: {
     title: '倒计时组件',
-    'limit|1000-5000': 1,
+    limit: Random.integer(1000, 5000),
   },
   DiscussionPicModeElement: {
-    avatar: Mock.Random.dataImage('100x100', 'avatar'),
+    avatar: Random.dataImage('100x100', 'avatar'),
     name: '@CNAME()',
-    picture: Mock.Random.dataImage('100x100', 'picture'),
+    picture: Random.dataImage('100x100', 'picture'),
   },
   RoundProgressBar: {
     display: '进度显示器',
-    'percent|0-100': 1,
+    percent: Random.integer(0, 100),
     color: '@COLOR()',
-    'width|5-20': 1,
+    width: Random.integer(5, 20),
   },
   StudentManagement: {
     'groupList|3': [
@@ -32,14 +32,14 @@ export default Mock.mock({
             key: '@GUID()',
             id: '@GUID()',
             name: '@CNAME()',
-            avatar: Mock.Random.dataImage('100x100', 'avatar'),
+            avatar: Random.dataImage('100x100', 'avatar'),
             studentId: '@ID()',
             nickName: '@CTITLE()',
-            'gender|1': [1, 2],
+            gender: Random.integer(1, 2),
             school: '@CTITLE()大学',
             college: '@CTITLE()学院',
             className: '@CTITLE(3)班',
-            order: /\d{3}/,
+            order: Random.integer(0, 1000),
             birthday: '@DATE()',
             location: '@PROVINCE()',
             introduction: '@CPARAGRAPH()',
@@ -55,14 +55,14 @@ export default Mock.mock({
     ],
   },
   DiscussionPicPreview: {
-    avatar: Mock.Random.dataImage('100x100', 'avatar'),
+    avatar: Random.dataImage('100x100', 'avatar'),
     content: '@CPARAGRAPH()',
     date: '@TIME()',
     id: '@GUID()',
-    'isAgree|1': true,
+    isAgree: Random.boolean(),
     name: '@CNAME()',
     pictures: [
-      Mock.Random.dataImage('100x100', 'picture'),
+      Random.dataImage('100x100', 'picture'),
     ],
   },
   SelectLibrary: {
@@ -70,95 +70,101 @@ export default Mock.mock({
       {
         libraryId: '@GUID()',
         libraryName: '@CTITLE()题库',
-        cover: Mock.Random.dataImage('100x100', 'cover'),
-        'questionNumber|1-100': 1,
-        'quizNumber|1-100': 1,
-        'coursewareNumber|1-100': 1,
-        'hasJoin|1': true,
+        cover: Random.dataImage('100x100', 'cover'),
+        questionNumber: Random.integer(1, 100),
+        quizNumber: Random.integer(1, 100),
+        coursewareNumber: Random.integer(1, 100),
+        hasJoin: Random.boolean(),
       }
     ],
   },
+  _QuestionPreviewBoard_pattern: Random.integer(1, 6),
+  _QuestionPreviewBoard_difficulty: Random.integer(1, 5),
+  _QuestionPreviewBoard_subQuestionIndex: Random.integer(0, 100),
+  _QuestionPreviewBoard_serialNumber: /[A-Z]\d{5}/,
   QuestionPreviewBoard: {
-    'comments|3-5': [
-      {
-        id: '@GUID()',
-        name: '@CNAME()',
-        avatar: Mock.Random.dataImage('100x100', 'avatar'),
-        createTime: `${moment().format('YYYY-MM-DD')} @TIME()`,
-        'like|0-100': 1,
-        comment: '@CSENTENCE()',
-      }
-    ],
     questionContent: {
-      content: `<p>这是一段测试文本<span>这是一个行内元素</span><img src="${Mock.Random.dataImage('100x100', 'picture')}" alt="" /></p>`,  // eslint-disable-line
+      content: `<p>@CSENTENCE()<span>@CSENTENCE()</span><img src="${Random.dataImage('100x100', 'picture')}" alt="" /></p>`,  // eslint-disable-line
       title: {
-        'pattern|1-6': 1,
-        'difficulty|1-5': 1,
-        serialNumber: /[A-Z]\d{5}/,
+        pattern: '@/_QuestionPreviewBoard_pattern',
+        difficulty: '@/_QuestionPreviewBoard_difficulty',
+        serialNumber: '@/_QuestionPreviewBoard_serialNumber',
       },
     },
     questionAnswer: {
       answer: {
+        answerCount: Random.integer(0, 100),
+        studentCount: Random.integer(0, 100),
+        correctRate: Random.integer(0, 100),
+        referenceCount: Random.integer(0, 100),
+        usageCount: Random.integer(0, 100),
         easyWrongOption: /A?B?C?D?/,
-        'hasCorrectness|1': true,
-        'answerCount|0-100': 1,
-        'studentCount|0-100': 1,
-        'correctRate|0-100': 1,
-        'referenceCount|0-100': 1,
-        'usageCount|0-100': 1,
-        'correctAnswer|1': true,
-        'strict|1': true,
-        'isRequired|1': true,
-        'limit|0-100': 1,
-        items: () => {
+        hasCorrectness: Random.boolean(),
+        correctAnswer: Random.boolean(),
+        strict: Random.boolean(),
+        isRequired: Random.boolean(),
+        limit: Random.integer(0, 100),
+        items: function () {
           const correctAnswerIndex = Math.floor(Math.random() * 4)
           const result = []
           for (let index = 0; index < 4; index++) {
-            result.push({
-              id: '@GUID()',
-              content: '@TITLE()',
+            result.push(Mock.mock({
+              id: Random.guid(),
+              content: Random.ctitle(),
               correctAnswer: index === correctAnswerIndex,
-              'myAnswer|1': true,
-              'attaches|1-3': [
-                Mock.Random.dataImage('100x100', 'picture'),
+              myAnswer: Random.boolean(),
+              'attaches|0-3': [
+                Random.dataImage('100x100', 'picture'),
               ],
-              isCorrect: () => this.myAnswer === this.correctAnswer,
-            })
+              isCorrect: function () {
+                return this.myAnswer === this.correctAnswer
+              },
+            }))
           }
           return result
         },
-        'isAllCorrect|1': true,
+        isAllCorrect: Random.boolean(),
       },
-      'isAnswerOpen|1': true,
-      'isAnswered|1': true,
-      'canAnswer|1': true,
-      pattern: '@../questionContent/title/pattern',
-      'subQuestionIndex|0-1000': 1,
+      isAnswerOpen: Random.boolean(),
+      isAnswered: Random.boolean(),
+      canAnswer: Random.boolean(),
+      pattern: '@/_QuestionPreviewBoard_pattern',
+      subQuestionIndex: '@/_QuestionPreviewBoard_subQuestionIndex',
       id: '@GUID()',
-      'limit|0-100': 1,
-      serialNumber: '@../questionContent/title/serialNumber',
-      difficulty: '@../questionContent/title/difficulty',
-      'oddTime|0-100': 1,
+      limit: Random.integer(0, 100),
+      serialNumber: '@/_QuestionPreviewBoard_serialNumber',
+      difficulty: '@/_QuestionPreviewBoard_difficulty',
+      oddTime: Random.integer(0, 100),
     },
     answerAnalysis: {
       data: {
         'labels|3-5': [
           {
             id: '@GUID()',
-            text: '@CSENTENCE()',
+            text: '@CTITLE()',
           },
         ],
-        review: '@CSENTENCE()',
+        review: '@CSENTENCE(20, 100)',
       },
-      'isAnswered|1': true,
-      'isAnswerOpen|1': true,
-      'canAnswer|1': true,
-      'subQuestionIndex|0-1000': 1,
+      isAnswered: Random.boolean(),
+      isAnswerOpen: Random.boolean(),
+      canAnswer: Random.boolean(),
+      subQuestionIndex: '@/_QuestionPreviewBoard_subQuestionIndex',
     },
+    'comments|3-5': [
+      {
+        id: '@GUID()',
+        name: '@CNAME()',
+        avatar: Random.dataImage('100x100', 'avatar'),
+        createTime: `${moment().format('YYYY-MM-DD')} @TIME()`,
+        like: Random.integer(0, 100),
+        comment: '@CSENTENCE()',
+      }
+    ],
   },
   DiscussionBottomToolBar: {
-    'attendeeCount|100': 1,
-    'messageCount|100': 1,
+    attendeeCount: Random.integer(0, 100),
+    messageCount: Random.integer(0, 100),
     'groupList|5': [
       {
         name: '@CTITLE(3)小组',
@@ -166,7 +172,7 @@ export default Mock.mock({
         color: '@UPPER(@COLOR)',
         'students|10': [
           {
-            'studentId|+1': 20000,
+            studentId: Random.increment(1000),
             'messageCount|0-10': 1,
           },
         ],
@@ -175,42 +181,42 @@ export default Mock.mock({
     'studentGroupList|5': {
       '10000|5-20': [
         {
-          'id|+1': 20000,
+          id: Random.increment(1000),
           name: '@CNAME()',
-          avatar: Mock.Random.dataImage('100x100', 'avatar'),
-          'messagesCount|0-10': 1,
+          avatar: Random.dataImage('100x100', 'avatar'),
+          messagesCount: Random.integer(0, 100),
         },
       ],
       '10001|5-20': [
         {
-          'id|+1': 20000,
+          id: Random.increment(1000),
           name: '@CNAME()',
-          avatar: Mock.Random.dataImage('100x100', 'avatar'),
-          'messagesCount|0-10': 1,
+          avatar: Random.dataImage('100x100', 'avatar'),
+          messagesCount: Random.integer(0, 100),
         },
       ],
       '10002|5-20': [
         {
-          'id|+1': 20000,
+          id: Random.increment(1000),
           name: '@CNAME()',
-          avatar: Mock.Random.dataImage('100x100', 'avatar'),
-          'messagesCount|0-10': 1,
+          avatar: Random.dataImage('100x100', 'avatar'),
+          messagesCount: Random.integer(0, 100),
         },
       ],
       '10003|5-20': [
         {
-          'id|+1': 20000,
+          id: Random.increment(1000),
           name: '@CNAME()',
-          avatar: Mock.Random.dataImage('100x100', 'avatar'),
-          'messagesCount|0-10': 1,
+          avatar: Random.dataImage('100x100', 'avatar'),
+          messagesCount: Random.integer(0, 100),
         },
       ],
       '10004|5-20': [
         {
-          'id|+1': 20000,
+          id: Random.increment(1000),
           name: '@CNAME()',
-          avatar: Mock.Random.dataImage('100x100', 'avatar'),
-          'messagesCount|0-10': 1,
+          avatar: Random.dataImage('100x100', 'avatar'),
+          messagesCount: Random.integer(0, 100),
         },
       ],
     },
