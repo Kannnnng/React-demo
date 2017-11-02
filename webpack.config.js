@@ -173,23 +173,17 @@ if (process.env.NODE_ENV === 'production') {
     }),
     /* 在组件热加载的时候显示更新的组件名而不是原本的组件 ID */
     new webpack.NamedModulesPlugin(),
-    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    // new BundleAnalyzerPlugin(),
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: path.resolve(BUILD_PATH, 'vendor.dev.manifest.json'),
     }),
-    /* 通过多线程的方式快速编译代码 */
-    // new HappyPack({
-    //   id: 'js',
-    //   threads: 2,
-    //   loaders: ['babel-loader?cacheDirectory'],
-    // }),
     /* 开启作用域提升功能 */
     /* 在开发环境中开启这个功能，我自己感觉会导致与 react-hot-loader 有冲突，总是会发生一些 */
     /* 问题，所以现在只在生产环境中开启这个功能 */
     // new webpack.optimize.ModuleConcatenationPlugin(),
+    /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
+    // new BundleAnalyzerPlugin(),
   ]
 }
 
@@ -284,11 +278,14 @@ module.exports = {
     extensions: ['.js', '.scss', '.jsx', '.css'],
     /* 文件路径别名，方便在写代码时对模块的引用 */
     alias: {
+      /* 本地文件夹路径别名 */
       app: APP_PATH,
       components: path.resolve(APP_PATH, 'components'),
       containers: path.resolve(APP_PATH, 'containers'),
       images: path.resolve(APP_PATH, 'images'),
       utils: path.resolve(APP_PATH, 'utils'),
+      /* 工具包的别名 */
+      lodash: 'lodash-es',
     },
     /* 直接写明 node_modules 的全路径 */
     modules: [NODE_MODULES_PATH],

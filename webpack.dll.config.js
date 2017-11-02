@@ -124,7 +124,6 @@ if (process.env.NODE_ENV === 'production') {
       minify: false,
     }),
     /* 禁止打包匹配文件 */
-    new webpack.IgnorePlugin(/^\.\/.*$/, /lodash-es$/),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.IgnorePlugin(/^\.\/cjs\/react\.production\.min\.js$/, /react$/),
     new webpack.IgnorePlugin(/^\.\/cjs\/react-dom\.production\.min\.js$/, /react-dom$/),
@@ -136,9 +135,9 @@ if (process.env.NODE_ENV === 'production') {
 const vendors = [
   'axios',
   'immutable',
-  /* lodash 可以通过 lodash-webpack-plugin 这款插件实现精确引用，防止将整个 lodash */
+  /* lodash-es 可以通过 lodash-webpack-plugin 这款插件实现精确引用，防止将整个 lodash-es */
   /* 全部打包到最后的文件中 */
-  // 'lodash',
+  // 'lodash-es',
   /* 不在此处统一引用，使用 import Button from 'material-ui/Button' 这样的引用语法 */
   /* 可以避免将整个 material-ui 全部打包到最后的文件中 */
   // 'material-ui',
@@ -170,16 +169,11 @@ const vendors = [
   'reselect',
 ]
 
-/* 处于生产环境时，由于 lodash-webpack-plugin 插件的使用，将会仅把代码中用到的 lodash 中 */
-/* 的每一个小部分打包到最后的输出文件中，这样最后的输出文件中就只存在使用到的 lodash 中的函 */
-/* 数，减少文件体积，但是在开发过程中，没有使用上面那个插件，因此还是需要将 lodash 整个打包 */
-/* 到 DLL 文件中 */
 /* 处于开发环境时将 Mockjs 也打包到 DLL 文件中 */
 /* 处于开发环境时将 redux-logger 也打包到 DLL 文件中 */
 /* 处于开发环境时将 redux-form 也打包到 DLL 文件中，因此引用 redux-form 一般就是全部引用 */
 /* 很少估计也是懒得单个引用 */
 if (process.env.NODE_ENV !== 'production') {
-  vendors.push('lodash')
   vendors.push('mockjs')
   vendors.push('redux-form')
   vendors.push('redux-logger')

@@ -66,7 +66,7 @@
     "axios": "0.17.0",
     "babel-polyfill": "6.23.0",
     "immutable": "3.8.2",
-    "lodash": "4.17.4",
+    "lodash-es": "4.17.4",
     "material-ui": "0.19.2",
     "md5": "2.2.1",
     "moment": "2.19.1",
