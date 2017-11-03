@@ -6,8 +6,8 @@
 
 import http from 'utils/fetch'
 
-export function test(params) {
-  return http.get(`test?${params}`)
+export function request(params) {
+  return http.get(`request?${params}`)
     .then((response) => {
       const result = response
       return result
