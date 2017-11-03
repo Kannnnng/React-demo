@@ -2,6 +2,7 @@ import createStore from 'redux/lib/createStore'
 import applyMiddleware from 'redux/lib/applyMiddleware'
 import compose from 'redux/lib/compose'
 import { createLogger } from 'redux-logger'
+import promiseMiddleware from 'redux-promise'
 import rootReducer from './reducers'
 
 const _create = window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore  // eslint-disable-line
@@ -16,6 +17,7 @@ function configStore(initialState) {
   } else {
     const createStoreWithMiddleware = compose(
       applyMiddleware(
+        promiseMiddleware,
         logger,
       ),
     )(create)
