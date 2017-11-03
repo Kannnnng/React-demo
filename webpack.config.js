@@ -161,7 +161,7 @@ if (process.env.NODE_ENV === 'production') {
   // devtool = 'cheap-eval-source-map'
   devtool = 'cheap-module-eval-source-map'
   devServer = {
-    /* 暂时使用不到这个设置 */
+    /* 统一设置请求的头部信息 */
     // headers: { 'X-Custom-Header': 'yes' },
     /* 设置为 true 后所有的跳转都将指向 index.html */
     historyApiFallback: true,
@@ -172,7 +172,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 请求代理 */
     proxy: {
       '/api/*': {
-        target: 'http://localhost:7000',
+        target: 'http://10.11.50.93:6000',
         secure: false,
       },
     },
