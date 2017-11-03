@@ -37,6 +37,9 @@ const Home = LoadComponent(() => (
 const Example = LoadComponent(() => (
   import(/* webpackChunkName: "Example" */'containers/Example'))
 )
+const Library = LoadComponent(() => (
+  import(/* webpackChunkName: "Library" */'containers/Library'))
+)
 
 const routes = (
   <div>
@@ -45,6 +48,7 @@ const routes = (
     <Route path='/pro' component={Profile} exact strict />
     <Route path='/2048' component={Game2048} exact strict />
     <Route path='/example' component={Example} exact strict />
+    <Route path='/library' component={Library} exact strict />
   </div>
 )
 
