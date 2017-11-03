@@ -100,6 +100,10 @@ export default class Home extends React.Component {
               primaryText='组件示例'
               onTouchTap={this.handleOnClickCatalogList('/example')}
             />
+            <ListItem
+              primaryText='题库'
+              onTouchTap={this.handleOnClickCatalogList('/library')}
+            />
           </List>
         </Drawer>
         <Snackbar

@@ -20,6 +20,7 @@ import styles from './styles'
 export default class Library extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    actions: PropTypes.object,
   }
 
   static defaultProps = {
@@ -33,6 +34,9 @@ export default class Library extends React.Component {
   render() {
     return (
       <div className={styles.container}>
+        <button onClick={this.props.actions.getMyAllCoursesAction}>
+          111
+        </button>
       </div>
     )
   }
