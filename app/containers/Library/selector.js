@@ -7,7 +7,7 @@
 import { fromJS } from 'immutable'
 import { createSelector } from 'reselect'
 
-const selectorDomain = (state) => state.get('library')
+const selectorDomain = (state) => state.library
 
 /* 当前所有课程集合，包括我的课程集合和课程组中的课程集合 */
 const coursesSelector = createSelector(

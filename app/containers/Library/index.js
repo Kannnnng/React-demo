@@ -10,14 +10,18 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import lodash from 'lodash'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import List from 'material-ui/List/List'
+import ListItem from 'material-ui/List/ListItem'
+import HomeSvg from 'material-ui/svg-icons/action/account-balance'
 import * as acts from './actions'
 import selector from './selector'
 import styles from './styles'
 
 const mapStateToProps = () => {
-  return selector
+  return selector()
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -34,12 +38,13 @@ const mapDispatchToProps = (dispatch) => {
 
 export default class Library extends React.Component {
   static propTypes = {
-    data: PropTypes.object,
-    actions: PropTypes.object,
-  }
-
-  static defaultProps = {
-    data: {},
+    actions: PropTypes.object.isRequired,
+    myCourses: PropTypes.object.isRequired,
+    selectedCourseChapters: PropTypes.object.isRequired,
+    selectedCourseCoursewares: PropTypes.object.isRequired,
+    selectedCourseLabels: PropTypes.object.isRequired,
+    selectedCourseQuestions: PropTypes.object.isRequired,
+    selectedCourseQuizzes: PropTypes.object.isRequired,
   }
 
   state = {
@@ -47,11 +52,30 @@ export default class Library extends React.Component {
   }
 
   render() {
+    const {
+      myCourses,
+    } = this.props
+
     return (
       <div className={styles.container}>
-        <button onClick={this.props.actions.getMyAllCoursesAction}>
-          111
-        </button>
+        <div className={styles.leftArea}>
+          <List>
+            <ListItem
+              primaryText={'我的课程'}
+              leftIcon={<HomeSvg />}
+              initiallyOpen={false}
+              nestedItems={lodash.map(myCourses, (value) => (
+                <ListItem
+                  key={value.id}
+                  primaryText={value.name}
+                />
+              ))}
+            />
+          </List>
+        </div>
+        <div className={styles.rightArea}>
+          123
+        </div>
       </div>
     )
   }
