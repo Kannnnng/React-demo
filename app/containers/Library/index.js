@@ -13,10 +13,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as acts from './actions'
-import selectLibrary from './selector'
+import selector from './selector'
 import styles from './styles'
 
+const mapStateToProps = () => {
+  return selector
+}
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    ...acts,
+  }
+  const actionMap = {
+    actions: bindActionCreators(actions, dispatch)
+  }
+  return actionMap
+}
+
 @connect(mapStateToProps, mapDispatchToProps)
+
 export default class Library extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -41,16 +56,3 @@ export default class Library extends React.Component {
     )
   }
 }
-
-const mapStateToProps = selectLibrary()
-
-function mapDispatchToProps(dispatch) {
-  const actions = {
-    ...acts,
-  }
-  const actionMap = {
-    actions: bindActionCreators(actions, dispatch)
-  }
-  return actionMap
-}
-

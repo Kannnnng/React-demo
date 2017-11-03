@@ -9,7 +9,7 @@ import {
   getMyAllCourses,
   getMyAllCourseGroups,
   getMyAllClassrooms,
-  getLibraryByLibraryId,
+  getQuestionsByCourseId,
 } from './sources'
 
 export const getMyAllCoursesAction = createAction(
@@ -27,8 +27,11 @@ export const getMyAllClassroomsAction = createAction(
   getMyAllClassrooms,
 )
 
-export const getLibraryByLibraryIdAction = createAction(
-  'APP/LIBRARY/GET_LIBRARY_BY_LIBRARY_ID_ACTION',
-  getLibraryByLibraryId,
+export const getQuestionsByCourseIdAction = createAction(
+  'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_ID_ACTION',
+  getQuestionsByCourseId,
 )
 
+export const selectCourseAction = createAction(
+  'APP/LIBRARY/SELECT_COURSE_ACTION',
+)

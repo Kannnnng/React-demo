@@ -7,34 +7,37 @@
 import http from 'utils/fetch'
 import { normalize } from 'normalizr'
 import {
-  Libraries,
+  Chapters,
+  Coursewares,
+  Groups,
+  Labels,
+  Courses,
+  Questions,
+  Quizzes,
 } from 'utils/schemas'
 
 export function getMyAllCourses() {
   return http
     .get('v2/libraries?type=mine')
-    .catch(() => {
-      throw '获取个人所有课程出错'
-    })
     .then((response) => {
       const result = normalize(response, {
-        libraries: Libraries,
+        libraries: Courses,
       })
       return result
     })
-    .catch(() => {
-      throw '数据转换出错'
-    })
+    .catch((error) => {throw error})
 }
 
 export function getMyAllCourseGroups() {
   return http
     .get('v2/groups?type=2')
     .then((response) => {
-      const result = response
-      console.log(result, 456)
+      const result = normalize(response, {
+        groupList: Groups,
+      })
       return result
     })
+    .catch((error) => {throw error})
 }
 
 export function getMyAllClassrooms() {
@@ -46,14 +49,20 @@ export function getMyAllClassrooms() {
     })
 }
 
-export function getLibraryByLibraryId({
+export function getQuestionsByCourseId({
   libraryId,
 }) {
   return http
     .get(`v2/libraries/${libraryId}`)
     .then((response) => {
-      const result = response
-      console.log(result, 789)
+      const result = normalize(response, {
+        chapters: Chapters,
+        coursewares: Coursewares,
+        labels: Labels,
+        questions: Questions,
+        quizzes: Quizzes,
+      })
       return result
     })
+    .catch((error) => {throw error})
 }
