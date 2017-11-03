@@ -20,10 +20,28 @@ import { bindActionCreators } from 'redux'
 import * as acts from './actions'
 {{/if}}
 {{#if wantReducer}}
-import select{{properCase name}} from './selector'
+import selector from './selector'
 {{/if}}
 {{#if wantSCSS}}
 import styles from './styles'
+{{/if}}
+
+{{#if wantReducer}}
+const mapStateToProps = () => {
+  return selector
+}
+{{/if}}
+
+{{#if wantActions}}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    ...acts,
+  }
+  const actionMap = {
+    actions: bindActionCreators(actions, dispatch)
+  }
+  return actionMap
+}
 {{/if}}
 
 {{#if wantActions}}
@@ -37,6 +55,7 @@ import styles from './styles'
 @connect(mapStateToProps, null)
 {{/if}}
 {{/if}}
+
 export default class {{ properCase name }} extends React.{{{ component }}} {
   static propTypes = {
     data: PropTypes.object,
@@ -61,20 +80,3 @@ export default class {{ properCase name }} extends React.{{{ component }}} {
     )
   }
 }
-
-{{#if wantReducer}}
-const mapStateToProps = select{{properCase name}}()
-{{/if}}
-
-{{#if wantActions}}
-function mapDispatchToProps(dispatch) {
-  const actions = {
-    ...acts,
-  }
-  const actionMap = {
-    actions: bindActionCreators(actions, dispatch)
-  }
-  return actionMap
-}
-
-{{/if}}

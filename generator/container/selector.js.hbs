@@ -1,16 +1,20 @@
 /**
  *
- * {{ properCase name }} reducer
+ * Name: {{ properCase name }} selector
+ * Date: {{ date }}
+ * Description: {{ description }}
+ * Author: {{ author }}
+ * Organization: {{ organization }}
  *
  */
 
 import { createSelector } from 'reselect'
 
-const select{{ properCase name }}Domain = (state) => state.get('{{ camelCase name }}')
+const selectorDomain = (state) => state.get('{{ camelCase name }}')
 
-const select{{ properCase name }} = () => createSelector(
-  select{{ properCase name }}Domain,
-  (substate) => substate.toJS()
+const selector = () => createSelector(
+  selectorDomain,
+  (substate) => substate
 )
 
-export default select{{ properCase name }}
+export default selector
