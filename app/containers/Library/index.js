@@ -15,10 +15,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
-import HomeSvg from 'material-ui/svg-icons/action/account-balance'
+import makeSelectable from 'material-ui/List/makeSelectable'
+import GroupSvg from 'material-ui/svg-icons/action/group-work'
+import HumanSvg from 'material-ui/svg-icons/action/accessibility'
+import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
 import * as acts from './actions'
 import selector from './selector'
 import styles from './styles'
+
+const SelectableList = makeSelectable(List)
 
 const mapStateToProps = () => {
   return selector()
@@ -40,29 +45,40 @@ export default class Library extends React.Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     myCourses: PropTypes.object.isRequired,
-    selectedCourseChapters: PropTypes.object.isRequired,
-    selectedCourseCoursewares: PropTypes.object.isRequired,
-    selectedCourseLabels: PropTypes.object.isRequired,
-    selectedCourseQuestions: PropTypes.object.isRequired,
-    selectedCourseQuizzes: PropTypes.object.isRequired,
+    selectedCourseChapters: PropTypes.object,
+    selectedCourseCoursewares: PropTypes.object,
+    selectedCourseLabels: PropTypes.object,
+    selectedCourseQuestions: PropTypes.object,
+    selectedCourseQuizzes: PropTypes.object,
   }
 
   state = {
     stateData: {},
+    selectableListValue: null,
+  }
+
+  handleOnSelectableListChange = (event, value) => {
+    this.setState({ selectableListValue: value })
   }
 
   render() {
     const {
       myCourses,
     } = this.props
+    const {
+      selectableListValue,
+    } = this.state
 
     return (
       <div className={styles.container}>
         <div className={styles.leftArea}>
-          <List>
+          <SelectableList
+            value={selectableListValue}
+            onChange={this.handleOnSelectableListChange}
+          >
             <ListItem
               primaryText={'我的课程'}
-              leftIcon={<HomeSvg />}
+              leftIcon={<HumanSvg />}
               initiallyOpen={false}
               nestedItems={lodash.map(myCourses, (value) => (
                 <ListItem
@@ -70,11 +86,70 @@ export default class Library extends React.Component {
                   primaryText={value.name}
                 />
               ))}
+              value={'我的课程'}
             />
-          </List>
+            <ListItem
+              primaryText={'课程组'}
+              leftIcon={<GroupSvg />}
+              initiallyOpen={false}
+              nestedItems={lodash.map(myCourses, (value) => (
+                <ListItem
+                  key={value.id}
+                  primaryText={value.name}
+                />
+              ))}
+              value={'课程组'}
+            />
+          </SelectableList>
+          <SelectableList
+            value={selectableListValue}
+            onChange={this.handleOnSelectableListChange}
+            style={{ borderTop: 'dashed 1px #666' }}
+          >
+            {lodash.map(myCourses, (value) => (
+              <ListItem
+                primaryText={value.name}
+                leftIcon={<ClassroomSvg />}
+                initiallyOpen={false}
+                nestedItems={lodash.map(myCourses, (value) => (
+                  <ListItem
+                    key={value.id}
+                    primaryText={value.name}
+                  />
+                ))}
+                value={'我的课程'}
+              />
+            ))}
+            <ListItem
+              primaryText={'value.name'}
+              leftIcon={<ClassroomSvg />}
+              initiallyOpen={false}
+              nestedItems={lodash.map(myCourses, (value) => (
+                <ListItem
+                  key={value.id}
+                  primaryText={'value.name'}
+                />
+              ))}
+              value={'我的课程'}
+            />
+            <ListItem
+              primaryText={'value.name'}
+              leftIcon={<ClassroomSvg />}
+              initiallyOpen={false}
+              nestedItems={lodash.map(myCourses, (value) => (
+                <ListItem
+                  key={value.id}
+                  primaryText={'value.name'}
+                />
+              ))}
+              value={'我的课程'}
+            />
+          </SelectableList>
         </div>
         <div className={styles.rightArea}>
-          123
+          <button onClick={this.props.actions.getMyAllCoursesAction}>
+            111
+          </button>
         </div>
       </div>
     )

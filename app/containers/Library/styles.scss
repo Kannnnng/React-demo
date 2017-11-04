@@ -2,6 +2,7 @@
   display: flex;
   width: 100%;
   height: 100%;
+  background-color: #F2F2F2;
 
   > * {
     height: 100%;
@@ -15,4 +16,5 @@
 
 .rightArea {
   width: 80%;
+  border-left: dashed 1px #666;
 }
