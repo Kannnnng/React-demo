@@ -154,7 +154,7 @@ const selectedCourseQuizzesSelector = createSelector(
 )
 
 /* 导出最终的数据 */
-const selector = () => createSelector(
+const selector = createSelector(
   myCoursesSelector,
   selectedCourseChaptersSelector,
   selectedCourseCoursewaresSelector,

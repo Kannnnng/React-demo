@@ -26,7 +26,7 @@ import styles from './styles'
 const SelectableList = makeSelectable(List)
 
 const mapStateToProps = () => {
-  return selector()
+  return selector
 }
 
 const mapDispatchToProps = (dispatch) => {
