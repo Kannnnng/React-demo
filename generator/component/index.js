@@ -3,6 +3,7 @@
  */
 
 const componentExists = require('../utils/componentExists')
+const moment = require('moment')
 
 module.exports = {
   description: 'Add an unconnected component',
@@ -75,7 +76,7 @@ module.exports = {
     }
 
     /* add create time */
-    data.date = new Date().toString()
+    data.date = moment().format('YYYY-MM-DD HH:mm:ss')
 
     return actions
   },
