@@ -20,7 +20,9 @@ import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
 import Pagination from 'components/Pagination'
+import CurrentChoice from './CurrentChoice'
 import * as acts from './actions'
+import MockData from './mock'
 import selector from './selector'
 import styles from './styles'
 
@@ -53,6 +55,10 @@ class Library extends React.Component {
     this.props.actions.pageNumberChangeAction({
       number,
     })
+  }
+
+  handleOnClickCurrentChoiceCancel = (name) => () => {
+    console.log(`你取消了 ${name} 筛选条件`)
   }
 
   render() {
@@ -110,6 +116,10 @@ class Library extends React.Component {
           </SelectableList>
         </div>
         <div className={styles.rightArea}>
+          <CurrentChoice
+            conditions={MockData.CurrentChoice.conditions}
+            handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
+          />
           <Pagination
             total={100}
             handleOnChange={this.handleOnPageChange}
