@@ -7,7 +7,6 @@
     "stage-0",
   ],
   "plugins": [
-    "transform-decorators-legacy",
     ["transform-runtime", {
       "helpers": true,
       "polyfill": true,

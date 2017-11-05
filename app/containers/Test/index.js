@@ -7,8 +7,7 @@ import FontIcon from 'material-ui/FontIcon'
 import * as acts from './actions'
 import styles from './styles'
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Test extends React.Component {
+class Test extends React.Component {
   static propTypes = {
     actions: PropTypes.object,
     message: PropTypes.string,
@@ -56,3 +55,5 @@ function mapDispatchToProps(dispatch) {
   }
   return actionMap
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Test)

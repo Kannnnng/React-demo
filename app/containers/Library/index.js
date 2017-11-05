@@ -26,23 +26,7 @@ import styles from './styles'
 
 const SelectableList = makeSelectable(List)
 
-const mapStateToProps = () => {
-  return selector
-}
-
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    ...acts,
-  }
-  const actionMap = {
-    actions: bindActionCreators(actions, dispatch)
-  }
-  return actionMap
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
-
-export default class Library extends React.Component {
+class Library extends React.Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     myCourses: PropTypes.object.isRequired,
@@ -135,3 +119,19 @@ export default class Library extends React.Component {
     )
   }
 }
+
+const mapStateToProps = () => {
+  return selector
+}
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    ...acts,
+  }
+  const actionMap = {
+    actions: bindActionCreators(actions, dispatch)
+  }
+  return actionMap
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Library)

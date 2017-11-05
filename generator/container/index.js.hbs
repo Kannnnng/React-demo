@@ -26,37 +26,7 @@ import selector from './selector'
 import styles from './styles'
 {{/if}}
 
-{{#if wantReducer}}
-const mapStateToProps = () => {
-  return selector
-}
-{{/if}}
-
-{{#if wantActions}}
-const mapDispatchToProps = (dispatch) => {
-  const actions = {
-    ...acts,
-  }
-  const actionMap = {
-    actions: bindActionCreators(actions, dispatch)
-  }
-  return actionMap
-}
-{{/if}}
-
-{{#if wantActions}}
-{{#if wantReducer}}
-@connect(mapStateToProps, mapDispatchToProps)
-{{else}}
-@connect(null, mapDispatchToProps)
-{{/if}}
-{{else}}
-{{#if wantReducer}}
-@connect(mapStateToProps, null)
-{{/if}}
-{{/if}}
-
-export default class {{ properCase name }} extends React.{{{ component }}} {
+class {{ properCase name }} extends React.{{{ component }}} {
   static propTypes = {
     data: PropTypes.object,
   }
@@ -80,3 +50,33 @@ export default class {{ properCase name }} extends React.{{{ component }}} {
     )
   }
 }
+
+{{#if wantReducer}}
+const mapStateToProps = () => {
+  return selector
+}
+{{/if}}
+
+{{#if wantActions}}
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    ...acts,
+  }
+  const actionMap = {
+    actions: bindActionCreators(actions, dispatch)
+  }
+  return actionMap
+}
+{{/if}}
+
+{{#if wantActions}}
+{{#if wantReducer}}
+export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }})
+{{else}}
+export default connect(null, mapDispatchToProps)({{ properCase name }})
+{{/if}}
+{{else}}
+{{#if wantReducer}}
+export default connect(mapStateToProps, null)({{ properCase name }})
+{{/if}}
+{{/if}}
