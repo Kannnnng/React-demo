@@ -19,6 +19,7 @@ import makeSelectable from 'material-ui/List/makeSelectable'
 import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
+import Pagination from 'components/Pagination'
 import * as acts from './actions'
 import selector from './selector'
 import styles from './styles'
@@ -50,6 +51,7 @@ export default class Library extends React.Component {
     selectedCourseLabels: PropTypes.object,
     selectedCourseQuestions: PropTypes.object,
     selectedCourseQuizzes: PropTypes.object,
+    currentPageNumber: PropTypes.number,
   }
 
   state = {
@@ -57,8 +59,16 @@ export default class Library extends React.Component {
     selectableListValue: null,
   }
 
+  /* 当左侧被选中的项发生变化时触发 */
   handleOnSelectableListChange = (event, value) => {
     this.setState({ selectableListValue: value })
+  }
+
+  /* 当底部页码发生变化时触发 */
+  handleOnPageChange = (number) => {
+    this.props.actions.pageNumberChangeAction({
+      number,
+    })
   }
 
   render() {
@@ -110,46 +120,16 @@ export default class Library extends React.Component {
               <ListItem
                 primaryText={value.name}
                 leftIcon={<ClassroomSvg />}
-                initiallyOpen={false}
-                nestedItems={lodash.map(myCourses, (value) => (
-                  <ListItem
-                    key={value.id}
-                    primaryText={value.name}
-                  />
-                ))}
-                value={'我的课程'}
+                value={value.name}
               />
             ))}
-            <ListItem
-              primaryText={'value.name'}
-              leftIcon={<ClassroomSvg />}
-              initiallyOpen={false}
-              nestedItems={lodash.map(myCourses, (value) => (
-                <ListItem
-                  key={value.id}
-                  primaryText={'value.name'}
-                />
-              ))}
-              value={'我的课程'}
-            />
-            <ListItem
-              primaryText={'value.name'}
-              leftIcon={<ClassroomSvg />}
-              initiallyOpen={false}
-              nestedItems={lodash.map(myCourses, (value) => (
-                <ListItem
-                  key={value.id}
-                  primaryText={'value.name'}
-                />
-              ))}
-              value={'我的课程'}
-            />
           </SelectableList>
         </div>
         <div className={styles.rightArea}>
-          <button onClick={this.props.actions.getMyAllCoursesAction}>
-            111
-          </button>
+          <Pagination
+            total={100}
+            handleOnChange={this.handleOnPageChange}
+          />
         </div>
       </div>
     )

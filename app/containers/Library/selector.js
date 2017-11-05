@@ -153,6 +153,12 @@ const selectedCourseQuizzesSelector = createSelector(
   }
 )
 
+/* 当前页码 */
+const currentPageNumberSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || null
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myCoursesSelector,
@@ -161,6 +167,7 @@ const selector = createSelector(
   selectedCourseLabelsSelector,
   selectedCourseQuestionsSelector,
   selectedCourseQuizzesSelector,
+  currentPageNumberSelector,
   (
     myCourses,
     selectedCourseChapters,
@@ -168,6 +175,7 @@ const selector = createSelector(
     selectedCourseLabels,
     selectedCourseQuestions,
     selectedCourseQuizzes,
+    currentPageNumber,
   ) => ({
     myCourses: myCourses ? myCourses.toJS() : null,
     selectedCourseChapters: selectedCourseChapters ? selectedCourseChapters.toJS() : null,
@@ -175,6 +183,7 @@ const selector = createSelector(
     selectedCourseLabels: selectedCourseLabels ? selectedCourseLabels.toJS() : null,
     selectedCourseQuestions: selectedCourseQuestions ? selectedCourseQuestions.toJS() : null,
     selectedCourseQuizzes: selectedCourseQuizzes ? selectedCourseQuizzes.toJS() : null,
+    currentPageNumber,
   })
 )
 

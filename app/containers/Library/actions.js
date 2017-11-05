@@ -35,3 +35,7 @@ export const getQuestionsByCourseIdAction = createAction(
 export const selectCourseAction = createAction(
   'APP/LIBRARY/SELECT_COURSE_ACTION',
 )
+
+export const pageNumberChangeAction = createAction(
+  'APP/LIBRARY/PAGE_NUMBER_CHANGE_ACTION',
+)

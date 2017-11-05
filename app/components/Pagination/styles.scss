@@ -1,0 +1,22 @@
+.container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pageButton {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  margin-right: 5px !important;
+  padding: 0 !important;
+}
+
+.inputPage {
+  display: inline-flex;
+  align-items: center;
+
+  > div > input {
+    width: 40px;
+    margin-left: 5px;
+  }
+}

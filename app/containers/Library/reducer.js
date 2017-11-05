@@ -8,7 +8,12 @@ import lodash from 'lodash'
 import { fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
 
-const initialState = fromJS({})
+const initialState = fromJS({
+  others: {
+    selectedCourseId: null,
+    currentPageNumber: 1,
+  },
+})
 
 export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_COURSES_ACTION': {
@@ -64,6 +69,16 @@ export default handleActions({
       const courseId = lodash.get(action, 'payload.courseId')
       return state
         .setIn(['others', 'selectedCourseId'], courseId)
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/PAGE_NUMBER_CHANGE_ACTION': {
+    next(state, action) {
+      const number = lodash.get(action, 'payload.number')
+      return state
+        .setIn(['others', 'currentPageNumber'], number)
     },
     throw(state) {
       return state
