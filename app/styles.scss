@@ -1,20 +1,11 @@
 * {
   margin: 0;
   padding: 0;
-} /* 撑满页面 */
+}
 
-html {
+html,
+body,
+body > :first-child,
+body > :first-child > div {
   height: 100%;
-
-  body {
-    height: 100%;
-
-    > div {
-      height: 100%;
-
-      > div {
-        height: 100%;
-      }
-    }
-  }
 }

@@ -49,7 +49,6 @@ export default class Pagination extends React.PureComponent {
   handleOnCloseCopyToList = () => {
     this.setState({
       showCopyToList: false,
-      copyToButtonElement: null,
     })
   }
 
@@ -89,14 +88,14 @@ export default class Pagination extends React.PureComponent {
           <Popover
             open={showCopyToList}
             anchorEl={copyToButtonElement}
-            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
             onRequestClose={this.handleOnCloseCopyToList}
           >
             <Menu>
-              <MenuItem>123</MenuItem>
-              <MenuItem>123</MenuItem>
-              <MenuItem>123</MenuItem>
+              <MenuItem primaryText={'123'} />
+              <MenuItem primaryText={'123'} />
+              <MenuItem primaryText={'123'} />
             </Menu>
           </Popover>
         </div>
