@@ -88,7 +88,7 @@ const selectedCourseChaptersSelector = createSelector(
   chaptersSelector,
   selectedCourseSelector,
   (chapters, selectedCourse) => {
-    if (chapters && selectedCourse) {
+    if (chapters && selectedCourse && selectedCourse.get('chapters')) {
       return selectedCourse.get('chapters').reduce((result, value) => {
         return result.set(value, chapters.get(value))
       }, fromJS({}))
@@ -102,7 +102,7 @@ const selectedCourseCoursewaresSelector = createSelector(
   coursewaresSelector,
   selectedCourseSelector,
   (coursewares, selectedCourse) => {
-    if (coursewares && selectedCourse) {
+    if (coursewares && selectedCourse && selectedCourse.get('coursewares')) {
       return selectedCourse.get('coursewares').reduce((result, value) => {
         return result.set(value, coursewares.get(value))
       }, fromJS({}))
@@ -116,7 +116,7 @@ const selectedCourseLabelsSelector = createSelector(
   labelsSelector,
   selectedCourseSelector,
   (labels, selectedCourse) => {
-    if (labels && selectedCourse) {
+    if (labels && selectedCourse && selectedCourse.get('labels')) {
       return selectedCourse.get('labels').reduce((result, value) => {
         return result.set(value, labels.get(value))
       }, fromJS({}))
@@ -130,7 +130,7 @@ const selectedCourseQuestionsSelector = createSelector(
   questionsSelector,
   selectedCourseSelector,
   (questions, selectedCourse) => {
-    if (questions && selectedCourse) {
+    if (questions && selectedCourse && selectedCourse.get('questions')) {
       return selectedCourse.get('questions').reduce((result, value) => {
         return result.set(value, questions.get(value))
       }, fromJS({}))
@@ -144,7 +144,7 @@ const selectedCourseQuizzesSelector = createSelector(
   quizzesSelector,
   selectedCourseSelector,
   (quizzes, selectedCourse) => {
-    if (quizzes && selectedCourse) {
+    if (quizzes && selectedCourse && selectedCourse.get('quizzes')) {
       return selectedCourse.get('quizzes').reduce((result, value) => {
         return result.set(value, quizzes.get(value))
       }, fromJS({}))

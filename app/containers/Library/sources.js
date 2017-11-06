@@ -50,10 +50,10 @@ export function getMyAllClassrooms() {
 }
 
 export function getQuestionsByCourseId({
-  libraryId,
+  courseId,
 }) {
   return http
-    .get(`v2/libraries/${libraryId}`)
+    .get(`v2/libraries/${courseId}`)
     .then((response) => {
       const result = normalize(response, {
         chapters: Chapters,

@@ -10,6 +10,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import lodash from 'lodash'
 import Chip from 'material-ui/Chip'
 import FlatButton from 'material-ui/FlatButton'
 import Popover from 'material-ui/Popover'
@@ -18,7 +19,7 @@ import MenuItem from 'material-ui/MenuItem'
 import GoRightSvg from 'material-ui/svg-icons/navigation/chevron-right'
 import styles from './styles'
 
-export default class Pagination extends React.PureComponent {
+export default class CurrentChoice extends React.PureComponent {
   static propTypes = {
     conditions: PropTypes.arrayOf(
       PropTypes.shape({
@@ -26,11 +27,13 @@ export default class Pagination extends React.PureComponent {
         value: PropTypes.string.isRequired,
       })
     ).isRequired,
+    courses: PropTypes.object.isRequired,
     handleOnClickCancel: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     conditions: [],
+    courses: {},
     handleOnClickCancel: () => () => {},
   }
 
@@ -56,6 +59,7 @@ export default class Pagination extends React.PureComponent {
   render() {
     const {
       conditions,
+      courses,
       handleOnClickCancel,
     } = this.props
     const {
@@ -89,15 +93,17 @@ export default class Pagination extends React.PureComponent {
           <Popover
             open={showCopyToList}
             anchorEl={copyToButtonElement}
-            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
             onRequestClose={this.handleOnCloseCopyToList}
           >
-            <Menu>
-              <MenuItem>123</MenuItem>
-              <MenuItem>123</MenuItem>
-              <MenuItem>123</MenuItem>
-            </Menu>
+            {!lodash.isEmpty(courses) && <Menu>
+              {lodash.map((value) => (
+                <MenuItem
+                  primaryText={value.name}
+                />
+              ))}
+            </Menu>}
           </Popover>
         </div>
       </div>
