@@ -1,4 +1,8 @@
 .container {
+
+}
+
+.topToolBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,4 +12,28 @@
 .conditions {
   display: inline-flex;
   align-items: center;
+}
+
+.chapter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  :nth-child(1) {
+    font: 12px;
+    width: 50px;
+    height: 35px;
+    color: #9B9B9B;
+    flex: none;
+  }
+
+  :nth-child(1) {
+    display: flex;
+    align-items: flex-start;
+    flex: auto;
+  }
+}
+
+.search {
+
 }

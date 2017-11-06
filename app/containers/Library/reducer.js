@@ -88,4 +88,24 @@ export default handleActions({
       return state
     },
   },
+  'APP/LIBRARY/SELECT_CHPATER_ACTION': {
+    next(state, action) {
+      const id = lodash.get(action, 'payload.id')
+      return state
+        .setIn(['others', 'selectedChapterId'], id)
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION': {
+    next(state, action) {
+      const searchText = lodash.get(action, 'payload.searchText')
+      return state
+        .setIn(['others', 'searchText'], searchText)
+    },
+    throw(state) {
+      return state
+    },
+  },
 }, initialState)

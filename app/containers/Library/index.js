@@ -18,10 +18,10 @@ import makeSelectable from 'material-ui/List/makeSelectable'
 import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
+import { immutableObjectEmpty } from 'utils/constants'
 import Pagination from 'components/Pagination'
 import CurrentChoice from './CurrentChoice'
 import * as acts from './actions'
-import MockData from './mock'
 import selector from './selector'
 import styles from './styles'
 
@@ -39,6 +39,12 @@ class Library extends React.PureComponent {
     selectedCourseQuestions: PropTypes.object,
     selectedCourseQuizzes: PropTypes.object,
     currentPageNumber: PropTypes.number,
+    searchConditions: PropTypes.object,
+  }
+
+  static defaultProps = {
+    myClassroom: immutableObjectEmpty,
+    myCourseGroups: immutableObjectEmpty,
   }
 
   state = {
@@ -72,8 +78,24 @@ class Library extends React.PureComponent {
     })
   }
 
-  handleOnClickCurrentChoiceCancel = (name) => () => {
+  handleOnClickCurrentChoiceCancel = ({ name }) => () => {
     console.log(`你取消了 ${name} 筛选条件`)
+  }
+
+  handleOnClickCopyTarget = ({ id, name }) => () => {
+    console.log(`你选择了将选中的题目复制到 ID 为 ${id} 的 ${name} 中`)
+  }
+
+  handleOnClickChapter = ({ id }) => () => {
+    this.props.actions.selectChpaterAction({
+      id,
+    })
+  }
+
+  handleOnClickSearch = ({ value }) => {
+    this.props.actions.filterQuestionsBySearchAction({
+      searchText: value,
+    })
   }
 
   render() {
@@ -86,6 +108,7 @@ class Library extends React.PureComponent {
       selectedCourseLabels,
       selectedCourseQuestions,
       selectedCourseQuizzes,
+      searchConditions,
     } = this.props
     const {
       selectableListValue,
@@ -142,9 +165,15 @@ class Library extends React.PureComponent {
         </div>
         <div className={styles.rightArea}>
           <CurrentChoice
-            conditions={MockData.CurrentChoice.conditions}
+            conditions={searchConditions}
             courses={myCourses}
+            courseGroups={myCourseGroups}
+            classroom={myClassroom}
+            chapters={selectedCourseChapters}
             handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
+            handleOnClickCopyTarget={this.handleOnClickCopyTarget}
+            handleOnClickChapter={this.handleOnClickChapter}
+            handleOnClickSearch={this.handleOnClickSearch}
           />
           <Pagination
             total={100}

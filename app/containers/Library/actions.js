@@ -45,3 +45,12 @@ export const selectCourseAction = createAction(
 export const pageNumberChangeAction = createAction(
   'APP/LIBRARY/PAGE_NUMBER_CHANGE_ACTION',
 )
+
+/* 选择某一章节作为筛选条件 */
+export const selectChpaterAction = createAction(
+  'APP/LIBRARY/SELECT_CHPATER_ACTION',
+)
+
+export const filterQuestionsBySearchAction = createAction(
+  'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION',
+)

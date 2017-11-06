@@ -4,8 +4,9 @@
  *
  */
 
+import { fromJS } from 'immutable'
 import { createSelector } from 'reselect'
-import { immutableObjectEmpty } from 'utils/constants'
+import { immutableObjectEmpty, immutableArrayEmpty } from 'utils/constants'
 
 const selectorDomain = (state) => state.get('library')
 
@@ -97,6 +98,17 @@ const selectedCourseChaptersSelector = createSelector(
   }
 )
 
+/* 转换为数组结构且根据 rank 属性经过排序以后的章节信息 */
+const convertChaptersToListSelector = createSelector(
+  selectedCourseChaptersSelector,
+  (selectedCourseChapters) => selectedCourseChapters.toList().sort((prev, next) => {
+    if (prev && next) {
+      return prev.get('rank') - prev.get('rank')
+    }
+    return 0
+  })
+)
+
 /* 当前被选中的课程的课件集合 */
 const selectedCourseCoursewaresSelector = createSelector(
   coursewaresSelector,
@@ -156,18 +168,61 @@ const selectedCourseQuizzesSelector = createSelector(
 /* 当前页码 */
 const currentPageNumberSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || immutableObjectEmpty
+  (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || null
+)
+
+/* 当前被选中作为筛选条件的章节 */
+const selectedChapterSelector = createSelector(
+  selectorDomain,
+  selectedCourseChaptersSelector,
+  (selectorDomain, selectedCourseChapters) => {
+    if (selectorDomain && selectedCourseChapters) {
+      const selectedChapterId = selectorDomain.getIn(['others', 'selectedChapterId'])
+      return selectedCourseChapters.get(selectedChapterId) || immutableObjectEmpty
+    }
+    return immutableObjectEmpty
+  }
+)
+
+/* 当前搜索的内容 */
+const searchTextSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
+)
+
+/* 当前已经设置的筛选条件 */
+const searchConditionsSelector = createSelector(
+  selectedCourseChaptersSelector,
+  searchTextSelector,
+  (selectedCourseChapters, searchText) => {
+    const result = immutableArrayEmpty
+    if (selectedCourseChapters) {
+      result.push(fromJS({
+        name: 'chapter',
+        value: selectedCourseChapters.get('name'),
+      }))
+    }
+    if (searchText) {
+      result.push(fromJS({
+        name: 'search',
+        value: searchText,
+      }))
+    }
+    return result
+  }
 )
 
 /* 导出最终的数据 */
 const selector = createSelector(
   myCoursesSelector,
-  selectedCourseChaptersSelector,
+  convertChaptersToListSelector,
   selectedCourseCoursewaresSelector,
   selectedCourseLabelsSelector,
   selectedCourseQuestionsSelector,
   selectedCourseQuizzesSelector,
   currentPageNumberSelector,
+  selectedChapterSelector,
+  searchConditionsSelector,
   (
     myCourses,
     selectedCourseChapters,
@@ -176,6 +231,8 @@ const selector = createSelector(
     selectedCourseQuestions,
     selectedCourseQuizzes,
     currentPageNumber,
+    selectedChapter,
+    searchConditions,
   ) => ({
     myCourses,
     selectedCourseChapters,
@@ -184,6 +241,8 @@ const selector = createSelector(
     selectedCourseQuestions,
     selectedCourseQuizzes,
     currentPageNumber,
+    selectedChapter,
+    searchConditions,
   })
 )
 
