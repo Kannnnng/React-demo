@@ -10,7 +10,6 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import lodash from 'lodash'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import List from 'material-ui/List/List'
@@ -28,10 +27,12 @@ import styles from './styles'
 
 const SelectableList = makeSelectable(List)
 
-class Library extends React.Component {
+class Library extends React.PureComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    myCourses: PropTypes.object.isRequired,
+    myClassroom: PropTypes.object,
+    myCourses: PropTypes.object,
+    myCourseGroups: PropTypes.object,
     selectedCourseChapters: PropTypes.object,
     selectedCourseCoursewares: PropTypes.object,
     selectedCourseLabels: PropTypes.object,
@@ -45,8 +46,22 @@ class Library extends React.Component {
     selectableListValue: null,
   }
 
+  componentWillMount() {
+    this.props.actions.getMyAllCoursesAction()
+  }
+
   /* 当左侧被选中的项发生变化时触发 */
   handleOnSelectableListChange = (event, value) => {
+    if (value === '我的课程' || value === '课程组' || !value) {
+      this.props.actions.selectCourseAction(null)
+    } else {
+      this.props.actions.selectCourseAction({
+        courseId: value,
+      })
+      this.props.actions.getQuestionsByCourseIdAction({
+        courseId: value,
+      })
+    }
     this.setState({ selectableListValue: value })
   }
 
@@ -63,7 +78,14 @@ class Library extends React.Component {
 
   render() {
     const {
+      myClassroom,
       myCourses,
+      myCourseGroups,
+      selectedCourseChapters,
+      selectedCourseCoursewares,
+      selectedCourseLabels,
+      selectedCourseQuestions,
+      selectedCourseQuizzes,
     } = this.props
     const {
       selectableListValue,
@@ -80,24 +102,26 @@ class Library extends React.Component {
               primaryText={'我的课程'}
               leftIcon={<HumanSvg />}
               initiallyOpen={false}
-              nestedItems={lodash.map(myCourses, (value) => (
+              nestedItems={myCourses.map((value) => (
                 <ListItem
-                  key={value.id}
-                  primaryText={value.name}
+                  key={value.get('id')}
+                  primaryText={value.get('name')}
+                  value={value.get('id')}
                 />
-              ))}
+              )).toList().toJS()}
               value={'我的课程'}
             />
             <ListItem
               primaryText={'课程组'}
               leftIcon={<GroupSvg />}
               initiallyOpen={false}
-              nestedItems={lodash.map(myCourses, (value) => (
+              nestedItems={myCourseGroups.map((value) => (
                 <ListItem
-                  key={value.id}
-                  primaryText={value.name}
+                  key={value.get('id')}
+                  primaryText={value.get('name')}
+                  value={value.get('id')}
                 />
-              ))}
+              )).toList().toJS()}
               value={'课程组'}
             />
           </SelectableList>
@@ -106,18 +130,20 @@ class Library extends React.Component {
             onChange={this.handleOnSelectableListChange}
             style={{ borderTop: 'dashed 1px #666' }}
           >
-            {lodash.map(myCourses, (value) => (
+            {myClassroom.map((value) => (
               <ListItem
-                primaryText={value.name}
+                key={value.get('id')}
+                primaryText={value.get('name')}
                 leftIcon={<ClassroomSvg />}
-                value={value.name}
+                value={value.get('id')}
               />
-            ))}
+            )).toList().toJS()}
           </SelectableList>
         </div>
         <div className={styles.rightArea}>
           <CurrentChoice
             conditions={MockData.CurrentChoice.conditions}
+            courses={myCourses}
             handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
           />
           <Pagination

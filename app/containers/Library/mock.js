@@ -9,7 +9,7 @@ export default Mock.mock({
           'search',
           'select',
         ],
-        value: '@CTITLE()',
+        value: '@CTITLE()(@INTEGER(0, 100))',
       }
     ],
   },

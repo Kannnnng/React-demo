@@ -1,3 +1,5 @@
+import { fromJS } from 'immutable'
+
 export const questionPattern = {
   singleSelection: 1,
   multipleChoice: 2,
@@ -29,3 +31,9 @@ export const cosCurve = [
   0.011449846188517137,
   0.010522678411181322,
 ]
+
+/* immutable 数据结构中的空对象  */
+export const immutableObjectEmpty = fromJS({})
+
+/* immutable 数据结构中的空数组  */
+export const immutableArrayEmpty = fromJS([])

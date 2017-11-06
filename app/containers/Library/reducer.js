@@ -19,7 +19,7 @@ export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_COURSES_ACTION': {
     next(state, action) {
       const courses = lodash.get(action, 'payload.entities.courses')
-      const myCourseIds = lodash.get(action, 'payload.result.courses')
+      const myCourseIds = lodash.get(action, 'payload.result.libraries')
       return state
         .set('courses', fromJS(courses))
         .set('myCourseIds', fromJS(myCourseIds))
@@ -53,12 +53,16 @@ export default handleActions({
       const labels = lodash.get(action, 'payload.entities.labels')
       const questions = lodash.get(action, 'payload.entities.questions')
       const quizzes = lodash.get(action, 'payload.entities.quizzes')
+      const course = lodash.get(action, 'payload.result.library')
       return state
         .set('chapters', fromJS(chapters))
         .set('coursewares', fromJS(coursewares))
         .set('labels', fromJS(labels))
         .set('questions', fromJS(questions))
         .set('quizzes', fromJS(quizzes))
+        .mergeIn(['courses'], fromJS({
+          [course.id]: course,
+        }))
     },
     throw(state) {
       return state

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Provider from 'react-redux/lib/components/Provider'
+import { fromJS } from 'immutable'
+import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import InjectTapEventPlugin from 'react-tap-event-plugin'
 import Routes from './routes'
@@ -11,7 +12,7 @@ import './styles'
 InjectTapEventPlugin()
 
 /* 创建 store */
-const initialState = {}
+const initialState = fromJS({})
 const store = configStore(initialState)
 
 const render = (Component) => {

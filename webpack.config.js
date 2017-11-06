@@ -31,7 +31,6 @@ process.env.NODE_ENV = env === 'pro' ? 'production' : 'development'
 if (process.env.NODE_ENV === 'production') {
   entry = {
     app: [
-      // 'babel-polyfill',
       path.resolve(APP_PATH, 'index.js'),
     ],
   }
@@ -144,7 +143,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   entry = {
     app: [
-      // 'babel-polyfill',
       'react-hot-loader/patch',
       path.resolve(APP_PATH, 'index.js'),
     ],

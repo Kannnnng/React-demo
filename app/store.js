@@ -1,6 +1,8 @@
-import createStore from 'redux/lib/createStore'
-import applyMiddleware from 'redux/lib/applyMiddleware'
-import compose from 'redux/lib/compose'
+import {
+  createStore,
+  applyMiddleware,
+  compose,
+} from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
 import rootReducer from './reducers'
@@ -13,7 +15,12 @@ const logger = createLogger({ collapsed: true })
 function configStore(initialState) {
   let store = null
   if (process.env.NODE_ENV === 'production') {
-    store = create(rootReducer, initialState)
+    const createStoreWithMiddleware = compose(
+      applyMiddleware(
+        promiseMiddleware,
+      ),
+    )(create)
+    store = createStoreWithMiddleware(rootReducer, initialState)
   } else {
     const createStoreWithMiddleware = compose(
       applyMiddleware(
