@@ -145,13 +145,11 @@ const vendors = [
   // 'md5',
   'moment',
   'normalizr',
-  'prop-types',
   'react',
   /* 实现拖拽效果的两个库，在目前的项目中可以暂时不使用 */
   // 'react-dnd',
   // 'react-dnd-html5-backend',
   'react-dom',
-  'react-immutable-proptypes',
   /* 莫名其妙地，将这两个包添加到 DLL 中热替换就失败了 */
   // 'react-hot-component-loader',
   // 'react-hot-loader',
@@ -171,11 +169,15 @@ const vendors = [
 ]
 
 /* 处于开发环境时将 Mockjs 也打包到 DLL 文件中 */
+/* 处于开发环境时将 prop-types 也打包到 DLL 文件中 */
+/* 处于开发环境时将 react-immutable-proptypes 也打包到 DLL 文件中 */
 /* 处于开发环境时将 redux-logger 也打包到 DLL 文件中 */
 /* 处于开发环境时将 redux-form 也打包到 DLL 文件中，因此引用 redux-form 一般就是全部引用 */
 /* 很少估计也是懒得单个引用 */
 if (process.env.NODE_ENV !== 'production') {
   vendors.push('mockjs')
+  vendors.push('prop-types')
+  vendors.push('react-immutable-proptypes')
   vendors.push('redux-form')
   vendors.push('redux-logger')
 }
