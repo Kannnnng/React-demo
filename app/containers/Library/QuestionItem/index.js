@@ -87,9 +87,7 @@ export default function QuestionItem({
       <button
         onClick={handleOnClick({
           id,
-          name: isCourseware ? 'courseware' : (
-            isQuiz ? 'quiz' : 'question'
-          )
+          name: isCourseware ? 'courseware' : (isQuiz ? 'quiz' : 'question')
         })}
       />
       <div className={styles.pattern}>
