@@ -99,6 +99,10 @@ class Library extends React.PureComponent {
     })
   }
 
+  handleOnClickQuestionItem = ({ id, name }) => () => {
+    console.log(`你点击了 ID 为 ${id} 的 ${name}`)
+  }
+
   render() {
     const {
       myClassroom,
@@ -196,6 +200,7 @@ class Library extends React.PureComponent {
                 correctRate={value.get('correctRate')}
                 answerCount={value.get('answerCount')}
                 isQuiz={value.get('isQuiz')}
+                handleOnClick={this.handleOnClickQuestionItem}
               />
             )).toList().toJS()}
             <Pagination

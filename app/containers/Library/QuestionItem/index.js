@@ -32,6 +32,8 @@ export default function QuestionItem({
   isCourseware,
   /* 课件类型，如果当前是课件的话 */
   fileType,
+  /* 当列表项被点击时触发 */
+  handleOnClick,
 }) {
   let patternClassName
   let patternText
@@ -82,6 +84,14 @@ export default function QuestionItem({
 
   return (
     <div className={styles.container}>
+      <button
+        onClick={handleOnClick({
+          id,
+          name: isCourseware ? 'courseware' : (
+            isQuiz ? 'quiz' : 'question'
+          )
+        })}
+      />
       <div className={styles.pattern}>
         <div>
           <div className={patternClassName} />
@@ -111,4 +121,9 @@ QuestionItem.propTypes = {
   correctRate: PropTypes.number,
   answerCount: PropTypes.number,
   isQuiz: PropTypes.bool,
+  handleOnClick: PropTypes.func.isRequired,
+}
+
+QuestionItem.defaultProps = {
+  handleOnClick: () => () => {},
 }
