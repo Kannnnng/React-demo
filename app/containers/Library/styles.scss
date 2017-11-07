@@ -17,6 +17,7 @@
 }
 
 .rightArea {
+  overflow: auto;
   width: 80%;
   border-left: dashed 1px #666;
 }
@@ -29,4 +30,9 @@
 .displayArea {
   width: 100%;
   height: 80%;
+  padding-top: 10px;
+
+  > :not(:first-child) {
+    margin-top: 16px;
+  }
 }
