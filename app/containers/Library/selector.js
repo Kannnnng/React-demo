@@ -109,21 +109,7 @@ const convertChaptersToListSelector = createSelector(
   })
 )
 
-/* 当前被选中的课程的课件集合 */
-const selectedCourseCoursewaresSelector = createSelector(
-  coursewaresSelector,
-  selectedCourseSelector,
-  (coursewares, selectedCourse) => {
-    if (coursewares && selectedCourse && selectedCourse.get('coursewares')) {
-      return selectedCourse.get('coursewares').reduce((result, value) => {
-        return result.set(value, coursewares.get(value))
-      }, immutableObjectEmpty)
-    }
-    return immutableObjectEmpty
-  }
-)
-
-/* 当前所被选中的课程的识点集合 */
+/* 当前所被选中的课程的知识点集合 */
 const selectedCourseLabelsSelector = createSelector(
   labelsSelector,
   selectedCourseSelector,
@@ -137,7 +123,21 @@ const selectedCourseLabelsSelector = createSelector(
   }
 )
 
-/* 当前被选中的课程的问题集合 */
+/* 当前被选中的课程的课件集合 */
+const selectedCourseCoursewaresSelector = createSelector(
+  coursewaresSelector,
+  selectedCourseSelector,
+  (coursewares, selectedCourse) => {
+    if (coursewares && selectedCourse && selectedCourse.get('coursewares')) {
+      return selectedCourse.get('coursewares').reduce((result, value) => {
+        return result.set(value, coursewares.get(value).set('isCourseware', true))
+      }, immutableObjectEmpty)
+    }
+    return immutableObjectEmpty
+  }
+)
+
+/* 当前被选中的课程的题目集合 */
 const selectedCourseQuestionsSelector = createSelector(
   questionsSelector,
   selectedCourseSelector,
@@ -158,10 +158,29 @@ const selectedCourseQuizzesSelector = createSelector(
   (quizzes, selectedCourse) => {
     if (quizzes && selectedCourse && selectedCourse.get('quizzes')) {
       return selectedCourse.get('quizzes').reduce((result, value) => {
-        return result.set(value, quizzes.get(value))
+        return result.set(value, quizzes.get(value).set('isQuiz', true))
       }, immutableObjectEmpty)
     }
     return immutableObjectEmpty
+  }
+)
+
+/* 当前被选中课程的题目、组卷、课件集合 */
+const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
+  selectedCourseCoursewaresSelector,
+  selectedCourseQuestionsSelector,
+  selectedCourseQuizzesSelector,
+  (coursewares, questions, quizzes) => {
+    return coursewares.merge(questions).merge(quizzes)
+  }
+)
+
+/* 按照每页显示 10 个条目的规则所计算出的所有的页数 */
+const totalPagesSelector = createSelector(
+  selectedQuestionsAndQuizzesAndCoursewaresSelector,
+  (selectedQuestionsAndQuizzesAndCoursewares) => {
+    /* 至少应该显示一页 */
+    return Math.ceil(selectedQuestionsAndQuizzesAndCoursewares.size / 10) || 1
   }
 )
 
@@ -169,6 +188,17 @@ const selectedCourseQuizzesSelector = createSelector(
 const currentPageNumberSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || null
+)
+
+/* 经过分页以后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
+const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
+  selectedQuestionsAndQuizzesAndCoursewaresSelector,
+  currentPageNumberSelector,
+  (selectedQuestionsAndQuizzesAndCoursewares, currentPageNumber) => {
+    const begin = (currentPageNumber - 1) * 10
+    const end = begin + 10
+    return selectedQuestionsAndQuizzesAndCoursewares.slice(begin, end)
+  }
 )
 
 /* 当前被选中作为筛选条件的章节 */
@@ -192,23 +222,23 @@ const searchTextSelector = createSelector(
 
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
-  selectedCourseChaptersSelector,
+  selectedChapterSelector,
   searchTextSelector,
-  (selectedCourseChapters, searchText) => {
-    const result = immutableArrayEmpty
-    if (selectedCourseChapters) {
-      result.push(fromJS({
+  (selectedChapter, searchText) => {
+    const result = []
+    if (!selectedChapter.isEmpty()) {
+      result.push({
         name: 'chapter',
-        value: selectedCourseChapters.get('name'),
-      }))
+        value: selectedChapter.get('name'),
+      })
     }
     if (searchText) {
-      result.push(fromJS({
+      result.push({
         name: 'search',
         value: searchText,
-      }))
+      })
     }
-    return result
+    return fromJS(result)
   }
 )
 
@@ -216,33 +246,24 @@ const searchConditionsSelector = createSelector(
 const selector = createSelector(
   myCoursesSelector,
   convertChaptersToListSelector,
-  selectedCourseCoursewaresSelector,
   selectedCourseLabelsSelector,
-  selectedCourseQuestionsSelector,
-  selectedCourseQuizzesSelector,
-  currentPageNumberSelector,
-  selectedChapterSelector,
+  pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
   searchConditionsSelector,
+  totalPagesSelector,
   (
     myCourses,
     selectedCourseChapters,
-    selectedCourseCoursewares,
     selectedCourseLabels,
-    selectedCourseQuestions,
-    selectedCourseQuizzes,
-    currentPageNumber,
-    selectedChapter,
+    questionItems,
     searchConditions,
+    totalPages,
   ) => ({
     myCourses,
     selectedCourseChapters,
-    selectedCourseCoursewares,
     selectedCourseLabels,
-    selectedCourseQuestions,
-    selectedCourseQuizzes,
-    currentPageNumber,
-    selectedChapter,
+    questionItems,
     searchConditions,
+    totalPages,
   })
 )
 

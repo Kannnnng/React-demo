@@ -10,6 +10,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import List from 'material-ui/List/List'
@@ -21,6 +22,7 @@ import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
 import { immutableObjectEmpty } from 'utils/constants'
 import Pagination from 'components/Pagination'
 import CurrentChoice from './CurrentChoice'
+import QuestionItem from './QuestionItem'
 import * as acts from './actions'
 import selector from './selector'
 import styles from './styles'
@@ -30,16 +32,14 @@ const SelectableList = makeSelectable(List)
 class Library extends React.PureComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    myClassroom: PropTypes.object,
-    myCourses: PropTypes.object,
-    myCourseGroups: PropTypes.object,
-    selectedCourseChapters: PropTypes.object,
-    selectedCourseCoursewares: PropTypes.object,
-    selectedCourseLabels: PropTypes.object,
-    selectedCourseQuestions: PropTypes.object,
-    selectedCourseQuizzes: PropTypes.object,
-    currentPageNumber: PropTypes.number,
-    searchConditions: PropTypes.object,
+    myClassroom: ImmutablePropTypes.map,
+    myCourses: ImmutablePropTypes.map,
+    myCourseGroups: ImmutablePropTypes.map,
+    selectedCourseChapters: ImmutablePropTypes.list,
+    selectedCourseLabels: ImmutablePropTypes.map,
+    questionItems: ImmutablePropTypes.map,
+    searchConditions: ImmutablePropTypes.list,
+    totalPages: PropTypes.node,
   }
 
   static defaultProps = {
@@ -48,7 +48,6 @@ class Library extends React.PureComponent {
   }
 
   state = {
-    stateData: {},
     selectableListValue: null,
   }
 
@@ -79,7 +78,9 @@ class Library extends React.PureComponent {
   }
 
   handleOnClickCurrentChoiceCancel = ({ name }) => () => {
-    console.log(`你取消了 ${name} 筛选条件`)
+    this.props.actions.deleteConditionAction({
+      name,
+    })
   }
 
   handleOnClickCopyTarget = ({ id, name }) => () => {
@@ -104,11 +105,9 @@ class Library extends React.PureComponent {
       myCourses,
       myCourseGroups,
       selectedCourseChapters,
-      selectedCourseCoursewares,
-      selectedCourseLabels,
-      selectedCourseQuestions,
-      selectedCourseQuizzes,
+      questionItems,
       searchConditions,
+      totalPages,
     } = this.props
     const {
       selectableListValue,
@@ -164,21 +163,46 @@ class Library extends React.PureComponent {
           </SelectableList>
         </div>
         <div className={styles.rightArea}>
-          <CurrentChoice
-            conditions={searchConditions}
-            courses={myCourses}
-            courseGroups={myCourseGroups}
-            classroom={myClassroom}
-            chapters={selectedCourseChapters}
-            handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
-            handleOnClickCopyTarget={this.handleOnClickCopyTarget}
-            handleOnClickChapter={this.handleOnClickChapter}
-            handleOnClickSearch={this.handleOnClickSearch}
-          />
-          <Pagination
-            total={100}
-            handleOnChange={this.handleOnPageChange}
-          />
+          <div className={styles.functionalArea}>
+            <CurrentChoice
+              conditions={searchConditions}
+              courses={myCourses}
+              courseGroups={myCourseGroups}
+              classroom={myClassroom}
+              chapters={selectedCourseChapters}
+              handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
+              handleOnClickCopyTarget={this.handleOnClickCopyTarget}
+              handleOnClickChapter={this.handleOnClickChapter}
+              handleOnClickSearch={this.handleOnClickSearch}
+            />
+          </div>
+          <div className={styles.displayArea}>
+            {questionItems.map((value) => (
+              <QuestionItem
+                key={value.get('id')}
+                id={value.get('id')}
+                pattern={value.get('pattern')}
+                difficulty={value.get('difficulty')}
+                summary={value.get('isCourseware') ? ({
+                  word: value.get('originFileName'),
+                  image: value.get('cover'),
+                }) : (
+                  value.get('isQuiz') ? ({
+                    word: value.get('description'),
+                  }) : (
+                    value.get('summary')
+                  )
+                )}
+                correctRate={value.get('correctRate')}
+                answerCount={value.get('answerCount')}
+                isQuiz={value.get('isQuiz')}
+              />
+            )).toList().toJS()}
+            <Pagination
+              total={totalPages}
+              handleOnChange={this.handleOnPageChange}
+            />
+          </div>
         </div>
       </div>
     )

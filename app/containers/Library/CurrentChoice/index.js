@@ -39,6 +39,7 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickCopyTarget: PropTypes.func.isRequired,
     /* 点击筛选条件中的章节时被触发 */
     handleOnClickChapter: PropTypes.func.isRequired,
+    /* 点击搜索按钮时被触发 */
     handleOnClickSearch: PropTypes.func.isRequired,
   }
 
@@ -194,7 +195,11 @@ export default class CurrentChoice extends React.PureComponent {
             {chapters.map((value) => (
               <FlatButton
                 key={value.get('id')}
-                label={value.get('name')}
+                label={`${value.get('name')}(${
+                  (value.get('questions').size || 0) +
+                  (value.get('quizzes').size || 0) +
+                  (value.get('coursewares').size || 0)
+                })`}
                 onClick={handleOnClickChapter({
                   id: value.get('id'),
                 })}
@@ -203,10 +208,11 @@ export default class CurrentChoice extends React.PureComponent {
           </div>
         </div>
         <div className={styles.search}>
-          <div>{'搜索'}</div>
+          <div>{'搜索:'}</div>
           <input type='text' ref={(node) => {this.searchInputElement = node}} />
           <IconButton
             onClick={this.handleOnClickSearch}
+            style={{ padding: '0', width: '24px', height: '24px' }}
           >
             <SearchSvg />
           </IconButton>

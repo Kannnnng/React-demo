@@ -55,11 +55,11 @@ export default handleActions({
       const quizzes = lodash.get(action, 'payload.entities.quizzes')
       const course = lodash.get(action, 'payload.result.library')
       return state
-        .set('chapters', fromJS(chapters))
-        .set('coursewares', fromJS(coursewares))
-        .set('labels', fromJS(labels))
-        .set('questions', fromJS(questions))
-        .set('quizzes', fromJS(quizzes))
+        .mergeIn(['chapters'], fromJS(chapters))
+        .mergeIn(['coursewares'], fromJS(coursewares))
+        .mergeIn(['labels'], fromJS(labels))
+        .mergeIn(['questions'], fromJS(questions))
+        .mergeIn(['quizzes'], fromJS(quizzes))
         .mergeIn(['courses'], fromJS({
           [course.id]: course,
         }))
@@ -103,6 +103,24 @@ export default handleActions({
       const searchText = lodash.get(action, 'payload.searchText')
       return state
         .setIn(['others', 'searchText'], searchText)
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/DELETE_CONDITION_ACTION': {
+    next(state, action) {
+      const name = lodash.get(action, 'payload.name')
+      switch (name) {
+        case 'chapter':
+          return state.deleteIn(['others', 'selectedChapterId'])
+        case 'search':
+          return state.deleteIn(['others', 'searchText'])
+        case 'select':
+          return state.deleteIn(['others', 'select'])
+        default:
+          return state
+      }
     },
     throw(state) {
       return state

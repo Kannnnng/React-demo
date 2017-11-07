@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   background-color: #F2F2F2;
@@ -18,4 +19,14 @@
 .rightArea {
   width: 80%;
   border-left: dashed 1px #666;
+}
+
+.functionalArea {
+  width: 100%;
+  height: 20%;
+}
+
+.displayArea {
+  width: 100%;
+  height: 80%;
 }

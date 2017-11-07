@@ -51,6 +51,12 @@ export const selectChpaterAction = createAction(
   'APP/LIBRARY/SELECT_CHPATER_ACTION',
 )
 
+/* 输入文字作为筛选条件，筛选对象是题目的题干 */
 export const filterQuestionsBySearchAction = createAction(
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION',
+)
+
+/* 删除某一筛选条件 */
+export const deleteConditionAction = createAction(
+  'APP/LIBRARY/DELETE_CONDITION_ACTION',
 )
