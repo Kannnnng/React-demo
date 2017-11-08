@@ -37,9 +37,11 @@ export default function QuestionItem({
 }) {
   let patternClassName
   let patternText
+  let patternColor
   if (isQuiz) {
     patternClassName = styles.quizIcon
     patternText = '组卷'
+    patternColor = '#4A90E2'
   } else if (isCourseware) {
     switch (fileType) {
       case 'pdf':
@@ -56,26 +58,32 @@ export default function QuestionItem({
       case questionPattern.singleSelection:
         patternClassName = styles.singleSelectionIcon
         patternText = '单选'
+        patternColor = '#4CBEA1'
         break
       case questionPattern.multipleChoice:
         patternClassName = styles.multipleChoiceIcon
         patternText = '多选'
+        patternColor = '#00CCDE'
         break
       case questionPattern.judge:
         patternClassName = styles.judgeIcon
         patternText = '判断'
+        patternColor = '#9B9B9B'
         break
       case questionPattern.fillInTheBlanks:
         patternClassName = styles.fillInTheBlanksIcon
         patternText = '填空'
+        patternColor = '#F5A623'
         break
       case questionPattern.shortAnswer:
         patternClassName = styles.shortAnswerIcon
         patternText = '简答'
+        patternColor = '#9013FE'
         break
       case questionPattern.group:
         patternClassName = styles.groupIcon
         patternText = '题组'
+        patternColor = '#E91E63'
         break
       default:
         break
@@ -91,7 +99,7 @@ export default function QuestionItem({
         })}
       />
       <div className={styles.pattern}>
-        <div>
+        <div style={{ backgroundColor: patternColor }}>
           <div className={patternClassName} />
         </div>
         <div>
