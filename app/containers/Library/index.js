@@ -62,12 +62,23 @@ class Library extends React.PureComponent {
     if (value === '我的课程' || value === '课程组' || !value) {
       this.props.actions.selectCourseAction(null)
     } else {
-      this.props.actions.selectCourseAction({
-        courseId: value,
-      })
-      this.props.actions.getQuestionsByCourseIdAction({
-        courseId: value,
-      })
+      const [name, id] = value.split('|')
+      switch (name) {
+        case 'course':
+          this.props.actions.selectCourseAction({
+            courseId: id,
+          })
+          this.props.actions.getQuestionsByCourseIdAction({
+            courseId: id,
+          })
+          break
+        case 'group':
+          break
+        case 'classroom':
+          break
+        default:
+          break
+      }
     }
     this.setState({ selectableListValue: value })
   }
@@ -142,7 +153,7 @@ class Library extends React.PureComponent {
                 <ListItem
                   key={value.get('id')}
                   primaryText={value.get('name')}
-                  value={value.get('id')}
+                  value={`course|${value.get('id')}`}
                 />
               )).toList().toJS()}
               value={'我的课程'}
@@ -155,7 +166,7 @@ class Library extends React.PureComponent {
                 <ListItem
                   key={value.get('id')}
                   primaryText={value.get('name')}
-                  value={value.get('id')}
+                  value={`group|${value.get('id')}`}
                 />
               )).toList().toJS()}
               value={'课程组'}
@@ -171,7 +182,7 @@ class Library extends React.PureComponent {
                 key={value.get('id')}
                 primaryText={value.get('name')}
                 leftIcon={<ClassroomSvg />}
-                value={value.get('id')}
+                value={`classroom|${value.get('id')}`}
               />
             )).toList().toJS()}
           </SelectableList>

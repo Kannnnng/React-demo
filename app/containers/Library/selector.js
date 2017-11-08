@@ -55,7 +55,7 @@ const myClassroomsSelector = createSelector(
   (classrooms, myClassroomIds) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
       return myClassroomIds.reduce((result, value) => {
-        return result.set(value, classrooms.get(value))
+        return result.set(value, classrooms.get(String(value)))
       }, immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -95,7 +95,7 @@ const quizzesSelector = createSelector(
 /* 当前被选中的课程的 ID */
 const selectedCourseIdSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCourseId']) || immutableArrayEmpty
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCourseId']) || null
 )
 
 /* 当前被选中的课程 */
@@ -103,7 +103,7 @@ const selectedCourseSelector = createSelector(
   myCoursesSelector,
   selectedCourseIdSelector,
   (myCourses, selectedCourseId) => {
-    if (!myCourses.isEmpty() && !selectedCourseId.isEmpty()) {
+    if (!myCourses.isEmpty() && selectedCourseId) {
       return myCourses.get(selectedCourseId)
     }
     return immutableObjectEmpty
