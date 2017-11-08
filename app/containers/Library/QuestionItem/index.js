@@ -47,22 +47,27 @@ export default function QuestionItem({
       case 'ppt':
         patternClassName = styles.pptIcon
         patternText = 'POWERPOINT'
+        patternColor = '#4A90E2'
         break
       case 'rtf':
         patternClassName = styles.rtfIcon
         patternText = 'RTF'
+        patternColor = '#4A90E2'
         break
       case 'pdf':
         patternClassName = styles.pdfIcon
         patternText = 'PDF'
+        patternColor = '#4A90E2'
         break
       case 'word':
         patternClassName = styles.wordIcon
         patternText = 'WORD'
+        patternColor = '#4A90E2'
         break
       case 'excel':
         patternClassName = styles.excelIcon
         patternText = 'EXCEL'
+        patternColor = '#4A90E2'
         break
       // case 'ppt':
       //   patternClassName = styles.wpsWordIcon

@@ -20,6 +20,7 @@ export default class Pagination extends React.PureComponent {
   static propTypes = {
     total: PropTypes.number.isRequired,
     handleOnChange: PropTypes.func.isRequired,
+    style: PropTypes.object,
   }
 
   state = {
@@ -52,6 +53,7 @@ export default class Pagination extends React.PureComponent {
   render() {
     const {
       total,
+      style,
     } = this.props
     const {
       currentNumber,
@@ -75,7 +77,7 @@ export default class Pagination extends React.PureComponent {
     })
 
     return (
-      <div className={styles.container}>
+      <div className={styles.container} style={style}>
         <IconButton
           className={styles.pageButton}
           disabled={currentNumber <= 1}
