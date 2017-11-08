@@ -197,7 +197,7 @@ class Library extends React.PureComponent {
                 pattern={value.get('pattern')}
                 difficulty={value.get('difficulty')}
                 summary={value.get('isCourseware') ? ({
-                  word: value.get('originFileName'),
+                  word: value.get('name'),
                   image: value.get('cover'),
                 }) : (
                   value.get('isQuiz') ? ({

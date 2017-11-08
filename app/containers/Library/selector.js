@@ -165,13 +165,46 @@ const selectedCourseQuizzesSelector = createSelector(
   }
 )
 
-/* 当前被选中课程的题目、组卷、课件集合 */
+/* 当前被选中作为筛选条件的章节 */
+const selectedChaptersSelector = createSelector(
+  selectorDomain,
+  selectedCourseChaptersSelector,
+  (selectorDomain, selectedCourseChapters) => {
+    if (selectorDomain && selectedCourseChapters) {
+      const selectedChapterId = selectorDomain.getIn(['others', 'selectedChapterId'])
+      return selectedCourseChapters.get(selectedChapterId) || immutableObjectEmpty
+    }
+    return immutableObjectEmpty
+  }
+)
+
+/* 当前搜索的内容 */
+const searchTextSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
+)
+
+/* 经过筛选后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
 const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseCoursewaresSelector,
   selectedCourseQuestionsSelector,
   selectedCourseQuizzesSelector,
-  (coursewares, questions, quizzes) => {
-    return coursewares.merge(questions).merge(quizzes)
+  selectedChaptersSelector,
+  searchTextSelector,
+  (coursewares, questions, quizzes, selectedChapters, searchText) => {
+    let result
+    if (searchText) {
+      result = coursewares
+        .filter((value) => value.get('name').includes(searchText))
+        .merge(questions.filter((value) => value.getIn(['content', 'html']).includes(searchText)))
+        .merge(quizzes.filter((value) => value.get('title').includes(searchText)))
+    } else {
+      result = coursewares.merge(questions).merge(quizzes)
+    }
+    if (!selectedChapters.isEmpty()) {
+      result = result.filter((value) => selectedChapters.get('id') === value.get('chapterId'))
+    }
+    return result
   }
 )
 
@@ -201,35 +234,16 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
-/* 当前被选中作为筛选条件的章节 */
-const selectedChapterSelector = createSelector(
-  selectorDomain,
-  selectedCourseChaptersSelector,
-  (selectorDomain, selectedCourseChapters) => {
-    if (selectorDomain && selectedCourseChapters) {
-      const selectedChapterId = selectorDomain.getIn(['others', 'selectedChapterId'])
-      return selectedCourseChapters.get(selectedChapterId) || immutableObjectEmpty
-    }
-    return immutableObjectEmpty
-  }
-)
-
-/* 当前搜索的内容 */
-const searchTextSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
-)
-
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
-  selectedChapterSelector,
+  selectedChaptersSelector,
   searchTextSelector,
-  (selectedChapter, searchText) => {
+  (selectedChapters, searchText) => {
     const result = []
-    if (!selectedChapter.isEmpty()) {
+    if (!selectedChapters.isEmpty()) {
       result.push({
         name: 'chapter',
-        value: selectedChapter.get('name'),
+        value: selectedChapters.get('name'),
       })
     }
     if (searchText) {
