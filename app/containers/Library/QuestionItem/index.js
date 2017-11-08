@@ -44,12 +44,38 @@ export default function QuestionItem({
     patternColor = '#4A90E2'
   } else if (isCourseware) {
     switch (fileType) {
-      case 'pdf':
-        break
       case 'ppt':
         patternClassName = styles.pptIcon
         patternText = 'POWERPOINT'
         break
+      case 'rtf':
+        patternClassName = styles.rtfIcon
+        patternText = 'RTF'
+        break
+      case 'pdf':
+        patternClassName = styles.pdfIcon
+        patternText = 'PDF'
+        break
+      case 'word':
+        patternClassName = styles.wordIcon
+        patternText = 'WORD'
+        break
+      case 'excel':
+        patternClassName = styles.excelIcon
+        patternText = 'EXCEL'
+        break
+      // case 'ppt':
+      //   patternClassName = styles.wpsWordIcon
+      //   patternText = 'WPSWORD'
+      //   break
+      // case 'ppt':
+      //   patternClassName = styles.wpsPPTIcon
+      //   patternText = 'WPSPPT'
+      //   break
+      // case 'ppt':
+      //   patternClassName = styles.wpsExcelIcon
+      //   patternText = 'WPSEXCEL'
+      //   break
       default:
         break
     }

@@ -200,6 +200,8 @@ class Library extends React.PureComponent {
                 correctRate={value.get('correctRate')}
                 answerCount={value.get('answerCount')}
                 isQuiz={value.get('isQuiz')}
+                isCourseware={value.get('isCourseware')}
+                fileType={value.get('fileType')}
                 handleOnClick={this.handleOnClickQuestionItem}
               />
             )).toList().toJS()}
