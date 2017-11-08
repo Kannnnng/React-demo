@@ -32,7 +32,7 @@ const SelectableList = makeSelectable(List)
 class Library extends React.PureComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    myClassroom: ImmutablePropTypes.map,
+    myClassrooms: ImmutablePropTypes.map,
     myCourses: ImmutablePropTypes.map,
     myCourseGroups: ImmutablePropTypes.map,
     selectedCourseChapters: ImmutablePropTypes.list,
@@ -44,7 +44,7 @@ class Library extends React.PureComponent {
   }
 
   static defaultProps = {
-    myClassroom: immutableObjectEmpty,
+    myClassrooms: immutableObjectEmpty,
     myCourseGroups: immutableObjectEmpty,
   }
 
@@ -54,6 +54,7 @@ class Library extends React.PureComponent {
 
   componentWillMount() {
     this.props.actions.getMyAllCoursesAction()
+    this.props.actions.getMyAllClassroomsAction()
   }
 
   /* 当左侧被选中的项发生变化时触发 */
@@ -113,7 +114,7 @@ class Library extends React.PureComponent {
 
   render() {
     const {
-      myClassroom,
+      myClassrooms,
       myCourses,
       myCourseGroups,
       selectedCourseChapters,
@@ -165,7 +166,7 @@ class Library extends React.PureComponent {
             onChange={this.handleOnSelectableListChange}
             style={{ borderTop: 'dashed 1px #666' }}
           >
-            {myClassroom.map((value) => (
+            {myClassrooms.map((value) => (
               <ListItem
                 key={value.get('id')}
                 primaryText={value.get('name')}
@@ -181,7 +182,7 @@ class Library extends React.PureComponent {
               conditions={searchConditions}
               courses={myCourses}
               courseGroups={myCourseGroups}
-              classroom={myClassroom}
+              classroom={myClassrooms}
               chapters={selectedCourseChapters}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}

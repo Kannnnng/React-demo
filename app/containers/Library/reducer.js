@@ -40,8 +40,12 @@ export default handleActions({
     },
   },
   'APP/LIBRARY/GET_MY_ALL_CLASSROOMS_ACTION': {
-    next(state) {
+    next(state, action) {
+      const classrooms = lodash.get(action, 'payload.entities.classrooms')
+      const myClassroomIds = lodash.get(action, 'payload.result.courses')
       return state
+        .set('classrooms', fromJS(classrooms))
+        .set('myClassroomIds', fromJS(myClassroomIds))
     },
     throw(state) {
       return state

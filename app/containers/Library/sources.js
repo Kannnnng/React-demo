@@ -8,6 +8,7 @@ import http from 'utils/fetch'
 import { normalize } from 'normalizr'
 import {
   Chapters,
+  Classrooms,
   Coursewares,
   Groups,
   Labels,
@@ -42,9 +43,11 @@ export function getMyAllCourseGroups() {
 
 export function getMyAllClassrooms() {
   return http
-    .get('v2/request')
+    .get('v2/courses')
     .then((response) => {
-      const result = response
+      const result = normalize(response, {
+        courses: Classrooms,
+      })
       return result
     })
 }

@@ -16,10 +16,22 @@ const coursesSelector = createSelector(
   (selectorDomain) => selectorDomain.get('courses') || immutableObjectEmpty
 )
 
+/* 当前所有课堂集合，因为课程组中不包含课堂，因此当前所有课堂理论上来说应该全部都是我的 */
+const classroomsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('classrooms') || immutableObjectEmpty
+)
+
 /* 我的所有课程 ID 集合 */
 const myCourseIdsSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.get('myCourseIds') || immutableObjectEmpty
+  (selectorDomain) => selectorDomain.get('myCourseIds') || immutableArrayEmpty
+)
+
+/* 我的所有课堂 ID 集合 */
+const myClassroomIdsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('myClassroomIds') || immutableArrayEmpty
 )
 
 /* 我的所有课程集合 */
@@ -27,9 +39,23 @@ const myCoursesSelector = createSelector(
   coursesSelector,
   myCourseIdsSelector,
   (courses, myCourseIds) => {
-    if (courses && myCourseIds) {
+    if (!courses.isEmpty() && !myCourseIds.isEmpty()) {
       return myCourseIds.reduce((result, value) => {
         return result.set(value, courses.get(value))
+      }, immutableObjectEmpty)
+    }
+    return immutableObjectEmpty
+  }
+)
+
+/* 我的所有课堂集合 */
+const myClassroomsSelector = createSelector(
+  classroomsSelector,
+  myClassroomIdsSelector,
+  (classrooms, myClassroomIds) => {
+    if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
+      return myClassroomIds.reduce((result, value) => {
+        return result.set(value, classrooms.get(value))
       }, immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -69,7 +95,7 @@ const quizzesSelector = createSelector(
 /* 当前被选中的课程的 ID */
 const selectedCourseIdSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCourseId']) || immutableObjectEmpty
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCourseId']) || immutableArrayEmpty
 )
 
 /* 当前被选中的课程 */
@@ -77,7 +103,7 @@ const selectedCourseSelector = createSelector(
   myCoursesSelector,
   selectedCourseIdSelector,
   (myCourses, selectedCourseId) => {
-    if (myCourses && selectedCourseId) {
+    if (!myCourses.isEmpty() && !selectedCourseId.isEmpty()) {
       return myCourses.get(selectedCourseId)
     }
     return immutableObjectEmpty
@@ -89,7 +115,7 @@ const selectedCourseChaptersSelector = createSelector(
   chaptersSelector,
   selectedCourseSelector,
   (chapters, selectedCourse) => {
-    if (chapters && selectedCourse && selectedCourse.get('chapters')) {
+    if (!chapters.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('chapters')) {
       return selectedCourse.get('chapters').reduce((result, value) => {
         return result.set(value, chapters.get(value))
       }, immutableObjectEmpty)
@@ -114,7 +140,7 @@ const selectedCourseLabelsSelector = createSelector(
   labelsSelector,
   selectedCourseSelector,
   (labels, selectedCourse) => {
-    if (labels && selectedCourse && selectedCourse.get('labels')) {
+    if (!labels.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('labels')) {
       return selectedCourse.get('labels').reduce((result, value) => {
         return result.set(value, labels.get(value))
       }, immutableObjectEmpty)
@@ -128,7 +154,7 @@ const selectedCourseCoursewaresSelector = createSelector(
   coursewaresSelector,
   selectedCourseSelector,
   (coursewares, selectedCourse) => {
-    if (coursewares && selectedCourse && selectedCourse.get('coursewares')) {
+    if (!coursewares.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('coursewares')) {
       return selectedCourse.get('coursewares').reduce((result, value) => {
         return result.set(value, coursewares.get(value).set('isCourseware', true))
       }, immutableObjectEmpty)
@@ -142,7 +168,7 @@ const selectedCourseQuestionsSelector = createSelector(
   questionsSelector,
   selectedCourseSelector,
   (questions, selectedCourse) => {
-    if (questions && selectedCourse && selectedCourse.get('questions')) {
+    if (!questions.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('questions')) {
       return selectedCourse.get('questions').reduce((result, value) => {
         return result.set(value, questions.get(value))
       }, immutableObjectEmpty)
@@ -156,7 +182,7 @@ const selectedCourseQuizzesSelector = createSelector(
   quizzesSelector,
   selectedCourseSelector,
   (quizzes, selectedCourse) => {
-    if (quizzes && selectedCourse && selectedCourse.get('quizzes')) {
+    if (!quizzes.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('quizzes')) {
       return selectedCourse.get('quizzes').reduce((result, value) => {
         return result.set(value, quizzes.get(value).set('isQuiz', true))
       }, immutableObjectEmpty)
@@ -170,7 +196,7 @@ const selectedChaptersSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
   (selectorDomain, selectedCourseChapters) => {
-    if (selectorDomain && selectedCourseChapters) {
+    if (!selectorDomain.isEmpty() && !selectedCourseChapters.isEmpty()) {
       const selectedChapterId = selectorDomain.getIn(['others', 'selectedChapterId'])
       return selectedCourseChapters.get(selectedChapterId) || immutableObjectEmpty
     }
@@ -264,6 +290,7 @@ const selectedQuestionItemIdsSelector = createSelector(
 
 /* 导出最终的数据 */
 const selector = createSelector(
+  myClassroomsSelector,
   myCoursesSelector,
   convertChaptersToListSelector,
   selectedCourseLabelsSelector,
@@ -272,6 +299,7 @@ const selector = createSelector(
   totalPagesSelector,
   selectedQuestionItemIdsSelector,
   (
+    myClassrooms,
     myCourses,
     selectedCourseChapters,
     selectedCourseLabels,
@@ -280,6 +308,7 @@ const selector = createSelector(
     totalPages,
     selectedQuestionItemIds,
   ) => ({
+    myClassrooms,
     myCourses,
     selectedCourseChapters,
     selectedCourseLabels,
