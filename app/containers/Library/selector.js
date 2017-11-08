@@ -242,6 +242,12 @@ const searchConditionsSelector = createSelector(
   }
 )
 
+/* 当前选中的题目、组卷、课件 ID 集合 */
+const selectedQuestionItemIdsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemIds']) || immutableArrayEmpty
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myCoursesSelector,
@@ -250,6 +256,7 @@ const selector = createSelector(
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
   searchConditionsSelector,
   totalPagesSelector,
+  selectedQuestionItemIdsSelector,
   (
     myCourses,
     selectedCourseChapters,
@@ -257,6 +264,7 @@ const selector = createSelector(
     questionItems,
     searchConditions,
     totalPages,
+    selectedQuestionItemIds,
   ) => ({
     myCourses,
     selectedCourseChapters,
@@ -264,6 +272,7 @@ const selector = createSelector(
     questionItems,
     searchConditions,
     totalPages,
+    selectedQuestionItemIds,
   })
 )
 

@@ -10,6 +10,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import Checkbox from 'material-ui/Checkbox'
+import IconButton from 'material-ui/IconButton'
 import { questionPattern } from 'utils/constants'
 import styles from './styles'
 
@@ -32,8 +34,12 @@ export default function QuestionItem({
   isCourseware,
   /* 课件类型，如果当前是课件的话 */
   fileType,
+  /* 当前列表项是否被选中 */
+  isChecked,
   /* 当列表项被点击时触发 */
   handleOnClick,
+  /* 当列表项被选中或取消选中时触发 */
+  handleOnQuestionItemCheck,
 }) {
   let patternClassName
   let patternText
@@ -144,7 +150,27 @@ export default function QuestionItem({
         <div>
           {summary.word}
         </div>
-        {summary.image && <div style={{ backgroundImage: `url(${summary.image})` }} />}
+        {summary.image && <div
+          style={{ backgroundImage: `url(${summary.image})` }}
+        />}
+      </div>
+      <div className={styles.bottomToolBar}>
+        <div>
+          {correctRate && `正确率:${correctRate}`}
+          {answerCount && ` 答题人数:${answerCount}`}
+        </div>
+        <div>
+          <Checkbox
+            checked={isChecked}
+            label={'选择:'}
+            labelPosition={'left'}
+            labelStyle={{ whiteSpace: 'nowrap', marginTop: '6px', marginRight: '5px' }}
+            iconStyle={{ marginTop: '3px' }}
+            onCheck={handleOnQuestionItemCheck({
+              id,
+            })}
+          />
+        </div>
       </div>
     </div>
   )
@@ -159,8 +185,10 @@ QuestionItem.propTypes = {
   answerCount: PropTypes.number,
   isQuiz: PropTypes.bool,
   handleOnClick: PropTypes.func.isRequired,
+  handleOnQuestionItemCheck: PropTypes.func.isRequired
 }
 
 QuestionItem.defaultProps = {
   handleOnClick: () => () => {},
+  handleOnQuestionItemCheck: () => () => {},
 }

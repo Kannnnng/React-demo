@@ -40,6 +40,7 @@ class Library extends React.PureComponent {
     questionItems: ImmutablePropTypes.map,
     searchConditions: ImmutablePropTypes.list,
     totalPages: PropTypes.node,
+    selectedQuestionItemIds: ImmutablePropTypes.list,
   }
 
   static defaultProps = {
@@ -103,6 +104,13 @@ class Library extends React.PureComponent {
     console.log(`你点击了 ID 为 ${id} 的 ${name}`)
   }
 
+  handleOnQuestionItemCheck = ({ id }) => (event, isChecked) => {
+    this.props.actions.selectQuestionItemAction({
+      id,
+      isChecked,
+    })
+  }
+
   render() {
     const {
       myClassroom,
@@ -112,6 +120,7 @@ class Library extends React.PureComponent {
       questionItems,
       searchConditions,
       totalPages,
+      selectedQuestionItemIds,
     } = this.props
     const {
       selectableListValue,
@@ -194,7 +203,7 @@ class Library extends React.PureComponent {
                   value.get('isQuiz') ? ({
                     word: value.get('description'),
                   }) : (
-                    value.get('summary')
+                    value.get('summary').toJS()
                   )
                 )}
                 correctRate={value.get('correctRate')}
@@ -202,7 +211,9 @@ class Library extends React.PureComponent {
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
+                isChecked={selectedQuestionItemIds.includes(value.get('id'))}
                 handleOnClick={this.handleOnClickQuestionItem}
+                handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
               />
             )).toList().toJS()}
             <Pagination

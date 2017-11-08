@@ -12,6 +12,7 @@ const initialState = fromJS({
   others: {
     selectedCourseId: null,
     currentPageNumber: 1,
+    selectedQuestionItemIds: [],
   },
 })
 
@@ -121,6 +122,23 @@ export default handleActions({
         default:
           return state
       }
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/SELECT_QUESTIONITEM_ACTION': {
+    next(state, action) {
+      const id = lodash.get(action, 'payload.id')
+      const isChecked = lodash.get(action, 'payload.isChecked')
+      if (isChecked && !state.getIn(['others', 'selectedQuestionItemIds']).includes(id)) {
+        return state.updateIn(['others', 'selectedQuestionItemIds'], (value) => value.push(id))
+      }
+      const index = state.getIn(['others', 'selectedQuestionItemIds']).findIndex((value) => value === id)
+      if (index !== -1) {
+        return state.deleteIn(['others', 'selectedQuestionItemIds', index])
+      }
+      return state
     },
     throw(state) {
       return state

@@ -60,3 +60,8 @@ export const filterQuestionsBySearchAction = createAction(
 export const deleteConditionAction = createAction(
   'APP/LIBRARY/DELETE_CONDITION_ACTION',
 )
+
+/* 选中或取消某一题目、组卷、课件 */
+export const selectQuestionItemAction = createAction(
+  'APP/LIBRARY/SELECT_QUESTIONITEM_ACTION',
+)
