@@ -10,7 +10,7 @@ import {
   Chapters,
   Classrooms,
   Coursewares,
-  Groups,
+  CourseGroups,
   Labels,
   Courses,
   Questions,
@@ -34,7 +34,7 @@ export function getMyAllCourseGroups() {
     .get('v2/groups?type=2')
     .then((response) => {
       const result = normalize(response, {
-        groupList: Groups,
+        groupList: CourseGroups,
       })
       return result
     })

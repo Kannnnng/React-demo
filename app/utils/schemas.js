@@ -2,7 +2,7 @@ import { schema } from 'normalizr'
 
 export const Chapters = new schema.Array(new schema.Entity('chapters'))
 export const Coursewares = new schema.Array(new schema.Entity('coursewares'))
-export const Groups = new schema.Array(new schema.Entity('groups', {
+export const CourseGroups = new schema.Array(new schema.Entity('courseGroups', {
   idAttribute: 'groupId',
 }))
 export const Labels = new schema.Array(new schema.Entity('labels'))

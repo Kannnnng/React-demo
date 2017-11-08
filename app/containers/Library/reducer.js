@@ -31,9 +31,9 @@ export default handleActions({
   },
   'APP/LIBRARY/GET_MY_ALL_COURSE_GROUPS_ACTION': {
     next(state, action) {
-      const groups = lodash.get(action, 'payload.entities.groups')
+      const courseGroups = lodash.get(action, 'payload.entities.courseGroups')
       return state
-        .set('groups', fromJS(groups))
+        .set('courseGroups', fromJS(courseGroups))
     },
     throw(state) {
       return state

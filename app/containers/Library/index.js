@@ -72,7 +72,7 @@ class Library extends React.PureComponent {
             courseId: id,
           })
           break
-        case 'group':
+        case 'courseGroup':
           break
         case 'classroom':
           break
@@ -166,7 +166,7 @@ class Library extends React.PureComponent {
                 <ListItem
                   key={value.get('id')}
                   primaryText={value.get('name')}
-                  value={`group|${value.get('id')}`}
+                  value={`courseGroup|${value.get('id')}`}
                 />
               )).toList().toJS()}
               value={'课程组'}
@@ -193,7 +193,7 @@ class Library extends React.PureComponent {
               conditions={searchConditions}
               courses={myCourses}
               courseGroups={myCourseGroups}
-              classroom={myClassrooms}
+              classrooms={myClassrooms}
               chapters={selectedCourseChapters}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}

@@ -30,7 +30,7 @@ export default class CurrentChoice extends React.PureComponent {
     /* immutable 对象 */
     courseGroups: PropTypes.object.isRequired,
     /* immutable 对象 */
-    classroom: PropTypes.object.isRequired,
+    classrooms: PropTypes.object.isRequired,
     /* 章节信息 */
     chapters: PropTypes.object.isRequired,
     /* 取消某一选择限制条件 */
@@ -47,7 +47,7 @@ export default class CurrentChoice extends React.PureComponent {
     conditions: [],
     courses: {},
     courseGroups: {},
-    classroom: {},
+    classrooms: {},
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => () => {},
     handleOnClickChapter: () => () => {},
@@ -83,7 +83,7 @@ export default class CurrentChoice extends React.PureComponent {
       conditions,
       courses,
       courseGroups,
-      classroom,
+      classrooms,
       chapters,
       handleOnClickCancel,
       handleOnClickCopyTarget,
@@ -121,7 +121,7 @@ export default class CurrentChoice extends React.PureComponent {
               disabled={
                 courses.isEmpty() &&
                 courseGroups.isEmpty() &&
-                classroom.isEmpty()
+                classrooms.isEmpty()
               }
               onClick={this.handleOnClickCopyToButton}
             />
@@ -168,13 +168,13 @@ export default class CurrentChoice extends React.PureComponent {
                   )).toList().toJS()}
                 />
               </Menu>}
-              {!classroom.isEmpty() && <Menu>
+              {!classrooms.isEmpty() && <Menu>
                 <MenuItem
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   leftIcon={<GoLeftSvg />}
                   primaryText={'我的课堂'}
-                  menuItems={courses.map((value) => (
+                  menuItems={classrooms.map((value) => (
                     <MenuItem
                       key={value.get('id')}
                       primaryText={value.get('name')}
