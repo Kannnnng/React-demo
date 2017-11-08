@@ -78,6 +78,13 @@ export default class CurrentChoice extends React.PureComponent {
     })
   }
 
+  handleOnClickCopyTarget = (value) => () => {
+    this.setState({
+      showCopyToList: false,
+    })
+    this.props.handleOnClickCopyTarget(value)
+  }
+
   render() {
     const {
       conditions,
@@ -86,7 +93,6 @@ export default class CurrentChoice extends React.PureComponent {
       classrooms,
       chapters,
       handleOnClickCancel,
-      handleOnClickCopyTarget,
       handleOnClickChapter,
     } = this.props
     const {
@@ -132,7 +138,9 @@ export default class CurrentChoice extends React.PureComponent {
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
               onRequestClose={this.handleOnCloseCopyToList}
             >
-              {!courses.isEmpty() && <Menu>
+              {!courses.isEmpty() && <Menu
+                desktop
+              >
                 <MenuItem
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -142,7 +150,7 @@ export default class CurrentChoice extends React.PureComponent {
                     <MenuItem
                       key={value.get('id')}
                       primaryText={value.get('name')}
-                      onClick={handleOnClickCopyTarget({
+                      onClick={this.handleOnClickCopyTarget({
                         id: value.get('id'),
                         name: 'course',
                       })}
@@ -150,7 +158,9 @@ export default class CurrentChoice extends React.PureComponent {
                   )).toList().toJS()}
                 />
               </Menu>}
-              {!courseGroups.isEmpty() && <Menu>
+              {!courseGroups.isEmpty() && <Menu
+                desktop
+              >
                 <MenuItem
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -160,7 +170,7 @@ export default class CurrentChoice extends React.PureComponent {
                     <MenuItem
                       key={value.get('id')}
                       primaryText={value.get('name')}
-                      onClick={handleOnClickCopyTarget({
+                      onClick={this.handleOnClickCopyTarget({
                         id: value.get('id'),
                         name: 'courseGroup',
                       })}
@@ -168,7 +178,9 @@ export default class CurrentChoice extends React.PureComponent {
                   )).toList().toJS()}
                 />
               </Menu>}
-              {!classrooms.isEmpty() && <Menu>
+              {!classrooms.isEmpty() && <Menu
+                desktop
+              >
                 <MenuItem
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -178,7 +190,7 @@ export default class CurrentChoice extends React.PureComponent {
                     <MenuItem
                       key={value.get('id')}
                       primaryText={value.get('name')}
-                      onClick={handleOnClickCopyTarget({
+                      onClick={this.handleOnClickCopyTarget({
                         id: value.get('id'),
                         name: 'classroom',
                       })}
