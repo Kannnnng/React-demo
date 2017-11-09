@@ -39,7 +39,8 @@ class Library extends React.PureComponent {
     selectedCourseLabels: ImmutablePropTypes.map,
     questionItems: ImmutablePropTypes.map,
     searchConditions: ImmutablePropTypes.list,
-    totalPages: PropTypes.node,
+    totalPages: PropTypes.number.isRequired,
+    currentPageNumber: PropTypes.number.isRequired,
     selectedQuestionItemIds: ImmutablePropTypes.list,
   }
 
@@ -132,6 +133,7 @@ class Library extends React.PureComponent {
       questionItems,
       searchConditions,
       totalPages,
+      currentPageNumber,
       selectedQuestionItemIds,
     } = this.props
     const {
@@ -230,6 +232,7 @@ class Library extends React.PureComponent {
             )).toList().toJS()}
             <Pagination
               total={totalPages}
+              currentNumber={currentPageNumber}
               handleOnChange={this.handleOnPageChange}
             />
           </div>

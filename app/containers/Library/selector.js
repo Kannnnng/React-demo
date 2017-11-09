@@ -297,6 +297,7 @@ const selector = createSelector(
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
   searchConditionsSelector,
   totalPagesSelector,
+  currentPageNumberSelector,
   selectedQuestionItemIdsSelector,
   (
     myClassrooms,
@@ -306,6 +307,7 @@ const selector = createSelector(
     questionItems,
     searchConditions,
     totalPages,
+    currentPageNumber,
     selectedQuestionItemIds,
   ) => ({
     myClassrooms,
@@ -315,6 +317,7 @@ const selector = createSelector(
     questionItems,
     searchConditions,
     totalPages,
+    currentPageNumber,
     selectedQuestionItemIds,
   })
 )

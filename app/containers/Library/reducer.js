@@ -78,6 +78,7 @@ export default handleActions({
       const courseId = lodash.get(action, 'payload.courseId')
       return state
         .setIn(['others', 'selectedCourseId'], courseId)
+        .setIn(['others', 'currentPageNumber'], 1)
     },
     throw(state) {
       return state
@@ -98,6 +99,7 @@ export default handleActions({
       const id = lodash.get(action, 'payload.id')
       return state
         .setIn(['others', 'selectedChapterId'], id)
+        .setIn(['others', 'currentPageNumber'], 1)
     },
     throw(state) {
       return state
@@ -108,6 +110,7 @@ export default handleActions({
       const searchText = lodash.get(action, 'payload.searchText')
       return state
         .setIn(['others', 'searchText'], searchText)
+        .setIn(['others', 'currentPageNumber'], 1)
     },
     throw(state) {
       return state
@@ -118,11 +121,17 @@ export default handleActions({
       const name = lodash.get(action, 'payload.name')
       switch (name) {
         case 'chapter':
-          return state.deleteIn(['others', 'selectedChapterId'])
+          return state
+            .deleteIn(['others', 'selectedChapterId'])
+            .setIn(['others', 'currentPageNumber'], 1)
         case 'search':
-          return state.deleteIn(['others', 'searchText'])
+          return state
+            .deleteIn(['others', 'searchText'])
+            .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
-          return state.deleteIn(['others', 'select'])
+          return state
+            .deleteIn(['others', 'select'])
+            .setIn(['others', 'currentPageNumber'], 1)
         default:
           return state
       }

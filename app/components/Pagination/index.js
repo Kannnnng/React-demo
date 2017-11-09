@@ -19,33 +19,26 @@ import styles from './styles'
 export default class Pagination extends React.PureComponent {
   static propTypes = {
     total: PropTypes.number.isRequired,
+    currentNumber: PropTypes.number.isRequired,
     handleOnChange: PropTypes.func.isRequired,
     style: PropTypes.object,
   }
 
-  state = {
-    currentNumber: 1,
-  }
-
   handleOnClick = (number) => () => {
-    this.setState({ currentNumber: number })
     this.props.handleOnChange(number)
   }
 
   handleOnGoNext = () => {
-    this.setState({ currentNumber: this.state.currentNumber + 1 })
-    this.props.handleOnChange(this.state.currentNumber + 1)
+    this.props.handleOnChange(this.props.currentNumber + 1)
   }
 
   handleOnGoPrev = () => {
-    this.setState({ currentNumber: this.state.currentNumber - 1 })
-    this.props.handleOnChange(this.state.currentNumber - 1)
+    this.props.handleOnChange(this.props.currentNumber - 1)
   }
 
   handleOnGoPage = () => {
     const value = Number(this.inputElement.value)
     if (value > 0 && value <= this.props.total ) {
-      this.setState({ currentNumber: value })
       this.props.handleOnChange(value)
     }
   }
@@ -53,11 +46,9 @@ export default class Pagination extends React.PureComponent {
   render() {
     const {
       total,
+      currentNumber,
       style,
     } = this.props
-    const {
-      currentNumber,
-    } = this.state
     const begin = total < 5 ? 1 : (
       /* 当前页面是第一页、第二页、第三页时 */
       ((currentNumber < 4) && 1) ||
