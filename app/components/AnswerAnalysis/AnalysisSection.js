@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles'
+import FroalaEditorView from 'components/QuestionAnswer/HTMLPreview'
 
 function AnalysisSection({ review }) {
   return (
@@ -8,13 +9,9 @@ function AnalysisSection({ review }) {
       <div className={styles.analysisTitle}>
         <span>{'解析'}</span>
       </div>
-      {review ?
-        <div dangerouslySetInnerHTML={{ __html: review }} />
-      :
-        <div>
-          <span>{'请等待老师公布答案后查看解析'}</span>
-        </div>
-      }
+      <FroalaEditorView
+        model={review}
+      />
     </div>
   )
 }

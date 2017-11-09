@@ -6,13 +6,15 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { isEqual } from 'lodash'
+import FroalaEditorView from 'components/QuestionAnswer/HTMLPreview'
 import img1 from 'images/singleSelection.png'
 import img2 from 'images/multipleChoice.png'
 import img3 from 'images/judge.png'
 import img4 from 'images/fillInTheBlanks.png'
 import img5 from 'images/shortAnswer.png'
 import img6 from 'images/group.png'
-import { questionPattern } from 'utils/constants'
+import { questionPattern, CoursewareAssets } from 'utils/constants'
 import styles from './styles'
 
 function getQuestionFlag(pattern = 0) {
@@ -42,6 +44,7 @@ class QuestionContent extends React.Component {
   static propTypes = {
     content: PropTypes.string,
     title: PropTypes.object,
+    contentOnly: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -53,14 +56,18 @@ class QuestionContent extends React.Component {
     const {
       content,
       title,
+      contentOnly,
     } = this.props
     const flag = getQuestionFlag(title.pattern)
-    return (
-      <div className={styles.container}>
+    let titleSection = null
+    if (!isEqual({}, title) && title.pattern !== 7) {
+      titleSection = (
         <div className={styles.title}>
           <div className={styles.chapter} style={{ backgroundColor: flag.bgc }}>
             <img src={flag.img} alt='' />
-            <span>{`${flag.pattern} ${title.serialNumber}`}</span>
+          </div>
+          <div className={styles.type}>
+            {`${flag.pattern}`}
           </div>
           <div className={styles.level}>
             {getLevel(title.difficulty)}
@@ -71,7 +78,30 @@ class QuestionContent extends React.Component {
           </div>
           }
         </div>
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: content }} />
+      )
+    }
+    if (!isEqual({}, title) && title.pattern === 7) {
+      const assets = CoursewareAssets[title.type]
+      titleSection = (
+        <div className={styles.title}>
+          <div className={styles.chapter}>
+            <img src={assets.icon} alt='' />
+          </div>
+          <div className={styles.type}>
+            {`${title.serialNumber}`}
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className={styles.container}>
+        {!contentOnly && titleSection}
+        <div className={styles.contentBox}>
+          <FroalaEditorView
+            className={styles.content}
+            model={content}
+          />
+        </div>
       </div>
     )
   }

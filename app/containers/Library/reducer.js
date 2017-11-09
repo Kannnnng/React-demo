@@ -44,9 +44,11 @@ export default handleActions({
     next(state, action) {
       const classrooms = lodash.get(action, 'payload.entities.classrooms')
       const myClassroomIds = lodash.get(action, 'payload.result.courses')
+      const teacher = lodash.get(action, 'payload.entities.teacher')
       return state
         .set('classrooms', fromJS(classrooms))
         .set('myClassroomIds', fromJS(myClassroomIds))
+        .set('mine', fromJS(teacher))
     },
     throw(state) {
       return state

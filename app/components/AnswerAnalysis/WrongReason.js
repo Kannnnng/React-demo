@@ -9,7 +9,7 @@ function WrongReason({ wrongReason }) {
         <span>{'答错原因'}</span>
       </div>
       <div className={styles.wrongReasonContent}>
-        {wrongReason.map((value, index) => (<button
+        {wrongReason.map((value, index) => <button
           key={index}
           style={{
             backgroundColor: value.isChecked ? '#FF5B05' : '',
@@ -17,7 +17,7 @@ function WrongReason({ wrongReason }) {
           }}
         >
           {value.text}
-        </button>))}
+        </button>)}
       </div>
     </div>
   )

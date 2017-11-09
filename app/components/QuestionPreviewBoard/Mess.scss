@@ -1,7 +1,6 @@
 .goBackButton,
 .goLeftButton,
 .goRightButton,
-.closeButton,
 .editButton,
 .cloneButton,
 .copyButton,
@@ -29,24 +28,16 @@
   }
 }
 
-.goBackButton,
-.closeButton {
+.goBackButton {
   width: 24px;
   height: 24px;
 
   i {
     width: 24px;
     height: 24px;
+    mask-image: url('images/cross.svg');
     mask-size: 24px 24px;
   }
-}
-
-.goBackButton i {
-  mask-image: url('images/left.svg');
-}
-
-.closeButton i {
-  mask-image: url('images/cross.png');
 }
 
 .goLeftButton,
@@ -77,8 +68,10 @@
 
 .bottomToolBarContainer {
   overflow: hidden;
-  width: 100%;
+  width: 800px;
   height: 48px;
+  margin-right: auto;
+  margin-left: auto;
   background-color: #4A4A4A;
 }
 

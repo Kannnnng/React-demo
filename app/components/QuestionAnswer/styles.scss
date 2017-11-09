@@ -1,7 +1,9 @@
 .container {
   overflow: auto;
-  width: 100%;
-  margin-top: 14px;
+  width: calc(100% - 16px);
+  margin: 16px 8px 0;
+  padding-bottom: 16px;
+  // border-bottom: 1px dashed #EEE;
 }
 
 .subQuestionTitle {
@@ -40,6 +42,8 @@
 
 .subQuestionPages {
   font-size: 16px;
+  display: flex;
+  align-items: center;
   color: #333;
 }
 
@@ -50,11 +54,11 @@
 .subQuestionPrevBtn,
 .subQuestionNextBtn {
   font-weight: bold;
-  line-height: 40px;
+  display: flex;
+  align-items: center;
   width: 40px;
   height: 40px;
   cursor: pointer;
-  text-align: center;
   border: none;
   outline: none;
   background-color: transparent;
@@ -124,6 +128,7 @@ label .text-style-1 {
 
 .statistics {
   font-size: 14px;
+  line-height: 1.5;
   margin-right: 12px;
   margin-left: 12px;
   color: #262626;

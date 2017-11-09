@@ -71,21 +71,6 @@ GoRight.propTypes = {
   handleOnClick: PropTypes.func,
 }
 
-export function Close({
-  handleOnClick,
-}) {
-  return (
-    <Button
-      className={styles.closeButton}
-      handleOnClick={handleOnClick}
-    />
-  )
-}
-
-Close.propTypes = {
-  handleOnClick: PropTypes.func,
-}
-
 export function BottomToolBar({
   handleOnEdit,
   handleOnClone,
@@ -95,31 +80,31 @@ export function BottomToolBar({
 }) {
   return (
     <div className={styles.bottomToolBarContainer}>
-      <Button
+      {handleOnEdit && <Button
         title={'编辑'}
         className={styles.editButton}
         handleOnClick={handleOnEdit}
-      />
-      <Button
+      />}
+      {handleOnClone && <Button
         title={'克隆'}
         className={styles.cloneButton}
         handleOnClick={handleOnClone}
-      />
-      <Button
+      />}
+      {handleOnCopy && <Button
         title={'复制'}
         className={styles.copyButton}
         handleOnClick={handleOnCopy}
-      />
-      <Button
+      />}
+      {handleOnMove && <Button
         title={'移动'}
         className={styles.moveButton}
         handleOnClick={handleOnMove}
-      />
-      <Button
+      />}
+      {handleOnDelete && <Button
         title={'删除'}
         className={styles.deleteButton}
         handleOnClick={handleOnDelete}
-      />
+      />}
     </div>
   )
 }

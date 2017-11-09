@@ -1,24 +1,36 @@
 .answerContent {
-  display: block;
-  height: 40px;
   position: relative;
+  display: block;
   overflow: hidden;
-  outline: none;
-  margin-left: 12px;
+
+  // 原本的属性为 height: 40px, 因为需要兼容多个标准答案这个需求，将 height 改为 min-height
+  min-height: 40px;
   margin-right: 12px;
+  margin-left: 12px;
   border-bottom: solid 2px #C8C8C8;
+  outline: none;
 }
 
 .circleOrder {
-  width: 20px;
-  height: 20px;
-  background-color: #FDBE41;
-  border-radius: 10px;
+  font-size: 12px;
+  line-height: 20px;
   position: absolute;
   top: 10px;
   left: 2px;
-  font-size: 12px;
-  color: #383F4A;
+  width: 20px;
+  height: 20px;
   text-align: center;
-  line-height: 20px;
+  color: #383F4A;
+  border-radius: 10px;
+  background-color: #FDBE41;
+}
+
+.rightAnswer {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  margin: 16px 12px 0;
+  letter-spacing: normal;
+  color: #262626;
 }

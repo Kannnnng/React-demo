@@ -15,6 +15,7 @@ import {
   Courses,
   Questions,
   Quizzes,
+  Teacher,
 } from 'utils/schemas'
 
 export function getMyAllCourses() {
@@ -47,6 +48,7 @@ export function getMyAllClassrooms() {
     .then((response) => {
       const result = normalize(response, {
         courses: Classrooms,
+        teacher: Teacher,
       })
       return result
     })

@@ -21,6 +21,7 @@ import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
 import { immutableObjectEmpty } from 'utils/constants'
 import Pagination from 'components/Pagination'
+import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import CurrentChoice from './CurrentChoice'
 import QuestionItem from './QuestionItem'
 import * as acts from './actions'
@@ -32,6 +33,7 @@ const SelectableList = makeSelectable(List)
 class Library extends React.PureComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired,
+    myInfomation: ImmutablePropTypes.map,
     myClassrooms: ImmutablePropTypes.map,
     myCourses: ImmutablePropTypes.map,
     myCourseGroups: ImmutablePropTypes.map,
@@ -243,7 +245,28 @@ class Library extends React.PureComponent {
         </div>
         {/* 题目预览 */}
         {!previewQuestionItem.isEmpty() && !previewQuestionItem.get(isQuiz) && (
-
+          <QuestionPreviewBoard
+            open
+            data={myInfomation.toJS()}
+            comments={undefined}
+            questionContent={questionContent || coursewareTitle}
+            questionAnswer={questionAnswer || coursewareContent}
+            answerAnalysis={answerAnalysis}
+            prePaperPage={this.preQuizPageInPreview}
+            nextPaperPage={this.nextQuizPageInPreview}
+            subsInPaper={quizQuestions}
+            isPaper={quizPreview}
+            paperTitle={quizTitle}
+            isPreview
+            allKnowledgePoint={allKnowledgePoint}
+            currentPaperPage={this.state.currentQuizPage}
+            handleOnClickGoBack={() => {
+              questionPreview && this.props.actions.closeQuestionPreview()
+              quizPreview && this.props.actions.closeQuizPreview()
+              quizPreview && this.setState({ currentQuizPage: 1 })
+              coursewarePreview && this.props.actions.closeCoursewarePreview()
+            }}
+          />
         )}
       </div>
     )

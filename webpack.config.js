@@ -248,6 +248,10 @@ module.exports = {
         exclude: NODE_MODULES_PATH,
       },
       {
+        test: /\.css$/i,
+        loader: 'style-loader!css-loader?root=.',
+      },
+      {
         test: /\.scss$/i,
         loaders: (process.env.NODE_ENV === 'production' ? (
           ExtractTextPlugin.extract({

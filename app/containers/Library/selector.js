@@ -10,6 +10,12 @@ import { immutableObjectEmpty, immutableArrayEmpty } from 'utils/constants'
 
 const selectorDomain = (state) => state.get('library')
 
+/* 当前教师的个人信息 */
+const myInfomationSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('mine')
+)
+
 /* 当前所有课程集合，包括我的课程集合和课程组中的课程集合 */
 const coursesSelector = createSelector(
   selectorDomain,
@@ -313,6 +319,7 @@ const previewQuestionItemSelector = createSelector(
 
 /* 导出最终的数据 */
 const selector = createSelector(
+  myInfomationSelector,
   myClassroomsSelector,
   myCoursesSelector,
   convertChaptersToListSelector,
@@ -324,6 +331,7 @@ const selector = createSelector(
   selectedQuestionItemIdsSelector,
   previewQuestionItemSelector,
   (
+    myInfomation,
     myClassrooms,
     myCourses,
     selectedCourseChapters,
@@ -335,6 +343,7 @@ const selector = createSelector(
     selectedQuestionItemIds,
     previewQuestionItem,
   ) => ({
+    myInfomation,
     myClassrooms,
     myCourses,
     selectedCourseChapters,

@@ -1,31 +1,32 @@
 .title {
   height: 32px;
-  padding: 0 8px;
+  padding-right: 8px;
   overflow: hidden;
 }
 
 .chapter {
   float: left;
+  width: 32px;
   height: 32px;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
+  border-top-left-radius: 4px;
   overflow: hidden;
-  padding-right: 8px;
+  text-align: center;
+  background-color: #fff;
 }
 
 .chapter img {
-  float: left;
-  height: 16px;
-  margin-left: 6px;
-  margin-top: 8px;
+  width: 24px;
+  height: 24px;
+  margin-top: 4px;
 }
 
-.chapter span {
+.type {
   float: left;
-  font-size: 13px;
-  color: #FFF;
-  margin-top: 7px;
-  margin-left: 4px;
+  margin-left: 12px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 18px;
+  color: #333;
 }
 
 .level {
@@ -36,7 +37,7 @@
   letter-spacing: 0.3px;
   color: #4A4A4A;
   margin-top: 8px;
-  margin-left: 4px;
+  margin-left: 26px;
 }
 
 .answer {
@@ -47,11 +48,22 @@
   color: #3B9E46;
 }
 
+.contentBox {
+  padding-bottom: 16px;
+  margin: 0 8px;
+  width: calc(100% - 16px);
+  border-bottom: 1px dashed #eee;
+}
+
 .content {
   font-size: 14px;
   line-height: 1.5;
   color: #333;
-  padding: 8px;
+
+  p {
+    margin: 0;
+    word-break: break-all;
+  }
 }
 
 .content img {

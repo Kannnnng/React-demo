@@ -48,10 +48,10 @@ class QuestionComment extends React.PureComponent {
     const file = event.target.files[0]
     this.setState({ image: file })
     // const reader = new FileReader()  // eslint-disable-line
-    // reader.readAsDataURL(file)
     // reader.onload = (_event) => {
     //   console.log(_event.target.result, 123)
     // }
+    // reader.readAsDataURL(file)
   }
 
   handleOnInputThinking = (event) => {

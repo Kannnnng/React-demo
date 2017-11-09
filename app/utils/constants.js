@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 
+/* 单题题目类型，分别为单选、多选、判断、填空、简答、题组 */
 export const questionPattern = {
   singleSelection: 1,
   multipleChoice: 2,
@@ -9,6 +10,7 @@ export const questionPattern = {
   group: 6,
 }
 
+/* 26 个大写英文字母 */
 export const letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']  // eslint-disable-line
 
 /* 1 + cos(x) 函数在 [0, 𝛑] 每隔两个点一个值，之后删除相对较小的 13 个值，共 17 个函数值 */
@@ -37,3 +39,47 @@ export const immutableObjectEmpty = fromJS({})
 
 /* immutable 数据结构中的空数组  */
 export const immutableArrayEmpty = fromJS([])
+
+/* 目前支持的课件类型 */
+export const CoursewareAssets = {
+  pdf: {
+    text: 'PDF',
+    icon: require('images/pdf.png'),
+  },
+  ppt: {
+    text: 'POWERPOINT',
+    icon: require('images/ppt.png'),
+  },
+  doc: {
+    text: 'WORD',
+    icon: require('images/word.png'),
+  },
+  docx: {
+    text: 'WORD',
+    icon: require('images/word.png'),
+  },
+  xls: {
+    text: 'EXCEL',
+    icon: require('images/excel.png'),
+  },
+  xlsx: {
+    text: 'EXCEL',
+    icon: require('images/excel.png'),
+  },
+  wps: {
+    text: 'WPS文字',
+    icon: require('images/wpsWord.png'),
+  },
+  et: {
+    text: 'WPS表格',
+    icon: require('images/wpsExcel.png'),
+  },
+  dps: {
+    text: 'WPS演示',
+    icon: require('images/wpsPPT.png'),
+  },
+  rtf: {
+    text: 'PDF',
+    icon: require('images/rtf.png'),
+  },
+}
