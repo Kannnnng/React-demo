@@ -65,3 +65,8 @@ export const deleteConditionAction = createAction(
 export const selectQuestionItemAction = createAction(
   'APP/LIBRARY/SELECT_QUESTIONITEM_ACTION',
 )
+
+/* 点击某一题目、组卷开始预览，没有课件，因为点击课件以后就直接跳转到课件的预览页面 */
+export const previewQuestionItemAction = createAction(
+  'APP/LIBRARY/PREVIEW_QUESTIONITEM_ACTION',
+)

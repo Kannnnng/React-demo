@@ -36,6 +36,8 @@ export default function QuestionItem({
   fileType,
   /* 当前列表项是否被选中 */
   isChecked,
+  /* 课件的预览地址 */
+  previewUrl,
   /* 当列表项被点击时触发 */
   handleOnClick,
   /* 当列表项被选中或取消选中时触发 */
@@ -129,12 +131,16 @@ export default function QuestionItem({
 
   return (
     <div className={styles.container}>
-      <button
-        onClick={handleOnClick({
-          id,
-          name: isCourseware ? 'courseware' : (isQuiz ? 'quiz' : 'question')
-        })}
-      />
+      {isCourseware ? (
+        <a href={previewUrl} />  // eslint-disable-line
+      ) : (
+        <button
+          onClick={handleOnClick({
+            id,
+            name: isQuiz ? 'quiz' : 'question',
+          })}
+        />
+      )}
       <div className={styles.pattern}>
         <div style={{ backgroundColor: patternColor }}>
           <div className={patternClassName} />

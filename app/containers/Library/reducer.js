@@ -13,6 +13,7 @@ const initialState = fromJS({
     selectedCourseId: null,
     currentPageNumber: 1,
     selectedQuestionItemIds: [],
+    previewQuestionItem: {},
   },
 })
 
@@ -152,6 +153,20 @@ export default handleActions({
         return state.deleteIn(['others', 'selectedQuestionItemIds', index])
       }
       return state
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/PREVIEW_QUESTIONITEM_ACTION': {
+    next(state, action) {
+      const id = lodash.get(action, 'payload.id')
+      const name = lodash.get(action, 'payload.name')
+      return state
+        .setIn(['others', 'previewQuestionItem'], fromJS({
+          id,
+          name,
+        }))
     },
     throw(state) {
       return state

@@ -42,10 +42,10 @@ class Library extends React.PureComponent {
     totalPages: PropTypes.number.isRequired,
     currentPageNumber: PropTypes.number.isRequired,
     selectedQuestionItemIds: ImmutablePropTypes.list,
+    previewQuestionItem: ImmutablePropTypes.map,
   }
 
   static defaultProps = {
-    myClassrooms: immutableObjectEmpty,
     myCourseGroups: immutableObjectEmpty,
   }
 
@@ -114,7 +114,10 @@ class Library extends React.PureComponent {
   }
 
   handleOnClickQuestionItem = ({ id, name }) => () => {
-    console.log(`你点击了 ID 为 ${id} 的 ${name}`)
+    this.props.actions.previewQuestionItemAction({
+      id,
+      name,
+    })
   }
 
   handleOnQuestionItemCheck = ({ id }) => (event, isChecked) => {
@@ -226,6 +229,7 @@ class Library extends React.PureComponent {
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
                 isChecked={selectedQuestionItemIds.includes(value.get('id'))}
+                previewUrl={value.get('previewUrl')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
               />
@@ -237,6 +241,10 @@ class Library extends React.PureComponent {
             />
           </div>
         </div>
+        {/* 题目预览 */}
+        {!previewQuestionItem.isEmpty() && !previewQuestionItem.get(isQuiz) && (
+
+        )}
       </div>
     )
   }

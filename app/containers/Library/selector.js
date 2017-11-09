@@ -288,6 +288,29 @@ const selectedQuestionItemIdsSelector = createSelector(
   (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemIds']) || immutableArrayEmpty
 )
 
+/* 当前需要显示预览的题目、组卷信息 */
+const previewQuestionItemSelector = createSelector(
+  selectorDomain,
+  questionsSelector,
+  quizzesSelector,
+  (selectorDomain, questions, quizzes) => {
+    const previewQuestionItem = selectorDomain.getIn(['others', 'previewQuestionItem']) || immutableObjectEmpty
+    if (!previewQuestionItem.isEmpty()) {
+      const id = previewQuestionItem.get('id')
+      const name = previewQuestionItem.get('name')
+      switch (name) {
+        case 'question':
+          return questions.get(id)
+        case 'quiz':
+          return quizzes.get(id).set('isQuiz', true)
+        default:
+          return immutableObjectEmpty
+      }
+    }
+    return immutableObjectEmpty
+  }
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myClassroomsSelector,
@@ -299,6 +322,7 @@ const selector = createSelector(
   totalPagesSelector,
   currentPageNumberSelector,
   selectedQuestionItemIdsSelector,
+  previewQuestionItemSelector,
   (
     myClassrooms,
     myCourses,
@@ -309,6 +333,7 @@ const selector = createSelector(
     totalPages,
     currentPageNumber,
     selectedQuestionItemIds,
+    previewQuestionItem,
   ) => ({
     myClassrooms,
     myCourses,
@@ -319,6 +344,7 @@ const selector = createSelector(
     totalPages,
     currentPageNumber,
     selectedQuestionItemIds,
+    previewQuestionItem,
   })
 )
 
