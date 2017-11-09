@@ -70,3 +70,8 @@ export const selectQuestionItemAction = createAction(
 export const previewQuestionItemAction = createAction(
   'APP/LIBRARY/PREVIEW_QUESTIONITEM_ACTION',
 )
+
+/* 关闭预览页面 */
+export const closePreviewQuestionItemAction = createAction(
+  'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION',
+)

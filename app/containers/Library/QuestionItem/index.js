@@ -132,7 +132,7 @@ export default function QuestionItem({
   return (
     <div className={styles.container}>
       {isCourseware ? (
-        <a href={previewUrl} />  // eslint-disable-line
+        <a target={'_blank'} href={previewUrl} />  // eslint-disable-line
       ) : (
         <button
           onClick={handleOnClick({

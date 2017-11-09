@@ -22,6 +22,12 @@ const coursesSelector = createSelector(
   (selectorDomain) => selectorDomain.get('courses') || immutableObjectEmpty
 )
 
+/* 当前所有课程组集合 */
+const courseGroupsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('courseGroups') || immutableObjectEmpty
+)
+
 /* 当前所有课堂集合，因为课程组中不包含课堂，因此当前所有课堂理论上来说应该全部都是我的 */
 const classroomsSelector = createSelector(
   selectorDomain,
@@ -32,6 +38,11 @@ const classroomsSelector = createSelector(
 const myCourseIdsSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.get('myCourseIds') || immutableArrayEmpty
+)
+
+const myCourseGroupIdsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('myCourseGroupIds') || immutableArrayEmpty
 )
 
 /* 我的所有课堂 ID 集合 */
@@ -46,9 +57,23 @@ const myCoursesSelector = createSelector(
   myCourseIdsSelector,
   (courses, myCourseIds) => {
     if (!courses.isEmpty() && !myCourseIds.isEmpty()) {
-      return myCourseIds.reduce((result, value) => {
-        return result.set(value, courses.get(value))
-      }, immutableObjectEmpty)
+      return myCourseIds.reduce((result, value) => (
+        result.set(value, courses.get(value))
+      ), immutableObjectEmpty)
+    }
+    return immutableObjectEmpty
+  }
+)
+
+/* 我所属的所有课程组 */
+const myCourseGroupsSelector = createSelector(
+  courseGroupsSelector,
+  myCourseGroupIdsSelector,
+  (courseGroups, myCourseGroupIds) => {
+    if (!courseGroups.isEmpty() && !myCourseGroupIds.isEmpty()) {
+      return myCourseGroupIds.reduce((result, value) => (
+        result.set(value, courseGroups.get(value))
+      ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
   }
@@ -60,9 +85,9 @@ const myClassroomsSelector = createSelector(
   myClassroomIdsSelector,
   (classrooms, myClassroomIds) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
-      return myClassroomIds.reduce((result, value) => {
-        return result.set(value, classrooms.get(String(value)))
-      }, immutableObjectEmpty)
+      return myClassroomIds.reduce((result, value) => (
+        result.set(value, classrooms.get(String(value)))
+      ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
   }
@@ -308,7 +333,10 @@ const previewQuestionItemSelector = createSelector(
         case 'question':
           return questions.get(id)
         case 'quiz':
-          return quizzes.get(id).set('isQuiz', true)
+          return quizzes
+            .get(id)
+            .set('isQuiz', true)
+            .update('subs', (value) => value.map((item) => questions.get(item)))
         default:
           return immutableObjectEmpty
       }
@@ -322,6 +350,7 @@ const selector = createSelector(
   myInfomationSelector,
   myClassroomsSelector,
   myCoursesSelector,
+  myCourseGroupsSelector,
   convertChaptersToListSelector,
   selectedCourseLabelsSelector,
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
@@ -334,6 +363,7 @@ const selector = createSelector(
     myInfomation,
     myClassrooms,
     myCourses,
+    myCourseGroups,
     selectedCourseChapters,
     selectedCourseLabels,
     questionItems,
@@ -346,6 +376,7 @@ const selector = createSelector(
     myInfomation,
     myClassrooms,
     myCourses,
+    myCourseGroups,
     selectedCourseChapters,
     selectedCourseLabels,
     questionItems,

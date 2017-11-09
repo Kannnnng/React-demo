@@ -47,16 +47,14 @@ class Library extends React.PureComponent {
     previewQuestionItem: ImmutablePropTypes.map,
   }
 
-  static defaultProps = {
-    myCourseGroups: immutableObjectEmpty,
-  }
-
   state = {
     selectableListValue: null,
+    currentQuizPage: 1,
   }
 
   componentWillMount() {
     this.props.actions.getMyAllCoursesAction()
+    this.props.actions.getMyAllCourseGroupsAction()
     this.props.actions.getMyAllClassroomsAction()
   }
 
@@ -129,20 +127,38 @@ class Library extends React.PureComponent {
     })
   }
 
+  handleOnPreQuizPageInPreview = () => {
+    this.setState({ currentQuizPage: this.state.currentQuizPage - 1 })
+  }
+
+  handleOnNextQuizPageInPreview = () => {
+    this.setState({ currentQuizPage: this.state.currentQuizPage + 1 })
+  }
+
+  handleOnClosePreviewQuestionItem = () => {
+    this.setState({ currentQuizPage: 1 })
+    this.props.actions.closePreviewQuestionItemAction()
+  }
+
+
   render() {
     const {
+      myInfomation,
       myClassrooms,
       myCourses,
       myCourseGroups,
       selectedCourseChapters,
+      selectedCourseLabels,
       questionItems,
       searchConditions,
       totalPages,
       currentPageNumber,
       selectedQuestionItemIds,
+      previewQuestionItem,
     } = this.props
     const {
       selectableListValue,
+      currentQuizPage,
     } = this.state
 
     return (
@@ -171,9 +187,9 @@ class Library extends React.PureComponent {
               initiallyOpen={false}
               nestedItems={myCourseGroups.map((value) => (
                 <ListItem
-                  key={value.get('id')}
-                  primaryText={value.get('name')}
-                  value={`courseGroup|${value.get('id')}`}
+                  key={value.get('groupId')}
+                  primaryText={value.get('groupName')}
+                  value={`courseGroup|${value.get('groupId')}`}
                 />
               )).toList().toJS()}
               value={'课程组'}
@@ -244,28 +260,38 @@ class Library extends React.PureComponent {
           </div>
         </div>
         {/* 题目预览 */}
-        {!previewQuestionItem.isEmpty() && !previewQuestionItem.get(isQuiz) && (
+        {!previewQuestionItem.isEmpty() && (
           <QuestionPreviewBoard
             open
             data={myInfomation.toJS()}
             comments={undefined}
-            questionContent={questionContent || coursewareTitle}
-            questionAnswer={questionAnswer || coursewareContent}
-            answerAnalysis={answerAnalysis}
-            prePaperPage={this.preQuizPageInPreview}
-            nextPaperPage={this.nextQuizPageInPreview}
-            subsInPaper={quizQuestions}
-            isPaper={quizPreview}
-            paperTitle={quizTitle}
-            isPreview
-            allKnowledgePoint={allKnowledgePoint}
-            currentPaperPage={this.state.currentQuizPage}
-            handleOnClickGoBack={() => {
-              questionPreview && this.props.actions.closeQuestionPreview()
-              quizPreview && this.props.actions.closeQuizPreview()
-              quizPreview && this.setState({ currentQuizPage: 1 })
-              coursewarePreview && this.props.actions.closeCoursewarePreview()
+            questionContent={{
+              content: previewQuestionItem.getIn(['content', 'html']),
+              title: previewQuestionItem.get('title'),
             }}
+            questionAnswer={{
+              pattern: previewQuestionItem.get('pattern'),
+              answer: previewQuestionItem.get('answer'),
+              img: previewQuestionItem.getIn(['answer', 'summary', 'image']),
+              coursewareName: previewQuestionItem.get('name'),
+              previewUrl: previewQuestionItem.get('previewUrl'),
+            }}
+            answerAnalysis={{
+              data: {
+                review: '',
+                labels: [],
+                questionId: previewQuestionItem.get('id'),
+              }
+            }}
+            prePaperPage={this.handleOnPreQuizPageInPreview}
+            nextPaperPage={this.handleOnNextQuizPageInPreview}
+            subsInPaper={previewQuestionItem.get('subs')}
+            isPaper={previewQuestionItem.get('isQuiz')}
+            paperTitle={previewQuestionItem.get('title')}
+            isPreview
+            allKnowledgePoint={selectedCourseLabels}
+            currentPaperPage={currentQuizPage}
+            handleOnClickGoBack={this.handleOnClosePreviewQuestionItem}
           />
         )}
       </div>

@@ -36,7 +36,7 @@ class QuestionPreviewBoard extends React.Component {
     prePaperPage: PropTypes.func,  // 组卷，上一题
     nextPaperPage: PropTypes.func,  // 组卷，下一题
     currentPaperPage: PropTypes.number,
-    subsInPaper: PropTypes.array,
+    subsInPaper: PropTypes.object,
     isPaper: PropTypes.bool,
     paperTitle: PropTypes.string,
     allKnowledgePoint: PropTypes.object,

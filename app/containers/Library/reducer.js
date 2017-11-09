@@ -23,7 +23,7 @@ export default handleActions({
       const courses = lodash.get(action, 'payload.entities.courses')
       const myCourseIds = lodash.get(action, 'payload.result.libraries')
       return state
-        .set('courses', fromJS(courses))
+        .mergeIn(['courses'], fromJS(courses))
         .set('myCourseIds', fromJS(myCourseIds))
     },
     throw(state) {
@@ -33,8 +33,10 @@ export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_COURSE_GROUPS_ACTION': {
     next(state, action) {
       const courseGroups = lodash.get(action, 'payload.entities.courseGroups')
+      const myCourseGroupIds = lodash.get(action, 'payload.result.groupList')
       return state
-        .set('courseGroups', fromJS(courseGroups))
+        .mergeIn(['courseGroups'], fromJS(courseGroups))
+        .set('myCourseGroupIds', fromJS(myCourseGroupIds))
     },
     throw(state) {
       return state
@@ -46,7 +48,7 @@ export default handleActions({
       const myClassroomIds = lodash.get(action, 'payload.result.courses')
       const teacher = lodash.get(action, 'payload.entities.teacher')
       return state
-        .set('classrooms', fromJS(classrooms))
+        .mergeIn(['classrooms'], fromJS(classrooms))
         .set('myClassroomIds', fromJS(myClassroomIds))
         .set('mine', fromJS(teacher))
     },
@@ -169,6 +171,14 @@ export default handleActions({
           id,
           name,
         }))
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION': {
+    next(state) {
+      return state.setIn(['others', 'previewQuestionItem'], fromJS({}))
     },
     throw(state) {
       return state
