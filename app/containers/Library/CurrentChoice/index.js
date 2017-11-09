@@ -166,12 +166,12 @@ export default class CurrentChoice extends React.PureComponent {
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   leftIcon={<GoLeftSvg />}
                   primaryText={'课程组'}
-                  menuItems={courses.map((value) => (
+                  menuItems={courseGroups.map((value) => (
                     <MenuItem
-                      key={value.get('id')}
-                      primaryText={value.get('name')}
+                      key={value.get('groupId')}
+                      primaryText={value.get('groupName')}
                       onClick={this.handleOnClickCopyTarget({
-                        id: value.get('id'),
+                        id: value.get('groupId'),
                         name: 'courseGroup',
                       })}
                     />
