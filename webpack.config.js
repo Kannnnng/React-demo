@@ -250,6 +250,7 @@ module.exports = {
       {
         test: /\.css$/i,
         loader: 'style-loader!css-loader?root=.',
+        include: NODE_MODULES_PATH,
       },
       {
         test: /\.scss$/i,
