@@ -7,10 +7,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import lodash from 'lodash'
-import { letter } from 'utils/constants'
-// import type1 from 'images/type1.png'
-// import type11 from 'images/type11.png'
 import ItemLabel from 'components/ItemLabel'
+import FroalaEditorView from 'components/QuestionAnswer/HTMLPreview'
+import type1 from 'images/type1.png'
+import type11 from 'images/type11.png'
+import { letter } from 'utils/constants'
 import styles from './styles'
 
 const findIndex = (array, id) =>
@@ -41,39 +42,45 @@ function AnswerSingleSelection(props) {
           <ItemLabel
             hasCorrectness={hasCorrectness}
             selected={selected}
-            correct={value.correctAnswer}
+            correct={value.isCorrectOption || value.correctAnswer}
             showMySelected={!isAllCorrect}
           >
             {letter[index]}
           </ItemLabel>
-          <span dangerouslySetInnerHTML={{ __html: value.content }} />
+          <FroalaEditorView
+            tag='span'
+            model={value.content.html}
+          />
         </div>,
       )
-      if (value.correctAnswer) {
+      if (value.isCorrectOption || value.correctAnswer) {
         correctAnswer.push(letter[index])
       }
       // if (selected) {
       //   myChoice.push(letter[index])
       // }
     } else {
-      // temp.push(
-      //   <button
-      //     className={styles.answerContent}
-      //     onClick={handleOnClickAnswer(value.id)}
-      //     key={index}
-      //     disabled={!canAnswer}
-      //   >
-      //     <img src={selected ? type1 : type11} alt="" />
-      //     <span dangerouslySetInnerHTML={{ _lodashhtml: value.content }} />
-      //   </button>,
-      // )
+      temp.push(
+        <button
+          className={styles.answerContent}
+          // onClick={handleOnClickAnswer(value.id)}
+          key={index}
+          disabled={!canAnswer}
+        >
+          <img src={selected ? type1 : type11} alt='' />
+          <FroalaEditorView
+            tag='span'
+            model={value.content.html}
+          />
+        </button>,
+      )
     }
   })
 
-  let rightAnswer = null
+  let rightAnswer
   if (!isAnswered || !isAnswerOpen || canAnswer) {
     rightAnswer = null
-  } else if (hasCorrectness) {
+  } else if (hasCorrectness && correctAnswer.length) {
     rightAnswer = (
       <div className={styles.rightAnswer}>
         <span>{`正确答案是「${correctAnswer.join('')}」。`}</span>

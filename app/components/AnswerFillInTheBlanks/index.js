@@ -7,17 +7,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles'
+import lodash from 'lodash'
 
-function renderFillInTheBlanksContent(value/* , hasCorrectness */) {
+function renderFillInTheBlanksContent(value, /* hasCorrectness */isAnswered) {
   // if (hasCorrectness && value.myAnswer === value.correctAnswer) {
   //   return <span style={{ color: '#118675' }}>{value.correctAnswer}</span>
   // } else if (!hasCorrectness) {
   //   return <span style={{ color: '#118675' }}>{value.myAnswer}</span>
   // }
+  if (lodash.get(value, 'correctAnswer') instanceof Array) {
+    return (
+      <div key={value.id}>
+        {lodash.get(value, 'correctAnswer[0].length') ?
+          value.correctAnswer.map((item, index) => (
+            <div key={index} style={{ color: '#333', lineHeight: '1', marginTop: `${!index ? '13px' : '0'}` }}>{item}</div>
+          )) :
+          <span style={{ color: '#888' }}>{'未输入标答'}</span>
+        }
+      </div>
+    )
+  }
   return (
     <div>
-      {/* value.myAnswer && <span style={{ color: '#EE192E', paddingRight: '10px' }}>{value.myAnswer}</span> */}
-      <span style={{ color: '#333' }}>{`正确答案「${value.correctAnswer}」`}</span>
+      {/* value.myAnswer && (
+        <span style={{ color: '#EE192E', paddingRight: '10px' }}>
+          {value.myAnswer}
+        </span>
+      ) */}
+      {value.content && isAnswered && (
+        <span style={{ color: '#333' }}>
+          {`正确答案「${value.content.html}」`}
+        </span>
+      )}
     </div>
   )
 }
@@ -28,20 +49,24 @@ function AnswerFillInTheBlanks(props) {
     isAnswered,
     isAnswerOpen,
     canAnswer,
-    hasCorrectness,
+    // hasCorrectness,
     // answer,
     // handleOnClickAnswer,
+    caseSensitive,
+    strict,
+    noBottomLine,
   } = props
+  const answerContentStyle = noBottomLine ? { borderBottom: 'none' } : {}
   const temp = []
   items.forEach((value, index) => {
-    if (isAnswered && isAnswerOpen && !canAnswer) {
+    if (/* isAnswered && */isAnswerOpen && !canAnswer) {
       temp.push(
-        <div className={styles.answerContent} key={index}>
+        <div className={styles.answerContent} key={index} style={answerContentStyle}>
           <div className={styles.circleOrder}>
             {index + 1}
           </div>
           <div style={{ marginLeft: '33px', fontSize: '14px', lineHeight: '40px' }}>
-            {renderFillInTheBlanksContent(value, hasCorrectness)}
+            {renderFillInTheBlanksContent(value, /* hasCorrectness, */isAnswered)}
           </div>
         </div>,
       )
@@ -66,9 +91,18 @@ function AnswerFillInTheBlanks(props) {
     }
   })
 
+  let rightAnswer
+  if (strict || caseSensitive) {
+    rightAnswer = (
+      <div className={styles.rightAnswer}>
+        <span>{`答案${strict && '「允许次序不同」' || ''}${caseSensitive && '「不严格匹配大小写」' || ''}`}</span>
+      </div>
+    )
+  }
   return (
     <div>
       {temp}
+      {rightAnswer}
     </div>
   )
 }
@@ -79,13 +113,17 @@ AnswerFillInTheBlanks.propTypes = {
   isAnswered: PropTypes.bool,
   isAnswerOpen: PropTypes.bool,
   canAnswer: PropTypes.bool,
-  hasCorrectness: PropTypes.bool,
+  // hasCorrectness: PropTypes.bool,
   // handleOnClickAnswer: PropTypes.func,
+  caseSensitive: PropTypes.bool,
+  strict: PropTypes.bool,
+  noBottomLine: PropTypes.bool,
 }
 
 AnswerFillInTheBlanks.defaultProps = {
   items: [],
   answer: {},
+  noBottomLine: false,
 }
 
 export default AnswerFillInTheBlanks

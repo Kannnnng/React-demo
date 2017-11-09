@@ -1,11 +1,10 @@
 .answerContentForShow {
   font-size: 0;
   position: relative;
-  overflow: hidden;
-  height: 40px;
+  min-height: 40px;
 }
 
-.answerContentForShow div {
+.answerContentForShow > div {
   font-size: 14px;
   line-height: 23px;
   position: absolute;
@@ -19,23 +18,36 @@
   border-radius: 12px;
 }
 
-.answerContentForShow span {
+.answerContentForShow > span {
   font-size: 14px;
-  line-height: 40px;
   position: relative;
-  top: 3px;
-  height: 40px;
-  margin-left: 41px;
+  top: 15px;
+  bottom: 0;
+  left: 50px;
+  display: inline-block;
+  overflow-x: hidden;
+  min-height: 40px;
   color: #333;
+
+  p {
+    margin: 0;
+    word-break: break-all;
+  }
+
+  *:last-child:not(:first-child) {
+    margin-bottom: 20px;
+  }
 }
 
 .answerContent {
   font-size: 0;
   position: relative;
   display: block;
-  overflow: hidden;
-  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  border: none;
   outline: none;
+  background: transparent;
 }
 
 .answerContent > img {
@@ -49,9 +61,15 @@
 .answerContent > span {
   font-size: 14px;
   line-height: 40px;
-  height: 40px;
+  display: inline-block;
+  min-height: 40px;
   margin-left: 41px;
   color: #333;
+
+  p {
+    margin: 0;
+    word-break: break-all;
+  }
 }
 
 .rightAnswer {
@@ -59,15 +77,15 @@
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  margin: 16px 12px 0;
+  margin: 16px 12px 0 12px;
   letter-spacing: normal;
   color: #262626;
 }
 
 .right {
-  color: #3B9E46;
+  color: #3b9e46;
 }
 
 .wrong {
-  color: #F4333C;
+  color: #f4333c;
 }

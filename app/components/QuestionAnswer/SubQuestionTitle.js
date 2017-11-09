@@ -20,7 +20,7 @@ function getQuestionFlag(pattern, canAnswer) {
   }
 }
 
-function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) {
+function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer, isPreview }) {
   const { pattern, answer } = question
   const { isAllCorrect, limit } = answer
   let style = {}
@@ -37,7 +37,7 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
     style = {
       backgroundColor: 'rgba(244, 51, 60, 0.16)',
     }
-  } else {
+  } else if (!isPreview) {
     text.push(<span key='sqt-result' className={styles.none}>{'未作答'}</span>)
   }
   return (
@@ -52,12 +52,14 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
           onClick={
             (e) => {
               e.preventDefault()
-              onChange(index - 1)
+              onChange(index - 2)
             }
           }
           disabled={index <= 1}
         >
-          &lt;
+          <i className='material-icons'>
+            keyboard_arrow_left
+          </i>
         </button>
         <span>{`${index} / ${totalCount}`}</span>
         <button
@@ -65,12 +67,14 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
           onClick={
             (e) => {
               e.preventDefault()
-              onChange(index + 1)
+              onChange(index)
             }
           }
           disabled={index >= totalCount}
         >
-          &gt;
+          <i className='material-icons'>
+            keyboard_arrow_right
+          </i>
         </button>
       </div>
     </div>
@@ -79,6 +83,7 @@ function SubQuestionTitle({ index, totalCount, onChange, question, canAnswer }) 
 
 SubQuestionTitle.propTypes = {
   canAnswer: PropTypes.bool,
+  isPreview: PropTypes.bool,
   index: PropTypes.number,
   totalCount: PropTypes.number,
   onChange: PropTypes.func,

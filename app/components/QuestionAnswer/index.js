@@ -13,9 +13,17 @@ import AnswerJudge from 'components/AnswerJudge'
 import AnswerFillInTheBlanks from 'components/AnswerFillInTheBlanks'
 import AnswerShortAnswer from 'components/AnswerShortAnswer'
 import { questionPattern, letter } from 'utils/constants'
+import CoursewarePreview from 'components/CoursewarePreview'
 // import { getNewImages } from 'containers/Answers/helper'
 import SubQuestionTitle from './SubQuestionTitle'
 import styles from './styles'
+
+// Require Editor JS files.
+import 'froala-editor/js/froala_editor.pkgd.min.js'  // eslint-disable-line
+
+// Require Editor CSS files.
+import 'froala-editor/css/froala_style.min.css'  // eslint-disable-line
+import 'froala-editor/css/froala_editor.pkgd.min.css'  // eslint-disable-line
 
 class QuestionAnswer extends React.Component {
   static propTypes = {
@@ -25,20 +33,30 @@ class QuestionAnswer extends React.Component {
       PropTypes.array,
       PropTypes.bool,
     ]),
+    className: PropTypes.string,  // 组件 container 的样式类
     isAnswerOpen: PropTypes.bool,
     isAnswered: PropTypes.bool,
     canAnswer: PropTypes.bool,
+    showStatistics: PropTypes.bool,  // 是否显示使用次数、正确率、易错项等杂项
+    noBottomLine: PropTypes.bool,  // 填空题每一项是否具有下面的灰色横线
     pattern: PropTypes.number,
     // onChange: PropTypes.func,
     subQuestionIndex: PropTypes.number,
     onSubQuestionChange: PropTypes.func,
+    img: PropTypes.string,  // 课件预览图片
+    coursewareName: PropTypes.string,  // 课件名称
+    playCourseware: PropTypes.func,  // 播放课件时被触发
+    isPreview: PropTypes.bool,
+    hasBottomBorder: PropTypes.bool,
   }
 
   static defaultProps = {
     answer: {},
     isAnswerOpen: false,
     isAnswered: false,
+    showStatistics: true,
     subQuestionIndex: 0,
+    hasBottomBorder: true
   }
 
   // state = {
@@ -143,13 +161,16 @@ class QuestionAnswer extends React.Component {
     let answerSection
     const {
       pattern, answer, /* myAnswer, */
-      isAnswered, isAnswerOpen, canAnswer,
+      isAnswered, isAnswerOpen, canAnswer, noBottomLine,
+      img, coursewareName, playCourseware,
     } = this.props
     const {
       items: candidateItems,
       isAllCorrect,
       correctAnswer,
       hasCorrectness,
+      caseSensitive,
+      strict,
     } = answer
     switch (pattern) {
       case questionPattern.singleSelection:
@@ -204,6 +225,9 @@ class QuestionAnswer extends React.Component {
             hasCorrectness={hasCorrectness}
             // answer={myAnswer}
             handleOnClickAnswer={this.handleOnClickAnswer}
+            caseSensitive={caseSensitive}
+            strict={strict}
+            noBottomLine={noBottomLine}
           />
         )
         break
@@ -213,7 +237,7 @@ class QuestionAnswer extends React.Component {
             canAnswer={canAnswer}
             limit={answer.limit}
             // answer={myAnswer}
-            answer={candidateItems[0]}
+            // answer={candidateItems[0]}
             // gallery={this.state.gallery}
             maxCount={3}
             textAreaPlaceHolder={'请填写你的答案'}
@@ -228,6 +252,15 @@ class QuestionAnswer extends React.Component {
         break
       case questionPattern.group:
         answerSection = this.renderGroup()
+        break
+      case 7:
+        answerSection = (
+          <CoursewarePreview
+            img={img}
+            coursewareName={coursewareName}
+            playCourseware={playCourseware}
+          />
+        )
         break
       default:
         break
@@ -246,6 +279,8 @@ class QuestionAnswer extends React.Component {
       isAnswered,
       subQuestionIndex,
       onSubQuestionChange,
+      isPreview,
+      showStatistics,
     } = this.props
     const question = questions[subQuestionIndex]
     question.answer = {
@@ -262,10 +297,11 @@ class QuestionAnswer extends React.Component {
       <div className={styles.subQuestion}>
         <SubQuestionTitle
           canAnswer={false}
+          isPreview={isPreview}
           index={subQuestionIndex + 1}
           totalCount={questions.length}
           question={question}
-          onChange={(index) => { onSubQuestionChange(index) }}
+          onChange={(event, index) => { onSubQuestionChange(event, index) }}
         />
         <QuestionAnswer
           answer={question.answer}
@@ -273,7 +309,9 @@ class QuestionAnswer extends React.Component {
           isAnswerOpen={isAnswerOpen}
           isAnswered={isAnswered}
           canAnswer={canAnswer}
+          showStatistics={showStatistics}
           pattern={question.pattern}
+          hasBottomBorder={false}
           // onChange={(state) => {
           //   onChange({
           //     ...myAnswers,
@@ -290,23 +328,27 @@ class QuestionAnswer extends React.Component {
     const {
       items,
       hasCorrectness,
-      answerCount,
+      answerCount = 0,  // 设置初始值为 0
       // studentCount,
-      correctRate,
-      easyWrongOption,
-      referenceCount,
-      usageCount,
+      correctRate = 0,  // 设置初始值为 0
+      easyWrongOption = [],  // 设置初始值为 []
+      referenceCount = 0,  // 设置初始值为 0
+      usageCount = 0,  // 设置初始值为 0
     } = answer
     const temp = []
 
     switch (pattern) {
       case questionPattern.singleSelection:
       case questionPattern.multipleChoice:
-      case questionPattern.AnswerFillInTheBlanks:
       case questionPattern.judge:
+      case questionPattern.fillInTheBlanks:
         temp.push(<span key="referenceCount">{`本题被${referenceCount}位老师引用。共计使用${usageCount}次。学生作答${answerCount}人次。`}</span>)  // eslint-disable-line
         if (!hasCorrectness) {
-          // temp = <span key="answerCount">{`本题共被作答${answerCount}次。你的答案与${studentCount}人相同。`}</span>
+          // temp = (
+          //   <span key="answerCount">
+          //     {`本题共被作答${answerCount}次。你的答案与${studentCount}人相同。`}
+          //   </span>
+          // )
         } else {
           let easyWrongOptionText
           if (pattern === questionPattern.judge) {
@@ -349,16 +391,27 @@ class QuestionAnswer extends React.Component {
 
   render() {
     const {
+      className,
       pattern,
       isAnswerOpen,
       isAnswered,
       canAnswer,
+      showStatistics,
+      hasBottomBorder
     } = this.props
-
+    const containerClassName = `${className} ${styles.container}`
     return (
-      <div className={styles.container}>
+      <div
+        className={containerClassName}
+        style={{ borderBottom: hasBottomBorder ? '1px dashed #eee' : '' }}
+      >
         {this.renderAnswer()}
-        {pattern !== questionPattern.group && isAnswered && !canAnswer && isAnswerOpen && this.renderStatistics()}
+        {pattern !== questionPattern.group &&
+          isAnswered &&
+          !canAnswer &&
+          isAnswerOpen &&
+          showStatistics &&
+          this.renderStatistics()}
       </div>
     )
   }

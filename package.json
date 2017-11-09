@@ -75,6 +75,7 @@
     "react-dnd": "2.5.3",
     "react-dnd-html5-backend": "2.5.3",
     "react-dom": "16.0.0",
+    "react-froala-wysiwyg": "^2.7.1",
     "react-hot-component-loader": "1.0.3",
     "react-hot-loader": "3.1.1",
     "react-immutable-proptypes": "^2.1.0",

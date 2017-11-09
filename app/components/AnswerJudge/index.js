@@ -6,8 +6,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-// import type1 from 'images/type1.png'
-// import type11 from 'images/type11.png'
+import type1 from 'images/type1.png'
+import type11 from 'images/type11.png'
 import { letter } from 'utils/constants'
 import ItemLabel from 'components/ItemLabel'
 import styles from './styles'
@@ -46,27 +46,27 @@ function AnswerJudge(props) {
         </div>,
       )
       if (correctAnswer === !index) {
-        correctAnswerArray.push(letter[index])
+        correctAnswerArray.push(correctAnswer ? '是' : '否')
       }
       // if (!index === answer) {
       //   myChoice.push(letter[index])
       // }
     } else {
-      // temp.push(
-      //   <button
-      //     className={styles.answerContent}
-      //     onClick={handleOnClickAnswer(!index)}
-      //     key={index}
-      //     disabled={!canAnswer}
-      //   >
-      //     <img src={!index === answer ? type1 : type11} alt="" />
-      //     <span>{value}</span>
-      //   </button>,
-      // )
+      temp.push(
+        <button
+          className={styles.answerContent}
+          // onClick={handleOnClickAnswer(!index)}
+          key={index}
+          disabled={!canAnswer}
+        >
+          <img src={!index === answer ? type1 : type11} alt="" />
+          <span>{value}</span>
+        </button>,
+      )
     }
   })
 
-  let rightAnswer = null
+  let rightAnswer
   if (!isAnswered || !isAnswerOpen || canAnswer) {
     rightAnswer = null
   } else if (hasCorrectness) {
