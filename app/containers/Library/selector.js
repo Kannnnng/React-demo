@@ -154,7 +154,6 @@ const selectedCourseChaptersSelector = createSelector(
   chaptersSelector,
   selectedCourseOrCourseGroupOrClassroomSelector,
   (chapters, selectedItems) => {
-    console.log(selectedItems.toJS(), 123)
     if (!chapters.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('chapters')) {
       return selectedItems.get('chapters').reduce((result, value) => {
         return result.set(value, chapters.get(value))
@@ -263,7 +262,7 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
       result = coursewares
         .filter((value) => value.get('name').includes(searchText))
         .merge(questions.filter((value) => value.getIn(['content', 'html']).includes(searchText)))
-        .merge(quizzes.filter((value) => value.get('title').includes(searchText)))
+        .merge(quizzes.filter((value) => value.get('description').includes(searchText)))
     } else {
       result = coursewares.merge(questions).merge(quizzes)
     }
