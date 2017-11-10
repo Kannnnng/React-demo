@@ -10,6 +10,7 @@ import {
   getMyAllCourseGroups,
   getMyAllClassrooms,
   getQuestionsByCourseId,
+  getQuestionsByCourseGroupId,
 } from './sources'
 
 /* 获取个人所有课程 */
@@ -30,15 +31,21 @@ export const getMyAllClassroomsAction = createAction(
   getMyAllClassrooms,
 )
 
-/* 获取课程 ID 获取所有题目，这其中也包括组卷、课件 */
+/* 根据课程 ID 获取所有题目，这其中包括单题、组卷、课件 */
 export const getQuestionsByCourseIdAction = createAction(
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_ID_ACTION',
   getQuestionsByCourseId,
 )
 
-/* 点击选择某一课程或课堂，课程可能是个人课程，也可能是课程组内的课程 */
-export const selectCourseAction = createAction(
-  'APP/LIBRARY/SELECT_COURSE_ACTION',
+/* 根据课程组 ID 获取课程组中所有题目，这其中包括单题、组卷、课件 */
+export const getQuestionsByCourseGroupIdAction = createAction(
+  'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_GROUP_ID_ACTION',
+  getQuestionsByCourseGroupId,
+)
+
+/* 点击选择某一课程 */
+export const selectCourseOrCourseGroupOrClassroomAction = createAction(
+  'APP/LIBRARY/SELECT_COURSE_OR_COURSE_GROUP_OR_CLASSROOM_ACTION',
 )
 
 /* 翻页操作 */

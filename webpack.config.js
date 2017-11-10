@@ -170,7 +170,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 请求代理 */
     proxy: {
       '/api/*': {
-        target: 'http://10.11.50.93:7000',
+        target: 'http://10.11.50.93:6000',
         secure: false,
       },
     },

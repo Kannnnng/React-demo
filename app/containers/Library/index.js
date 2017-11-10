@@ -64,16 +64,20 @@ class Library extends React.PureComponent {
       this.props.actions.selectCourseAction(null)
     } else {
       const [name, id] = value.split('|')
+      this.props.actions.selectCourseOrCourseGroupOrClassroomAction({
+        id,
+        name,
+      })
       switch (name) {
         case 'course':
-          this.props.actions.selectCourseAction({
-            courseId: id,
-          })
           this.props.actions.getQuestionsByCourseIdAction({
             courseId: id,
           })
           break
         case 'courseGroup':
+          this.props.actions.getQuestionsByCourseGroupIdAction({
+            courseGroupId: id,
+          })
           break
         case 'classroom':
           break

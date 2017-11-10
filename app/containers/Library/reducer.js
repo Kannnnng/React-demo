@@ -10,7 +10,7 @@ import { handleActions } from 'redux-actions'
 
 const initialState = fromJS({
   others: {
-    selectedCourseId: null,
+    selectedCourseOrCourseGroupOrClassroom: {},
     currentPageNumber: 1,
     selectedQuestionItemIds: [],
     previewQuestionItem: {},
@@ -78,11 +78,35 @@ export default handleActions({
       return state
     },
   },
-  'APP/LIBRARY/SELECT_COURSE_ACTION': {
+  'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_GROUP_ID_ACTION': {
     next(state, action) {
-      const courseId = lodash.get(action, 'payload.courseId')
+      const chapters = lodash.get(action, 'payload.entities.chapters')
+      const coursewares = lodash.get(action, 'payload.entities.coursewares')
+      const courseGroup = lodash.get(action, 'payload.entities.courseGroup')
+      const labels = lodash.get(action, 'payload.entities.labels')
+      const questions = lodash.get(action, 'payload.entities.questions')
+      const quizzes = lodash.get(action, 'payload.entities.quizzes')
       return state
-        .setIn(['others', 'selectedCourseId'], courseId)
+        .mergeIn(['chapters'], fromJS(chapters))
+        .mergeIn(['coursewares'], fromJS(coursewares))
+        .mergeIn(['labels'], fromJS(labels))
+        .mergeIn(['questions'], fromJS(questions))
+        .mergeIn(['quizzes'], fromJS(quizzes))
+        .mergeIn(['courseGroups'], fromJS(courseGroup))
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/SELECT_COURSE_OR_COURSE_GROUP_OR_CLASSROOM_ACTION': {
+    next(state, action) {
+      const id = lodash.get(action, 'payload.id')
+      const name = lodash.get(action, 'payload.name')
+      return state
+        .setIn(['others', 'selectedCourseOrCourseGroupOrClassroom'], fromJS({
+          id,
+          name,
+        }))
         .setIn(['others', 'currentPageNumber'], 1)
     },
     throw(state) {

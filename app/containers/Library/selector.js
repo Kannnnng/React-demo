@@ -13,7 +13,7 @@ const selectorDomain = (state) => state.get('library')
 /* 当前教师的个人信息 */
 const myInfomationSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.get('mine')
+  (selectorDomain) => selectorDomain.get('mine') || immutableObjectEmpty
 )
 
 /* 当前所有课程集合，包括我的课程集合和课程组中的课程集合 */
@@ -40,6 +40,7 @@ const myCourseIdsSelector = createSelector(
   (selectorDomain) => selectorDomain.get('myCourseIds') || immutableArrayEmpty
 )
 
+/* 我的所有课程组 ID 集合 */
 const myCourseGroupIdsSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.get('myCourseGroupIds') || immutableArrayEmpty
@@ -123,19 +124,26 @@ const quizzesSelector = createSelector(
   (selectorDomain) => selectorDomain.get('quizzes') || immutableObjectEmpty
 )
 
-/* 当前被选中的课程的 ID */
-const selectedCourseIdSelector = createSelector(
+/* 当前被选中的课程、课程组或课堂 */
+const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCourseId']) || null
-)
-
-/* 当前被选中的课程 */
-const selectedCourseSelector = createSelector(
   myCoursesSelector,
-  selectedCourseIdSelector,
-  (myCourses, selectedCourseId) => {
-    if (!myCourses.isEmpty() && selectedCourseId) {
-      return myCourses.get(selectedCourseId)
+  myCourseGroupsSelector,
+  myClassroomsSelector,
+  (selectorDomain, myCourses, myCourseGroups, myClassrooms) => {
+    if (!selectorDomain.isEmpty()) {
+      const id = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'id'])
+      const name = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'name'])
+      switch (name) {
+        case 'course':
+          return myCourses.isEmpty() ? immutableObjectEmpty : myCourses.get(id)
+        case 'courseGroup':
+          return myCourseGroups.isEmpty() ? immutableObjectEmpty : myCourseGroups.get(id)
+        case 'classroom':
+          return myClassrooms.isEmpty() ? immutableObjectEmpty : myClassrooms.get(id)
+        default:
+          return immutableObjectEmpty
+      }
     }
     return immutableObjectEmpty
   }
@@ -144,10 +152,11 @@ const selectedCourseSelector = createSelector(
 /* 当前被选中的课程的章节集合 */
 const selectedCourseChaptersSelector = createSelector(
   chaptersSelector,
-  selectedCourseSelector,
-  (chapters, selectedCourse) => {
-    if (!chapters.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('chapters')) {
-      return selectedCourse.get('chapters').reduce((result, value) => {
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (chapters, selectedItems) => {
+    console.log(selectedItems.toJS(), 123)
+    if (!chapters.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('chapters')) {
+      return selectedItems.get('chapters').reduce((result, value) => {
         return result.set(value, chapters.get(value))
       }, immutableObjectEmpty)
     }
@@ -169,10 +178,10 @@ const convertChaptersToListSelector = createSelector(
 /* 当前所被选中的课程的知识点集合 */
 const selectedCourseLabelsSelector = createSelector(
   labelsSelector,
-  selectedCourseSelector,
-  (labels, selectedCourse) => {
-    if (!labels.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('labels')) {
-      return selectedCourse.get('labels').reduce((result, value) => {
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (labels, selectedItems) => {
+    if (!labels.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('labels')) {
+      return selectedItems.get('labels').reduce((result, value) => {
         return result.set(value, labels.get(value))
       }, immutableObjectEmpty)
     }
@@ -183,10 +192,10 @@ const selectedCourseLabelsSelector = createSelector(
 /* 当前被选中的课程的课件集合 */
 const selectedCourseCoursewaresSelector = createSelector(
   coursewaresSelector,
-  selectedCourseSelector,
-  (coursewares, selectedCourse) => {
-    if (!coursewares.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('coursewares')) {
-      return selectedCourse.get('coursewares').reduce((result, value) => {
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (coursewares, selectedItems) => {
+    if (!coursewares.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('coursewares')) {
+      return selectedItems.get('coursewares').reduce((result, value) => {
         return result.set(value, coursewares.get(value).set('isCourseware', true))
       }, immutableObjectEmpty)
     }
@@ -197,10 +206,10 @@ const selectedCourseCoursewaresSelector = createSelector(
 /* 当前被选中的课程的题目集合 */
 const selectedCourseQuestionsSelector = createSelector(
   questionsSelector,
-  selectedCourseSelector,
-  (questions, selectedCourse) => {
-    if (!questions.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('questions')) {
-      return selectedCourse.get('questions').reduce((result, value) => {
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (questions, selectedItems) => {
+    if (!questions.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('questions')) {
+      return selectedItems.get('questions').reduce((result, value) => {
         return result.set(value, questions.get(value))
       }, immutableObjectEmpty)
     }
@@ -211,10 +220,10 @@ const selectedCourseQuestionsSelector = createSelector(
 /* 当前被选中的课程的组卷集合 */
 const selectedCourseQuizzesSelector = createSelector(
   quizzesSelector,
-  selectedCourseSelector,
-  (quizzes, selectedCourse) => {
-    if (!quizzes.isEmpty() && !selectedCourse.isEmpty() && selectedCourse.get('quizzes')) {
-      return selectedCourse.get('quizzes').reduce((result, value) => {
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (quizzes, selectedItems) => {
+    if (!quizzes.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('quizzes')) {
+      return selectedItems.get('quizzes').reduce((result, value) => {
         return result.set(value, quizzes.get(value).set('isQuiz', true))
       }, immutableObjectEmpty)
     }

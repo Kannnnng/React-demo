@@ -10,6 +10,7 @@ import {
   Chapters,
   Classrooms,
   Coursewares,
+  CourseGroup,
   CourseGroups,
   Labels,
   Courses,
@@ -32,7 +33,7 @@ export function getMyAllCourses() {
 
 export function getMyAllCourseGroups() {
   return http
-    .get('v2/groups?type=2')
+    .get('v2/groups?type=3')
     .then((response) => {
       const result = normalize(response, {
         groupList: CourseGroups,
@@ -63,6 +64,25 @@ export function getQuestionsByCourseId({
       const result = normalize(response, {
         chapters: Chapters,
         coursewares: Coursewares,
+        labels: Labels,
+        questions: Questions,
+        quizzes: Quizzes,
+      })
+      return result
+    })
+    .catch((error) => {throw error})
+}
+
+export function getQuestionsByCourseGroupId({
+  courseGroupId,
+}) {
+  return http
+    .get(`v2/groups/${courseGroupId}`)
+    .then((response) => {
+      const result = normalize(response, {
+        chapters: Chapters,
+        coursewares: Coursewares,
+        group: CourseGroup,
         labels: Labels,
         questions: Questions,
         quizzes: Quizzes,
