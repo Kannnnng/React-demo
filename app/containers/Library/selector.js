@@ -6,7 +6,11 @@
 
 import { fromJS } from 'immutable'
 import { createSelector } from 'reselect'
-import { immutableObjectEmpty, immutableArrayEmpty } from 'utils/constants'
+import {
+  immutableObjectEmpty,
+  immutableArrayEmpty,
+  questionPattern,
+} from 'utils/constants'
 
 const selectorDomain = (state) => state.get('library')
 
@@ -140,7 +144,7 @@ const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
         case 'courseGroup':
           return myCourseGroups.isEmpty() ? immutableObjectEmpty : myCourseGroups.get(id)
         case 'classroom':
-          return myClassrooms.isEmpty() ? immutableObjectEmpty : myClassrooms.get(id)
+          return myClassrooms.isEmpty() ? immutableObjectEmpty : myClassrooms.get(Number(id))
         default:
           return immutableObjectEmpty
       }
@@ -267,7 +271,18 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
       result = coursewares.merge(questions).merge(quizzes)
     }
     if (!selectedChapters.isEmpty()) {
-      result = result.filter((value) => selectedChapters.get('id') === value.get('chapterId'))
+      console.log(selectedChapters.toJS(), 123)
+      result = selectedChapters
+        .get('coursewares')
+        .concat(selectedChapters.get('questions'))
+        .concat(selectedChapters.get('quizzes'))
+        .reduce((tempResult, value) =>{
+          const questionItem = result.get(value)
+          if (questionItem) {
+            return tempResult.set(value, questionItem)
+          }
+          return tempResult
+        }, fromJS({}))
     }
     return result
   }
@@ -339,12 +354,17 @@ const previewQuestionItemSelector = createSelector(
       const name = previewQuestionItem.get('name')
       switch (name) {
         case 'question':
+          if (questions.getIn([id, 'pattern']) === questionPattern.group) {
+            return questions
+              .get(id)
+              .update('subQuestions', (value) => value.map((item) => questions.get(item)))
+          }
           return questions.get(id)
         case 'quiz':
           return quizzes
             .get(id)
             .set('isQuiz', true)
-            .update('subs', (value) => value.map((item) => questions.get(item)))
+            .update('subQuestions', (value) => value.map((item) => questions.get(item)))
         default:
           return immutableObjectEmpty
       }

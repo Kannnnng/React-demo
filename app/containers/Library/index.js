@@ -19,9 +19,9 @@ import makeSelectable from 'material-ui/List/makeSelectable'
 import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
-import { immutableObjectEmpty } from 'utils/constants'
 import Pagination from 'components/Pagination'
 import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
+import { questionPattern } from 'utils/constants'
 import CurrentChoice from './CurrentChoice'
 import QuestionItem from './QuestionItem'
 import * as acts from './actions'
@@ -80,6 +80,9 @@ class Library extends React.PureComponent {
           })
           break
         case 'classroom':
+          this.props.actions.getQuestionsByClassroomIdAction({
+            classroomId: id,
+          })
           break
         default:
           break
@@ -136,6 +139,7 @@ class Library extends React.PureComponent {
   }
 
   handleOnNextQuizPageInPreview = () => {
+    console.log(this.state.currentQuizPage, 123)
     this.setState({ currentQuizPage: this.state.currentQuizPage + 1 })
   }
 
@@ -245,8 +249,8 @@ class Library extends React.PureComponent {
                     value.get('summary').toJS()
                   )
                 )}
-                correctRate={value.get('correctRate')}
-                answerCount={value.get('answerCount')}
+                correctRate={value.get('correct')}
+                answerCount={value.get('studentCount')}
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
@@ -275,7 +279,11 @@ class Library extends React.PureComponent {
             }}
             questionAnswer={{
               pattern: previewQuestionItem.get('pattern'),
-              answer: previewQuestionItem.get('answer'),
+              answer: previewQuestionItem.get('pattern') === questionPattern.group ? (
+                previewQuestionItem.get('subQuestions')
+              ) : (
+                previewQuestionItem.get('answer')
+              ),
               img: previewQuestionItem.getIn(['answer', 'summary', 'image']),
               coursewareName: previewQuestionItem.get('name'),
               previewUrl: previewQuestionItem.get('previewUrl'),
@@ -289,7 +297,7 @@ class Library extends React.PureComponent {
             }}
             prePaperPage={this.handleOnPreQuizPageInPreview}
             nextPaperPage={this.handleOnNextQuizPageInPreview}
-            subsInPaper={previewQuestionItem.get('subs')}
+            subsInPaper={previewQuestionItem.get('subQuestions')}
             isPaper={previewQuestionItem.get('isQuiz')}
             paperTitle={previewQuestionItem.get('title')}
             isPreview

@@ -11,6 +11,11 @@ export const CourseGroups = new schema.Array(new schema.Entity('courseGroups', {
 export const Labels = new schema.Array(new schema.Entity('labels'))
 export const Classrooms = new schema.Array(new schema.Entity('classrooms'))
 export const Courses = new schema.Array(new schema.Entity('courses'))
-export const Questions = new schema.Array(new schema.Entity('questions'))
-export const Quizzes = new schema.Array(new schema.Entity('quizzes'))
-export const Teacher = new schema.Entity('teacher')
+export const SubQuestions = new schema.Array(new schema.Entity('subQuestions'))
+export const Questions = new schema.Array(new schema.Entity('questions', {
+  labels: Labels,
+  subQuestions: SubQuestions,
+}))
+export const Quizzes = new schema.Array(new schema.Entity('quizzes', {
+  subQuestions: Questions,
+}))

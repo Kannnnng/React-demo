@@ -11,6 +11,7 @@ import {
   getMyAllClassrooms,
   getQuestionsByCourseId,
   getQuestionsByCourseGroupId,
+  getQuestionsByClassroomId,
 } from './sources'
 
 /* 获取个人所有课程 */
@@ -41,6 +42,12 @@ export const getQuestionsByCourseIdAction = createAction(
 export const getQuestionsByCourseGroupIdAction = createAction(
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_GROUP_ID_ACTION',
   getQuestionsByCourseGroupId,
+)
+
+/* 根据课堂 ID 获取课堂中所有题目，这其中包括单题、组卷、课件 */
+export const getQuestionsByClassroomIdAction = createAction(
+  'APP/LIBRARY/GET_QUESTIONS_BY_CLASSROOM_ID_ACTION',
+  getQuestionsByClassroomId,
 )
 
 /* 点击选择某一课程 */

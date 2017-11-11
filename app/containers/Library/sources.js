@@ -16,7 +16,6 @@ import {
   Courses,
   Questions,
   Quizzes,
-  Teacher,
 } from 'utils/schemas'
 
 export function getMyAllCourses() {
@@ -49,7 +48,6 @@ export function getMyAllClassrooms() {
     .then((response) => {
       const result = normalize(response, {
         courses: Classrooms,
-        teacher: Teacher,
       })
       return result
     })
@@ -87,6 +85,25 @@ export function getQuestionsByCourseGroupId({
         questions: Questions,
         quizzes: Quizzes,
       })
+      return result
+    })
+    .catch((error) => {throw error})
+}
+
+export function getQuestionsByClassroomId({
+  classroomId,
+}) {
+  return http
+    .get(`v2/courses/${classroomId}/units`)
+    .then((response) => {
+      const result = normalize(response, {
+        units: Chapters,
+        coursewares: Coursewares,
+        questions: Questions,
+        quizzes: Quizzes,
+      })
+      result.classroomId = classroomId
+      result.result.chapters = result.result.units
       return result
     })
     .catch((error) => {throw error})

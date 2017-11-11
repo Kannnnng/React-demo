@@ -162,8 +162,8 @@ export default function QuestionItem({
       </div>
       <div className={styles.bottomToolBar}>
         <div>
-          {correctRate && `正确率:${correctRate}`}
-          {answerCount && ` 答题人数:${answerCount}`}
+          {(correctRate != undefined) && (`正确率:${correctRate}`)}
+          {(answerCount != undefined) && (` 答题人数:${answerCount}`)}
         </div>
         <div>
           <Checkbox

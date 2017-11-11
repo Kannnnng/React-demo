@@ -46,7 +46,7 @@ export default handleActions({
     next(state, action) {
       const classrooms = lodash.get(action, 'payload.entities.classrooms')
       const myClassroomIds = lodash.get(action, 'payload.result.courses')
-      const teacher = lodash.get(action, 'payload.entities.teacher')
+      const teacher = lodash.get(action, 'payload.result.teacher')
       return state
         .mergeIn(['classrooms'], fromJS(classrooms))
         .set('myClassroomIds', fromJS(myClassroomIds))
@@ -62,6 +62,7 @@ export default handleActions({
       const coursewares = lodash.get(action, 'payload.entities.coursewares')
       const labels = lodash.get(action, 'payload.entities.labels')
       const questions = lodash.get(action, 'payload.entities.questions')
+      const subQuestions = lodash.get(action, 'payload.entities.subQuestions')
       const quizzes = lodash.get(action, 'payload.entities.quizzes')
       const course = lodash.get(action, 'payload.result.library')
       return state
@@ -69,6 +70,7 @@ export default handleActions({
         .mergeIn(['coursewares'], fromJS(coursewares))
         .mergeIn(['labels'], fromJS(labels))
         .mergeIn(['questions'], fromJS(questions))
+        .mergeIn(['questions'], fromJS(subQuestions))
         .mergeIn(['quizzes'], fromJS(quizzes))
         .mergeIn(['courses'], fromJS({
           [course.id]: course,
@@ -85,14 +87,41 @@ export default handleActions({
       const courseGroup = lodash.get(action, 'payload.entities.courseGroup')
       const labels = lodash.get(action, 'payload.entities.labels')
       const questions = lodash.get(action, 'payload.entities.questions')
+      const subQuestions = lodash.get(action, 'payload.entities.subQuestions')
       const quizzes = lodash.get(action, 'payload.entities.quizzes')
       return state
         .mergeIn(['chapters'], fromJS(chapters))
         .mergeIn(['coursewares'], fromJS(coursewares))
         .mergeIn(['labels'], fromJS(labels))
         .mergeIn(['questions'], fromJS(questions))
+        .mergeIn(['questions'], fromJS(subQuestions))
         .mergeIn(['quizzes'], fromJS(quizzes))
         .mergeIn(['courseGroups'], fromJS(courseGroup))
+    },
+    throw(state) {
+      return state
+    },
+  },
+  'APP/LIBRARY/GET_QUESTIONS_BY_CLASSROOM_ID_ACTION': {
+    next(state, action) {
+      const chapters = lodash.get(action, 'payload.entities.chapters')
+      const coursewares = lodash.get(action, 'payload.entities.coursewares')
+      const labels = lodash.get(action, 'payload.entities.labels')
+      const questions = lodash.get(action, 'payload.entities.questions')
+      const subQuestions = lodash.get(action, 'payload.entities.subQuestions')
+      const quizzes = lodash.get(action, 'payload.entities.quizzes')
+      const result = lodash.get(action, 'payload.result')
+      const classroomId = lodash.get(action, 'payload.classroomId')
+      return state
+        .mergeIn(['chapters'], fromJS(chapters))
+        .mergeIn(['coursewares'], fromJS(coursewares))
+        .mergeIn(['labels'], fromJS(labels))
+        .mergeIn(['questions'], fromJS(questions))
+        .mergeIn(['questions'], fromJS(subQuestions))
+        .mergeIn(['quizzes'], fromJS(quizzes))
+        .mergeDeepIn(['classrooms'], fromJS({
+          [classroomId]: result,
+        }))
     },
     throw(state) {
       return state
@@ -108,6 +137,8 @@ export default handleActions({
           name,
         }))
         .setIn(['others', 'currentPageNumber'], 1)
+        .setIn(['others', 'selectedQuestionItemIds'], fromJS([]))
+        .setIn(['others', 'previewQuestionItem'], fromJS({}))
     },
     throw(state) {
       return state
