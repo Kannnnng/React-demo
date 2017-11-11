@@ -282,7 +282,9 @@ class Library extends React.PureComponent {
               answer: previewQuestionItem.get('pattern') === questionPattern.group ? (
                 previewQuestionItem.get('subQuestions')
               ) : (!previewQuestionItem.get('isQuiz') ? {
-                items: previewQuestionItem.get('items').toJS(),
+                items: previewQuestionItem.get('items') ? (
+                  previewQuestionItem.get('items').toJS()
+                ) : undefined,
                 // isAllCorrect: previewQuestionItem.get(''),
                 correctAnswer: previewQuestionItem.get('correctAnswer'),
                 // hasCorrectness: previewQuestionItem.get(''),
@@ -296,7 +298,9 @@ class Library extends React.PureComponent {
             answerAnalysis={!previewQuestionItem.get('isQuiz') ? {
               data: {
                 review: previewQuestionItem.getIn(['review', 'html']),
-                labels: previewQuestionItem.get('labels').toJS(),
+                labels: previewQuestionItem.get('labels') ? (
+                  previewQuestionItem.get('labels').toJS()
+                ) : undefined,
                 questionId: previewQuestionItem.get('id'),
               }
             } : undefined}
