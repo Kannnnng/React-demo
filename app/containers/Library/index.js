@@ -244,7 +244,7 @@ class Library extends React.PureComponent {
                   image: value.get('cover'),
                 }) : (
                   value.get('isQuiz') ? ({
-                    word: value.get('description'),
+                    word: value.get('title'),
                   }) : (
                     value.get('summary').toJS()
                   )
@@ -281,20 +281,25 @@ class Library extends React.PureComponent {
               pattern: previewQuestionItem.get('pattern'),
               answer: previewQuestionItem.get('pattern') === questionPattern.group ? (
                 previewQuestionItem.get('subQuestions')
-              ) : (
-                previewQuestionItem.get('answer')
-              ),
+              ) : (!previewQuestionItem.get('isQuiz') ? {
+                items: previewQuestionItem.get('items').toJS(),
+                // isAllCorrect: previewQuestionItem.get(''),
+                correctAnswer: previewQuestionItem.get('correctAnswer'),
+                // hasCorrectness: previewQuestionItem.get(''),
+                // caseSensitive: previewQuestionItem.get(''),
+                // strict: previewQuestionItem.get(''),
+              } : undefined),
               img: previewQuestionItem.getIn(['answer', 'summary', 'image']),
               coursewareName: previewQuestionItem.get('name'),
               previewUrl: previewQuestionItem.get('previewUrl'),
             }}
-            answerAnalysis={{
+            answerAnalysis={!previewQuestionItem.get('isQuiz') ? {
               data: {
-                review: '',
-                labels: [],
+                review: previewQuestionItem.getIn(['review', 'html']),
+                labels: previewQuestionItem.get('labels').toJS(),
                 questionId: previewQuestionItem.get('id'),
               }
-            }}
+            } : undefined}
             prePaperPage={this.handleOnPreQuizPageInPreview}
             nextPaperPage={this.handleOnNextQuizPageInPreview}
             subsInPaper={previewQuestionItem.get('subQuestions')}

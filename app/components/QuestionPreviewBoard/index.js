@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { fromJS } from 'immutable'
+import { isEqual, isEmpty } from 'lodash'
 import AnswerAnalysis from 'components/AnswerAnalysis'
 import QuestionAnswer from 'components/QuestionAnswer'
 import QuestionContent from 'components/QuestionContent'
 import QuestionComment from 'components/QuestionComment'
+import { questionPattern } from 'utils/constants'
 import BlackCover from './BlackCover'
 import {
   GoBack,
@@ -13,8 +15,6 @@ import {
   BottomToolBar,
 } from './Mess'
 import styles from './styles'
-import { isEqual, isEmpty } from 'lodash'
-import { questionPattern } from 'utils/constants'
 
 class QuestionPreviewBoard extends React.Component {
   static propTypes = {

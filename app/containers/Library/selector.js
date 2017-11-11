@@ -266,12 +266,11 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
       result = coursewares
         .filter((value) => value.get('name').includes(searchText))
         .merge(questions.filter((value) => value.getIn(['content', 'html']).includes(searchText)))
-        .merge(quizzes.filter((value) => value.get('description').includes(searchText)))
+        .merge(quizzes.filter((value) => value.get('title').includes(searchText)))
     } else {
       result = coursewares.merge(questions).merge(quizzes)
     }
     if (!selectedChapters.isEmpty()) {
-      console.log(selectedChapters.toJS(), 123)
       result = selectedChapters
         .get('coursewares')
         .concat(selectedChapters.get('questions'))
@@ -347,7 +346,8 @@ const previewQuestionItemSelector = createSelector(
   selectorDomain,
   questionsSelector,
   quizzesSelector,
-  (selectorDomain, questions, quizzes) => {
+  chaptersSelector,
+  (selectorDomain, questions, quizzes, chapters) => {
     const previewQuestionItem = selectorDomain.getIn(['others', 'previewQuestionItem']) || immutableObjectEmpty
     if (!previewQuestionItem.isEmpty()) {
       const id = previewQuestionItem.get('id')
@@ -357,14 +357,33 @@ const previewQuestionItemSelector = createSelector(
           if (questions.getIn([id, 'pattern']) === questionPattern.group) {
             return questions
               .get(id)
+              .update('labels', (value) => value.map((item) => chapters.get(item)))
               .update('subQuestions', (value) => value.map((item) => questions.get(item)))
           }
-          return questions.get(id)
+          return questions
+            .get(id)
+            .update('labels', (value) => value.map((item) => chapters.get(item)))
         case 'quiz':
           return quizzes
             .get(id)
             .set('isQuiz', true)
-            .update('subQuestions', (value) => value.map((item) => questions.get(item)))
+            .update('subQuestions', (value) => value.map((item) => {
+              const question = questions.get(item)
+              if (question.get('pattern') === questionPattern.group) {
+                return question
+                  .update('subQuestions', (subSubQestions) => subSubQestions.map((subSubQestion) => {
+                    const tempsubSubQuestion = questions.get(subSubQestion)
+                    return tempsubSubQuestion.set('answer', fromJS({
+                      items: tempsubSubQuestion.get('items'),
+                      correctAnswer: tempsubSubQuestion.get('correctAnswer'),
+                    }))
+                  }))  // eslint-disable-line
+              }
+              return question.set('answer', fromJS({
+                items: question.get('items'),
+                correctAnswer: question.get('correctAnswer'),
+              }))
+            }))
         default:
           return immutableObjectEmpty
       }

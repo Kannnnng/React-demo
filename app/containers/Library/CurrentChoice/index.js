@@ -76,6 +76,7 @@ export default class CurrentChoice extends React.PureComponent {
     this.props.handleOnClickSearch({
       value: this.searchInputElement.value,
     })
+    this.searchInputElement.value = ''
   }
 
   handleOnClickCopyTarget = (value) => () => {

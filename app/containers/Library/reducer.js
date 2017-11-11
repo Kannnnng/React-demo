@@ -14,6 +14,9 @@ const initialState = fromJS({
     currentPageNumber: 1,
     selectedQuestionItemIds: [],
     previewQuestionItem: {},
+    selectedChapterId: null,
+    searchText: null,
+    select: null,
   },
 })
 
@@ -132,13 +135,18 @@ export default handleActions({
       const id = lodash.get(action, 'payload.id')
       const name = lodash.get(action, 'payload.name')
       return state
-        .setIn(['others', 'selectedCourseOrCourseGroupOrClassroom'], fromJS({
-          id,
-          name,
+        .mergeDeepIn(['others'], fromJS({
+          selectedCourseOrCourseGroupOrClassroom: {
+            id,
+            name,
+          },
+          currentNumber: 1,
+          selectedQuestionItemIds: [],
+          previewQuestionItem: {},
+          selectedChapterId: null,
+          searchText: null,
+          select: null,
         }))
-        .setIn(['others', 'currentPageNumber'], 1)
-        .setIn(['others', 'selectedQuestionItemIds'], fromJS([]))
-        .setIn(['others', 'previewQuestionItem'], fromJS({}))
     },
     throw(state) {
       return state
@@ -200,6 +208,7 @@ export default handleActions({
       return state
     },
   },
+  /* 选中某一道题目、组卷、课件 */
   'APP/LIBRARY/SELECT_QUESTIONITEM_ACTION': {
     next(state, action) {
       const id = lodash.get(action, 'payload.id')
@@ -217,6 +226,7 @@ export default handleActions({
       return state
     },
   },
+  /* 打开题目或组卷的预览界面 */
   'APP/LIBRARY/PREVIEW_QUESTIONITEM_ACTION': {
     next(state, action) {
       const id = lodash.get(action, 'payload.id')
@@ -231,6 +241,7 @@ export default handleActions({
       return state
     },
   },
+  /* 关闭预览界面 */
   'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION': {
     next(state) {
       return state.setIn(['others', 'previewQuestionItem'], fromJS({}))
