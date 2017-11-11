@@ -139,7 +139,6 @@ class Library extends React.PureComponent {
   }
 
   handleOnNextQuizPageInPreview = () => {
-    console.log(this.state.currentQuizPage, 123)
     this.setState({ currentQuizPage: this.state.currentQuizPage + 1 })
   }
 
@@ -280,7 +279,7 @@ class Library extends React.PureComponent {
             questionAnswer={{
               pattern: previewQuestionItem.get('pattern'),
               answer: previewQuestionItem.get('pattern') === questionPattern.group ? (
-                previewQuestionItem.get('subQuestions')
+                previewQuestionItem.get('subQuestions').toJS()
               ) : (!previewQuestionItem.get('isQuiz') ? {
                 items: previewQuestionItem.get('items') ? (
                   previewQuestionItem.get('items').toJS()

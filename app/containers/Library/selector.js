@@ -358,7 +358,13 @@ const previewQuestionItemSelector = createSelector(
             return questions
               .get(id)
               .update('labels', (value) => value.map((item) => chapters.get(item)))
-              .update('subQuestions', (value) => value.map((item) => questions.get(item)))
+              .update('subQuestions', (value) => value.map((item) => {
+                const tempsubSubQuestion = questions.get(item)
+                return tempsubSubQuestion.set('answer', fromJS({
+                  items: tempsubSubQuestion.get('items'),
+                  correctAnswer: tempsubSubQuestion.get('correctAnswer'),
+                }))
+              }))
           }
           return questions
             .get(id)
