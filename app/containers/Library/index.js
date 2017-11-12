@@ -254,7 +254,7 @@ class Library extends React.PureComponent {
                     value.get('summary').toJS()
                   )
                 )}
-                correctRate={value.get('correct')}
+                correctRate={Number(value.get('correct'))}
                 answerCount={value.get('studentCount')}
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}

@@ -71,10 +71,12 @@ const myCoursesSelector = createSelector(
     if (!courses.isEmpty() && !myCourseIds.isEmpty()) {
       return myCourseIds.reduce((result, value) => (
         result
-          .set(value, courses.get(value))
-          .update('chapters', (chapterId) => (
-            chapters.get(chapterId)
-          ))
+          .set(value, courses
+            .get(value)
+            .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
+              chapters.get(chapterId) || immutableObjectEmpty
+            )))
+          )
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -90,10 +92,12 @@ const myCourseGroupsSelector = createSelector(
     if (!courseGroups.isEmpty() && !myCourseGroupIds.isEmpty()) {
       return myCourseGroupIds.reduce((result, value) => (
         result
-          .set(value, courseGroups.get(value))
-          .update('chapters', (chapterId) => (
-            chapters.get(chapterId)
-          ))
+          .set(value, courseGroups
+            .get(value)
+            .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
+              chapters.get(chapterId) || immutableObjectEmpty
+            )))
+          )
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -109,10 +113,12 @@ const myClassroomsSelector = createSelector(
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
       return myClassroomIds.reduce((result, value) => (
         result
-          .set(value, classrooms.get(String(value)))
-          .update('units', (chapterId) => (
-            chapters.get(chapterId)
-          ))
+          .set(value, classrooms
+            .get(String(value))
+            .update('units', (chapterIds) => chapterIds.map((chapterId) => (
+              chapters.get(chapterId) || immutableObjectEmpty
+            )))
+          )
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -174,9 +180,7 @@ const selectedCourseChaptersSelector = createSelector(
   selectedCourseOrCourseGroupOrClassroomSelector,
   (chapters, selectedItems) => {
     if (!chapters.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('chapters')) {
-      return selectedItems.get('chapters').reduce((result, value) => {
-        return result.set(value, chapters.get(value))
-      }, immutableObjectEmpty)
+      return selectedItems.get('chapters')
     }
     return immutableObjectEmpty
   }
