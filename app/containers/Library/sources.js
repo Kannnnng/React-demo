@@ -108,3 +108,28 @@ export function getQuestionsByClassroomId({
     })
     .catch((error) => {throw error})
 }
+
+export function copyQuestionItemToLibrary({
+  targetId,
+  chapterId,
+  name,
+}) {
+  let url
+  switch (name) {
+    case 'course':
+    case 'courseGroup':
+      url = 'v2/questions?method=copy'
+      break
+    case 'classroom':
+      url = ''
+      break
+    default:
+      return null
+  }
+  // return http
+  //   .post(url, {
+  //     libraryId
+  //     chapterId
+  //     sourceId
+  //   })
+}

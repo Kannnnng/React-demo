@@ -174,6 +174,11 @@ export default function QuestionItem({
             iconStyle={{ marginTop: '3px' }}
             onCheck={handleOnQuestionItemCheck({
               id,
+              name: (
+                (isCourseware && 'courseware') ||
+                (isQuiz && 'quiz') ||
+                ('question')
+              )
             })}
           />
         </div>

@@ -5,12 +5,18 @@ export const Coursewares = new schema.Array(new schema.Entity('coursewares'))
 export const CourseGroup = new schema.Entity('courseGroup', {}, {
   idAttribute: 'groupId',
 })
-export const CourseGroups = new schema.Array(new schema.Entity('courseGroups', {}, {
+export const CourseGroups = new schema.Array(new schema.Entity('courseGroups', {
+  chapters: Chapters,
+}, {
   idAttribute: 'groupId',
 }))
 export const Labels = new schema.Array(new schema.Entity('labels'))
-export const Classrooms = new schema.Array(new schema.Entity('classrooms'))
-export const Courses = new schema.Array(new schema.Entity('courses'))
+export const Classrooms = new schema.Array(new schema.Entity('classrooms', {
+  units: Chapters,
+}))
+export const Courses = new schema.Array(new schema.Entity('courses', {
+  chapters: Chapters,
+}))
 export const SubQuestions = new schema.Array(new schema.Entity('subQuestions'))
 export const Questions = new schema.Array(new schema.Entity('questions', {
   labels: Labels,

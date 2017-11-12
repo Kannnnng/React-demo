@@ -33,6 +33,8 @@ export default class CurrentChoice extends React.PureComponent {
     classrooms: PropTypes.object.isRequired,
     /* 章节信息 */
     chapters: PropTypes.object.isRequired,
+    /*  */
+    isSelectedQuestionItemIdsEmpty: PropTypes.bool.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -48,6 +50,7 @@ export default class CurrentChoice extends React.PureComponent {
     courses: {},
     courseGroups: {},
     classrooms: {},
+    isSelectedQuestionItemIdsEmpty: true,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => () => {},
     handleOnClickChapter: () => () => {},
@@ -93,6 +96,7 @@ export default class CurrentChoice extends React.PureComponent {
       courseGroups,
       classrooms,
       chapters,
+      isSelectedQuestionItemIdsEmpty,
       handleOnClickCancel,
       handleOnClickChapter,
     } = this.props
@@ -125,11 +129,7 @@ export default class CurrentChoice extends React.PureComponent {
           <div>
             <FlatButton
               label={'复制到'}
-              disabled={
-                courses.isEmpty() &&
-                courseGroups.isEmpty() &&
-                classrooms.isEmpty()
-              }
+              disabled={isSelectedQuestionItemIdsEmpty}
               onClick={this.handleOnClickCopyToButton}
             />
             <Popover
@@ -150,11 +150,21 @@ export default class CurrentChoice extends React.PureComponent {
                   menuItems={courses.map((value) => (
                     <MenuItem
                       key={value.get('id')}
+                      anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      leftIcon={<GoLeftSvg />}
                       primaryText={value.get('name')}
-                      onClick={this.handleOnClickCopyTarget({
-                        id: value.get('id'),
-                        name: 'course',
-                      })}
+                      menuItems={value.get('chapters').map((item) => (
+                        <MenuItem
+                          key={item.get('id')}
+                          primaryText={item.get('name')}
+                          onClick={this.handleOnClickCopyTarget({
+                            targetId: value.get('id'),
+                            chapterId: item.get('id'),
+                            name: 'course',
+                          })}
+                        />
+                      )).toList().toJS()}
                     />
                   )).toList().toJS()}
                 />
@@ -170,11 +180,21 @@ export default class CurrentChoice extends React.PureComponent {
                   menuItems={courseGroups.map((value) => (
                     <MenuItem
                       key={value.get('groupId')}
+                      anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      leftIcon={<GoLeftSvg />}
                       primaryText={value.get('groupName')}
-                      onClick={this.handleOnClickCopyTarget({
-                        id: value.get('groupId'),
-                        name: 'courseGroup',
-                      })}
+                      menuItems={value.get('chapters').map((item) => (
+                        <MenuItem
+                          key={item.get('id')}
+                          primaryText={item.get('name')}
+                          onClick={this.handleOnClickCopyTarget({
+                            targetId: value.get('groupId'),
+                            chapterId: item.get('id'),
+                            name: 'courseGroup',
+                          })}
+                        />
+                      )).toList().toJS()}
                     />
                   )).toList().toJS()}
                 />
@@ -190,11 +210,21 @@ export default class CurrentChoice extends React.PureComponent {
                   menuItems={classrooms.map((value) => (
                     <MenuItem
                       key={value.get('id')}
+                      anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                      leftIcon={<GoLeftSvg />}
                       primaryText={value.get('name')}
-                      onClick={this.handleOnClickCopyTarget({
-                        id: value.get('id'),
-                        name: 'classroom',
-                      })}
+                      menuItems={value.get('units').map((item) => (
+                        <MenuItem
+                          key={item.get('id')}
+                          primaryText={item.get('name')}
+                          onClick={this.handleOnClickCopyTarget({
+                            targetId: value.get('id'),
+                            chapterId: item.get('id'),
+                            name: 'classroom',
+                          })}
+                        />
+                      )).toList().toJS()}
                     />
                   )).toList().toJS()}
                 />

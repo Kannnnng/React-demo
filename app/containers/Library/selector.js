@@ -56,14 +56,25 @@ const myClassroomIdsSelector = createSelector(
   (selectorDomain) => selectorDomain.get('myClassroomIds') || immutableArrayEmpty
 )
 
+/* 当前所有章节集合 */
+const chaptersSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('chapters') || immutableObjectEmpty
+)
+
 /* 我的所有课程集合 */
 const myCoursesSelector = createSelector(
   coursesSelector,
   myCourseIdsSelector,
-  (courses, myCourseIds) => {
+  chaptersSelector,
+  (courses, myCourseIds, chapters) => {
     if (!courses.isEmpty() && !myCourseIds.isEmpty()) {
       return myCourseIds.reduce((result, value) => (
-        result.set(value, courses.get(value))
+        result
+          .set(value, courses.get(value))
+          .update('chapters', (chapterId) => (
+            chapters.get(chapterId)
+          ))
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -74,10 +85,15 @@ const myCoursesSelector = createSelector(
 const myCourseGroupsSelector = createSelector(
   courseGroupsSelector,
   myCourseGroupIdsSelector,
-  (courseGroups, myCourseGroupIds) => {
+  chaptersSelector,
+  (courseGroups, myCourseGroupIds, chapters) => {
     if (!courseGroups.isEmpty() && !myCourseGroupIds.isEmpty()) {
       return myCourseGroupIds.reduce((result, value) => (
-        result.set(value, courseGroups.get(value))
+        result
+          .set(value, courseGroups.get(value))
+          .update('chapters', (chapterId) => (
+            chapters.get(chapterId)
+          ))
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
@@ -88,20 +104,19 @@ const myCourseGroupsSelector = createSelector(
 const myClassroomsSelector = createSelector(
   classroomsSelector,
   myClassroomIdsSelector,
-  (classrooms, myClassroomIds) => {
+  chaptersSelector,
+  (classrooms, myClassroomIds, chapters) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
       return myClassroomIds.reduce((result, value) => (
-        result.set(value, classrooms.get(String(value)))
+        result
+          .set(value, classrooms.get(String(value)))
+          .update('units', (chapterId) => (
+            chapters.get(chapterId)
+          ))
       ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
   }
-)
-
-/* 当前所有章节集合 */
-const chaptersSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.get('chapters') || immutableObjectEmpty
 )
 
 /* 当前所有课件集合 */
@@ -313,11 +328,18 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
+/* 当前选中的题目、组卷、课件 ID 集合 */
+const selectedQuestionItemIdsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemIds']) || immutableObjectEmpty
+)
+
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
   selectedChaptersSelector,
   searchTextSelector,
-  (selectedChapters, searchText) => {
+  selectedQuestionItemIdsSelector,
+  (selectedChapters, searchText, selectedQuestionItemIds) => {
     const result = []
     if (!selectedChapters.isEmpty()) {
       result.push({
@@ -331,14 +353,14 @@ const searchConditionsSelector = createSelector(
         value: searchText,
       })
     }
+    if (!selectedQuestionItemIds.isEmpty()) {
+      result.push({
+        name: 'select',
+        value: `手动选择(${selectedQuestionItemIds.size})`,
+      })
+    }
     return fromJS(result)
   }
-)
-
-/* 当前选中的题目、组卷、课件 ID 集合 */
-const selectedQuestionItemIdsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemIds']) || immutableArrayEmpty
 )
 
 /* 当前需要显示预览的题目、组卷信息 */
@@ -383,7 +405,7 @@ const previewQuestionItemSelector = createSelector(
                       items: tempsubSubQuestion.get('items'),
                       correctAnswer: tempsubSubQuestion.get('correctAnswer'),
                     }))
-                  }))  // eslint-disable-line
+                  }))
               }
               return question.set('answer', fromJS({
                 items: question.get('items'),
@@ -401,9 +423,9 @@ const previewQuestionItemSelector = createSelector(
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
-  myClassroomsSelector,
   myCoursesSelector,
   myCourseGroupsSelector,
+  myClassroomsSelector,
   convertChaptersToListSelector,
   selectedCourseLabelsSelector,
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
@@ -414,9 +436,9 @@ const selector = createSelector(
   previewQuestionItemSelector,
   (
     myInfomation,
-    myClassrooms,
     myCourses,
     myCourseGroups,
+    myClassrooms,
     selectedCourseChapters,
     selectedCourseLabels,
     questionItems,
@@ -427,9 +449,9 @@ const selector = createSelector(
     previewQuestionItem,
   ) => ({
     myInfomation,
-    myClassrooms,
     myCourses,
     myCourseGroups,
+    myClassrooms,
     selectedCourseChapters,
     selectedCourseLabels,
     questionItems,

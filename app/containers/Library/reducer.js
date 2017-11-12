@@ -12,11 +12,10 @@ const initialState = fromJS({
   others: {
     selectedCourseOrCourseGroupOrClassroom: {},
     currentPageNumber: 1,
-    selectedQuestionItemIds: [],
+    selectedQuestionItemIds: {},
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
-    select: null,
   },
 })
 
@@ -24,9 +23,11 @@ export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_COURSES_ACTION': {
     next(state, action) {
       const courses = lodash.get(action, 'payload.entities.courses')
+      const chapters = lodash.get(action, 'payload.entities.chapters')
       const myCourseIds = lodash.get(action, 'payload.result.libraries')
       return state
         .mergeIn(['courses'], fromJS(courses))
+        .mergeIn(['chapters'], fromJS(chapters))
         .set('myCourseIds', fromJS(myCourseIds))
     },
     throw(state) {
@@ -36,9 +37,11 @@ export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_COURSE_GROUPS_ACTION': {
     next(state, action) {
       const courseGroups = lodash.get(action, 'payload.entities.courseGroups')
+      const chapters = lodash.get(action, 'payload.entities.chapters')
       const myCourseGroupIds = lodash.get(action, 'payload.result.groupList')
       return state
         .mergeIn(['courseGroups'], fromJS(courseGroups))
+        .mergeIn(['chapters'], fromJS(chapters))
         .set('myCourseGroupIds', fromJS(myCourseGroupIds))
     },
     throw(state) {
@@ -48,10 +51,12 @@ export default handleActions({
   'APP/LIBRARY/GET_MY_ALL_CLASSROOMS_ACTION': {
     next(state, action) {
       const classrooms = lodash.get(action, 'payload.entities.classrooms')
+      const chapters = lodash.get(action, 'payload.entities.chapters')
       const myClassroomIds = lodash.get(action, 'payload.result.courses')
       const teacher = lodash.get(action, 'payload.result.teacher')
       return state
         .mergeIn(['classrooms'], fromJS(classrooms))
+        .mergeIn(['chapters'], fromJS(chapters))
         .set('myClassroomIds', fromJS(myClassroomIds))
         .set('mine', fromJS(teacher))
     },
@@ -135,17 +140,16 @@ export default handleActions({
       const id = lodash.get(action, 'payload.id')
       const name = lodash.get(action, 'payload.name')
       return state
-        .mergeDeepIn(['others'], fromJS({
+        .mergeIn(['others'], fromJS({
           selectedCourseOrCourseGroupOrClassroom: {
             id,
             name,
           },
           currentNumber: 1,
-          selectedQuestionItemIds: [],
+          selectedQuestionItemIds: {},
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
-          select: null,
         }))
     },
     throw(state) {
@@ -198,7 +202,7 @@ export default handleActions({
             .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
           return state
-            .deleteIn(['others', 'select'])
+            .setIn(['others', 'selectedQuestionItemIds'], fromJS({}))
             .setIn(['others', 'currentPageNumber'], 1)
         default:
           return state
@@ -212,15 +216,18 @@ export default handleActions({
   'APP/LIBRARY/SELECT_QUESTIONITEM_ACTION': {
     next(state, action) {
       const id = lodash.get(action, 'payload.id')
+      const name = lodash.get(action, 'payload.name')
       const isChecked = lodash.get(action, 'payload.isChecked')
-      if (isChecked && !state.getIn(['others', 'selectedQuestionItemIds']).includes(id)) {
-        return state.updateIn(['others', 'selectedQuestionItemIds'], (value) => value.push(id))
+      if (isChecked) {
+        if (state.getIn(['others', 'selectedQuestionItemIds']).has(id)) {
+          return state
+        }
+        return state.updateIn(['others', 'selectedQuestionItemIds'], (value) => value.set(id, fromJS({
+          id,
+          name,
+        })))
       }
-      const index = state.getIn(['others', 'selectedQuestionItemIds']).findIndex((value) => value === id)
-      if (index !== -1) {
-        return state.deleteIn(['others', 'selectedQuestionItemIds', index])
-      }
-      return state
+      return state.deleteIn(['others', 'selectedQuestionItemIds', id])
     },
     throw(state) {
       return state

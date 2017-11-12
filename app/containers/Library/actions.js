@@ -12,6 +12,7 @@ import {
   getQuestionsByCourseId,
   getQuestionsByCourseGroupId,
   getQuestionsByClassroomId,
+  copyQuestionItemToLibrary,
 } from './sources'
 
 /* 获取个人所有课程 */
@@ -65,7 +66,7 @@ export const selectChpaterAction = createAction(
   'APP/LIBRARY/SELECT_CHPATER_ACTION',
 )
 
-/* 输入文字作为筛选条件，筛选对象是题目的题干 */
+/* 输入文字作为筛选条件，筛选对象是题目的题干、组卷的标题、课件的名字 */
 export const filterQuestionsBySearchAction = createAction(
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION',
 )
@@ -88,4 +89,10 @@ export const previewQuestionItemAction = createAction(
 /* 关闭预览页面 */
 export const closePreviewQuestionItemAction = createAction(
   'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION',
+)
+
+/* 将选中的题目、组卷和课件复制到指定的课程、课程组或课堂的指定章节中 */
+export const copyQuestionItemToLibraryAction = createAction(
+  'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION',
+  copyQuestionItemToLibrary,
 )

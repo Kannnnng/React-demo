@@ -43,7 +43,7 @@ class Library extends React.PureComponent {
     searchConditions: ImmutablePropTypes.list,
     totalPages: PropTypes.number.isRequired,
     currentPageNumber: PropTypes.number.isRequired,
-    selectedQuestionItemIds: ImmutablePropTypes.list,
+    selectedQuestionItemIds: ImmutablePropTypes.map,
     previewQuestionItem: ImmutablePropTypes.map,
   }
 
@@ -104,8 +104,12 @@ class Library extends React.PureComponent {
     })
   }
 
-  handleOnClickCopyTarget = ({ id, name }) => () => {
-    console.log(`你选择了将选中的题目复制到 ID 为 ${id} 的 ${name} 中`)
+  handleOnClickCopyTarget = ({ targetId, chapterId, name }) => () => {
+    this.props.actions.copyQuestionItemToLibrary({
+      targetId,
+      chapterId,
+      name,
+    })
   }
 
   handleOnClickChapter = ({ id }) => () => {
@@ -127,9 +131,10 @@ class Library extends React.PureComponent {
     })
   }
 
-  handleOnQuestionItemCheck = ({ id }) => (event, isChecked) => {
+  handleOnQuestionItemCheck = ({ id, name }) => (event, isChecked) => {
     this.props.actions.selectQuestionItemAction({
       id,
+      name,
       isChecked,
     })
   }
@@ -225,6 +230,7 @@ class Library extends React.PureComponent {
               courseGroups={myCourseGroups}
               classrooms={myClassrooms}
               chapters={selectedCourseChapters}
+              isSelectedQuestionItemIdsEmpty={selectedQuestionItemIds.isEmpty()}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}
@@ -253,7 +259,7 @@ class Library extends React.PureComponent {
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
-                isChecked={selectedQuestionItemIds.includes(value.get('id'))}
+                isChecked={selectedQuestionItemIds.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
