@@ -45,6 +45,7 @@ class Library extends React.PureComponent {
     currentPageNumber: PropTypes.number.isRequired,
     selectedQuestionItems: ImmutablePropTypes.map,
     previewQuestionItem: ImmutablePropTypes.map,
+    status: ImmutablePropTypes.map,
   }
 
   state = {
@@ -56,6 +57,17 @@ class Library extends React.PureComponent {
     this.props.actions.getMyAllCoursesAction()
     this.props.actions.getMyAllCourseGroupsAction()
     this.props.actions.getMyAllClassroomsAction()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.status.get('copyQuestionItemToLibraryStatus') === 'doing' &&
+      nextProps.status.get('copyQuestionItemToLibraryStatus') === 'failed'
+    ) {
+      window.setTimeout(() => {
+        this.props.actions.initialCopyQuestionItemToLibraryStatus()
+      }, 2000)
+    }
   }
 
   /* 当左侧被选中的项发生变化时触发 */

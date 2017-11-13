@@ -431,6 +431,12 @@ const previewQuestionItemSelector = createSelector(
   }
 )
 
+/* 获取众多请求的状态标志位 */
+const statusSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('status') || immutableObjectEmpty
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
@@ -445,6 +451,7 @@ const selector = createSelector(
   currentPageNumberSelector,
   selectedQuestionItemsSelector,
   previewQuestionItemSelector,
+  statusSelector,
   (
     myInfomation,
     myCourses,
@@ -458,6 +465,7 @@ const selector = createSelector(
     currentPageNumber,
     selectedQuestionItems,
     previewQuestionItem,
+    status,
   ) => ({
     myInfomation,
     myCourses,
@@ -471,6 +479,7 @@ const selector = createSelector(
     currentPageNumber,
     selectedQuestionItems,
     previewQuestionItem,
+    status,
   })
 )
 

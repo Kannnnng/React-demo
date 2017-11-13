@@ -91,6 +91,11 @@ export const closePreviewQuestionItemAction = createAction(
   'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION',
 )
 
+/* 初始化复制操作请求状态位 */
+export const initialCopyQuestionItemToLibraryStatus = createAction(
+  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS',
+)
+
 /* 将选中的题目、组卷和课件复制到指定的课程、课程组或课堂的指定章节中 */
 export const copyQuestionItemToLibraryAction = createAction(
   'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION',

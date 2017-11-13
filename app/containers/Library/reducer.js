@@ -260,6 +260,15 @@ export default handleActions({
       return state
     },
   },
+  /* 初始化复制操作请求状态位 */
+  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS': {
+    next(state) {
+      return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'initial')
+    },
+    throw(state) {
+      return state
+    },
+  },
   /* 复制选择的题目、组卷和课件到指定的课程、课程组和课堂中去 */
   'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION': {
     next(state, action) {
@@ -269,6 +278,7 @@ export default handleActions({
       return state
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
         .setIn(['others', 'selectedQuestionItems'], fromJS({}))
+        .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
     },
     throw(state) {
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')
