@@ -214,7 +214,7 @@ export default class CurrentChoice extends React.PureComponent {
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
                       leftIcon={<GoLeftSvg />}
                       primaryText={value.get('name')}
-                      menuItems={value.get('units').map((item) => (
+                      menuItems={value.get('chapters').map((item) => (
                         <MenuItem
                           key={item.get('id')}
                           primaryText={item.get('name')}
@@ -235,13 +235,16 @@ export default class CurrentChoice extends React.PureComponent {
         <div className={styles.chapter}>
           <div>{'章节:'}</div>
           <div>
+            {/* chapters 在没有获取题目详情的时候也存在数据，但是没有题目、组卷和课件的信息 */}
+            {/* 原因是获取课程、课程组和课堂列表时需要获取各自对应的章节供复制按钮使用 */}
+            {/* 因此需要判断是否存在题目、组卷和课件的信息，防止出错 */}
             {chapters.map((value) => (
               <FlatButton
                 key={value.get('id')}
                 label={`${value.get('name')}(${
-                  (value.get('questions').size || 0) +
-                  (value.get('quizzes').size || 0) +
-                  (value.get('coursewares').size || 0)
+                  ((value.get('questions') && value.get('questions').size) || 0) +
+                  ((value.get('quizzes') && value.get('quizzes').size) || 0) +
+                  ((value.get('coursewares') && value.get('coursewares').size) || 0)
                 })`}
                 onClick={handleOnClickChapter({
                   id: value.get('id'),

@@ -73,6 +73,7 @@ const myCoursesSelector = createSelector(
         result
           .set(value, courses
             .get(value)
+            /* 这里将 chapters 恢复成对象嵌套结构是为了页面上的复制功能能够选择到某一章节 */
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
               chapters.get(chapterId) || immutableObjectEmpty
             )))
@@ -94,6 +95,7 @@ const myCourseGroupsSelector = createSelector(
         result
           .set(value, courseGroups
             .get(value)
+            /* 这里将 chapters 恢复成对象嵌套结构是为了页面上的复制功能能够选择到某一章节 */
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
               chapters.get(chapterId) || immutableObjectEmpty
             )))
@@ -115,7 +117,7 @@ const myClassroomsSelector = createSelector(
         result
           .set(value, classrooms
             .get(String(value))
-            .update('units', (chapterIds) => chapterIds.map((chapterId) => (
+            .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
               chapters.get(chapterId) || immutableObjectEmpty
             )))
           )
@@ -182,19 +184,21 @@ const selectedCourseChaptersSelector = createSelector(
     if (!chapters.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('chapters')) {
       return selectedItems.get('chapters')
     }
-    return immutableObjectEmpty
+    return immutableArrayEmpty
   }
 )
 
 /* 转换为数组结构且根据 rank 属性经过排序以后的章节信息 */
 const convertChaptersToListSelector = createSelector(
   selectedCourseChaptersSelector,
-  (selectedCourseChapters) => selectedCourseChapters.toList().sort((prev, next) => {
-    if (prev && next) {
-      return prev.get('rank') - prev.get('rank')
-    }
-    return 0
-  })
+  (selectedCourseChapters) => {
+    return selectedCourseChapters.sort((prev, next) => {
+      if (prev && next) {
+        return prev.get('rank') - prev.get('rank')
+      }
+      return 0
+    })
+  }
 )
 
 /* 当前所被选中的课程的知识点集合 */
@@ -260,7 +264,7 @@ const selectedChaptersSelector = createSelector(
   (selectorDomain, selectedCourseChapters) => {
     if (!selectorDomain.isEmpty() && !selectedCourseChapters.isEmpty()) {
       const selectedChapterId = selectorDomain.getIn(['others', 'selectedChapterId'])
-      return selectedCourseChapters.get(selectedChapterId) || immutableObjectEmpty
+      return selectedCourseChapters.find((value) => value.get('id') === selectedChapterId) || immutableObjectEmpty
     }
     return immutableObjectEmpty
   }
@@ -289,7 +293,10 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
     } else {
       result = coursewares.merge(questions).merge(quizzes)
     }
-    if (!selectedChapters.isEmpty()) {
+    /* 因为复制按钮要事先知道课程、课程组和课堂中包含的章节，所以最先返回的章节信息中仅有基本信息 */
+    /* 不包含有属于本章节的题目、组卷和课件，因此这里的 coursewares、questions 和 quizzes */
+    /* 可能是空的，需要进行判断，只需要判断其中一个就好了，因为三个数据是同时被返回的 */
+    if (!selectedChapters.isEmpty() && selectedChapters.get('coursewares')) {
       result = selectedChapters
         .get('coursewares')
         .concat(selectedChapters.get('questions'))
