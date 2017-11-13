@@ -61,7 +61,7 @@ class Library extends React.PureComponent {
   /* 当左侧被选中的项发生变化时触发 */
   handleOnSelectableListChange = (event, value) => {
     if (value === '我的课程' || value === '课程组' || !value) {
-      this.props.actions.selectCourseAction(null)
+      this.props.actions.selectCourseOrCourseGroupOrClassroomAction(null)
     } else {
       const [name, id] = value.split('|')
       this.props.actions.selectCourseOrCourseGroupOrClassroomAction({

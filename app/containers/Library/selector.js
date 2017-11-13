@@ -114,7 +114,6 @@ const myClassroomsSelector = createSelector(
   (classrooms, myClassroomIds, chapters) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
       return myClassroomIds.reduce((result, value) => {
-        console.log(classrooms.get(String(value)).toJS(), 123)
         return result
           .set(value, classrooms
             .get(String(value))

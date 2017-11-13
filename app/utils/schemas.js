@@ -12,7 +12,7 @@ export const CourseGroups = new schema.Array(new schema.Entity('courseGroups', {
 }))
 export const Labels = new schema.Array(new schema.Entity('labels'))
 export const Classrooms = new schema.Array(new schema.Entity('classrooms', {
-  units: Chapters,
+  chapters: Chapters,
 }))
 export const Courses = new schema.Array(new schema.Entity('courses', {
   chapters: Chapters,
