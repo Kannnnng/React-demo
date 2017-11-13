@@ -268,6 +268,7 @@ export default handleActions({
       const numbers = lodash.get(action, 'payload.numbers')
       return state
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
+        .setIn(['others', 'selectedQuestionItems'], fromJS({}))
     },
     throw(state) {
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')

@@ -126,7 +126,7 @@ export function copyQuestionItemToLibrary({
     mapIdToCollection[value.name].push(value.id)
   })
   return (name === 'classrooms' ? (
-    http.post('v2/preparations', {
+    http.post(`v2/preparations?courseId=${targetId}`, {
       unitId: chapterId,
       coursewareIds,
       questionIds,
