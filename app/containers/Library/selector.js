@@ -339,18 +339,18 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
-/* 当前选中的题目、组卷、课件 ID 集合 */
-const selectedQuestionItemIdsSelector = createSelector(
+/* 当前选中的题目、组卷、课件集合 */
+const selectedQuestionItemsSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemIds']) || immutableObjectEmpty
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItems']) || immutableObjectEmpty
 )
 
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
   selectedChaptersSelector,
   searchTextSelector,
-  selectedQuestionItemIdsSelector,
-  (selectedChapters, searchText, selectedQuestionItemIds) => {
+  selectedQuestionItemsSelector,
+  (selectedChapters, searchText, selectedQuestionItems) => {
     const result = []
     if (!selectedChapters.isEmpty()) {
       result.push({
@@ -364,10 +364,10 @@ const searchConditionsSelector = createSelector(
         value: searchText,
       })
     }
-    if (!selectedQuestionItemIds.isEmpty()) {
+    if (!selectedQuestionItems.isEmpty()) {
       result.push({
         name: 'select',
-        value: `手动选择(${selectedQuestionItemIds.size})`,
+        value: `手动选择(${selectedQuestionItems.size})`,
       })
     }
     return fromJS(result)
@@ -443,7 +443,7 @@ const selector = createSelector(
   searchConditionsSelector,
   totalPagesSelector,
   currentPageNumberSelector,
-  selectedQuestionItemIdsSelector,
+  selectedQuestionItemsSelector,
   previewQuestionItemSelector,
   (
     myInfomation,
@@ -456,7 +456,7 @@ const selector = createSelector(
     searchConditions,
     totalPages,
     currentPageNumber,
-    selectedQuestionItemIds,
+    selectedQuestionItems,
     previewQuestionItem,
   ) => ({
     myInfomation,
@@ -469,7 +469,7 @@ const selector = createSelector(
     searchConditions,
     totalPages,
     currentPageNumber,
-    selectedQuestionItemIds,
+    selectedQuestionItems,
     previewQuestionItem,
   })
 )

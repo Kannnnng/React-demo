@@ -34,7 +34,7 @@ export default class CurrentChoice extends React.PureComponent {
     /* 章节信息 */
     chapters: PropTypes.object.isRequired,
     /*  */
-    isSelectedQuestionItemIdsEmpty: PropTypes.bool.isRequired,
+    isSelectedQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -50,9 +50,9 @@ export default class CurrentChoice extends React.PureComponent {
     courses: {},
     courseGroups: {},
     classrooms: {},
-    isSelectedQuestionItemIdsEmpty: true,
+    isSelectedQuestionItemsEmpty: true,
     handleOnClickCancel: () => () => {},
-    handleOnClickCopyTarget: () => () => {},
+    handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
     handleOnClickSearch: () => {},
   }
@@ -96,7 +96,7 @@ export default class CurrentChoice extends React.PureComponent {
       courseGroups,
       classrooms,
       chapters,
-      isSelectedQuestionItemIdsEmpty,
+      isSelectedQuestionItemsEmpty,
       handleOnClickCancel,
       handleOnClickChapter,
     } = this.props
@@ -129,7 +129,7 @@ export default class CurrentChoice extends React.PureComponent {
           <div>
             <FlatButton
               label={'复制到'}
-              disabled={isSelectedQuestionItemIdsEmpty}
+              disabled={isSelectedQuestionItemsEmpty}
               onClick={this.handleOnClickCopyToButton}
             />
             <Popover
@@ -161,7 +161,7 @@ export default class CurrentChoice extends React.PureComponent {
                           onClick={this.handleOnClickCopyTarget({
                             targetId: value.get('id'),
                             chapterId: item.get('id'),
-                            name: 'course',
+                            name: 'courses',
                           })}
                         />
                       )).toList().toJS()}
@@ -189,9 +189,9 @@ export default class CurrentChoice extends React.PureComponent {
                           key={item.get('id')}
                           primaryText={item.get('name')}
                           onClick={this.handleOnClickCopyTarget({
-                            targetId: value.get('groupId'),
+                            targetId: value.get('library'),
                             chapterId: item.get('id'),
-                            name: 'courseGroup',
+                            name: 'courseGroups',
                           })}
                         />
                       )).toList().toJS()}
@@ -221,7 +221,7 @@ export default class CurrentChoice extends React.PureComponent {
                           onClick={this.handleOnClickCopyTarget({
                             targetId: value.get('id'),
                             chapterId: item.get('id'),
-                            name: 'classroom',
+                            name: 'classrooms',
                           })}
                         />
                       )).toList().toJS()}

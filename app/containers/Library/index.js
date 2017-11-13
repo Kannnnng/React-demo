@@ -43,7 +43,7 @@ class Library extends React.PureComponent {
     searchConditions: ImmutablePropTypes.list,
     totalPages: PropTypes.number.isRequired,
     currentPageNumber: PropTypes.number.isRequired,
-    selectedQuestionItemIds: ImmutablePropTypes.map,
+    selectedQuestionItems: ImmutablePropTypes.map,
     previewQuestionItem: ImmutablePropTypes.map,
   }
 
@@ -104,11 +104,12 @@ class Library extends React.PureComponent {
     })
   }
 
-  handleOnClickCopyTarget = ({ targetId, chapterId, name }) => () => {
-    this.props.actions.copyQuestionItemToLibrary({
+  handleOnClickCopyTarget = ({ targetId, chapterId, name }) => {
+    this.props.actions.copyQuestionItemToLibraryAction({
       targetId,
       chapterId,
       name,
+      selectedQuestionItems: this.props.selectedQuestionItems.toList().toJS(),
     })
   }
 
@@ -165,7 +166,7 @@ class Library extends React.PureComponent {
       searchConditions,
       totalPages,
       currentPageNumber,
-      selectedQuestionItemIds,
+      selectedQuestionItems,
       previewQuestionItem,
     } = this.props
     const {
@@ -181,13 +182,17 @@ class Library extends React.PureComponent {
             onChange={this.handleOnSelectableListChange}
           >
             <ListItem
-              primaryText={'我的课程'}
+              primaryText={'我的课堂'}
               leftIcon={<HumanSvg />}
               initiallyOpen={false}
               nestedItems={myCourses.map((value) => (
                 <ListItem
                   key={value.get('id')}
-                  primaryText={value.get('name')}
+                  primaryText={`${value.get('name')}${
+                    value.get('newCopyedQuestionItemNumbers') ? (
+                      `(${value.get('newCopyedQuestionItemNumbers')})`
+                    ) : ''
+                  }`}
                   value={`course|${value.get('id')}`}
                 />
               )).toList().toJS()}
@@ -200,7 +205,11 @@ class Library extends React.PureComponent {
               nestedItems={myCourseGroups.map((value) => (
                 <ListItem
                   key={value.get('groupId')}
-                  primaryText={value.get('groupName')}
+                  primaryText={`${value.get('groupName')}${
+                    value.get('newCopyedQuestionItemNumbers') ? (
+                      `(${value.get('newCopyedQuestionItemNumbers')})`
+                    ) : ''
+                  }`}
                   value={`courseGroup|${value.get('groupId')}`}
                 />
               )).toList().toJS()}
@@ -230,7 +239,7 @@ class Library extends React.PureComponent {
               courseGroups={myCourseGroups}
               classrooms={myClassrooms}
               chapters={selectedCourseChapters}
-              isSelectedQuestionItemIdsEmpty={selectedQuestionItemIds.isEmpty()}
+              isSelectedQuestionItemsEmpty={selectedQuestionItems.isEmpty()}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}
@@ -259,7 +268,7 @@ class Library extends React.PureComponent {
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
-                isChecked={selectedQuestionItemIds.has(value.get('id'))}
+                isChecked={selectedQuestionItems.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}

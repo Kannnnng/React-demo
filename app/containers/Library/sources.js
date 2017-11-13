@@ -97,13 +97,12 @@ export function getQuestionsByClassroomId({
     .get(`v2/courses/${classroomId}/units`)
     .then((response) => {
       const result = normalize(response, {
-        units: Chapters,
+        chapters: Chapters,
         coursewares: Coursewares,
         questions: Questions,
         quizzes: Quizzes,
       })
       result.classroomId = classroomId
-      result.result.chapters = result.result.units
       return result
     })
     .catch((error) => {throw error})
@@ -113,23 +112,38 @@ export function copyQuestionItemToLibrary({
   targetId,
   chapterId,
   name,
+  selectedQuestionItems,
 }) {
-  let url
-  switch (name) {
-    case 'course':
-    case 'courseGroup':
-      url = 'v2/questions?method=copy'
-      break
-    case 'classroom':
-      url = ''
-      break
-    default:
-      return null
+  const coursewareIds = []
+  const questionIds = []
+  const quizIds = []
+  const mapIdToCollection = {
+    courseware: coursewareIds,
+    question: questionIds,
+    quiz: quizIds,
   }
-  // return http
-  //   .post(url, {
-  //     libraryId
-  //     chapterId
-  //     sourceId
-  //   })
+  selectedQuestionItems.forEach((value) => {
+    mapIdToCollection[value.name].push(value.id)
+  })
+  return (name === 'classrooms' ? (
+    http.post('v2/preparations', {
+      unitId: chapterId,
+      coursewareIds,
+      questionIds,
+      quizIds,
+    })
+  ) : (
+    http.post('v2/copy', {
+      libraryId: targetId,
+      chapterId: chapterId,
+      coursewareIds,
+      questionIds,
+      quizIds,
+    })
+  )).then(() => ({
+    targetId,
+    name,
+    numbers: selectedQuestionItems.length,
+  }))
+  .catch((error) => {throw error})
 }

@@ -12,10 +12,13 @@ const initialState = fromJS({
   others: {
     selectedCourseOrCourseGroupOrClassroom: {},
     currentPageNumber: 1,
-    selectedQuestionItemIds: {},
+    selectedQuestionItems: {},
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
+  },
+  status: {
+    copyQuestionItemToLibraryStatus: 'initial',
   },
 })
 
@@ -146,7 +149,7 @@ export default handleActions({
             name,
           },
           currentNumber: 1,
-          selectedQuestionItemIds: {},
+          selectedQuestionItems: {},
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
@@ -202,7 +205,7 @@ export default handleActions({
             .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
           return state
-            .setIn(['others', 'selectedQuestionItemIds'], fromJS({}))
+            .setIn(['others', 'selectedQuestionItems'], fromJS({}))
             .setIn(['others', 'currentPageNumber'], 1)
         default:
           return state
@@ -219,15 +222,15 @@ export default handleActions({
       const name = lodash.get(action, 'payload.name')
       const isChecked = lodash.get(action, 'payload.isChecked')
       if (isChecked) {
-        if (state.getIn(['others', 'selectedQuestionItemIds']).has(id)) {
+        if (state.getIn(['others', 'selectedQuestionItems']).has(id)) {
           return state
         }
-        return state.updateIn(['others', 'selectedQuestionItemIds'], (value) => value.set(id, fromJS({
+        return state.updateIn(['others', 'selectedQuestionItems'], (value) => value.set(id, fromJS({
           id,
           name,
         })))
       }
-      return state.deleteIn(['others', 'selectedQuestionItemIds', id])
+      return state.deleteIn(['others', 'selectedQuestionItems', id])
     },
     throw(state) {
       return state
@@ -255,6 +258,19 @@ export default handleActions({
     },
     throw(state) {
       return state
+    },
+  },
+  /* 复制选择的题目、组卷和课件到指定的课程、课程组和课堂中去 */
+  'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION': {
+    next(state, action) {
+      const name = lodash.get(action, 'payload.name')
+      const targetId = lodash.get(action, 'payload.targetId')
+      const numbers = lodash.get(action, 'payload.numbers')
+      return state
+        .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
+    },
+    throw(state) {
+      return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')
     },
   },
 }, initialState)
