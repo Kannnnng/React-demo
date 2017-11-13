@@ -113,15 +113,16 @@ const myClassroomsSelector = createSelector(
   chaptersSelector,
   (classrooms, myClassroomIds, chapters) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
-      return myClassroomIds.reduce((result, value) => (
-        result
+      return myClassroomIds.reduce((result, value) => {
+        console.log(classrooms.get(String(value)).toJS(), 123)
+        return result
           .set(value, classrooms
             .get(String(value))
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
               chapters.get(chapterId) || immutableObjectEmpty
             )))
           )
-      ), immutableObjectEmpty)
+      }, immutableObjectEmpty)
     }
     return immutableObjectEmpty
   }
