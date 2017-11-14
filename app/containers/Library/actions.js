@@ -91,7 +91,8 @@ export const closePreviewQuestionItemAction = createAction(
   'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION',
 )
 
-/* 初始化复制操作请求状态位 */
+/* 初始化复制操作请求状态位，包括发起操作时将请求状态位置为 doing、操作完成时将请求状态位置为 */
+/* succeed 或 failed、几秒钟以后将请求状态位置为 initial 这三个功能 */
 export const initialCopyQuestionItemToLibraryStatus = createAction(
   'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS',
 )

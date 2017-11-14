@@ -262,8 +262,9 @@ export default handleActions({
   },
   /* 初始化复制操作请求状态位 */
   'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS': {
-    next(state) {
-      return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'initial')
+    next(state, action) {
+      const status = lodash.get(action, 'payload.status')
+      return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], status)
     },
     throw(state) {
       return state

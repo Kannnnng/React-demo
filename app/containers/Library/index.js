@@ -19,8 +19,10 @@ import makeSelectable from 'material-ui/List/makeSelectable'
 import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
+import Snackbar from 'material-ui/Snackbar'
 import Pagination from 'components/Pagination'
 import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
+import Loading from 'components/Loading'
 import { questionPattern } from 'utils/constants'
 import CurrentChoice from './CurrentChoice'
 import QuestionItem from './QuestionItem'
@@ -79,17 +81,6 @@ class Library extends React.PureComponent {
     this.props.actions.getMyAllClassroomsAction()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.status.get('copyQuestionItemToLibraryStatus') === 'doing' &&
-      nextProps.status.get('copyQuestionItemToLibraryStatus') === 'failed'
-    ) {
-      window.setTimeout(() => {
-        this.props.actions.initialCopyQuestionItemToLibraryStatus()
-      }, 2000)
-    }
-  }
-
   /* 当左侧被选中的项发生变化时触发 */
   handleOnSelectableListChange = (event, value) => {
     if (value === '我的课程' || value === '课程组' || !value) {
@@ -139,6 +130,9 @@ class Library extends React.PureComponent {
 
   /* 将选择好的题目、组卷和课件复制到指定位置 */
   handleOnClickCopyTarget = ({ targetId, chapterId, name }) => {
+    this.props.actions.initialCopyQuestionItemToLibraryStatus({
+      status: 'doing',
+    })
     this.props.actions.copyQuestionItemToLibraryAction({
       targetId,
       chapterId,
@@ -209,6 +203,7 @@ class Library extends React.PureComponent {
       currentPageNumber,
       selectedQuestionItems,
       previewQuestionItem,
+      status,
     } = this.props
     const {
       selectableListValue,
@@ -366,6 +361,19 @@ class Library extends React.PureComponent {
             handleOnClickGoBack={this.handleOnClosePreviewQuestionItem}
           />
         )}
+        {status.get('copyQuestionItemToLibraryStatus') === 'doing' && (
+          <div className={styles.loading}>
+            <Loading
+              text={'请稍等'}
+            />
+          </div>
+        )}
+        <Snackbar
+          autoHideDuration={2000}
+          contentStyle={{ color: 'red' }}
+          open={status.get('copyQuestionItemToLibraryStatus') === 'failed'}
+          message={'复制失败'}
+        />
       </div>
     )
   }

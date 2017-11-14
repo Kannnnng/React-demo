@@ -10,11 +10,12 @@ import styles from './styles'
 
 export default function Loading({
   progress,
+  text,
 }) {
   return (
     <div className={styles.container}>
       <div className={styles.progress}>
-        {progress ? `${progress}%` : <span>{'加载中'}</span>}
+        {progress ? `${progress}%` : <span>{text}</span>}
       </div>
       <div className={styles.ring} />
     </div>
@@ -23,8 +24,10 @@ export default function Loading({
 
 Loading.propTypes = {
   progress: PropTypes.number,
+  text: PropTypes.string,
 }
 
 Loading.default = {
   progress: null,
+  text: '加载中'
 }
