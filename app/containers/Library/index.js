@@ -91,6 +91,10 @@ class Library extends React.PureComponent {
         id,
         name,
       })
+      this.props.actions.initialGetQuestionsByIdStatusAction({
+        status: 'doing',
+        name,
+      })
       switch (name) {
         case 'course':
           this.props.actions.getQuestionsByCourseIdAction({
@@ -130,7 +134,7 @@ class Library extends React.PureComponent {
 
   /* 将选择好的题目、组卷和课件复制到指定位置 */
   handleOnClickCopyTarget = ({ targetId, chapterId, name }) => {
-    this.props.actions.initialCopyQuestionItemToLibraryStatus({
+    this.props.actions.initialCopyQuestionItemToLibraryStatusAction({
       status: 'doing',
     })
     this.props.actions.copyQuestionItemToLibraryAction({
@@ -188,6 +192,18 @@ class Library extends React.PureComponent {
     this.props.actions.closePreviewQuestionItemAction()
   }
 
+  handleOnAutoInitialStatus = ({ name }) => () => {
+    const mapNameToInitialStatusAction = {
+      copy: this.props.actions.initialCopyQuestionItemToLibraryStatusAction,
+      course: this.props.actions.initialGetQuestionsByIdStatusAction,
+      courseGroup: this.props.actions.initialGetQuestionsByIdStatusAction,
+      classroom: this.props.actions.initialGetQuestionsByIdStatusAction,
+    }
+    mapNameToInitialStatusAction[name]({
+      status: 'initial',
+      name
+    })
+  }
 
   render() {
     const {
@@ -361,19 +377,56 @@ class Library extends React.PureComponent {
             handleOnClickGoBack={this.handleOnClosePreviewQuestionItem}
           />
         )}
-        {status.get('copyQuestionItemToLibraryStatus') === 'doing' && (
+        {(
+          status.get('copyQuestionItemToLibraryStatus') === 'doing' ||
+          status.get('getQuestionsByCourseIdStatus') === 'doing' ||
+          status.get('getQuestionsByCourseGroupIdStatus') === 'doing' ||
+          status.get('getQuestionsByClassroomIdStatus') === 'doing'
+        ) && (
           <div className={styles.loading}>
             <Loading
               text={'请稍等'}
             />
           </div>
         )}
-        <Snackbar
-          autoHideDuration={2000}
-          contentStyle={{ color: 'red' }}
-          open={status.get('copyQuestionItemToLibraryStatus') === 'failed'}
-          message={'复制失败'}
-        />
+        <div>
+          <Snackbar
+            autoHideDuration={2000}
+            contentStyle={{ color: 'red' }}
+            open={status.get('copyQuestionItemToLibraryStatus') === 'failed'}
+            message={'复制失败'}
+            onRequestClose={this.handleOnAutoInitialStatus({
+              name: 'copy',
+            })}
+          />
+          <Snackbar
+            autoHideDuration={2000}
+            contentStyle={{ color: 'red' }}
+            open={status.get('getQuestionsByCourseIdStatus') === 'failed'}
+            message={'获取课程中的题目失败'}
+            onRequestClose={this.handleOnAutoInitialStatus({
+              name: 'course',
+            })}
+          />
+          <Snackbar
+            autoHideDuration={2000}
+            contentStyle={{ color: 'red' }}
+            open={status.get('getQuestionsByCourseGroupIdStatus') === 'failed'}
+            message={'获取课程组中的题目失败'}
+            onRequestClose={this.handleOnAutoInitialStatus({
+              name: 'courseGroup',
+            })}
+          />
+          <Snackbar
+            autoHideDuration={2000}
+            contentStyle={{ color: 'red' }}
+            open={status.get('getQuestionsByClassroomIdStatus') === 'failed'}
+            message={'获取课堂中的题目失败'}
+            onRequestClose={this.handleOnAutoInitialStatus({
+              name: 'classroom',
+            })}
+          />
+        </div>
       </div>
     )
   }

@@ -33,6 +33,12 @@ export const getMyAllClassroomsAction = createAction(
   getMyAllClassrooms,
 )
 
+/* 初始化根据课程 ID、课程组 ID、课堂 ID 获取题目、组卷、课件的请求状态位，包括发起操作时将 */
+/* 请求状态位置为 doing、操作完成时将请求状态位置为 succeed 或 failed 这两个功能 */
+export const initialGetQuestionsByIdStatusAction = createAction(
+  'APP/LIBRARY/INITIAL_GET_QUESTIONS_BY_ID_STATUS_ACTION',
+)
+
 /* 根据课程 ID 获取所有题目，这其中包括单题、组卷、课件 */
 export const getQuestionsByCourseIdAction = createAction(
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_ID_ACTION',
@@ -92,9 +98,9 @@ export const closePreviewQuestionItemAction = createAction(
 )
 
 /* 初始化复制操作请求状态位，包括发起操作时将请求状态位置为 doing、操作完成时将请求状态位置为 */
-/* succeed 或 failed、几秒钟以后将请求状态位置为 initial 这三个功能 */
-export const initialCopyQuestionItemToLibraryStatus = createAction(
-  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS',
+/* succeed 或 failed 这两个功能 */
+export const initialCopyQuestionItemToLibraryStatusAction = createAction(
+  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS_ACTION',
 )
 
 /* 将选中的题目、组卷和课件复制到指定的课程、课程组或课堂的指定章节中 */

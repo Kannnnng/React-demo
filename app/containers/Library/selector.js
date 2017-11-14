@@ -20,7 +20,7 @@ const myInfomationSelector = createSelector(
   (selectorDomain) => selectorDomain.get('mine') || immutableObjectEmpty
 )
 
-/* 当前所有课程集合，包括我的课程集合和课程组中的课程集合 */
+/* 当前所有课程集合 */
 const coursesSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.get('courses') || immutableObjectEmpty
@@ -75,7 +75,7 @@ const myCoursesSelector = createSelector(
             .get(value)
             /* 这里将 chapters 恢复成对象嵌套结构是为了页面上的复制功能能够选择到某一章节 */
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
-              chapters.get(chapterId) || immutableObjectEmpty
+              chapters.get(chapterId)
             )))
           )
       ), immutableObjectEmpty)
@@ -84,7 +84,7 @@ const myCoursesSelector = createSelector(
   }
 )
 
-/* 我所属的所有课程组 */
+/* 我参与的所有课程组 */
 const myCourseGroupsSelector = createSelector(
   courseGroupsSelector,
   myCourseGroupIdsSelector,
@@ -97,7 +97,7 @@ const myCourseGroupsSelector = createSelector(
             .get(value)
             /* 这里将 chapters 恢复成对象嵌套结构是为了页面上的复制功能能够选择到某一章节 */
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
-              chapters.get(chapterId) || immutableObjectEmpty
+              chapters.get(chapterId)
             )))
           )
       ), immutableObjectEmpty)
@@ -113,15 +113,18 @@ const myClassroomsSelector = createSelector(
   chaptersSelector,
   (classrooms, myClassroomIds, chapters) => {
     if (!classrooms.isEmpty() && !myClassroomIds.isEmpty()) {
-      return myClassroomIds.reduce((result, value) => {
-        return result
+      return myClassroomIds.reduce((result, value) => (
+        result
           .set(value, classrooms
+            /* 真是莫名其妙，课堂接口返回的数据中 ID 竟然是数字类型，需要将其转换为字符串类型 */
+            /* 才能通过 get 方法获取数据 */
             .get(String(value))
+            /* 这里将 chapters 恢复成对象嵌套结构是为了页面上的复制功能能够选择到某一章节 */
             .update('chapters', (chapterIds) => chapterIds.map((chapterId) => (
-              chapters.get(chapterId) || immutableObjectEmpty
+              chapters.get(chapterId)
             )))
           )
-      }, immutableObjectEmpty)
+      ), immutableObjectEmpty)
     }
     return immutableObjectEmpty
   }

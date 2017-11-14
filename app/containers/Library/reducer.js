@@ -19,6 +19,9 @@ const initialState = fromJS({
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
+    getQuestionsByCourseIdStatus: 'initial',
+    getQuestionsByCourseGroupIdStatus: 'initial',
+    getQuestionsByClassroomIdStatus: 'initial',
   },
 })
 
@@ -67,6 +70,21 @@ export default handleActions({
       return state
     },
   },
+  'APP/LIBRARY/INITIAL_GET_QUESTIONS_BY_ID_STATUS_ACTION': {
+    next(state, action) {
+      const status = lodash.get(action, 'payload.status')
+      const name = lodash.get(action, 'payload.name')
+      const mapNameToStatus = {
+        course: 'getQuestionsByCourseIdStatus',
+        courseGroup: 'getQuestionsByCourseGroupIdStatus',
+        classroom: 'getQuestionsByClassroomIdStatus',
+      }
+      return state.setIn(['status', mapNameToStatus[name]], status)
+    },
+    throw(state) {
+      return state
+    },
+  },
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_ID_ACTION': {
     next(state, action) {
       const chapters = lodash.get(action, 'payload.entities.chapters')
@@ -86,9 +104,10 @@ export default handleActions({
         .mergeIn(['courses'], fromJS({
           [course.id]: course,
         }))
+        .setIn(['status', 'getQuestionsByCourseIdStatus'], 'succeed')
     },
     throw(state) {
-      return state
+      return state.setIn(['status', 'getQuestionsByCourseIdStatus'], 'failed')
     },
   },
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_GROUP_ID_ACTION': {
@@ -108,9 +127,10 @@ export default handleActions({
         .mergeIn(['questions'], fromJS(subQuestions))
         .mergeIn(['quizzes'], fromJS(quizzes))
         .mergeIn(['courseGroups'], fromJS(courseGroup))
+        .setIn(['status', 'getQuestionsByCourseGroupIdStatus'], 'succeed')
     },
     throw(state) {
-      return state
+      return state.setIn(['status', 'getQuestionsByCourseGroupIdStatus'], 'failed')
     },
   },
   'APP/LIBRARY/GET_QUESTIONS_BY_CLASSROOM_ID_ACTION': {
@@ -133,9 +153,10 @@ export default handleActions({
         .mergeDeepIn(['classrooms'], fromJS({
           [classroomId]: result,
         }))
+        .setIn(['status', 'getQuestionsByClassroomIdStatus'], 'succeed')
     },
     throw(state) {
-      return state
+      return state.setIn(['status', 'getQuestionsByClassroomIdStatus'], 'failed')
     },
   },
   'APP/LIBRARY/SELECT_COURSE_OR_COURSE_GROUP_OR_CLASSROOM_ACTION': {
@@ -261,7 +282,7 @@ export default handleActions({
     },
   },
   /* 初始化复制操作请求状态位 */
-  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS': {
+  'APP/LIBRARY/INITIAL_COPY_QUESTIONITEM_TO_LIBRARY_STATUS_ACTION': {
     next(state, action) {
       const status = lodash.get(action, 'payload.status')
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], status)
