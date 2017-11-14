@@ -42,6 +42,9 @@
       height: 24px;
       background-color: #FFF;
       mask-size: 24px 24px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
   }
 
@@ -138,35 +141,42 @@
   mask-image: url('images/t7C.svg');
 }
 
+.pdfIcon {
+  mask-image: url('images/pdf.svg');
+}
+
 .pptIcon {
   mask-image: url('images/ppt.svg');
+}
+
+.docIcon {
+  mask-image: url('images/word.svg');
+}
+
+.docxIcon {
+  mask-image: url('images/word.svg');
+}
+
+.xlsIcon {
+  mask-image: url('images/excel.svg');
+}
+
+.xlsxIcon {
+  mask-image: url('images/excel.svg');
+}
+
+.wpsIcon {
+  mask-image: url('images/wpsWord.svg');
+}
+
+.etIcon {
+  mask-image: url('images/wpsExcel.svg');
+}
+
+.dpsIcon {
+  mask-image: url('images/wpsPPT.svg');
 }
 
 .rtfIcon {
   mask-image: url('images/rtf.svg');
 }
-
-.pdfIcon {
-  mask-image: url('images/pdf.svg');
-}
-
-.wordIcon {
-  mask-image: url('images/word.svg');
-}
-
-.excelIcon {
-  mask-image: url('images/excel.svg');
-}
-
-.wpsWordIcon {
-  mask-image: url('images/wpsWord.svg');
-}
-
-.wpsPPTIcon {
-  mask-image: url('images/wpsPPT.svg');
-}
-
-.wpsExcelIcon {
-  mask-image: url('images/wpsExcel.svg');
-}
-

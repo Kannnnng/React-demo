@@ -431,7 +431,7 @@ const previewQuestionItemSelector = createSelector(
   }
 )
 
-/* 获取众多请求的状态标志位 */
+/* 获取异步请求的状态标志位 */
 const statusSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.get('status') || immutableObjectEmpty
@@ -457,10 +457,10 @@ const selector = createSelector(
     myCourses,
     myCourseGroups,
     myClassrooms,
-    selectedCourseChapters,
-    selectedCourseLabels,
-    questionItems,
-    searchConditions,
+    selectedCollectionChapters,
+    selectedCollectionLabels,
+    selectedCollectionQuestionItems,
+    filterConditions,
     totalPages,
     currentPageNumber,
     selectedQuestionItems,
@@ -471,10 +471,10 @@ const selector = createSelector(
     myCourses,
     myCourseGroups,
     myClassrooms,
-    selectedCourseChapters,
-    selectedCourseLabels,
-    questionItems,
-    searchConditions,
+    selectedCollectionChapters,
+    selectedCollectionLabels,
+    selectedCollectionQuestionItems,
+    filterConditions,
     totalPages,
     currentPageNumber,
     selectedQuestionItems,

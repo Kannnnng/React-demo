@@ -40,8 +40,8 @@ export const immutableObjectEmpty = fromJS({})
 /* immutable 数据结构中的空数组  */
 export const immutableArrayEmpty = fromJS([])
 
-/* 目前支持的课件类型 */
-export const CoursewareAssets = {
+/* 目前支持的课件对应的名称和图标 */
+export const coursewareAssets = {
   pdf: {
     text: 'PDF',
     icon: require('images/pdf.png'),

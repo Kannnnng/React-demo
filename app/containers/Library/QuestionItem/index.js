@@ -11,8 +11,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Checkbox from 'material-ui/Checkbox'
-import IconButton from 'material-ui/IconButton'
-import { questionPattern } from 'utils/constants'
+import {
+  questionPattern,
+} from 'utils/constants'
 import styles from './styles'
 
 export default function QuestionItem({
@@ -52,43 +53,46 @@ export default function QuestionItem({
     patternColor = '#4A90E2'
   } else if (isCourseware) {
     switch (fileType) {
-      case 'ppt':
-        patternClassName = styles.pptIcon
-        patternText = 'POWERPOINT'
-        patternColor = '#4A90E2'
-        break
-      case 'rtf':
-        patternClassName = styles.rtfIcon
-        patternText = 'RTF'
-        patternColor = '#4A90E2'
-        break
       case 'pdf':
         patternClassName = styles.pdfIcon
         patternText = 'PDF'
-        patternColor = '#4A90E2'
         break
-      case 'word':
-        patternClassName = styles.wordIcon
+      case 'ppt':
+        patternClassName = styles.pptIcon
+        patternText = 'POWERPOINT'
+        break
+      case 'doc':
+        patternClassName = styles.docIcon
         patternText = 'WORD'
-        patternColor = '#4A90E2'
         break
-      case 'excel':
-        patternClassName = styles.excelIcon
+      case 'docx':
+        patternClassName = styles.docxIcon
+        patternText = 'WORD'
+        break
+      case 'xls':
+        patternClassName = styles.xlsIcon
         patternText = 'EXCEL'
-        patternColor = '#4A90E2'
         break
-      // case 'ppt':
-      //   patternClassName = styles.wpsWordIcon
-      //   patternText = 'WPSWORD'
-      //   break
-      // case 'ppt':
-      //   patternClassName = styles.wpsPPTIcon
-      //   patternText = 'WPSPPT'
-      //   break
-      // case 'ppt':
-      //   patternClassName = styles.wpsExcelIcon
-      //   patternText = 'WPSEXCEL'
-      //   break
+      case 'xlsx':
+        patternClassName = styles.xlsxIcon
+        patternText = 'EXCEL'
+        break
+      case 'wps':
+        patternClassName = styles.wpsIcon
+        patternText = 'WPS文字'
+        break
+      case 'et':
+        patternClassName = styles.etIcon
+        patternText = 'WPS表格'
+        break
+      case 'dps':
+        patternClassName = styles.dpsIcon
+        patternText = 'WPS演示'
+        break
+      case 'rtf':
+        patternClassName = styles.rtfIcon
+        patternText = 'PDF'
+        break
       default:
         break
     }
@@ -142,7 +146,7 @@ export default function QuestionItem({
         />
       )}
       <div className={styles.pattern}>
-        <div style={{ backgroundColor: patternColor }}>
+        <div style={patternColor && { backgroundColor: patternColor }}>
           <div className={patternClassName} />
         </div>
         <div>
@@ -162,8 +166,8 @@ export default function QuestionItem({
       </div>
       <div className={styles.bottomToolBar}>
         <div>
-          {(correctRate != undefined) && (`正确率:${correctRate}`)}
-          {(answerCount != undefined) && (` 答题人数:${answerCount}`)}
+          {isNaN(correctRate) ? null : `正确率:${correctRate}`}
+          {isNaN(answerCount) ? null : ` 答题人数:${answerCount}`}
         </div>
         <div>
           <Checkbox
@@ -195,6 +199,10 @@ QuestionItem.propTypes = {
   correctRate: PropTypes.number,
   answerCount: PropTypes.number,
   isQuiz: PropTypes.bool,
+  isCourseware: PropTypes.bool,
+  fileType: PropTypes.string,
+  isChecked: PropTypes.bool,
+  previewUrl: PropTypes.string,
   handleOnClick: PropTypes.func.isRequired,
   handleOnQuestionItemCheck: PropTypes.func.isRequired
 }

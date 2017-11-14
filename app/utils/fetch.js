@@ -14,7 +14,7 @@ function axiosGet(path, fetchConfig) {
     .get(path, fetchConfig)
     .then((response) => response.data)
     .catch((error) => {
-      throw error  // eslint-disable-line
+      throw error
     })
 }
 
@@ -23,7 +23,7 @@ function axiosPost(path, params, fetchConfig) {
     .post(path, params, fetchConfig)
     .then((response) => response.data)
     .catch((error) => {
-      throw error  // eslint-disable-line
+      throw error
     })
 }
 
@@ -32,7 +32,7 @@ function axiosPut(path, params, fetchConfig) {
     .put(path, params, fetchConfig)
     .then((response) => response.data)
     .catch((error) => {
-      throw error  // eslint-disable-line
+      throw error
     })
 }
 
@@ -41,7 +41,7 @@ function axiosDelete(path, fetchConfig) {
     .delete(path, fetchConfig)
     .then((response) => response.data)
     .catch((error) => {
-      throw error  // eslint-disable-line
+      throw error
     })
 }
 

@@ -10,6 +10,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Chip from 'material-ui/Chip'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
@@ -19,37 +20,43 @@ import MenuItem from 'material-ui/MenuItem'
 import SearchSvg from 'material-ui/svg-icons/action/search'
 import GoRightSvg from 'material-ui/svg-icons/navigation/chevron-right'
 import GoLeftSvg from 'material-ui/svg-icons/navigation/chevron-left'
+import {
+  immutableObjectEmpty,
+  immutableArrayEmpty,
+} from 'utils/constants'
 import styles from './styles'
 
 export default class CurrentChoice extends React.PureComponent {
   static propTypes = {
-    /* immutable 对象 */
-    conditions: PropTypes.object.isRequired,
-    /* immutable 对象 */
-    courses: PropTypes.object.isRequired,
-    /* immutable 对象 */
-    courseGroups: PropTypes.object.isRequired,
-    /* immutable 对象 */
-    classrooms: PropTypes.object.isRequired,
-    /* 章节信息 */
-    chapters: PropTypes.object.isRequired,
-    /*  */
+    /* 当前设置的筛选条件，immutable 数组 */
+    /* 使用数组的原因是需要有显示顺序，显示效果类似于 全部 > 章节 > 搜索 > 手动选择 */
+    conditions: ImmutablePropTypes.list.isRequired,
+    /* 教师本人的所有课程，immutable 对象 */
+    courses: ImmutablePropTypes.map.isRequired,
+    /* 教师本人参与的所有课程组，immutable 对象 */
+    courseGroups: ImmutablePropTypes.map.isRequired,
+    /* 教师本人的所有课堂，immutable 对象 */
+    classrooms: ImmutablePropTypes.map.isRequired,
+    /* 当前选择的课程、课程组或课堂所包含的章节信息，immutable 数组 */
+    /* 使用数组的原因是需要根据章节的 rank 属性按顺序显示 */
+    chapters: ImmutablePropTypes.list.isRequired,
+    /* 当前是否已经选择了至少一个题目、组卷或课件 */
     isSelectedQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
     handleOnClickCopyTarget: PropTypes.func.isRequired,
-    /* 点击筛选条件中的章节时被触发 */
+    /* 选择某一章节作为筛选条件 */
     handleOnClickChapter: PropTypes.func.isRequired,
     /* 点击搜索按钮时被触发 */
     handleOnClickSearch: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    conditions: [],
-    courses: {},
-    courseGroups: {},
-    classrooms: {},
+    conditions: immutableArrayEmpty,
+    courses: immutableObjectEmpty,
+    courseGroups: immutableObjectEmpty,
+    classrooms: immutableObjectEmpty,
     isSelectedQuestionItemsEmpty: true,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},

@@ -32,19 +32,36 @@ const SelectableList = makeSelectable(List)
 
 class Library extends React.PureComponent {
   static propTypes = {
+    /* actions */
     actions: PropTypes.object.isRequired,
+    /* 教师的基本信息 */
     myInfomation: ImmutablePropTypes.map,
-    myClassrooms: ImmutablePropTypes.map,
+    /* 教室本人的所有课程 */
     myCourses: ImmutablePropTypes.map,
+    /* 教师本人参与的所有课程组 */
     myCourseGroups: ImmutablePropTypes.map,
-    selectedCourseChapters: ImmutablePropTypes.list,
-    selectedCourseLabels: ImmutablePropTypes.map,
-    questionItems: ImmutablePropTypes.map,
-    searchConditions: ImmutablePropTypes.list,
+    /* 教师本人的所有课堂 */
+    myClassrooms: ImmutablePropTypes.map,
+    /* 当前选择的课程、课程组或课堂所包含的章节信息 */
+    selectedCollectionChapters: ImmutablePropTypes.list,
+    /* 当前选择的课程、课程组或课堂所包含的知识点信息 */
+    selectedCollectionLabels: ImmutablePropTypes.map,
+    /* 当前选择的课程、课程组或课堂所包含的所有题目、组卷和课件 */
+    /* 已经经过分页操作，每页最多显示 10 个条目，因此该属性的 size 小于等于 10 */
+    selectedCollectionQuestionItems: ImmutablePropTypes.map,
+    /* 当前设置的筛选条件 */
+    /* 使用数组的原因是需要有显示顺序，显示效果类似于 全部 > 章节 > 搜索 > 手动选择 */
+    filterConditions: ImmutablePropTypes.list,
+    /* 经过分页操作以后，计算出的总页数 */
     totalPages: PropTypes.number.isRequired,
+    /* 当前页码 */
     currentPageNumber: PropTypes.number.isRequired,
+    /* 当前已经选择的题目、组卷和课件集合 */
     selectedQuestionItems: ImmutablePropTypes.map,
+    /* 当前要求显示预览效果的题目或组卷 */
+    /* 课件的预览直接跳转至预览页面 */
     previewQuestionItem: ImmutablePropTypes.map,
+    /* 异步请求的状态标志位 */
     status: ImmutablePropTypes.map,
   }
 
@@ -54,8 +71,11 @@ class Library extends React.PureComponent {
   }
 
   componentWillMount() {
+    /* 获取教师本人的所有课程 */
     this.props.actions.getMyAllCoursesAction()
+    /* 获取教师本人参与的所有课程组 */
     this.props.actions.getMyAllCourseGroupsAction()
+    /* 获取教师本人的所有课堂 */
     this.props.actions.getMyAllClassroomsAction()
   }
 
@@ -110,12 +130,14 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 取消某一个筛选条件 */
   handleOnClickCurrentChoiceCancel = ({ name }) => () => {
     this.props.actions.deleteConditionAction({
       name,
     })
   }
 
+  /* 将选择好的题目、组卷和课件复制到指定位置 */
   handleOnClickCopyTarget = ({ targetId, chapterId, name }) => {
     this.props.actions.copyQuestionItemToLibraryAction({
       targetId,
@@ -125,18 +147,21 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 将某一章节作为筛选条件 */
   handleOnClickChapter = ({ id }) => () => {
     this.props.actions.selectChpaterAction({
       id,
     })
   }
 
+  /* 利用搜索文本作为筛选条件 */
   handleOnClickSearch = ({ value }) => {
     this.props.actions.filterQuestionsBySearchAction({
       searchText: value,
     })
   }
 
+  /* 预览某一题目或组卷 */
   handleOnClickQuestionItem = ({ id, name }) => () => {
     this.props.actions.previewQuestionItemAction({
       id,
@@ -144,6 +169,7 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 选中某一题目、组卷或课件 */
   handleOnQuestionItemCheck = ({ id, name }) => (event, isChecked) => {
     this.props.actions.selectQuestionItemAction({
       id,
@@ -152,14 +178,17 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 查看组卷的下一道题目 */
   handleOnPreQuizPageInPreview = () => {
     this.setState({ currentQuizPage: this.state.currentQuizPage - 1 })
   }
 
+  /* 查看组卷的上一道题目 */
   handleOnNextQuizPageInPreview = () => {
     this.setState({ currentQuizPage: this.state.currentQuizPage + 1 })
   }
 
+  /* 关闭题目或组卷的预览 */
   handleOnClosePreviewQuestionItem = () => {
     this.setState({ currentQuizPage: 1 })
     this.props.actions.closePreviewQuestionItemAction()
@@ -172,10 +201,10 @@ class Library extends React.PureComponent {
       myClassrooms,
       myCourses,
       myCourseGroups,
-      selectedCourseChapters,
-      selectedCourseLabels,
-      questionItems,
-      searchConditions,
+      selectedCollectionChapters,
+      selectedCollectionLabels,
+      selectedCollectionQuestionItems,
+      filterConditions,
       totalPages,
       currentPageNumber,
       selectedQuestionItems,
@@ -194,7 +223,7 @@ class Library extends React.PureComponent {
             onChange={this.handleOnSelectableListChange}
           >
             <ListItem
-              primaryText={'我的课堂'}
+              primaryText={'我的课程'}
               leftIcon={<HumanSvg />}
               initiallyOpen={false}
               nestedItems={myCourses.map((value) => (
@@ -246,11 +275,11 @@ class Library extends React.PureComponent {
         <div className={styles.rightArea}>
           <div className={styles.functionalArea}>
             <CurrentChoice
-              conditions={searchConditions}
+              conditions={filterConditions}
               courses={myCourses}
               courseGroups={myCourseGroups}
               classrooms={myClassrooms}
-              chapters={selectedCourseChapters}
+              chapters={selectedCollectionChapters}
               isSelectedQuestionItemsEmpty={selectedQuestionItems.isEmpty()}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
@@ -259,7 +288,7 @@ class Library extends React.PureComponent {
             />
           </div>
           <div className={styles.displayArea}>
-            {questionItems.map((value) => (
+            {selectedCollectionQuestionItems.map((value) => (
               <QuestionItem
                 key={value.get('id')}
                 id={value.get('id')}
@@ -275,8 +304,8 @@ class Library extends React.PureComponent {
                     value.get('summary').toJS()
                   )
                 )}
-                correctRate={Number(value.get('correct'))}
-                answerCount={value.get('studentCount')}
+                correctRate={parseInt(value.get('correct'), 10)}
+                answerCount={parseInt(value.get('studentCount'), 10)}
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
@@ -311,11 +340,7 @@ class Library extends React.PureComponent {
                 items: previewQuestionItem.get('items') ? (
                   previewQuestionItem.get('items').toJS()
                 ) : undefined,
-                // isAllCorrect: previewQuestionItem.get(''),
                 correctAnswer: previewQuestionItem.get('correctAnswer'),
-                // hasCorrectness: previewQuestionItem.get(''),
-                // caseSensitive: previewQuestionItem.get(''),
-                // strict: previewQuestionItem.get(''),
               } : undefined),
               img: previewQuestionItem.getIn(['answer', 'summary', 'image']),
               coursewareName: previewQuestionItem.get('name'),
@@ -336,7 +361,7 @@ class Library extends React.PureComponent {
             isPaper={previewQuestionItem.get('isQuiz')}
             paperTitle={previewQuestionItem.get('title')}
             isPreview
-            allKnowledgePoint={selectedCourseLabels}
+            allKnowledgePoint={selectedCollectionLabels}
             currentPaperPage={currentQuizPage}
             handleOnClickGoBack={this.handleOnClosePreviewQuestionItem}
           />

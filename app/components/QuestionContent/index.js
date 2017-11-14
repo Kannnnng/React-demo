@@ -14,7 +14,7 @@ import img3 from 'images/judge.png'
 import img4 from 'images/fillInTheBlanks.png'
 import img5 from 'images/shortAnswer.png'
 import img6 from 'images/group.png'
-import { questionPattern, CoursewareAssets } from 'utils/constants'
+import { questionPattern, coursewareAssets } from 'utils/constants'
 import styles from './styles'
 
 function getQuestionFlag(pattern = 0) {
@@ -81,7 +81,7 @@ class QuestionContent extends React.Component {
       )
     }
     if (!isEqual({}, title) && title.pattern === 7) {
-      const assets = CoursewareAssets[title.type]
+      const assets = coursewareAssets[title.type]
       titleSection = (
         <div className={styles.title}>
           <div className={styles.chapter}>
