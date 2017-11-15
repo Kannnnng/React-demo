@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { fromJS } from 'immutable'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import makeSelectable from 'material-ui/List/makeSelectable'
@@ -24,7 +25,10 @@ import Snackbar from 'material-ui/Snackbar'
 import Pagination from 'components/Pagination'
 import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
 import Loading from 'components/Loading'
-import { questionPattern } from 'utils/constants'
+import {
+  questionPattern,
+  immutableObjectEmpty,
+} from 'utils/constants'
 import CurrentChoice from './CurrentChoice'
 import QuestionItem from './QuestionItem'
 import * as acts from './actions'
@@ -50,6 +54,8 @@ class Library extends React.PureComponent {
     /* 当前选择的课程、课程组或课堂所包含的知识点信息 */
     selectedCollectionLabels: ImmutablePropTypes.map,
     /* 当前选择的课程、课程组或课堂所包含的所有题目、组卷和课件 */
+    selectedCollectionAllQuestionItems: ImmutablePropTypes.orderedMap,
+    /* 当前选择的课程、课程组或课堂所包含的已经经过分页操作的题目、组卷和课件 */
     /* 已经经过分页操作，每页最多显示 10 个条目，因此该属性的 size 小于等于 10 */
     /* 因为要求最新创建的题目、组卷和课件在最前面，因此需要使用 orderedMap */
     selectedCollectionQuestionItems: ImmutablePropTypes.orderedMap,
@@ -207,6 +213,43 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 点击筛选区全选按钮时被触发 */
+  handleOnClickSelectAll = () => {
+    const {
+      selectedCollectionAllQuestionItems,
+      selectedQuestionItems,
+    } = this.props
+    if (
+      selectedCollectionAllQuestionItems.size === selectedQuestionItems.size &&
+      selectedQuestionItems.size !== 0
+    ) {
+      this.props.actions.selectAllQuestionItemsAction({
+        allQuestionItems: immutableObjectEmpty,
+      })
+    } else {
+      const allQuestionItems = selectedCollectionAllQuestionItems.reduce((result, value) => {
+        if (value.get('isCourseware')) {
+          return result.set(value.get('id'), fromJS({
+            id: value.get('id'),
+            name: 'courseware',
+          }))
+        } else if (value.get('isQuiz')) {
+          return result.set(value.get('id'), fromJS({
+            id: value.get('id'),
+            name: 'quiz',
+          }))
+        }
+        return result.set(value.get('id'), fromJS({
+          id: value.get('id'),
+          name: 'question',
+        }))
+      }, immutableObjectEmpty)
+      this.props.actions.selectAllQuestionItemsAction({
+        allQuestionItems,
+      })
+    }
+  }
+
   render() {
     const {
       myInfomation,
@@ -215,6 +258,7 @@ class Library extends React.PureComponent {
       myCourseGroups,
       selectedCollectionChapters,
       selectedCollectionLabels,
+      selectedCollectionAllQuestionItems,
       selectedCollectionQuestionItems,
       filterConditions,
       totalPages,
@@ -296,10 +340,15 @@ class Library extends React.PureComponent {
               classrooms={myClassrooms}
               chapters={selectedCollectionChapters}
               isSelectedQuestionItemsEmpty={selectedQuestionItems.isEmpty()}
+              isSelectAll={(
+                selectedCollectionAllQuestionItems.size === selectedQuestionItems.size &&
+                selectedQuestionItems.size !== 0
+              )}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}
               handleOnClickSearch={this.handleOnClickSearch}
+              handleOnClickSelectAll={this.handleOnClickSelectAll}
             />
           </div>
           <div className={styles.displayArea}>

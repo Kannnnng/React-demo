@@ -190,17 +190,20 @@ export default handleActions({
       return state
     },
   },
+  /* 选择指定章节作为筛选条件 */
   'APP/LIBRARY/SELECT_CHPATER_ACTION': {
     next(state, action) {
       const id = lodash.get(action, 'payload.id')
       return state
         .setIn(['others', 'selectedChapterId'], id)
         .setIn(['others', 'currentPageNumber'], 1)
+        .setIn(['others', 'selectedQuestionItems'], fromJS({}))
     },
     throw(state) {
       return state
     },
   },
+  /* 将输入的搜索内容作为筛选条件 */
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION': {
     next(state, action) {
       const searchText = lodash.get(action, 'payload.searchText')
@@ -212,6 +215,7 @@ export default handleActions({
       return state
     },
   },
+  /* 删除某一筛选条件，可选的筛选条件有章节、搜索内容和手动选择 */
   'APP/LIBRARY/DELETE_CONDITION_ACTION': {
     next(state, action) {
       const name = lodash.get(action, 'payload.name')
@@ -251,6 +255,17 @@ export default handleActions({
         })))
       }
       return state.deleteIn(['others', 'selectedQuestionItems', id])
+    },
+    throw(state) {
+      return state
+    },
+  },
+  /* 将当前符合筛选条件的题目、组卷、课件全部选中 */
+  'APP/LIBRARY/SELECT_ALL_QUESTIONITEMS_ACTION': {
+    next(state, action) {
+      /* allQuestionItems 已经是 immutable 对象了 */
+      const allQuestionItems = lodash.get(action, 'payload.allQuestionItems')
+      return state.setIn(['others', 'selectedQuestionItems'], allQuestionItems)
     },
     throw(state) {
       return state
