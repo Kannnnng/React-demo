@@ -117,7 +117,7 @@ export default class CurrentChoice extends React.PureComponent {
         <div className={styles.topToolBar}>
           <div className={styles.conditions}>
             <Chip>
-              {'所有分类'}
+              {'全部'}
             </Chip>
             {conditions.map((value) => [
               <GoRightSvg

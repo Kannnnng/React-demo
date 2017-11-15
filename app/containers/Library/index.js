@@ -392,7 +392,7 @@ class Library extends React.PureComponent {
         <div>
           <Snackbar
             autoHideDuration={2000}
-            contentStyle={{ color: 'red' }}
+            contentStyle={{ color: 'red', fontSize: '18px', textAlign: 'center' }}
             open={status.get('copyQuestionItemToLibraryStatus') === 'failed'}
             message={'复制失败'}
             onRequestClose={this.handleOnAutoInitialStatus({
@@ -401,7 +401,7 @@ class Library extends React.PureComponent {
           />
           <Snackbar
             autoHideDuration={2000}
-            contentStyle={{ color: 'red' }}
+            contentStyle={{ color: 'red', fontSize: '18px', textAlign: 'center' }}
             open={status.get('getQuestionsByCourseIdStatus') === 'failed'}
             message={'获取课程中的题目失败'}
             onRequestClose={this.handleOnAutoInitialStatus({
@@ -410,7 +410,7 @@ class Library extends React.PureComponent {
           />
           <Snackbar
             autoHideDuration={2000}
-            contentStyle={{ color: 'red' }}
+            contentStyle={{ color: 'red', fontSize: '18px', textAlign: 'center' }}
             open={status.get('getQuestionsByCourseGroupIdStatus') === 'failed'}
             message={'获取课程组中的题目失败'}
             onRequestClose={this.handleOnAutoInitialStatus({
@@ -419,7 +419,7 @@ class Library extends React.PureComponent {
           />
           <Snackbar
             autoHideDuration={2000}
-            contentStyle={{ color: 'red' }}
+            contentStyle={{ color: 'red', fontSize: '18px', textAlign: 'center' }}
             open={status.get('getQuestionsByClassroomIdStatus') === 'failed'}
             message={'获取课堂中的题目失败'}
             onRequestClose={this.handleOnAutoInitialStatus({

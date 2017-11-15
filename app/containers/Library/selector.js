@@ -62,6 +62,30 @@ const chaptersSelector = createSelector(
   (selectorDomain) => selectorDomain.get('chapters') || immutableObjectEmpty
 )
 
+/* 当前所有课件集合 */
+const coursewaresSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('coursewares') || immutableObjectEmpty
+)
+
+/* 当前所有知识点集合 */
+const labelsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('labels') || immutableObjectEmpty
+)
+
+/* 当前所有问题集合 */
+const questionsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('questions') || immutableObjectEmpty
+)
+
+/* 当前所有组卷集合 */
+const quizzesSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.get('quizzes') || immutableObjectEmpty
+)
+
 /* 我的所有课程集合 */
 const myCoursesSelector = createSelector(
   coursesSelector,
@@ -130,30 +154,6 @@ const myClassroomsSelector = createSelector(
   }
 )
 
-/* 当前所有课件集合 */
-const coursewaresSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.get('coursewares') || immutableObjectEmpty
-)
-
-/* 当前所有知识点集合 */
-const labelsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.get('labels') || immutableObjectEmpty
-)
-
-/* 当前所有问题集合 */
-const questionsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.get('questions') || immutableObjectEmpty
-)
-
-/* 当前所有组卷集合 */
-const quizzesSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.get('quizzes') || immutableObjectEmpty
-)
-
 /* 当前被选中的课程、课程组或课堂 */
 const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
   selectorDomain,
@@ -179,32 +179,27 @@ const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
   }
 )
 
-/* 当前被选中的课程的章节集合 */
+/* 当前被选中的课程、课程组或课堂中的章节集合 */
+/* 因为在前面的 selector 中已经将课程、课程组和课堂中的章节恢复了，因此在这里不必要在使用 */
+/* chaptersSelector */
+/* 因为要求按照指定顺序显示，因此需要按照章节中的 rank 属性排序 */
 const selectedCourseChaptersSelector = createSelector(
-  chaptersSelector,
   selectedCourseOrCourseGroupOrClassroomSelector,
-  (chapters, selectedItems) => {
-    if (!chapters.isEmpty() && !selectedItems.isEmpty() && selectedItems.get('chapters')) {
-      return selectedItems.get('chapters')
+  (selectedItems) => {
+    if (!selectedItems.isEmpty() && selectedItems.get('chapters')) {
+      return selectedItems.get('chapters').sort((prev, next) => {
+        if (prev && next) {
+          return prev.get('rank') - prev.get('rank')
+        }
+        return 0
+      })
     }
     return immutableArrayEmpty
   }
 )
 
-/* 转换为数组结构且根据 rank 属性经过排序以后的章节信息 */
-const convertChaptersToListSelector = createSelector(
-  selectedCourseChaptersSelector,
-  (selectedCourseChapters) => {
-    return selectedCourseChapters.sort((prev, next) => {
-      if (prev && next) {
-        return prev.get('rank') - prev.get('rank')
-      }
-      return 0
-    })
-  }
-)
-
 /* 当前所被选中的课程的知识点集合 */
+/* 当前被选中的课程、课程组或课堂中的知识点没有恢复，因此需要借助 labelsSelector 恢复知识点信息  */
 const selectedCourseLabelsSelector = createSelector(
   labelsSelector,
   selectedCourseOrCourseGroupOrClassroomSelector,
@@ -261,6 +256,8 @@ const selectedCourseQuizzesSelector = createSelector(
 )
 
 /* 当前被选中作为筛选条件的章节 */
+/* 因为被选为筛选条件的章节一定是当前被选中的课程、课程组或课堂中所包含的章节，因此可以直接使用 */
+/* selectedCourseChaptersSelector */
 const selectedChaptersSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
@@ -305,12 +302,15 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
         .concat(selectedChapters.get('questions'))
         .concat(selectedChapters.get('quizzes'))
         .reduce((tempResult, value) =>{
+          /* value 是当前被选中作为筛选条件的章节中所包含的题目、组卷或课件的 ID，如果能够从 */
+          /* 当前被选中的课程、课程组或课堂中获取到该 ID 所对应的题目、组卷或课件的数据，那么 */
+          /* 就说明该 ID 所对应的题目、组卷或课件隶属于当前被选中作为筛选条件的章节中 */
           const questionItem = result.get(value)
           if (questionItem) {
             return tempResult.set(value, questionItem)
           }
           return tempResult
-        }, fromJS({}))
+        }, immutableObjectEmpty)
     }
     return result
   }
@@ -328,7 +328,7 @@ const totalPagesSelector = createSelector(
 /* 当前页码 */
 const currentPageNumberSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || null
+  (selectorDomain) => selectorDomain.getIn(['others', 'currentPageNumber']) || 1
 )
 
 /* 经过分页以后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
@@ -342,7 +342,7 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
-/* 当前选中的题目、组卷、课件集合 */
+/* 当前选中的题目、组卷、课件 ID 集合 */
 const selectedQuestionItemsSelector = createSelector(
   selectorDomain,
   (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItems']) || immutableObjectEmpty
@@ -370,7 +370,7 @@ const searchConditionsSelector = createSelector(
     if (!selectedQuestionItems.isEmpty()) {
       result.push({
         name: 'select',
-        value: `手动选择(${selectedQuestionItems.size})`,
+        value: `已选择(${selectedQuestionItems.size})`,
       })
     }
     return fromJS(result)
@@ -378,6 +378,9 @@ const searchConditionsSelector = createSelector(
 )
 
 /* 当前需要显示预览的题目、组卷信息 */
+/* 这部分比较麻烦，需要恢复题目、组卷、课件的知识点、题目中的题组、组卷、组卷中的题组它们各自的 */
+/* 单题也恢复出来 */
+/* 另外，题目预览组件中需要的 answer 数据在后端返回的数据结构中是没有的，因此需要自行拼凑起来 */
 const previewQuestionItemSelector = createSelector(
   selectorDomain,
   questionsSelector,
@@ -446,7 +449,7 @@ const selector = createSelector(
   myCoursesSelector,
   myCourseGroupsSelector,
   myClassroomsSelector,
-  convertChaptersToListSelector,
+  selectedCourseChaptersSelector,
   selectedCourseLabelsSelector,
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
   searchConditionsSelector,
