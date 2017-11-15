@@ -14,6 +14,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fromJS } from 'immutable'
+import Badge from 'material-ui/Badge'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
 import makeSelectable from 'material-ui/List/makeSelectable'
@@ -287,13 +288,25 @@ class Library extends React.PureComponent {
                 <ListItem
                   key={value.get('id')}
                   leftIcon={<SubDirectory />}
-                  primaryText={`${value.get('name')}${
-                    value.get('newCopyedQuestionItemNumbers') ? (
-                      `(${value.get('newCopyedQuestionItemNumbers')})`
-                    ) : ''
-                  }`}
                   value={`course|${value.get('id')}`}
-                />
+                >
+                  {!value.get('newCopyedQuestionItemNumbers') ? (
+                    value.get('name')
+                  ) : (
+                    <Badge
+                      badgeContent={value.get('newCopyedQuestionItemNumbers')}
+                      badgeStyle={{ top: '-15px' }}
+                      secondary
+                      style={{
+                        paddingTop: '0',
+                        paddingBottom: '0',
+                        paddingLeft: '0',
+                      }}
+                    >
+                      {value.get('name')}
+                    </Badge>
+                  )}
+                </ListItem>
               )).toList().toJS()}
               value={'我的课程'}
             />
@@ -305,13 +318,25 @@ class Library extends React.PureComponent {
                 <ListItem
                   key={value.get('groupId')}
                   leftIcon={<SubDirectory />}
-                  primaryText={`${value.get('groupName')}${
-                    value.get('newCopyedQuestionItemNumbers') ? (
-                      `(${value.get('newCopyedQuestionItemNumbers')})`
-                    ) : ''
-                  }`}
                   value={`courseGroup|${value.get('groupId')}`}
-                />
+                >
+                  {!value.get('newCopyedQuestionItemNumbers') ? (
+                    value.get('groupName')
+                  ) : (
+                    <Badge
+                      badgeContent={value.get('newCopyedQuestionItemNumbers')}
+                      badgeStyle={{ top: '-15px' }}
+                      secondary
+                      style={{
+                        paddingTop: '0',
+                        paddingBottom: '0',
+                        paddingLeft: '0',
+                      }}
+                    >
+                      {value.get('groupName')}
+                    </Badge>
+                  )}
+                </ListItem>
               )).toList().toJS()}
               value={'课程组'}
             />

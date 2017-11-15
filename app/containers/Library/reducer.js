@@ -312,7 +312,10 @@ export default handleActions({
       const targetId = lodash.get(action, 'payload.targetId')
       const numbers = lodash.get(action, 'payload.numbers')
       return state
+        /* name 可以为 course、courseGroup、classroom 三个值 */
+        /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
+        /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedQuestionItems'], fromJS({}))
         .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
     },
