@@ -227,7 +227,6 @@ export default handleActions({
         case 'select':
           return state
             .setIn(['others', 'selectedQuestionItems'], fromJS({}))
-            .setIn(['others', 'currentPageNumber'], 1)
         default:
           return state
       }

@@ -11,6 +11,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import Checkbox from 'material-ui/Checkbox'
 import Chip from 'material-ui/Chip'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
@@ -42,6 +43,8 @@ export default class CurrentChoice extends React.PureComponent {
     chapters: ImmutablePropTypes.list.isRequired,
     /* 当前是否已经选择了至少一个题目、组卷或课件 */
     isSelectedQuestionItemsEmpty: PropTypes.bool.isRequired,
+    /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
+    isSelectAll: PropTypes.bool.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -50,6 +53,8 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickChapter: PropTypes.func.isRequired,
     /* 点击搜索按钮时被触发 */
     handleOnClickSearch: PropTypes.func.isRequired,
+    /* 点击全选按钮时被触发 */
+    handleOnClickSelectAll: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -58,10 +63,12 @@ export default class CurrentChoice extends React.PureComponent {
     courseGroups: immutableObjectEmpty,
     classrooms: immutableObjectEmpty,
     isSelectedQuestionItemsEmpty: true,
+    isSelectAll: false,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
     handleOnClickSearch: () => {},
+    handleOnClickSelectAll: () => {},
   }
 
   state = {
@@ -104,8 +111,10 @@ export default class CurrentChoice extends React.PureComponent {
       classrooms,
       chapters,
       isSelectedQuestionItemsEmpty,
+      isSelectAll,
       handleOnClickCancel,
       handleOnClickChapter,
+      handleOnClickSelectAll,
     } = this.props
     const {
       copyToButtonElement,
@@ -269,6 +278,16 @@ export default class CurrentChoice extends React.PureComponent {
           >
             <SearchSvg />
           </IconButton>
+        </div>
+        <div className={styles.selectAll}>
+          <Checkbox
+            checked={isSelectAll}
+            label={'全选:'}
+            labelPosition={'left'}
+            labelStyle={{ whiteSpace: 'nowrap', marginTop: '6px', marginRight: '5px' }}
+            iconStyle={{ marginTop: '3px' }}
+            onCheck={handleOnClickSelectAll}
+          />
         </div>
       </div>
     )

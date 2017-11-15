@@ -19,6 +19,7 @@ import makeSelectable from 'material-ui/List/makeSelectable'
 import GroupSvg from 'material-ui/svg-icons/action/group-work'
 import HumanSvg from 'material-ui/svg-icons/action/accessibility'
 import ClassroomSvg from 'material-ui/svg-icons/action/supervisor-account'
+import SubDirectory from 'material-ui/svg-icons/navigation/subdirectory-arrow-right'
 import Snackbar from 'material-ui/Snackbar'
 import Pagination from 'components/Pagination'
 import QuestionPreviewBoard from 'components/QuestionPreviewBoard'
@@ -50,7 +51,8 @@ class Library extends React.PureComponent {
     selectedCollectionLabels: ImmutablePropTypes.map,
     /* 当前选择的课程、课程组或课堂所包含的所有题目、组卷和课件 */
     /* 已经经过分页操作，每页最多显示 10 个条目，因此该属性的 size 小于等于 10 */
-    selectedCollectionQuestionItems: ImmutablePropTypes.map,
+    /* 因为要求最新创建的题目、组卷和课件在最前面，因此需要使用 orderedMap */
+    selectedCollectionQuestionItems: ImmutablePropTypes.orderedMap,
     /* 当前设置的筛选条件 */
     /* 使用数组的原因是需要有显示顺序，显示效果类似于 全部 > 章节 > 搜索 > 手动选择 */
     filterConditions: ImmutablePropTypes.list,
@@ -240,6 +242,7 @@ class Library extends React.PureComponent {
               nestedItems={myCourses.map((value) => (
                 <ListItem
                   key={value.get('id')}
+                  leftIcon={<SubDirectory />}
                   primaryText={`${value.get('name')}${
                     value.get('newCopyedQuestionItemNumbers') ? (
                       `(${value.get('newCopyedQuestionItemNumbers')})`
@@ -257,6 +260,7 @@ class Library extends React.PureComponent {
               nestedItems={myCourseGroups.map((value) => (
                 <ListItem
                   key={value.get('groupId')}
+                  leftIcon={<SubDirectory />}
                   primaryText={`${value.get('groupName')}${
                     value.get('newCopyedQuestionItemNumbers') ? (
                       `(${value.get('newCopyedQuestionItemNumbers')})`

@@ -4,6 +4,7 @@
  *
  */
 
+import moment from 'moment'
 import { fromJS } from 'immutable'
 import { createSelector } from 'reselect'
 import {
@@ -312,7 +313,23 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
           return tempResult
         }, immutableObjectEmpty)
     }
-    return result
+    /* 如果题目、组卷、课件存在创建时间 createTime 这个字段，则按照降序排序，最近创建的在最前面 */
+    /* 没有 createTime 字段的数据在最后面 */
+    return result.sort((prev, next) => {
+      if (prev && next) {
+        const prevCreateTime = prev.get('createTime')
+        const nextCreateTime = next.get('createTime')
+        if (!prevCreateTime && !nextCreateTime) {
+          return 0
+        } else if (prevCreateTime && !nextCreateTime) {
+          return -1
+        } else if (!prevCreateTime && nextCreateTime) {
+          return 1
+        }
+        return moment(prevCreateTime).isAfter(nextCreateTime) ? -1 : 1
+      }
+      return 0
+    })
   }
 )
 
