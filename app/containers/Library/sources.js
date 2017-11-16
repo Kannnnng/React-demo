@@ -109,10 +109,18 @@ export function getQuestionsByClassroomId({
 }
 
 export function copyQuestionItemToLibrary({
+  /* 要复制到的课程、课程组或课堂的 ID */
   targetId,
-  chapterId,
+  /* 要复制到的章节的 ID */
+  targetChapterId,
+  /* 标示要复制到的是课程、课程组还是课堂 */
   name,
+  /* 当前选中的要复制的题目、组卷和课件集合 */
   selectedQuestionItems,
+  /* 章节复制方式，是否将整个章节信息全部复制还是仅复制选中的单位 */
+  copyMethod,
+  /* 被复制章节的 ID */
+  sourceChapterId,
 }) {
   const coursewareIds = []
   const questionIds = []
@@ -126,20 +134,37 @@ export function copyQuestionItemToLibrary({
     mapIdToCollection[value.name].push(value.id)
   })
   return (name === 'classrooms' ? (
-    http.post(`v2/preparations?courseId=${targetId}`, {
-      unitId: chapterId,
-      coursewareIds,
-      questionIds,
-      quizIds,
-    })
+    copyMethod === 'copyEntireChapter' ? (
+      http.post(`v2/copy/${targetId}/chapter`, {
+        chapters: [
+          sourceChapterId,
+        ],
+      })
+    ) : (
+      http.post(`v2/preparations?courseId=${targetId}`, {
+        unitId: targetChapterId,
+        coursewareIds,
+        questionIds,
+        quizIds,
+      })
+    )
   ) : (
-    http.post('v2/copy', {
-      libraryId: targetId,
-      chapterId: chapterId,
-      coursewareIds,
-      questionIds,
-      quizIds,
-    })
+    copyMethod === 'copyEntireChapter' ? (
+      http.post('v2/copy/chapter', {
+        libraryId: targetId,
+        chapters: [
+          sourceChapterId,
+        ],
+      })
+    ) : (
+      http.post('v2/copy', {
+        libraryId: targetId,
+        chapterId: targetChapterId,
+        coursewareIds,
+        questionIds,
+        quizIds,
+      })
+    )
   )).then(() => ({
     targetId,
     name,

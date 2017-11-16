@@ -54,7 +54,7 @@ class Library extends React.PureComponent {
     selectedCollectionChapters: ImmutablePropTypes.list,
     /* 当前选择的课程、课程组或课堂所包含的知识点信息 */
     selectedCollectionLabels: ImmutablePropTypes.map,
-    /* 当前选择的课程、课程组或课堂所包含的所有题目、组卷和课件 */
+    /* 当前选择的课程、课程组或课堂所包含的经过筛选条件筛选后的所有题目、组卷和课件 */
     selectedCollectionAllQuestionItems: ImmutablePropTypes.orderedMap,
     /* 当前选择的课程、课程组或课堂所包含的已经经过分页操作的题目、组卷和课件 */
     /* 已经经过分页操作，每页最多显示 10 个条目，因此该属性的 size 小于等于 10 */
@@ -142,15 +142,24 @@ class Library extends React.PureComponent {
   }
 
   /* 将选择好的题目、组卷和课件复制到指定位置 */
-  handleOnClickCopyTarget = ({ targetId, chapterId, name }) => {
+  handleOnClickCopyTarget = (value) => {
     this.props.actions.initialCopyQuestionItemToLibraryStatusAction({
       status: 'doing',
     })
     this.props.actions.copyQuestionItemToLibraryAction({
-      targetId,
-      chapterId,
-      name,
-      selectedQuestionItems: this.props.selectedQuestionItems.toList().toJS(),
+      ...value,
+      /* 如果用户选择了将整个章节全部复制，那么可以不提供该章节中具体包含了哪些题目、组卷和课件 */
+      /* 给一个空数组即可 */
+      selectedQuestionItems: value.copyMethod === 'copyEntireChapter' ? (
+        []
+      ) : (
+        this.props.selectedQuestionItems.toList().toJS()
+      ),
+      sourceChapterId: value.copyMethod !== 'copyEntireChapter' ? (
+        undefined
+      ) : (
+        this.props.filterConditions.getIn(['0', 'id'])
+      ),
     })
   }
 
@@ -349,10 +358,26 @@ class Library extends React.PureComponent {
             {myClassrooms.map((value) => (
               <ListItem
                 key={value.get('id')}
-                primaryText={value.get('name')}
                 leftIcon={<ClassroomSvg />}
                 value={`classroom|${value.get('id')}`}
-              />
+              >
+                {!value.get('newCopyedQuestionItemNumbers') ? (
+                  value.get('name')
+                ) : (
+                  <Badge
+                    badgeContent={value.get('newCopyedQuestionItemNumbers')}
+                    badgeStyle={{ top: '-15px' }}
+                    secondary
+                    style={{
+                      paddingTop: '0',
+                      paddingBottom: '0',
+                      paddingLeft: '0',
+                    }}
+                  >
+                    {value.get('name')}
+                  </Badge>
+                )}
+              </ListItem>
             )).toList().toJS()}
           </SelectableList>
         </div>
@@ -369,6 +394,7 @@ class Library extends React.PureComponent {
                 selectedCollectionAllQuestionItems.size === selectedQuestionItems.size &&
                 selectedQuestionItems.size !== 0
               )}
+              isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedQuestionItems.size}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}

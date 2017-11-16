@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Checkbox from 'material-ui/Checkbox'
 import Chip from 'material-ui/Chip'
+import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import Popover from 'material-ui/Popover'
@@ -45,6 +46,9 @@ export default class CurrentChoice extends React.PureComponent {
     isSelectedQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
     isSelectAll: PropTypes.bool.isRequired,
+    /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
+    /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
+    isCopyEntireChapter: PropTypes.bool.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -64,6 +68,7 @@ export default class CurrentChoice extends React.PureComponent {
     classrooms: immutableObjectEmpty,
     isSelectedQuestionItemsEmpty: true,
     isSelectAll: false,
+    isCopyEntireChapter: false,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
@@ -72,15 +77,28 @@ export default class CurrentChoice extends React.PureComponent {
   }
 
   state = {
+    copyMethod: 'copySelectedQuestionItems',
     copyToButtonElement: null,
     showCopyToList: false,
+    showCopyMethodDialog: false,
   }
 
   handleOnClickCopyToButton = (event) => {
-    this.setState({
-      showCopyToList: true,
-      copyToButtonElement: event.currentTarget,
-    })
+    const {
+      isCopyEntireChapter,
+    } = this.props
+    if (isCopyEntireChapter) {
+      this.setState({
+        showCopyMethodDialog: true,
+        copyToButtonElement: event.currentTarget,
+      })
+    } else {
+      this.setState({
+        copyMethod: 'copySelectedQuestionItems',
+        showCopyToList: true,
+        copyToButtonElement: event.currentTarget,
+      })
+    }
   }
 
   handleOnCloseCopyToList = () => {
@@ -97,10 +115,24 @@ export default class CurrentChoice extends React.PureComponent {
   }
 
   handleOnClickCopyTarget = (value) => () => {
+    const {
+      copyMethod,
+    } = this.state
     this.setState({
       showCopyToList: false,
     })
-    this.props.handleOnClickCopyTarget(value)
+    this.props.handleOnClickCopyTarget({
+      ...value,
+      copyMethod,
+    })
+  }
+
+  handleOnDecideCopyMethod = ({ method }) => () => {
+    this.setState({
+      copyMethod: method,
+      showCopyToList: true,
+      showCopyMethodDialog: false,
+    })
   }
 
   render() {
@@ -117,8 +149,10 @@ export default class CurrentChoice extends React.PureComponent {
       handleOnClickSelectAll,
     } = this.props
     const {
+      copyMethod,
       copyToButtonElement,
       showCopyToList,
+      showCopyMethodDialog,
     } = this.state
 
     return (
@@ -168,19 +202,31 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('id')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={<GoLeftSvg />}
+                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
                       primaryText={value.get('name')}
-                      menuItems={value.get('chapters').map((item) => (
-                        <MenuItem
-                          key={item.get('id')}
-                          primaryText={item.get('name')}
-                          onClick={this.handleOnClickCopyTarget({
-                            targetId: value.get('id'),
-                            chapterId: item.get('id'),
-                            name: 'courses',
-                          })}
-                        />
-                      )).toList().toJS()}
+                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                        undefined
+                      ) : (
+                        value.get('chapters').map((item) => (
+                          <MenuItem
+                            key={item.get('id')}
+                            primaryText={item.get('name')}
+                            onClick={this.handleOnClickCopyTarget({
+                              targetId: value.get('id'),
+                              targetChapterId: item.get('id'),
+                              name: 'courses',
+                            })}
+                          />
+                        )).toList().toJS()
+                      )}
+                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                        undefined
+                      ) : (
+                        this.handleOnClickCopyTarget({
+                           targetId: value.get('id'),
+                           name: 'courses',
+                        })
+                      )}
                     />
                   )).toList().toJS()}
                 />
@@ -198,19 +244,31 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('groupId')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={<GoLeftSvg />}
+                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
                       primaryText={value.get('groupName')}
-                      menuItems={value.get('chapters').map((item) => (
-                        <MenuItem
-                          key={item.get('id')}
-                          primaryText={item.get('name')}
-                          onClick={this.handleOnClickCopyTarget({
-                            targetId: value.get('library'),
-                            chapterId: item.get('id'),
-                            name: 'courseGroups',
-                          })}
-                        />
-                      )).toList().toJS()}
+                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                        undefined
+                      ) : (
+                        value.get('chapters').map((item) => (
+                          <MenuItem
+                            key={item.get('id')}
+                            primaryText={item.get('name')}
+                            onClick={this.handleOnClickCopyTarget({
+                              targetId: value.get('library'),
+                              targetChapterId: item.get('id'),
+                              name: 'courseGroups',
+                            })}
+                          />
+                        )).toList().toJS()
+                      )}
+                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                        undefined
+                      ) : (
+                        this.handleOnClickCopyTarget({
+                          targetId: value.get('library'),
+                          name: 'courseGroups',
+                        })
+                      )}
                     />
                   )).toList().toJS()}
                 />
@@ -228,19 +286,31 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('id')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={<GoLeftSvg />}
+                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
                       primaryText={value.get('name')}
-                      menuItems={value.get('chapters').map((item) => (
-                        <MenuItem
-                          key={item.get('id')}
-                          primaryText={item.get('name')}
-                          onClick={this.handleOnClickCopyTarget({
-                            targetId: value.get('id'),
-                            chapterId: item.get('id'),
-                            name: 'classrooms',
-                          })}
-                        />
-                      )).toList().toJS()}
+                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                        undefined
+                      ) : (
+                        value.get('chapters').map((item) => (
+                          <MenuItem
+                            key={item.get('id')}
+                            primaryText={item.get('name')}
+                            onClick={this.handleOnClickCopyTarget({
+                              targetId: value.get('id'),
+                              targetChapterId: item.get('id'),
+                              name: 'classrooms',
+                            })}
+                          />
+                        )).toList().toJS()
+                      )}
+                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                        undefined
+                      ) : (
+                        this.handleOnClickCopyTarget({
+                          targetId: value.get('id'),
+                          name: 'classrooms',
+                        })
+                      )}
                     />
                   )).toList().toJS()}
                 />
@@ -248,37 +318,40 @@ export default class CurrentChoice extends React.PureComponent {
             </Popover>
           </div>
         </div>
-        <div className={styles.chapter}>
-          <div>{'章节:'}</div>
-          <div>
-            {/* chapters 在没有获取题目详情的时候也存在数据，但是没有题目、组卷和课件的信息 */}
-            {/* 原因是获取课程、课程组和课堂列表时需要获取各自对应的章节供复制按钮使用 */}
-            {/* 因此需要判断是否存在题目、组卷和课件的信息，防止出错 */}
-            {chapters.map((value) => (
-              <FlatButton
-                key={value.get('id')}
-                label={`${value.get('name')}(${
-                  ((value.get('questions') && value.get('questions').size) || 0) +
-                  ((value.get('quizzes') && value.get('quizzes').size) || 0) +
-                  ((value.get('coursewares') && value.get('coursewares').size) || 0)
-                })`}
-                onClick={handleOnClickChapter({
-                  id: value.get('id'),
-                })}
-              />
-            )).toJS()}
+        <fieldset className={styles.filter}>
+          <legend>{'筛选'}</legend>
+          <div className={styles.chapter}>
+            <div>{'章节:'}</div>
+            <div>
+              {/* chapters 在没有获取题目详情的时候也存在数据，但是没有题目、组卷和课件的信息 */}
+              {/* 原因是获取课程、课程组和课堂列表时需要获取各自对应的章节供复制按钮使用 */}
+              {/* 因此需要判断是否存在题目、组卷和课件的信息，防止出错 */}
+              {chapters.map((value) => (
+                <FlatButton
+                  key={value.get('id')}
+                  label={`${value.get('name')}(${
+                    ((value.get('questions') && value.get('questions').size) || 0) +
+                    ((value.get('quizzes') && value.get('quizzes').size) || 0) +
+                    ((value.get('coursewares') && value.get('coursewares').size) || 0)
+                  })`}
+                  onClick={handleOnClickChapter({
+                    id: value.get('id'),
+                  })}
+                />
+              )).toJS()}
+            </div>
           </div>
-        </div>
-        <div className={styles.search}>
-          <div>{'搜索:'}</div>
-          <input type='text' ref={(node) => {this.searchInputElement = node}} />
-          <IconButton
-            onClick={this.handleOnClickSearch}
-            style={{ padding: '0', width: '24px', height: '24px' }}
-          >
-            <SearchSvg />
-          </IconButton>
-        </div>
+          <div className={styles.search}>
+            <div>{'搜索:'}</div>
+            <input type='text' ref={(node) => {this.searchInputElement = node}} />
+            <IconButton
+              onClick={this.handleOnClickSearch}
+              style={{ padding: '0', width: '24px', height: '24px' }}
+            >
+              <SearchSvg />
+            </IconButton>
+          </div>
+        </fieldset>
         <div className={styles.selectAll}>
           <Checkbox
             checked={isSelectAll}
@@ -289,6 +362,31 @@ export default class CurrentChoice extends React.PureComponent {
             onCheck={handleOnClickSelectAll}
           />
         </div>
+        <Dialog
+          title={'请决定复制方式'}
+          actions={[
+            <FlatButton
+              key={'copyEntireChapter'}
+              label={'复制整个章节'}
+              primary
+              onClick={this.handleOnDecideCopyMethod({
+                method: 'copyEntireChapter',
+              })}
+            />,
+            <FlatButton
+              key={'copySelectedQuestionItems'}
+              label={'仅复制选中项'}
+              primary
+              onClick={this.handleOnDecideCopyMethod({
+                method: 'copySelectedQuestionItems',
+              })}
+            />,
+          ]}
+          modal
+          open={showCopyMethodDialog}
+        >
+          {'您当前选中了当前章节中的所有题目，需要将整个章节全部复制到指定位置吗？'}
+        </Dialog>
       </div>
     )
   }

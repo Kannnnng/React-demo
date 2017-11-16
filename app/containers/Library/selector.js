@@ -374,8 +374,18 @@ const searchConditionsSelector = createSelector(
     const result = []
     if (!selectedChapters.isEmpty()) {
       result.push({
+        /* 按照整个章节复制时需要知道被复制章节的 ID */
+        id: selectedChapters.get('id'),
         name: 'chapter',
         value: selectedChapters.get('name'),
+        /* 在 CurrentChoice 组件中，需要得知当前被选中作为筛选条件的章节中所包含的题目、组卷 */
+        /* 课件的总数，然后与当前用于选中的题目、组卷、课件数量做比较，如果想同，则提示用户是否 */
+        /* 需要将整个章节（包含章节信息和章节中题目信息）全部复制， */
+        number: (
+          selectedChapters.get('coursewares').size +
+          selectedChapters.get('questions').size +
+          selectedChapters.get('quizzes').size
+        ),
       })
     }
     if (searchText) {
