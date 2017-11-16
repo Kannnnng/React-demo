@@ -189,7 +189,7 @@ export default class CurrentChoice extends React.PureComponent {
             ]).toJS()}
             <GoRightSvg />
             <Badge
-              id={'questionItemShoppingCart'}
+              id={'questionItemShoppingCartTarget'}
               badgeContent={entireSelectedQuestionItemsNumber}
               badgeStyle={{ top: '-1px' }}
               primary

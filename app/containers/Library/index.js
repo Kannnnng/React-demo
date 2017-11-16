@@ -14,6 +14,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fromJS } from 'immutable'
+import $ from 'jquery'
 import Badge from 'material-ui/Badge'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
@@ -203,11 +204,39 @@ class Library extends React.PureComponent {
 
   /* 选中某一题目、组卷或课件 */
   handleOnQuestionItemCheck = ({ id, name }) => (event, isChecked) => {
-    this.props.actions.selectQuestionItemAction({
-      id,
-      name,
-      isChecked,
-    })
+    const sourcePosition = event.currentTarget.getClientRects()[0]
+    const targetPosition = $('#questionItemShoppingCartTarget')[0].getClientRects()[0]
+    if (isChecked) {
+      /* 如果选中，则显示点击以后的类似“商品进入购物车”动画 */
+      $('#questionItemShoppingCartSource')
+        .clone()
+        .attr({
+          id: 'questionItemShoppingCartSourceDuplicate',
+        })
+        .appendTo('body')
+        .css({
+          display: 'inline-block',
+          top: `${sourcePosition.top + 5}px`,
+          left: `${sourcePosition.left + 43}px`,
+        })
+        .animate({
+          top: `${targetPosition.top - 1}px`,
+          left: `${targetPosition.left + 24}px`,
+        }, 'swing', () => {
+          $('#questionItemShoppingCartSourceDuplicate').remove()
+          this.props.actions.selectQuestionItemAction({
+            id,
+            name,
+            isChecked,
+          })
+        })
+    } else {
+      this.props.actions.selectQuestionItemAction({
+        id,
+        name,
+        isChecked,
+      })
+    }
   }
 
   /* 查看组卷的下一道题目 */
@@ -549,6 +578,20 @@ class Library extends React.PureComponent {
             })}
           />
         </div>
+        <Badge
+          id={'questionItemShoppingCartSource'}
+          badgeContent={'1'}
+          secondary
+          style={{
+            display: 'none',
+            paddingTop: '0',
+            paddingBottom: '0',
+            paddingLeft: '0',
+            lineHeight: '0',
+            position: 'absolute',
+            zIndex: '1000',
+          }}
+        />
       </div>
     )
   }
