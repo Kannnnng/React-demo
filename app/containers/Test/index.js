@@ -59,7 +59,7 @@ class Test extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-    message: state.test.get('message'),
+    message: state.getIn(['test', 'message']),
   }
 }
 

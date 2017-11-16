@@ -11,6 +11,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import Badge from 'material-ui/Badge'
 import Checkbox from 'material-ui/Checkbox'
 import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
@@ -20,6 +21,7 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import SearchSvg from 'material-ui/svg-icons/action/search'
+import ShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
 import GoRightSvg from 'material-ui/svg-icons/navigation/chevron-right'
 import GoLeftSvg from 'material-ui/svg-icons/navigation/chevron-left'
 import {
@@ -181,6 +183,20 @@ export default class CurrentChoice extends React.PureComponent {
                 {value.get('value')}
               </Chip>,
             ]).toJS()}
+            <GoRightSvg />
+            <Badge
+              badgeContent={'123'}
+              badgeStyle={{ top: '-1px' }}
+              primary
+              style={{
+                paddingTop: '0',
+                paddingBottom: '0',
+                paddingLeft: '0',
+                lineHeight: '0',
+              }}
+            >
+              <ShoppingCart />
+            </Badge>
           </div>
           <div>
             <FlatButton

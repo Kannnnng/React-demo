@@ -12,7 +12,10 @@ const initialState = fromJS({
   others: {
     selectedCourseOrCourseGroupOrClassroom: {},
     currentPageNumber: 1,
-    selectedQuestionItems: {},
+    /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件 */
+    selectedAllQuestionItems: {},
+    /* 当前课程、课程组或课堂中经过筛选后显示在页面上的选定的所有题目、组卷和课件 */
+    selectedCurrentQuestionItems: {},
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
@@ -70,6 +73,7 @@ export default handleActions({
       return state
     },
   },
+  /* 初始化根据 ID 获取详情数据请求的状态标志位 */
   'APP/LIBRARY/INITIAL_GET_QUESTIONS_BY_ID_STATUS_ACTION': {
     next(state, action) {
       const status = lodash.get(action, 'payload.status')
@@ -85,6 +89,7 @@ export default handleActions({
       return state
     },
   },
+  /* 根据课程 ID 获取详情数据 */
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_ID_ACTION': {
     next(state, action) {
       const chapters = lodash.get(action, 'payload.entities.chapters')
@@ -110,6 +115,7 @@ export default handleActions({
       return state.setIn(['status', 'getQuestionsByCourseIdStatus'], 'failed')
     },
   },
+  /* 根据课程组 ID 获取详情数据 */
   'APP/LIBRARY/GET_QUESTIONS_BY_COURSE_GROUP_ID_ACTION': {
     next(state, action) {
       const chapters = lodash.get(action, 'payload.entities.chapters')
@@ -133,6 +139,7 @@ export default handleActions({
       return state.setIn(['status', 'getQuestionsByCourseGroupIdStatus'], 'failed')
     },
   },
+  /* 根据课堂 ID 获取详情数据 */
   'APP/LIBRARY/GET_QUESTIONS_BY_CLASSROOM_ID_ACTION': {
     next(state, action) {
       const chapters = lodash.get(action, 'payload.entities.chapters')
@@ -159,18 +166,20 @@ export default handleActions({
       return state.setIn(['status', 'getQuestionsByClassroomIdStatus'], 'failed')
     },
   },
+  /* 点击左侧边栏选择某一课程、课程组或课堂 */
   'APP/LIBRARY/SELECT_COURSE_OR_COURSE_GROUP_OR_CLASSROOM_ACTION': {
     next(state, action) {
       const id = lodash.get(action, 'payload.id')
       const name = lodash.get(action, 'payload.name')
       return state
+        /* 在课程、课程组和课堂之间相互切换时，需要初始化与页面相关的状态标志位 */
         .mergeIn(['others'], fromJS({
           selectedCourseOrCourseGroupOrClassroom: {
             id,
             name,
           },
           currentNumber: 1,
-          selectedQuestionItems: {},
+          selectedAllQuestionItems: {},
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
@@ -180,6 +189,7 @@ export default handleActions({
       return state
     },
   },
+  /* 翻页操作 */
   'APP/LIBRARY/PAGE_NUMBER_CHANGE_ACTION': {
     next(state, action) {
       const number = lodash.get(action, 'payload.number')
@@ -197,7 +207,8 @@ export default handleActions({
       return state
         .setIn(['others', 'selectedChapterId'], id)
         .setIn(['others', 'currentPageNumber'], 1)
-        .setIn(['others', 'selectedQuestionItems'], fromJS({}))
+        /* 因为要求可以跨章节选择，因此在指定章节作为筛选条件时，不将原来选中的内容删除 */
+        // .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
     },
     throw(state) {
       return state
@@ -210,6 +221,7 @@ export default handleActions({
       return state
         .setIn(['others', 'searchText'], searchText)
         .setIn(['others', 'currentPageNumber'], 1)
+        /* 在指定输入内容作为筛选条件时，不将原来选中的内容删除 */
     },
     throw(state) {
       return state
@@ -230,7 +242,7 @@ export default handleActions({
             .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
           return state
-            .setIn(['others', 'selectedQuestionItems'], fromJS({}))
+            .setIn(['others', 'selectedCurrentQuestionItems'], fromJS({}))
         default:
           return state
       }
@@ -246,15 +258,22 @@ export default handleActions({
       const name = lodash.get(action, 'payload.name')
       const isChecked = lodash.get(action, 'payload.isChecked')
       if (isChecked) {
-        if (state.getIn(['others', 'selectedQuestionItems']).has(id)) {
+        if (state.getIn(['others', 'selectedAllQuestionItems']).has(id)) {
           return state
         }
-        return state.updateIn(['others', 'selectedQuestionItems'], (value) => value.set(id, fromJS({
-          id,
-          name,
-        })))
+        return state
+          .updateIn(['others', 'selectedAllQuestionItems'], (value) => value.set(id, fromJS({
+            id,
+            name,
+          })))
+          .updateIn(['others', 'selectedCurrentQuestionItems'], (value) => value.set(id, fromJS({
+            id,
+            name,
+          })))
       }
-      return state.deleteIn(['others', 'selectedQuestionItems', id])
+      return state
+        .deleteIn(['others', 'selectedAllQuestionItems', id])
+        .deleteIn(['others', 'selectedCurrentQuestionItems', id])
     },
     throw(state) {
       return state
@@ -265,7 +284,18 @@ export default handleActions({
     next(state, action) {
       /* allQuestionItems 已经是 immutable 对象了 */
       const allQuestionItems = lodash.get(action, 'payload.allQuestionItems')
-      return state.setIn(['others', 'selectedQuestionItems'], allQuestionItems)
+      if (allQuestionItems.isEmpty()) {
+        return state
+          .updateIn(['others', 'selectedAllQuestionItems'], (value) => (
+            state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item) => (
+              result.delete(item)
+            ), value)
+          ))
+          .setIn(['others', 'selectedCurrentQuestionItems'], allQuestionItems)
+      }
+      return state
+        .mergeIn(['others', 'selectedAllQuestionItems'], allQuestionItems)
+        .setIn(['others', 'selectedCurrentQuestionItems'], allQuestionItems)
     },
     throw(state) {
       return state
@@ -316,7 +346,8 @@ export default handleActions({
         /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
         /* 清空已经选择的题目、组卷和课件集合 */
-        .setIn(['others', 'selectedQuestionItems'], fromJS({}))
+        .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
+        .setIn(['others', 'selectedCurrentQuestionItems'], fromJS({}))
         .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
     },
     throw(state) {
