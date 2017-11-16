@@ -65,6 +65,7 @@
   "dependencies": {
     "axios": "0.17.0",
     "immutable": "3.8.2",
+    "jquery": "^3.2.1",
     "lodash-es": "4.17.4",
     "material-ui": "0.19.2",
     "md5": "2.2.1",
