@@ -359,18 +359,24 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
-/* 当前选中的题目、组卷、课件 ID 集合 */
-const selectedQuestionItemsSelector = createSelector(
+/* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
+const selectedAllQuestionItemsSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItems']) || immutableObjectEmpty
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedAllQuestionItems']) || immutableObjectEmpty
+)
+
+/* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件集合 */
+const selectedCurrentQuestionItemsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCurrentQuestionItems']) || immutableObjectEmpty
 )
 
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
   selectedChaptersSelector,
   searchTextSelector,
-  selectedQuestionItemsSelector,
-  (selectedChapters, searchText, selectedQuestionItems) => {
+  selectedCurrentQuestionItemsSelector,
+  (selectedChapters, searchText, selectedCurrentQuestionItems) => {
     const result = []
     if (!selectedChapters.isEmpty()) {
       result.push({
@@ -395,10 +401,10 @@ const searchConditionsSelector = createSelector(
         value: searchText,
       })
     }
-    if (!selectedQuestionItems.isEmpty()) {
+    if (!selectedCurrentQuestionItems.isEmpty()) {
       result.push({
         name: 'select',
-        value: `已选择(${selectedQuestionItems.size})`,
+        value: `已选择(${selectedCurrentQuestionItems.size})`,
       })
     }
     return fromJS(result)
@@ -484,7 +490,8 @@ const selector = createSelector(
   searchConditionsSelector,
   totalPagesSelector,
   currentPageNumberSelector,
-  selectedQuestionItemsSelector,
+  selectedAllQuestionItemsSelector,
+  selectedCurrentQuestionItemsSelector,
   previewQuestionItemSelector,
   statusSelector,
   (
@@ -499,7 +506,8 @@ const selector = createSelector(
     filterConditions,
     totalPages,
     currentPageNumber,
-    selectedQuestionItems,
+    selectedAllQuestionItems,
+    selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
   ) => ({
@@ -514,7 +522,8 @@ const selector = createSelector(
     filterConditions,
     totalPages,
     currentPageNumber,
-    selectedQuestionItems,
+    selectedAllQuestionItems,
+    selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
   })

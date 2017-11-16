@@ -67,8 +67,22 @@ class Library extends React.PureComponent {
     totalPages: PropTypes.number.isRequired,
     /* 当前页码 */
     currentPageNumber: PropTypes.number.isRequired,
+    /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
+    selectedAllQuestionItems: ImmutablePropTypes.mapOf(
+      ImmutablePropTypes.mapContains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+      PropTypes.string.isRequired,
+    ),
     /* 当前已经选择的题目、组卷和课件集合 */
-    selectedQuestionItems: ImmutablePropTypes.map,
+    selectedCurrentQuestionItems: ImmutablePropTypes.mapOf(
+      ImmutablePropTypes.mapContains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+      PropTypes.string.isRequired,
+    ),
     /* 当前要求显示预览效果的题目或组卷 */
     /* 课件的预览直接跳转至预览页面 */
     previewQuestionItem: ImmutablePropTypes.map,
@@ -153,7 +167,7 @@ class Library extends React.PureComponent {
       selectedQuestionItems: value.copyMethod === 'copyEntireChapter' ? (
         []
       ) : (
-        this.props.selectedQuestionItems.toList().toJS()
+        this.props.selectedCurrentQuestionItems.toList().toJS()
       ),
       sourceChapter: value.copyMethod !== 'copyEntireChapter' ? (
         undefined
@@ -229,11 +243,11 @@ class Library extends React.PureComponent {
   handleOnClickSelectAll = () => {
     const {
       selectedCollectionAllQuestionItems,
-      selectedQuestionItems,
+      selectedCurrentQuestionItems,
     } = this.props
     if (
-      selectedCollectionAllQuestionItems.size === selectedQuestionItems.size &&
-      selectedQuestionItems.size !== 0
+      selectedCollectionAllQuestionItems.size === selectedCurrentQuestionItems.size &&
+      selectedCurrentQuestionItems.size !== 0
     ) {
       this.props.actions.selectAllQuestionItemsAction({
         allQuestionItems: immutableObjectEmpty,
@@ -275,7 +289,8 @@ class Library extends React.PureComponent {
       filterConditions,
       totalPages,
       currentPageNumber,
-      selectedQuestionItems,
+      selectedAllQuestionItems,
+      selectedCurrentQuestionItems,
       previewQuestionItem,
       status,
     } = this.props
@@ -391,12 +406,13 @@ class Library extends React.PureComponent {
               courseGroups={myCourseGroups}
               classrooms={myClassrooms}
               chapters={selectedCollectionChapters}
-              isSelectedQuestionItemsEmpty={selectedQuestionItems.isEmpty()}
+              isSelectedCurrentQuestionItemsEmpty={selectedAllQuestionItems.isEmpty()}
               isSelectAll={(
-                selectedCollectionAllQuestionItems.size === selectedQuestionItems.size &&
-                selectedQuestionItems.size !== 0
+                selectedCollectionAllQuestionItems.size === selectedCurrentQuestionItems.size &&
+                selectedCurrentQuestionItems.size !== 0
               )}
-              isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedQuestionItems.size}
+              isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
+              entireSelectedQuestionItemsNumber={selectedAllQuestionItems.size}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}
@@ -426,7 +442,7 @@ class Library extends React.PureComponent {
                 isQuiz={value.get('isQuiz')}
                 isCourseware={value.get('isCourseware')}
                 fileType={value.get('fileType')}
-                isChecked={selectedQuestionItems.has(value.get('id'))}
+                isChecked={selectedAllQuestionItems.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}

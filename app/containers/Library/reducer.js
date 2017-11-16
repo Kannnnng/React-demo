@@ -14,7 +14,7 @@ const initialState = fromJS({
     currentPageNumber: 1,
     /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件 */
     selectedAllQuestionItems: {},
-    /* 当前课程、课程组或课堂中经过筛选后显示在页面上的选定的所有题目、组卷和课件 */
+    /* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件 */
     selectedCurrentQuestionItems: {},
     previewQuestionItem: {},
     selectedChapterId: null,

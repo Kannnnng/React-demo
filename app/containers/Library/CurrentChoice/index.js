@@ -45,12 +45,14 @@ export default class CurrentChoice extends React.PureComponent {
     /* 使用数组的原因是需要根据章节的 rank 属性按顺序显示 */
     chapters: ImmutablePropTypes.list.isRequired,
     /* 当前是否已经选择了至少一个题目、组卷或课件 */
-    isSelectedQuestionItemsEmpty: PropTypes.bool.isRequired,
+    isSelectedCurrentQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
     isSelectAll: PropTypes.bool.isRequired,
     /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
     /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
     isCopyEntireChapter: PropTypes.bool.isRequired,
+    /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件总数量 */
+    entireSelectedQuestionItemsNumber: PropTypes.number.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -68,9 +70,10 @@ export default class CurrentChoice extends React.PureComponent {
     courses: immutableObjectEmpty,
     courseGroups: immutableObjectEmpty,
     classrooms: immutableObjectEmpty,
-    isSelectedQuestionItemsEmpty: true,
+    isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
     isCopyEntireChapter: false,
+    entireSelectedQuestionItemsNumber: 0,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
@@ -150,8 +153,9 @@ export default class CurrentChoice extends React.PureComponent {
       courseGroups,
       classrooms,
       chapters,
-      isSelectedQuestionItemsEmpty,
+      isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
+      entireSelectedQuestionItemsNumber,
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
@@ -185,7 +189,8 @@ export default class CurrentChoice extends React.PureComponent {
             ]).toJS()}
             <GoRightSvg />
             <Badge
-              badgeContent={'123'}
+              id={'questionItemShoppingCart'}
+              badgeContent={entireSelectedQuestionItemsNumber}
               badgeStyle={{ top: '-1px' }}
               primary
               style={{
@@ -201,7 +206,7 @@ export default class CurrentChoice extends React.PureComponent {
           <div>
             <FlatButton
               label={'复制到'}
-              disabled={isSelectedQuestionItemsEmpty}
+              disabled={isSelectedCurrentQuestionItemsEmpty}
               onClick={this.handleOnClickCopyToButton}
             />
             <Popover
