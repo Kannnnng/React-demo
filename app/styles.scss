@@ -5,7 +5,23 @@
 
 html,
 body,
-body > :first-child,
-body > :first-child > div {
+body > :nth-child(2),
+body > :nth-child(2) > div {
   height: 100%;
+}
+
+body > :nth-child(1) > * {
+
+  &:nth-child(1) {
+    background-color: #3B9E46;
+
+    > div {
+      box-shadow: 0 0 10px red, 0 0 5px red;
+    }
+  }
+
+  &:nth-child(2) {
+    border-top-color: #3B9E46;
+    border-left-color: #3B9E46;
+  }
 }

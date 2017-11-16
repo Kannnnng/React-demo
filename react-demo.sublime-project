@@ -12,6 +12,7 @@
 				"assets",
 				"build",
 				"generator",
+				"lib",
 				"node_modules"
 			],
 			"path": "."

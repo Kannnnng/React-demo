@@ -128,12 +128,12 @@ if (process.env.NODE_ENV === 'production') {
     new CopyWebpackPlugin([
       /* 复制图片到 build 文件夹 */
       {
-        from: 'assets/*.[png|jpg|jpeg|gif|svg]',
+        from: 'lib/*.[png|jpg|jpeg|gif|svg]',
         to: 'build/assets',
       },
-      /* 复制其他 JS 文件到 build 文件夹 */
+      /* 复制 JS、CSS 文件到 build 文件夹 */
       {
-        from: 'assets/*.[js]',
+        from: 'lib/*.[js|css]',
         to: 'build',
       },
     ]),
