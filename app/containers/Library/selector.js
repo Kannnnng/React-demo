@@ -379,12 +379,13 @@ const searchConditionsSelector = createSelector(
         name: 'chapter',
         value: selectedChapters.get('name'),
         /* 在 CurrentChoice 组件中，需要得知当前被选中作为筛选条件的章节中所包含的题目、组卷 */
-        /* 课件的总数，然后与当前用于选中的题目、组卷、课件数量做比较，如果想同，则提示用户是否 */
+        /* 课件的总数，然后与当前用于选中的题目、组卷、课件数量做比较，如果相同，则提示用户是否 */
         /* 需要将整个章节（包含章节信息和章节中题目信息）全部复制， */
+        /* 章节信息中可能不包含题目、组卷、课件信息，因此获取各自的 size 时需要判断一下 */
         number: (
-          selectedChapters.get('coursewares').size +
-          selectedChapters.get('questions').size +
-          selectedChapters.get('quizzes').size
+          ((selectedChapters.get('coursewares') && selectedChapters.get('coursewares').size) || 0) +
+          ((selectedChapters.get('questions') && selectedChapters.get('questions').size) || 0) +
+          ((selectedChapters.get('quizzes') && selectedChapters.get('quizzes').size) || 0)
         ),
       })
     }

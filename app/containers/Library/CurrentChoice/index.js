@@ -135,6 +135,12 @@ export default class CurrentChoice extends React.PureComponent {
     })
   }
 
+  handleOnCloseCopyMethodDialog = () => {
+    this.setState({
+      showCopyMethodDialog: false,
+    })
+  }
+
   render() {
     const {
       conditions,
@@ -366,8 +372,13 @@ export default class CurrentChoice extends React.PureComponent {
           title={'请决定复制方式'}
           actions={[
             <FlatButton
+              key={'closeDialog'}
+              label={'关闭对话框'}
+              onClick={this.handleOnCloseCopyMethodDialog}
+            />,
+            <FlatButton
               key={'copyEntireChapter'}
-              label={'复制整个章节'}
+              label={'带章节信息'}
               primary
               onClick={this.handleOnDecideCopyMethod({
                 method: 'copyEntireChapter',
@@ -382,10 +393,10 @@ export default class CurrentChoice extends React.PureComponent {
               })}
             />,
           ]}
-          modal
           open={showCopyMethodDialog}
+          onRequestClose={this.handleOnCloseCopyMethodDialog}
         >
-          {'您当前选中了当前章节中的所有题目，需要将整个章节全部复制到指定位置吗？'}
+          {'您选中了当前章节中的所有题目，需要将整个章节全部复制到指定位置吗？'}
         </Dialog>
       </div>
     )

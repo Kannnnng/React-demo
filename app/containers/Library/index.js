@@ -155,10 +155,12 @@ class Library extends React.PureComponent {
       ) : (
         this.props.selectedQuestionItems.toList().toJS()
       ),
-      sourceChapterId: value.copyMethod !== 'copyEntireChapter' ? (
+      sourceChapter: value.copyMethod !== 'copyEntireChapter' ? (
         undefined
       ) : (
-        this.props.filterConditions.getIn(['0', 'id'])
+        this.props.selectedCollectionChapters.find((value) => (
+          value.get('id') === this.props.filterConditions.getIn(['0', 'id'])
+        )).toJS()
       ),
     })
   }

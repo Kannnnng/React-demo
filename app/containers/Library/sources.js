@@ -120,7 +120,7 @@ export function copyQuestionItemToLibrary({
   /* 章节复制方式，是否将整个章节信息全部复制还是仅复制选中的单位 */
   copyMethod,
   /* 被复制章节的 ID */
-  sourceChapterId,
+  sourceChapter,
 }) {
   const coursewareIds = []
   const questionIds = []
@@ -137,7 +137,7 @@ export function copyQuestionItemToLibrary({
     copyMethod === 'copyEntireChapter' ? (
       http.post(`v2/copy/${targetId}/chapter`, {
         chapters: [
-          sourceChapterId,
+          sourceChapter,
         ],
       })
     ) : (
@@ -153,7 +153,7 @@ export function copyQuestionItemToLibrary({
       http.post('v2/copy/chapter', {
         libraryId: targetId,
         chapters: [
-          sourceChapterId,
+          sourceChapter,
         ],
       })
     ) : (
