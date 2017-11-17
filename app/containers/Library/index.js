@@ -91,6 +91,8 @@ class Library extends React.PureComponent {
     status: ImmutablePropTypes.map,
     /* 需要用户确定哪些章节需要整体复制（带章节信息） */
     needDecideCopyEntireChapterList: ImmutablePropTypes.list,
+    /* 当前用户决定整体复制的章节信息集合 */
+    decidedCopyEntireChapterList: ImmutablePropTypes.map,
   }
 
   state = {
@@ -348,6 +350,7 @@ class Library extends React.PureComponent {
       previewQuestionItem,
       status,
       needDecideCopyEntireChapterList,
+      decidedCopyEntireChapterList,
     } = this.props
     const {
       selectableListValue,
@@ -467,6 +470,7 @@ class Library extends React.PureComponent {
                 selectedCurrentQuestionItems.size !== 0
               )}
               needDecideCopyEntireChapterList={needDecideCopyEntireChapterList}
+              decidedCopyEntireChapterList={decidedCopyEntireChapterList}
               isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}

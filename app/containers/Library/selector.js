@@ -534,6 +534,17 @@ const needDecideCopyEntireChapterListSelector = createSelector(
   )
 )
 
+/* 获取当前哪些章节用户决定整体复制 */
+const decidedCopyEntireChapterListSelector = createSelector(
+  selectorDomain,
+  selectedCourseChaptersSelector,
+  (selectorDomain, selectedCourseChaptersSelector) => (
+    selectorDomain.getIn(['others', 'needCopyEntireChapterList']).reduce((result, value) => (
+      result.set(value, selectedCourseChaptersSelector.get(value))
+    ), immutableObjectEmpty)
+  )
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
@@ -552,6 +563,7 @@ const selector = createSelector(
   previewQuestionItemSelector,
   statusSelector,
   needDecideCopyEntireChapterListSelector,
+  decidedCopyEntireChapterListSelector,
   (
     myInfomation,
     myCourses,
@@ -569,6 +581,7 @@ const selector = createSelector(
     previewQuestionItem,
     status,
     needDecideCopyEntireChapterList,
+    decidedCopyEntireChapterList,
   ) => ({
     myInfomation,
     myCourses,
@@ -586,6 +599,7 @@ const selector = createSelector(
     previewQuestionItem,
     status,
     needDecideCopyEntireChapterList,
+    decidedCopyEntireChapterList,
   })
 )
 

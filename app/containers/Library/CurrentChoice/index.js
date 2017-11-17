@@ -49,6 +49,8 @@ export default class CurrentChoice extends React.PureComponent {
     isSelectAll: PropTypes.bool.isRequired,
     /* 需要用户确定哪些章节需要整体拷贝（带章节信息） */
     needDecideCopyEntireChapterList: ImmutablePropTypes.list,
+    /* 当前用户决定整体复制的章节信息集合 */
+    decidedCopyEntireChapterList: ImmutablePropTypes.map,
     /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
     /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
     isCopyEntireChapter: PropTypes.bool.isRequired,
@@ -78,6 +80,7 @@ export default class CurrentChoice extends React.PureComponent {
     isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
     needDecideCopyEntireChapterList: immutableArrayEmpty,
+    decidedCopyEntireChapterList: immutableObjectEmpty,
     isCopyEntireChapter: false,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
@@ -165,6 +168,7 @@ export default class CurrentChoice extends React.PureComponent {
       isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
       needDecideCopyEntireChapterList,
+      decidedCopyEntireChapterList,
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
@@ -443,6 +447,7 @@ export default class CurrentChoice extends React.PureComponent {
               onToggle={handleOnSelectNeedCopyEntireChapter({
                 id: value.get('id'),
               })}
+              toggled={decidedCopyEntireChapterList.has(value.get('id'))}
             />
           )).toJS()}
         </Dialog>
