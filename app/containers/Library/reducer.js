@@ -19,7 +19,7 @@ const initialState = fromJS({
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
-    showAllSelectedQuestionItems: false,
+    isShowAllSelectedQuestionItems: false,
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
@@ -181,10 +181,11 @@ export default handleActions({
           },
           currentNumber: 1,
           selectedAllQuestionItems: {},
+          selectedCurrentQuestionItems: {},
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
-          showAllSelectedQuestionItems: false,
+          isShowAllSelectedQuestionItems: false,
         }))
     },
     throw(state) {
@@ -211,7 +212,7 @@ export default handleActions({
         .setIn(['others', 'currentPageNumber'], 1)
         /* 因为要求可以跨章节选择，因此在指定章节作为筛选条件时，不将原来选中的内容删除 */
         // .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
-        .setIn(['others', 'showAllSelectedQuestionItems'], false)
+        .setIn(['others', 'isShowAllSelectedQuestionItems'], false)
     },
     throw(state) {
       return state
@@ -225,7 +226,7 @@ export default handleActions({
         .setIn(['others', 'searchText'], searchText)
         .setIn(['others', 'currentPageNumber'], 1)
         /* 在指定输入内容作为筛选条件时，不将原来选中的内容删除 */
-        .setIn(['others', 'showAllSelectedQuestionItems'], false)
+        .setIn(['others', 'isShowAllSelectedQuestionItems'], false)
     },
     throw(state) {
       return state
@@ -239,7 +240,23 @@ export default handleActions({
         .mergeIn(['others'], fromJS({
           selectedChapterId: null,
           searchText: null,
-          showAllSelectedQuestionItems: true,
+          isShowAllSelectedQuestionItems: true,
+        }))
+    },
+    throw(state) {
+      return state
+    },
+  },
+  /* 显示选中的课程、课程组或课堂中的所有题目、组卷和课件 */
+  'APP/LIBRARY/SHOW_ALL_QUESTIONITEMS_ACTION': {
+    next(state) {
+      return state
+        /* 如果要求仅显示当前选中的题目、组卷和课件，则章节筛选条件和搜索筛选条件均不生效 */
+        .mergeIn(['others'], fromJS({
+          currentPageNumber: 1,
+          selectedChapterId: null,
+          searchText: null,
+          isShowAllSelectedQuestionItems: false,
         }))
     },
     throw(state) {
@@ -261,6 +278,11 @@ export default handleActions({
             .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
           return state
+            .updateIn(['others', 'selectedAllQuestionItems'], (value) => (
+              state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item, key) => (
+                result.delete(key)
+              ), value)
+            ))
             .setIn(['others', 'selectedCurrentQuestionItems'], fromJS({}))
         default:
           return state
@@ -303,11 +325,12 @@ export default handleActions({
     next(state, action) {
       /* allQuestionItems 已经是 immutable 对象了 */
       const allQuestionItems = lodash.get(action, 'payload.allQuestionItems')
+      /* allQuestionItems 如果是空，则表明当前操作是全不选 */
       if (allQuestionItems.isEmpty()) {
         return state
           .updateIn(['others', 'selectedAllQuestionItems'], (value) => (
-            state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item) => (
-              result.delete(item)
+            state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item, key) => (
+              result.delete(key)
             ), value)
           ))
           .setIn(['others', 'selectedCurrentQuestionItems'], allQuestionItems)

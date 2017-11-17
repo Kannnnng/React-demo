@@ -290,9 +290,9 @@ const searchTextSelector = createSelector(
 )
 
 /* 仅显示当前所有选中的题目、组卷和课件的状态标志位 */
-const showAllSelectedQuestionItemsSelector = createSelector(
+const isShowAllSelectedQuestionItemsSelector = createSelector(
   selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'showAllSelectedQuestionItems']) || false
+  (selectorDomain) => selectorDomain.getIn(['others', 'isShowAllSelectedQuestionItems']) || false
 )
 
 /* 经过筛选后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
@@ -302,7 +302,7 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseQuizzesSelector,
   selectedChaptersSelector,
   searchTextSelector,
-  showAllSelectedQuestionItemsSelector,
+  isShowAllSelectedQuestionItemsSelector,
   selectedAllQuestionItemsSelector,
   (
     coursewares,
@@ -310,20 +310,21 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
     quizzes,
     selectedChapters,
     searchText,
-    showAllSelectedQuestionItems,
+    isShowAllSelectedQuestionItems,
     selectedAllQuestionItems,
   ) => {
     let result
     /* 如果要求仅显示当前选中的题目、组卷和课件，则章节筛选条件和搜索筛选条件均不生效 */
-    if (showAllSelectedQuestionItems) {
+    if (isShowAllSelectedQuestionItems) {
+      /* 如果当前没有选中任何题目、组卷和课件，则直接返回空 Map */
       if (selectedAllQuestionItems.isEmpty()) {
-        return immutableObjectEmpty
+        return immutableObjectEmpty.toOrderedMap()
       }
-      result = showAllSelectedQuestionItems.reduce((tempResultresult, value, key) => (
+      result = selectedAllQuestionItems.reduce((tempResultresult, value, key) => (
         tempResultresult.set(key, (
           (value.get('name') === 'courseware' && coursewares.get(key)) ||
-          (value.get('name') === 'quiz' && coursewares.get(key)) ||
-          (value.get('name') === 'question' && coursewares.get(key)) || immutableObjectEmpty
+          (value.get('name') === 'quiz' && quizzes.get(key)) ||
+          (value.get('name') === 'question' && questions.get(key))
         ))
       ), immutableObjectEmpty)
     } else {

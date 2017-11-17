@@ -82,6 +82,11 @@ export const showAllSelectedQuestionItemsAction = createAction(
   'APP/LIBRARY/SHOW_ALL_SELECTED_QUESTIONITEMS_ACTION',
 )
 
+/* 显示选中的课程、课程组或课堂中的所有题目、组卷和课件 */
+export const showAllQuestionItemsAction = createAction(
+  'APP/LIBRARY/SHOW_ALL_QUESTIONITEMS_ACTION',
+)
+
 /* 删除某一筛选条件 */
 export const deleteConditionAction = createAction(
   'APP/LIBRARY/DELETE_CONDITION_ACTION',

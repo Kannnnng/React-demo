@@ -309,6 +309,16 @@ class Library extends React.PureComponent {
     }
   }
 
+  /* 点击显示选中的课程、课程组或课堂中的所有题目、组卷和课件 */
+  handleOnClickShowAllQuestionItems = () => {
+    this.props.actions.showAllQuestionItemsAction()
+  }
+
+  /* 点击显示当前所有选中的题目、组卷和课件 */
+  handleOnClickShowAllSelectedQuestionItems = () => {
+    this.props.actions.showAllSelectedQuestionItemsAction()
+  }
+
   render() {
     const {
       myInfomation,
@@ -450,7 +460,8 @@ class Library extends React.PureComponent {
               handleOnClickChapter={this.handleOnClickChapter}
               handleOnClickSearch={this.handleOnClickSearch}
               handleOnClickSelectAll={this.handleOnClickSelectAll}
-              handleOnClickShowAllSelectedQuestionItems={this.props.actions.showAllSelectedQuestionItemsAction}
+              handleOnClickShowAllQuestionItems={this.handleOnClickShowAllQuestionItems}
+              handleOnClickShowAllSelectedQuestionItems={this.handleOnClickShowAllSelectedQuestionItems}
             />
           </div>
           <div className={styles.displayArea}>

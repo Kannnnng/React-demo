@@ -59,6 +59,8 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickSearch: PropTypes.func.isRequired,
     /* 点击全选按钮时被触发 */
     handleOnClickSelectAll: PropTypes.func.isRequired,
+    /* 点击显示选中的课程、课程组或课堂中的所有题目、组卷和课件 */
+    handleOnClickShowAllQuestionItems: PropTypes.func.isRequired,
     /* 点击显示当前所有选中的题目、组卷和课件 */
     handleOnClickShowAllSelectedQuestionItems: PropTypes.func.isRequired,
   }
@@ -76,6 +78,7 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickChapter: () => () => {},
     handleOnClickSearch: () => {},
     handleOnClickSelectAll: () => {},
+    handleOnClickShowAllQuestionItems: () => {},
     handleOnClickShowAllSelectedQuestionItems: () => {},
   }
 
@@ -156,6 +159,7 @@ export default class CurrentChoice extends React.PureComponent {
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
+      handleOnClickShowAllQuestionItems,
       handleOnClickShowAllSelectedQuestionItems,
     } = this.props
     const {
@@ -172,7 +176,9 @@ export default class CurrentChoice extends React.PureComponent {
       <div className={styles.container}>
         <div className={styles.topToolBar}>
           <div className={styles.conditions}>
-            <Chip>
+            <Chip
+              onClick={handleOnClickShowAllQuestionItems}
+            >
               {'全部'}
             </Chip>
             {/* 要求当教师选择了的 */}
@@ -196,7 +202,7 @@ export default class CurrentChoice extends React.PureComponent {
             />
             <Chip
               id={'questionItemShoppingCartTarget'}
-              onClick={handleOnClickShowAllSelectedQuestionItems}
+              onClick={indexOfSelectInCondition === -1 ? undefined : handleOnClickShowAllSelectedQuestionItems}
               onRequestDelete={handleOnClickCancel({
                 name: conditions.getIn([indexOfSelectInCondition, 'name']),
               })}
