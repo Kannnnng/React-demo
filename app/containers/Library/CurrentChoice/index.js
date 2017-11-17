@@ -19,6 +19,7 @@ import IconButton from 'material-ui/IconButton'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
+import Toggle from 'material-ui/Toggle'
 import SearchSvg from 'material-ui/svg-icons/action/search'
 import GoRightSvg from 'material-ui/svg-icons/navigation/chevron-right'
 import GoLeftSvg from 'material-ui/svg-icons/navigation/chevron-left'
@@ -46,6 +47,8 @@ export default class CurrentChoice extends React.PureComponent {
     isSelectedCurrentQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
     isSelectAll: PropTypes.bool.isRequired,
+    /* 需要用户确定哪些章节需要整体拷贝（带章节信息） */
+    needDecideCopyEntireChapterList: ImmutablePropTypes.list,
     /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
     /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
     isCopyEntireChapter: PropTypes.bool.isRequired,
@@ -63,6 +66,8 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickShowAllQuestionItems: PropTypes.func.isRequired,
     /* 点击显示当前所有选中的题目、组卷和课件 */
     handleOnClickShowAllSelectedQuestionItems: PropTypes.func.isRequired,
+    /* 当某一个需要全部复制到指定位置的章节被选中时触发 */
+    handleOnSelectNeedCopyEntireChapter: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -72,6 +77,7 @@ export default class CurrentChoice extends React.PureComponent {
     classrooms: immutableObjectEmpty,
     isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
+    needDecideCopyEntireChapterList: immutableArrayEmpty,
     isCopyEntireChapter: false,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
@@ -80,6 +86,7 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickSelectAll: () => {},
     handleOnClickShowAllQuestionItems: () => {},
     handleOnClickShowAllSelectedQuestionItems: () => {},
+    handleOnSelectNeedCopyEntireChapter: () => () => {},
   }
 
   state = {
@@ -91,9 +98,10 @@ export default class CurrentChoice extends React.PureComponent {
 
   handleOnClickCopyToButton = (event) => {
     const {
-      isCopyEntireChapter,
+      needDecideCopyEntireChapterList,
     } = this.props
-    if (isCopyEntireChapter) {
+    /* 如果需要确认的章节列表不是空的，那么需要弹出对话框让用户确认哪些章节整体复制 */
+    if (!needDecideCopyEntireChapterList.isEmpty()) {
       this.setState({
         showCopyMethodDialog: true,
         copyToButtonElement: event.currentTarget,
@@ -156,11 +164,13 @@ export default class CurrentChoice extends React.PureComponent {
       chapters,
       isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
+      needDecideCopyEntireChapterList,
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
       handleOnClickShowAllQuestionItems,
       handleOnClickShowAllSelectedQuestionItems,
+      handleOnSelectNeedCopyEntireChapter,
     } = this.props
     const {
       copyMethod,
@@ -425,7 +435,16 @@ export default class CurrentChoice extends React.PureComponent {
           open={showCopyMethodDialog}
           onRequestClose={this.handleOnCloseCopyMethodDialog}
         >
-          {'您选中了当前章节中的所有题目，需要将整个章节全部复制到指定位置吗？'}
+          {'您当前选择的项目中，下列章节中的项目被全部选中，请选择哪些章节需要整体复制到指定位置'}
+          {needDecideCopyEntireChapterList.map((value) => (
+            <Toggle
+              key={value.get('id')}
+              label={value.get('name')}
+              onToggle={handleOnSelectNeedCopyEntireChapter({
+                id: value.get('id'),
+              })}
+            />
+          )).toJS()}
         </Dialog>
       </div>
     )

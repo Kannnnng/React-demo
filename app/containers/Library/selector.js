@@ -8,8 +8,8 @@ import moment from 'moment'
 import { fromJS } from 'immutable'
 import { createSelector } from 'reselect'
 import {
-  immutableObjectEmpty,
   immutableArrayEmpty,
+  immutableObjectEmpty,
   questionPattern,
 } from 'utils/constants'
 
@@ -516,6 +516,24 @@ const statusSelector = createSelector(
   (selectorDomain) => selectorDomain.get('status') || immutableObjectEmpty
 )
 
+/* 计算出用户确定哪些章节需要整体拷贝（带章节信息） */
+const needDecideCopyEntireChapterListSelector = createSelector(
+  selectedAllQuestionItemsSelector,
+  selectedCourseChaptersSelector,
+  (selectedAllQuestionItems, selectedCourseChapters) => (
+    selectedCourseChapters.map((value) => (
+      value
+        .get('coursewares')
+        .concat(value.get('questions'))
+        .concat(value.get('quizzes'))
+        .every((value) => selectedAllQuestionItems.has(value)) ? {
+          id: value.get('id'),
+          name: value.get('name'),
+        } : undefined
+    ))
+  )
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
@@ -533,6 +551,7 @@ const selector = createSelector(
   selectedCurrentQuestionItemsSelector,
   previewQuestionItemSelector,
   statusSelector,
+  needDecideCopyEntireChapterListSelector,
   (
     myInfomation,
     myCourses,
@@ -549,6 +568,7 @@ const selector = createSelector(
     selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
+    needDecideCopyEntireChapterList,
   ) => ({
     myInfomation,
     myCourses,
@@ -565,6 +585,7 @@ const selector = createSelector(
     selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
+    needDecideCopyEntireChapterList,
   })
 )
 

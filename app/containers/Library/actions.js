@@ -123,3 +123,8 @@ export const copyQuestionItemToLibraryAction = createAction(
   'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION',
   copyQuestionItemToLibrary,
 )
+
+/* 当某一个需要全部复制到指定位置的章节被选中时触发 */
+export const selectNeedCopyEntireChapterAction = createAction(
+  'APP/LIBRARY/SELECT_NEED_COPY_ENTIRE_CHAPTER_ACTION',
+)

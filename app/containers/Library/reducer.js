@@ -8,6 +8,7 @@ import lodash from 'lodash'
 import { fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
 import {
+  immutableArrayEmpty,
   immutableObjectEmpty,
 } from 'utils/constants'
 
@@ -21,6 +22,7 @@ const initialState = fromJS({
     selectedChapterId: null,
     searchText: null,
     isShowAllSelectedQuestionItems: false,
+    needCopyEntireChapterList: [],
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
@@ -186,6 +188,7 @@ export default handleActions({
           selectedChapterId: null,
           searchText: null,
           isShowAllSelectedQuestionItems: false,
+          needCopyEntireChapterList: [],
         }))
     },
     throw(state) {
@@ -381,9 +384,32 @@ export default handleActions({
         /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
+        .setIn(['status', 'needCopyEntireChapterList'], immutableArrayEmpty)
     },
     throw(state) {
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')
+    },
+  },
+  /* 当某一个需要全部复制到指定位置的章节被选中时触发 */
+  'APP/LIBRARY/SELECT_NEED_COPY_ENTIRE_CHAPTER_ACTION': {
+    next(state, action) {
+      const id = lodash.get(action, 'payload.id')
+      const isSelected = lodash.get(action, 'payload.isSelected')
+      if (isSelected) {
+        if (state.getIn(['others', 'needCopyEntireChapterList']).includes(id)) {
+          return state
+        }
+        return state
+          .updateIn(['others', 'needCopyEntireChapterList'], (value) => value.push(id))
+      }
+      const index = state.getIn(['others', 'needCopyEntireChapterList']).findIndex((value) => value === id)
+      if (index !== -1) {
+        return state.deleteIn(['others', 'needCopyEntireChapterList', index])
+      }
+      return state
+    },
+    throw(state) {
+      return state
     },
   },
 }, initialState)

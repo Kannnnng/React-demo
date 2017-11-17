@@ -89,6 +89,8 @@ class Library extends React.PureComponent {
     previewQuestionItem: ImmutablePropTypes.map,
     /* 异步请求的状态标志位 */
     status: ImmutablePropTypes.map,
+    /* 需要用户确定哪些章节需要整体复制（带章节信息） */
+    needDecideCopyEntireChapterList: ImmutablePropTypes.list,
   }
 
   state = {
@@ -321,6 +323,14 @@ class Library extends React.PureComponent {
     this.props.actions.showAllSelectedQuestionItemsAction()
   }
 
+  /* 当某一个需要全部复制到指定位置的章节被选中时触发 */
+  handleOnSelectNeedCopyEntireChapter = ({ id }) => (event, isInputChecked) => {
+    this.props.actions.selectNeedCopyEntireChapterAction({
+      id,
+      isSelected: isInputChecked,
+    })
+  }
+
   render() {
     const {
       myInfomation,
@@ -337,6 +347,7 @@ class Library extends React.PureComponent {
       selectedCurrentQuestionItems,
       previewQuestionItem,
       status,
+      needDecideCopyEntireChapterList,
     } = this.props
     const {
       selectableListValue,
@@ -455,6 +466,7 @@ class Library extends React.PureComponent {
                 selectedCollectionQuestionItems.size === selectedCurrentQuestionItems.size &&
                 selectedCurrentQuestionItems.size !== 0
               )}
+              needDecideCopyEntireChapterList={needDecideCopyEntireChapterList}
               isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
@@ -463,6 +475,7 @@ class Library extends React.PureComponent {
               handleOnClickSelectAll={this.handleOnClickSelectAll}
               handleOnClickShowAllQuestionItems={this.handleOnClickShowAllQuestionItems}
               handleOnClickShowAllSelectedQuestionItems={this.handleOnClickShowAllSelectedQuestionItems}
+              handleOnSelectNeedCopyEntireChapter={this.handleOnSelectNeedCopyEntireChapter}
             />
           </div>
           <div className={styles.displayArea}>
