@@ -256,22 +256,10 @@ const selectedCourseQuizzesSelector = createSelector(
   }
 )
 
-/* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
-const selectedAllQuestionItemsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedAllQuestionItems']) || immutableObjectEmpty
-)
-
-/* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件集合 */
-const selectedCurrentQuestionItemsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCurrentQuestionItems']) || immutableObjectEmpty
-)
-
 /* 当前被选中作为筛选条件的章节 */
 /* 因为被选为筛选条件的章节一定是当前被选中的课程、课程组或课堂中所包含的章节，因此可以直接使用 */
 /* selectedCourseChaptersSelector */
-const selectedChaptersSelector = createSelector(
+const selectedChapterSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
   (selectorDomain, selectedCourseChapters) => {
@@ -289,6 +277,12 @@ const searchTextSelector = createSelector(
   (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
 )
 
+/* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
+const selectedAllQuestionItemsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedAllQuestionItems']) || immutableObjectEmpty
+)
+
 /* 仅显示当前所有选中的题目、组卷和课件的状态标志位 */
 const isShowAllSelectedQuestionItemsSelector = createSelector(
   selectorDomain,
@@ -300,7 +294,7 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseCoursewaresSelector,
   selectedCourseQuestionsSelector,
   selectedCourseQuizzesSelector,
-  selectedChaptersSelector,
+  selectedChapterSelector,
   searchTextSelector,
   isShowAllSelectedQuestionItemsSelector,
   selectedAllQuestionItemsSelector,
@@ -308,7 +302,7 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
     coursewares,
     questions,
     quizzes,
-    selectedChapters,
+    selectedChapter,
     searchText,
     isShowAllSelectedQuestionItems,
     selectedAllQuestionItems,
@@ -339,11 +333,11 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
       /* 因为复制按钮要事先知道课程、课程组和课堂中包含的章节，所以最先返回的章节信息中仅有基本信息 */
       /* 不包含有属于本章节的题目、组卷和课件，因此这里的 coursewares、questions 和 quizzes */
       /* 可能是空的，需要进行判断，只需要判断其中一个就好了，因为三个数据是同时被返回的 */
-      if (!selectedChapters.isEmpty() && selectedChapters.get('coursewares')) {
-        result = selectedChapters
+      if (!selectedChapter.isEmpty() && selectedChapter.get('coursewares')) {
+        result = selectedChapter
           .get('coursewares')
-          .concat(selectedChapters.get('questions'))
-          .concat(selectedChapters.get('quizzes'))
+          .concat(selectedChapter.get('questions'))
+          .concat(selectedChapter.get('quizzes'))
           .reduce((tempResult, value) =>{
             /* value 是当前被选中作为筛选条件的章节中所包含的题目、组卷或课件的 ID，如果能够从 */
             /* 当前被选中的课程、课程组或课堂中获取到该 ID 所对应的题目、组卷或课件的数据，那么 */
@@ -376,6 +370,20 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
+/* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件集合 */
+const selectedCurrentQuestionItemsSelector = createSelector(
+  selectedAllQuestionItemsSelector,
+  selectedQuestionsAndQuizzesAndCoursewaresSelector,
+  (selectedAllQuestionItems, selectedQuestionsAndQuizzesAndCoursewares) => {
+    if (!selectedAllQuestionItems.isEmpty() && !selectedQuestionsAndQuizzesAndCoursewares.isEmpty()) {
+      return selectedQuestionsAndQuizzesAndCoursewares.reduce((result, value, key) => (
+        !selectedAllQuestionItems.has(key) ? result : result.set(key, selectedAllQuestionItems.get(key))
+      ), immutableObjectEmpty)
+    }
+    return immutableObjectEmpty
+  }
+)
+
 /* 按照每页显示 10 个条目的规则所计算出的所有的页数 */
 const totalPagesSelector = createSelector(
   selectedQuestionsAndQuizzesAndCoursewaresSelector,
@@ -404,25 +412,25 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
 
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
-  selectedChaptersSelector,
+  selectedChapterSelector,
   searchTextSelector,
   selectedAllQuestionItemsSelector,
-  (selectedChapters, searchText, selectedAllQuestionItems) => {
+  (selectedChapter, searchText, selectedAllQuestionItems) => {
     const result = []
-    if (!selectedChapters.isEmpty()) {
+    if (!selectedChapter.isEmpty()) {
       result.push({
         /* 按照整个章节复制时需要知道被复制章节的 ID */
-        id: selectedChapters.get('id'),
+        id: selectedChapter.get('id'),
         name: 'chapter',
-        value: selectedChapters.get('name'),
+        value: selectedChapter.get('name'),
         /* 在 CurrentChoice 组件中，需要得知当前被选中作为筛选条件的章节中所包含的题目、组卷 */
         /* 课件的总数，然后与当前用于选中的题目、组卷、课件数量做比较，如果相同，则提示用户是否 */
         /* 需要将整个章节（包含章节信息和章节中题目信息）全部复制， */
         /* 章节信息中可能不包含题目、组卷、课件信息，因此获取各自的 size 时需要判断一下 */
         number: (
-          ((selectedChapters.get('coursewares') && selectedChapters.get('coursewares').size) || 0) +
-          ((selectedChapters.get('questions') && selectedChapters.get('questions').size) || 0) +
-          ((selectedChapters.get('quizzes') && selectedChapters.get('quizzes').size) || 0)
+          ((selectedChapter.get('coursewares') && selectedChapter.get('coursewares').size) || 0) +
+          ((selectedChapter.get('questions') && selectedChapter.get('questions').size) || 0) +
+          ((selectedChapter.get('quizzes') && selectedChapter.get('quizzes').size) || 0)
         ),
       })
     }

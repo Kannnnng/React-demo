@@ -7,6 +7,9 @@
 import lodash from 'lodash'
 import { fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
+import {
+  immutableObjectEmpty,
+} from 'utils/constants'
 
 const initialState = fromJS({
   others: {
@@ -14,8 +17,6 @@ const initialState = fromJS({
     currentPageNumber: 1,
     /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件 */
     selectedAllQuestionItems: {},
-    /* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件 */
-    selectedCurrentQuestionItems: {},
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
@@ -181,7 +182,6 @@ export default handleActions({
           },
           currentNumber: 1,
           selectedAllQuestionItems: {},
-          selectedCurrentQuestionItems: {},
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
@@ -211,7 +211,7 @@ export default handleActions({
         .setIn(['others', 'selectedChapterId'], id)
         .setIn(['others', 'currentPageNumber'], 1)
         /* 因为要求可以跨章节选择，因此在指定章节作为筛选条件时，不将原来选中的内容删除 */
-        // .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
+        // .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         .setIn(['others', 'isShowAllSelectedQuestionItems'], false)
     },
     throw(state) {
@@ -278,12 +278,7 @@ export default handleActions({
             .setIn(['others', 'currentPageNumber'], 1)
         case 'select':
           return state
-            .updateIn(['others', 'selectedAllQuestionItems'], (value) => (
-              state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item, key) => (
-                result.delete(key)
-              ), value)
-            ))
-            .setIn(['others', 'selectedCurrentQuestionItems'], fromJS({}))
+            .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         default:
           return state
       }
@@ -307,14 +302,9 @@ export default handleActions({
             id,
             name,
           })))
-          .updateIn(['others', 'selectedCurrentQuestionItems'], (value) => value.set(id, fromJS({
-            id,
-            name,
-          })))
       }
       return state
         .deleteIn(['others', 'selectedAllQuestionItems', id])
-        .deleteIn(['others', 'selectedCurrentQuestionItems', id])
     },
     throw(state) {
       return state
@@ -325,19 +315,20 @@ export default handleActions({
     next(state, action) {
       /* allQuestionItems 已经是 immutable 对象了 */
       const allQuestionItems = lodash.get(action, 'payload.allQuestionItems')
-      /* allQuestionItems 如果是空，则表明当前操作是全不选 */
-      if (allQuestionItems.isEmpty()) {
+      const type = lodash.get(action, 'payload.type')
+      /* allQuestionItems 如果是 Seq 类型，则表明当前操作是全不选，其中每一项是不选择的题 */
+      /* 目、组卷或课件的 ID */
+      if (type === 'selectNothing') {
         return state
           .updateIn(['others', 'selectedAllQuestionItems'], (value) => (
-            state.getIn(['others', 'selectedCurrentQuestionItems']).reduce((result, item, key) => (
-              result.delete(key)
+            allQuestionItems.reduce((result, item) => (
+              result.delete(item)
             ), value)
           ))
-          .setIn(['others', 'selectedCurrentQuestionItems'], allQuestionItems)
       }
+      /* 如果当前操作是全选，则 allQuestionItems 在之前已经处理好，直接合并即可 */
       return state
         .mergeIn(['others', 'selectedAllQuestionItems'], allQuestionItems)
-        .setIn(['others', 'selectedCurrentQuestionItems'], allQuestionItems)
     },
     throw(state) {
       return state
@@ -361,7 +352,7 @@ export default handleActions({
   /* 关闭预览界面 */
   'APP/LIBRARY/CLOSE_PREVIEW_QUESTIONITEM_ACTION': {
     next(state) {
-      return state.setIn(['others', 'previewQuestionItem'], fromJS({}))
+      return state.setIn(['others', 'previewQuestionItem'], immutableObjectEmpty)
     },
     throw(state) {
       return state
@@ -388,8 +379,7 @@ export default handleActions({
         /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
         /* 清空已经选择的题目、组卷和课件集合 */
-        .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
-        .setIn(['others', 'selectedCurrentQuestionItems'], fromJS({}))
+        .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
     },
     throw(state) {

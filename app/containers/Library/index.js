@@ -283,7 +283,8 @@ class Library extends React.PureComponent {
       selectedCurrentQuestionItems.size !== 0
     ) {
       this.props.actions.selectAllQuestionItemsAction({
-        allQuestionItems: immutableObjectEmpty,
+        allQuestionItems: selectedCollectionAllQuestionItems.keySeq(),
+        type: 'selectNothing',
       })
     } else {
       const allQuestionItems = selectedCollectionAllQuestionItems.reduce((result, value) => {
@@ -305,6 +306,7 @@ class Library extends React.PureComponent {
       }, immutableObjectEmpty)
       this.props.actions.selectAllQuestionItemsAction({
         allQuestionItems,
+        type: 'selectAll',
       })
     }
   }
@@ -451,7 +453,7 @@ class Library extends React.PureComponent {
               chapters={selectedCollectionChapters}
               isSelectedCurrentQuestionItemsEmpty={selectedAllQuestionItems.isEmpty()}
               isSelectAll={(
-                selectedCollectionAllQuestionItems.size === selectedCurrentQuestionItems.size &&
+                selectedCollectionQuestionItems.size === selectedCurrentQuestionItems.size &&
                 selectedCurrentQuestionItems.size !== 0
               )}
               isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
