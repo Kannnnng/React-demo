@@ -77,6 +77,11 @@ export const filterQuestionsBySearchAction = createAction(
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION',
 )
 
+/* 显示当前所有选中的题目、组卷和课件 */
+export const showAllSelectedQuestionItemsAction = createAction(
+  'APP/LIBRARY/SHOW_ALL_SELECTED_QUESTIONITEMS_ACTION',
+)
+
 /* 删除某一筛选条件 */
 export const deleteConditionAction = createAction(
   'APP/LIBRARY/DELETE_CONDITION_ACTION',

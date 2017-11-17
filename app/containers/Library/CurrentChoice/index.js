@@ -11,7 +11,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import Badge from 'material-ui/Badge'
 import Checkbox from 'material-ui/Checkbox'
 import Chip from 'material-ui/Chip'
 import Dialog from 'material-ui/Dialog'
@@ -21,7 +20,6 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import SearchSvg from 'material-ui/svg-icons/action/search'
-import ShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
 import GoRightSvg from 'material-ui/svg-icons/navigation/chevron-right'
 import GoLeftSvg from 'material-ui/svg-icons/navigation/chevron-left'
 import {
@@ -51,8 +49,6 @@ export default class CurrentChoice extends React.PureComponent {
     /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
     /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
     isCopyEntireChapter: PropTypes.bool.isRequired,
-    /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件总数量 */
-    entireSelectedQuestionItemsNumber: PropTypes.number.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -63,6 +59,8 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickSearch: PropTypes.func.isRequired,
     /* 点击全选按钮时被触发 */
     handleOnClickSelectAll: PropTypes.func.isRequired,
+    /* 点击显示当前所有选中的题目、组卷和课件 */
+    handleOnClickShowAllSelectedQuestionItems: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -73,12 +71,12 @@ export default class CurrentChoice extends React.PureComponent {
     isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
     isCopyEntireChapter: false,
-    entireSelectedQuestionItemsNumber: 0,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
     handleOnClickSearch: () => {},
     handleOnClickSelectAll: () => {},
+    handleOnClickShowAllSelectedQuestionItems: () => {},
   }
 
   state = {
@@ -155,10 +153,10 @@ export default class CurrentChoice extends React.PureComponent {
       chapters,
       isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
-      entireSelectedQuestionItemsNumber,
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
+      handleOnClickShowAllSelectedQuestionItems,
     } = this.props
     const {
       copyMethod,
@@ -167,6 +165,9 @@ export default class CurrentChoice extends React.PureComponent {
       showCopyMethodDialog,
     } = this.state
 
+    /* 当前设置的筛选条件中是否含有已选择项 */
+    const indexOfSelectInCondition = conditions.findIndex((value) => value.get('name') === 'select')
+
     return (
       <div className={styles.container}>
         <div className={styles.topToolBar}>
@@ -174,7 +175,10 @@ export default class CurrentChoice extends React.PureComponent {
             <Chip>
               {'全部'}
             </Chip>
-            {conditions.map((value) => [
+            {/* 要求当教师选择了的 */}
+            {conditions.map((value) => value.get('name') === 'select' ? (
+              null
+            ) : [
               <GoRightSvg
                 key={`svg-${value.get('name')}`}
               />,
@@ -187,21 +191,19 @@ export default class CurrentChoice extends React.PureComponent {
                 {value.get('value')}
               </Chip>,
             ]).toJS()}
-            <GoRightSvg />
-            <Badge
+            <GoRightSvg
+              style={indexOfSelectInCondition !== -1 ? undefined : { opacity: '0' }}
+            />
+            <Chip
               id={'questionItemShoppingCartTarget'}
-              badgeContent={entireSelectedQuestionItemsNumber}
-              badgeStyle={{ top: '-1px' }}
-              primary
-              style={{
-                paddingTop: '0',
-                paddingBottom: '0',
-                paddingLeft: '0',
-                lineHeight: '0',
-              }}
+              onClick={handleOnClickShowAllSelectedQuestionItems}
+              onRequestDelete={handleOnClickCancel({
+                name: conditions.getIn([indexOfSelectInCondition, 'name']),
+              })}
+              style={indexOfSelectInCondition !== -1 ? undefined : { opacity: '0' }}
             >
-              <ShoppingCart />
-            </Badge>
+              {`已选择(${conditions.getIn([indexOfSelectInCondition, 'value']) || 0})`}
+            </Chip>
           </div>
           <div>
             <FlatButton

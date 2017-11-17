@@ -256,6 +256,18 @@ const selectedCourseQuizzesSelector = createSelector(
   }
 )
 
+/* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
+const selectedAllQuestionItemsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedAllQuestionItems']) || immutableObjectEmpty
+)
+
+/* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件集合 */
+const selectedCurrentQuestionItemsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCurrentQuestionItems']) || immutableObjectEmpty
+)
+
 /* 当前被选中作为筛选条件的章节 */
 /* 因为被选为筛选条件的章节一定是当前被选中的课程、课程组或课堂中所包含的章节，因此可以直接使用 */
 /* selectedCourseChaptersSelector */
@@ -277,6 +289,12 @@ const searchTextSelector = createSelector(
   (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
 )
 
+/* 仅显示当前所有选中的题目、组卷和课件的状态标志位 */
+const showAllSelectedQuestionItemsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'showAllSelectedQuestionItems']) || false
+)
+
 /* 经过筛选后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
 const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseCoursewaresSelector,
@@ -284,34 +302,58 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseQuizzesSelector,
   selectedChaptersSelector,
   searchTextSelector,
-  (coursewares, questions, quizzes, selectedChapters, searchText) => {
+  showAllSelectedQuestionItemsSelector,
+  selectedAllQuestionItemsSelector,
+  (
+    coursewares,
+    questions,
+    quizzes,
+    selectedChapters,
+    searchText,
+    showAllSelectedQuestionItems,
+    selectedAllQuestionItems,
+  ) => {
     let result
-    if (searchText) {
-      result = coursewares
-        .filter((value) => value.get('name').includes(searchText))
-        .merge(questions.filter((value) => value.getIn(['content', 'html']).includes(searchText)))
-        .merge(quizzes.filter((value) => value.get('title').includes(searchText)))
+    /* 如果要求仅显示当前选中的题目、组卷和课件，则章节筛选条件和搜索筛选条件均不生效 */
+    if (showAllSelectedQuestionItems) {
+      if (selectedAllQuestionItems.isEmpty()) {
+        return immutableObjectEmpty
+      }
+      result = showAllSelectedQuestionItems.reduce((tempResultresult, value, key) => (
+        tempResultresult.set(key, (
+          (value.get('name') === 'courseware' && coursewares.get(key)) ||
+          (value.get('name') === 'quiz' && coursewares.get(key)) ||
+          (value.get('name') === 'question' && coursewares.get(key)) || immutableObjectEmpty
+        ))
+      ), immutableObjectEmpty)
     } else {
-      result = coursewares.merge(questions).merge(quizzes)
-    }
-    /* 因为复制按钮要事先知道课程、课程组和课堂中包含的章节，所以最先返回的章节信息中仅有基本信息 */
-    /* 不包含有属于本章节的题目、组卷和课件，因此这里的 coursewares、questions 和 quizzes */
-    /* 可能是空的，需要进行判断，只需要判断其中一个就好了，因为三个数据是同时被返回的 */
-    if (!selectedChapters.isEmpty() && selectedChapters.get('coursewares')) {
-      result = selectedChapters
-        .get('coursewares')
-        .concat(selectedChapters.get('questions'))
-        .concat(selectedChapters.get('quizzes'))
-        .reduce((tempResult, value) =>{
-          /* value 是当前被选中作为筛选条件的章节中所包含的题目、组卷或课件的 ID，如果能够从 */
-          /* 当前被选中的课程、课程组或课堂中获取到该 ID 所对应的题目、组卷或课件的数据，那么 */
-          /* 就说明该 ID 所对应的题目、组卷或课件隶属于当前被选中作为筛选条件的章节中 */
-          const questionItem = result.get(value)
-          if (questionItem) {
-            return tempResult.set(value, questionItem)
-          }
-          return tempResult
-        }, immutableObjectEmpty)
+      if (searchText) {
+        result = coursewares
+          .filter((value) => value.get('name').includes(searchText))
+          .merge(questions.filter((value) => value.getIn(['content', 'html']).includes(searchText)))
+          .merge(quizzes.filter((value) => value.get('title').includes(searchText)))
+      } else {
+        result = coursewares.merge(questions).merge(quizzes)
+      }
+      /* 因为复制按钮要事先知道课程、课程组和课堂中包含的章节，所以最先返回的章节信息中仅有基本信息 */
+      /* 不包含有属于本章节的题目、组卷和课件，因此这里的 coursewares、questions 和 quizzes */
+      /* 可能是空的，需要进行判断，只需要判断其中一个就好了，因为三个数据是同时被返回的 */
+      if (!selectedChapters.isEmpty() && selectedChapters.get('coursewares')) {
+        result = selectedChapters
+          .get('coursewares')
+          .concat(selectedChapters.get('questions'))
+          .concat(selectedChapters.get('quizzes'))
+          .reduce((tempResult, value) =>{
+            /* value 是当前被选中作为筛选条件的章节中所包含的题目、组卷或课件的 ID，如果能够从 */
+            /* 当前被选中的课程、课程组或课堂中获取到该 ID 所对应的题目、组卷或课件的数据，那么 */
+            /* 就说明该 ID 所对应的题目、组卷或课件隶属于当前被选中作为筛选条件的章节中 */
+            const questionItem = result.get(value)
+            if (questionItem) {
+              return tempResult.set(value, questionItem)
+            }
+            return tempResult
+          }, immutableObjectEmpty)
+      }
     }
     /* 如果题目、组卷、课件存在创建时间 createTime 这个字段，则按照降序排序，最近创建的在最前面 */
     /* 没有 createTime 字段的数据在最后面 */
@@ -359,24 +401,12 @@ const pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   }
 )
 
-/* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
-const selectedAllQuestionItemsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedAllQuestionItems']) || immutableObjectEmpty
-)
-
-/* 当前课程、课程组或课堂中经过筛选后显示在页面上的被选中的所有题目、组卷和课件集合 */
-const selectedCurrentQuestionItemsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => selectorDomain.getIn(['others', 'selectedCurrentQuestionItems']) || immutableObjectEmpty
-)
-
 /* 当前已经设置的筛选条件 */
 const searchConditionsSelector = createSelector(
   selectedChaptersSelector,
   searchTextSelector,
-  selectedCurrentQuestionItemsSelector,
-  (selectedChapters, searchText, selectedCurrentQuestionItems) => {
+  selectedAllQuestionItemsSelector,
+  (selectedChapters, searchText, selectedAllQuestionItems) => {
     const result = []
     if (!selectedChapters.isEmpty()) {
       result.push({
@@ -401,10 +431,10 @@ const searchConditionsSelector = createSelector(
         value: searchText,
       })
     }
-    if (!selectedCurrentQuestionItems.isEmpty()) {
+    if (!selectedAllQuestionItems.isEmpty()) {
       result.push({
         name: 'select',
-        value: `已选择(${selectedCurrentQuestionItems.size})`,
+        value: selectedAllQuestionItems.size,
       })
     }
     return fromJS(result)

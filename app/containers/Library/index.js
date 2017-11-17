@@ -14,7 +14,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fromJS } from 'immutable'
-import $ from 'jquery'
+import jQuery from 'jquery'
 import Badge from 'material-ui/Badge'
 import List from 'material-ui/List/List'
 import ListItem from 'material-ui/List/ListItem'
@@ -205,10 +205,14 @@ class Library extends React.PureComponent {
   /* 选中某一题目、组卷或课件 */
   handleOnQuestionItemCheck = ({ id, name }) => (event, isChecked) => {
     const sourcePosition = event.currentTarget.getClientRects()[0]
-    const targetPosition = $('#questionItemShoppingCartTarget')[0].getClientRects()[0]
+    const targetPosition = jQuery('#questionItemShoppingCartTarget')[0].getClientRects()[0]
     if (isChecked) {
+      jQuery('#questionItemShoppingCartTarget')
+        .css({ opacity: '1' })
+        .prev()
+        .css({ opacity: '1' })
       /* 如果选中，则显示点击以后的类似“商品进入购物车”动画 */
-      $('#questionItemShoppingCartSource')
+      jQuery('#questionItemShoppingCartSource')
         .clone()
         .attr({
           id: 'questionItemShoppingCartSourceDuplicate',
@@ -216,14 +220,14 @@ class Library extends React.PureComponent {
         .appendTo('body')
         .css({
           display: 'inline-block',
-          top: `${sourcePosition.top + 5}px`,
-          left: `${sourcePosition.left + 43}px`,
+          top: `${sourcePosition.top + 12}px`,
+          left: `${sourcePosition.left + 37}px`,
         })
         .animate({
-          top: `${targetPosition.top - 1}px`,
-          left: `${targetPosition.left + 24}px`,
-        }, 'swing', () => {
-          $('#questionItemShoppingCartSourceDuplicate').remove()
+          top: `${targetPosition.top + 10}px`,
+          left: `${targetPosition.left + 45}px`,
+        }, '350', () => {
+          jQuery('#questionItemShoppingCartSourceDuplicate').remove()
           this.props.actions.selectQuestionItemAction({
             id,
             name,
@@ -441,12 +445,12 @@ class Library extends React.PureComponent {
                 selectedCurrentQuestionItems.size !== 0
               )}
               isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
-              entireSelectedQuestionItemsNumber={selectedAllQuestionItems.size}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}
               handleOnClickSearch={this.handleOnClickSearch}
               handleOnClickSelectAll={this.handleOnClickSelectAll}
+              handleOnClickShowAllSelectedQuestionItems={this.props.actions.showAllSelectedQuestionItemsAction}
             />
           </div>
           <div className={styles.displayArea}>
@@ -580,7 +584,8 @@ class Library extends React.PureComponent {
         </div>
         <Badge
           id={'questionItemShoppingCartSource'}
-          badgeContent={'1'}
+          badgeContent={''}
+          badgeStyle={{ width: '12px', height: '12px' }}
           secondary
           style={{
             display: 'none',

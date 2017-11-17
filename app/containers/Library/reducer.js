@@ -19,6 +19,7 @@ const initialState = fromJS({
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
+    showAllSelectedQuestionItems: false,
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
@@ -183,6 +184,7 @@ export default handleActions({
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
+          showAllSelectedQuestionItems: false,
         }))
     },
     throw(state) {
@@ -209,6 +211,7 @@ export default handleActions({
         .setIn(['others', 'currentPageNumber'], 1)
         /* 因为要求可以跨章节选择，因此在指定章节作为筛选条件时，不将原来选中的内容删除 */
         // .setIn(['others', 'selectedAllQuestionItems'], fromJS({}))
+        .setIn(['others', 'showAllSelectedQuestionItems'], false)
     },
     throw(state) {
       return state
@@ -222,6 +225,22 @@ export default handleActions({
         .setIn(['others', 'searchText'], searchText)
         .setIn(['others', 'currentPageNumber'], 1)
         /* 在指定输入内容作为筛选条件时，不将原来选中的内容删除 */
+        .setIn(['others', 'showAllSelectedQuestionItems'], false)
+    },
+    throw(state) {
+      return state
+    },
+  },
+  /* 显示当前所有选中的题目、组卷和课件 */
+  'APP/LIBRARY/SHOW_ALL_SELECTED_QUESTIONITEMS_ACTION': {
+    next(state) {
+      return state
+        /* 如果要求仅显示当前选中的题目、组卷和课件，则章节筛选条件和搜索筛选条件均不生效 */
+        .mergeIn(['others'], fromJS({
+          selectedChapterId: null,
+          searchText: null,
+          showAllSelectedQuestionItems: true,
+        }))
     },
     throw(state) {
       return state
