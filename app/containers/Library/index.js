@@ -329,7 +329,6 @@ class Library extends React.PureComponent {
       myCourseGroups,
       selectedCollectionChapters,
       selectedCollectionLabels,
-      selectedCollectionAllQuestionItems,
       selectedCollectionQuestionItems,
       filterConditions,
       totalPages,

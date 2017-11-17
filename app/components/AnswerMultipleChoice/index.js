@@ -48,7 +48,7 @@ function AnswerMultipleChoice(props) {
             {letter[index]}
           </ItemLabel>
           <FroalaEditorView
-            tag="span"
+            tag='span'
             model={value.content.html}
           />
         </div>,
@@ -67,9 +67,9 @@ function AnswerMultipleChoice(props) {
           key={index}
           disabled={!canAnswer}
         >
-          <img src={selected ? type2 : type22} alt="" />
+          <img src={selected ? type2 : type22} alt='' />
           <FroalaEditorView
-            tag="span"
+            tag='span'
             model={value.content.html}
           />
         </button>,

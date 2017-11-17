@@ -59,7 +59,7 @@ function AnswerJudge(props) {
           key={index}
           disabled={!canAnswer}
         >
-          <img src={!index === answer ? type1 : type11} alt="" />
+          <img src={!index === answer ? type1 : type11} alt='' />
           <span>{value}</span>
         </button>,
       )
