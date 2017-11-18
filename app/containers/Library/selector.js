@@ -537,6 +537,27 @@ const needDecideCopyEntireChapterMapSelector = createSelector(
 )
 
 /* 当前用户决定整体复制的章节信息集合 */
+// {
+//   id: {
+//     id: chapterId,
+//     name: chapterName,
+//     questionIds: [
+//       questionId,
+//       questionId,
+//       ...
+//     ],
+//     coursewareIds: [
+//       coursewareId,
+//       coursewareId,
+//       ...
+//     ],
+//     quizIds: [
+//       quizId,
+//       quizId,
+//       ...
+//     ],
+//   }
+// }
 const decidedCopyEntireChapterIdsMapSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
@@ -553,12 +574,16 @@ const singleQuestionItemNeedCopySelector = createSelector(
   needDecideCopyEntireChapterMapSelector,
   decidedCopyEntireChapterIdsMapSelector,
   (selectedAllQuestionItems, needDecideCopyEntireChapterMap, decidedCopyEntireChapterIdsMap) => {
+    /* 当前用户决定整体复制的章节中所包含的所有题目、组卷和课件 ID 集合 */
     const questionItemIdsInEntireChapter = decidedCopyEntireChapterIdsMap.reduce((result, value) => (
       result
         .concat(value.get('coursewares'))
         .concat(value.get('questions'))
         .concat(value.get('quizzes'))
     ), immutableArrayEmpty)
+    /* 如果当前被选中的题目、组卷或课件 ID 存在于 questionItemIdsInEntireChapter 中 */
+    /* 则返回 undefined，不存在则说明该项目 ID 所在章节没有被选择为带章节复制，也就是说 */
+    /* 该项目属于单项 */
     return selectedAllQuestionItems.map((value, key) => (
       questionItemIdsInEntireChapter.includes(key) ? undefined : value
     ))
