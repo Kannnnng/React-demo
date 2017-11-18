@@ -381,11 +381,14 @@ export default handleActions({
       return state
         /* name 可以为 course、courseGroup、classroom 三个值 */
         /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
+        /* newCopyedQuestionItemNumbers 的主要作用是在复制操作成功以后，在对应的 */
+        /* 课程、课程组或课堂名称附近显示新增题目、组卷和课件的数量 */
         .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
         /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
-        .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
+        /* 清空用户决定要将整个章节复制到指定位置的章节 ID 集合 */
         .setIn(['status', 'decidedCopyEntireChapterIdsList'], immutableArrayEmpty)
+        .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
     },
     throw(state) {
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')

@@ -109,18 +109,16 @@ export function getQuestionsByClassroomId({
 }
 
 export function copyQuestionItemToLibrary({
+  /* 标示要复制到的是课程、课程组还是课堂 */
+  name,
   /* 要复制到的课程、课程组或课堂的 ID */
   targetId,
   /* 要复制到的章节的 ID */
   targetChapterId,
-  /* 标示要复制到的是课程、课程组还是课堂 */
-  name,
   /* 当前选中的要复制的题目、组卷和课件集合 */
   selectedQuestionItems,
-  /* 章节复制方式，是否将整个章节信息全部复制还是仅复制选中的单位 */
-  copyMethod,
-  /* 被复制章节的 ID */
-  sourceChapter,
+  /* 被复制章节的具体信息 */
+  sourceChapters,
 }) {
   const coursewareIds = []
   const questionIds = []
@@ -166,9 +164,16 @@ export function copyQuestionItemToLibrary({
       })
     )
   )).then(() => ({
-    targetId,
     name,
-    numbers: selectedQuestionItems.length,
+    targetId,
+    numbers: !sourceChapters.length ? selectedQuestionItems.length : (
+      sourceChapters.reduce((result, value) => (
+        result +
+          value.coursewareIds.length +
+          value.questionIds.length +
+          value.quizIds.length
+      ), selectedQuestionItems.length)
+    ),
   }))
   .catch((error) => {throw error})
 }

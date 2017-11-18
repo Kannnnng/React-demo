@@ -108,7 +108,7 @@ class Library extends React.PureComponent {
       }),
       PropTypes.string.isRequired,
     ),
-    /* 计算出用户确定哪些章节需要整体复制以后，是否还有单个的题目、组卷或课件剩余 */
+    /* 计算用户确定哪些章节需要整体复制以后剩下不在被选择章节中的单个的题目、组卷或课件 */
     singleQuestionItemNeedCopy: ImmutablePropTypes.mapOf(
       ImmutablePropTypes.contains({
         id: PropTypes.string.isRequired,
@@ -190,19 +190,22 @@ class Library extends React.PureComponent {
     })
     this.props.actions.copyQuestionItemToLibraryAction({
       ...value,
-      /* 如果用户选择了将整个章节全部复制，那么可以不提供该章节中具体包含了哪些题目、组卷和课件 */
-      /* 给一个空数组即可 */
-      selectedQuestionItems: value.copyMethod === 'copyEntireChapter' ? (
+      /* 如果没有单独的题目、组卷或课件剩余，则返回一个空数组 */
+      selectedQuestionItems: !this.props.singleQuestionItemNeedCopy.size ? (
         []
       ) : (
-        this.props.selectedCurrentQuestionItems.toList().toJS()
+      /* 将 singleQuestionItemNeedCopy 直接转换为 List 即可，其数据结构在 selector */
+      /* 中已经处理好了 */
+        this.props.singleQuestionItemNeedCopy.toList().toJS()
       ),
-      sourceChapter: value.copyMethod !== 'copyEntireChapter' ? (
-        undefined
+      /* 需要带章节信息复制的章节集合 */
+      /* 如果没有要整体复制的章节，则直接返回一个空数组 */
+      sourceChapters: !this.props.decidedCopyEntireChapterIdsMap.size ? (
+        []
       ) : (
-        this.props.selectedCollectionChapters.find((value) => (
-          value.get('id') === this.props.filterConditions.getIn(['0', 'id'])
-        )).toJS()
+      /* 如果有需要整体复制的章节，则直接将 decidedCopyEntireChapterIdsMap 转换为 */
+      /* 数组即可，其数据结构在 selector 中已经被处理好 */
+        this.props.decidedCopyEntireChapterIdsMap.toList().toJS()
       ),
     })
   }
