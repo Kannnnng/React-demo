@@ -90,9 +90,32 @@ class Library extends React.PureComponent {
     /* 异步请求的状态标志位 */
     status: ImmutablePropTypes.map,
     /* 需要用户确定哪些章节需要整体复制（带章节信息） */
-    needDecideCopyEntireChapterList: ImmutablePropTypes.list,
+    needDecideCopyEntireChapterMap: ImmutablePropTypes.mapOf(
+      ImmutablePropTypes.contains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+      PropTypes.string.isRequired,
+    ),
     /* 当前用户决定整体复制的章节信息集合 */
-    decidedCopyEntireChapterList: ImmutablePropTypes.map,
+    decidedCopyEntireChapterIdsMap: ImmutablePropTypes.mapOf(
+      ImmutablePropTypes.contains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        coursewares: PropTypes.array.isRequired,
+        questions: PropTypes.array.isRequired,
+        quizzes: PropTypes.array.isRequired,
+      }),
+      PropTypes.string.isRequired,
+    ),
+    /* 计算出用户确定哪些章节需要整体复制以后，是否还有单个的题目、组卷或课件剩余 */
+    singleQuestionItemNeedCopy: ImmutablePropTypes.mapOf(
+      ImmutablePropTypes.contains({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+      PropTypes.string.isRequired,
+    ),
   }
 
   state = {
@@ -349,8 +372,9 @@ class Library extends React.PureComponent {
       selectedCurrentQuestionItems,
       previewQuestionItem,
       status,
-      needDecideCopyEntireChapterList,
-      decidedCopyEntireChapterList,
+      needDecideCopyEntireChapterMap,
+      decidedCopyEntireChapterIdsMap,
+      singleQuestionItemNeedCopy,
     } = this.props
     const {
       selectableListValue,
@@ -469,9 +493,9 @@ class Library extends React.PureComponent {
                 selectedCollectionQuestionItems.size === selectedCurrentQuestionItems.size &&
                 selectedCurrentQuestionItems.size !== 0
               )}
-              needDecideCopyEntireChapterList={needDecideCopyEntireChapterList}
-              decidedCopyEntireChapterList={decidedCopyEntireChapterList}
-              isCopyEntireChapter={filterConditions.getIn(['0', 'number']) === selectedCurrentQuestionItems.size}
+              needDecideCopyEntireChapterMap={needDecideCopyEntireChapterMap}
+              decidedCopyEntireChapterIdsMap={decidedCopyEntireChapterIdsMap}
+              singleQuestionItemNeedCopy={singleQuestionItemNeedCopy}
               handleOnClickCancel={this.handleOnClickCurrentChoiceCancel}
               handleOnClickCopyTarget={this.handleOnClickCopyTarget}
               handleOnClickChapter={this.handleOnClickChapter}

@@ -48,12 +48,12 @@ export default class CurrentChoice extends React.PureComponent {
     /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
     isSelectAll: PropTypes.bool.isRequired,
     /* 需要用户确定哪些章节需要整体拷贝（带章节信息） */
-    needDecideCopyEntireChapterList: ImmutablePropTypes.list,
+    needDecideCopyEntireChapterMap: ImmutablePropTypes.map,
     /* 当前用户决定整体复制的章节信息集合 */
-    decidedCopyEntireChapterList: ImmutablePropTypes.map,
+    decidedCopyEntireChapterIdsMap: ImmutablePropTypes.map,
     /* 当前选中的题目、组卷和课件的总数与被选择作为筛选条件的章节中所包含的题目、组卷和课件的总数 */
     /* 是否相等，以此标示是否将整个章节信息（包含章节信息和题目、组卷、课件等）全部复制到指定位置 */
-    isCopyEntireChapter: PropTypes.bool.isRequired,
+    singleQuestionItemNeedCopy: ImmutablePropTypes.map.isRequired,
     /* 取消某一选择限制条件 */
     handleOnClickCancel: PropTypes.func.isRequired,
     /* 复制到课程、课程组或课堂 */
@@ -79,9 +79,9 @@ export default class CurrentChoice extends React.PureComponent {
     classrooms: immutableObjectEmpty,
     isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
-    needDecideCopyEntireChapterList: immutableArrayEmpty,
-    decidedCopyEntireChapterList: immutableObjectEmpty,
-    isCopyEntireChapter: false,
+    needDecideCopyEntireChapterMap: immutableObjectEmpty,
+    decidedCopyEntireChapterIdsMap: immutableObjectEmpty,
+    singleQuestionItemNeedCopy: immutableObjectEmpty,
     handleOnClickCancel: () => () => {},
     handleOnClickCopyTarget: () => {},
     handleOnClickChapter: () => () => {},
@@ -93,7 +93,6 @@ export default class CurrentChoice extends React.PureComponent {
   }
 
   state = {
-    copyMethod: 'copySelectedQuestionItems',
     copyToButtonElement: null,
     showCopyToList: false,
     showCopyMethodDialog: false,
@@ -101,17 +100,16 @@ export default class CurrentChoice extends React.PureComponent {
 
   handleOnClickCopyToButton = (event) => {
     const {
-      needDecideCopyEntireChapterList,
+      needDecideCopyEntireChapterMap,
     } = this.props
     /* 如果需要确认的章节列表不是空的，那么需要弹出对话框让用户确认哪些章节整体复制 */
-    if (!needDecideCopyEntireChapterList.isEmpty()) {
+    if (!needDecideCopyEntireChapterMap.isEmpty()) {
       this.setState({
         showCopyMethodDialog: true,
         copyToButtonElement: event.currentTarget,
       })
     } else {
       this.setState({
-        copyMethod: 'copySelectedQuestionItems',
         showCopyToList: true,
         copyToButtonElement: event.currentTarget,
       })
@@ -132,21 +130,14 @@ export default class CurrentChoice extends React.PureComponent {
   }
 
   handleOnClickCopyTarget = (value) => () => {
-    const {
-      copyMethod,
-    } = this.state
     this.setState({
       showCopyToList: false,
     })
-    this.props.handleOnClickCopyTarget({
-      ...value,
-      copyMethod,
-    })
+    this.props.handleOnClickCopyTarget(value)
   }
 
-  handleOnDecideCopyMethod = ({ method }) => () => {
+  handleOnDecideCopyMethod = () => {
     this.setState({
-      copyMethod: method,
       showCopyToList: true,
       showCopyMethodDialog: false,
     })
@@ -167,8 +158,9 @@ export default class CurrentChoice extends React.PureComponent {
       chapters,
       isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
-      needDecideCopyEntireChapterList,
-      decidedCopyEntireChapterList,
+      needDecideCopyEntireChapterMap,
+      decidedCopyEntireChapterIdsMap,
+      singleQuestionItemNeedCopy,
       handleOnClickCancel,
       handleOnClickChapter,
       handleOnClickSelectAll,
@@ -177,7 +169,6 @@ export default class CurrentChoice extends React.PureComponent {
       handleOnSelectNeedCopyEntireChapter,
     } = this.props
     const {
-      copyMethod,
       copyToButtonElement,
       showCopyToList,
       showCopyMethodDialog,
@@ -195,7 +186,8 @@ export default class CurrentChoice extends React.PureComponent {
             >
               {'全部'}
             </Chip>
-            {/* 要求当教师选择了的 */}
+            {/* 当教师选择了至少一个题目、组卷或课件之后才显示“已选择” */}
+            {/* 因为动画需要，因此教师没有选择任何项目时，“已选择”需要被隐藏而非删除，因此需要单独渲染 */}
             {conditions.map((value) => value.get('name') === 'select' ? (
               null
             ) : [
@@ -211,6 +203,7 @@ export default class CurrentChoice extends React.PureComponent {
                 {value.get('value')}
               </Chip>,
             ]).toJS()}
+            {/* 因为动画需要，因此教师没有选择任何项目时，“已选择”需要被隐藏而非删除，因此需要单独渲染 */}
             <GoRightSvg
               style={indexOfSelectInCondition !== -1 ? undefined : { opacity: '0' }}
             />
@@ -251,9 +244,9 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('id')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
+                      leftIcon={!singleQuestionItemNeedCopy.size ? undefined : <GoLeftSvg />}
                       primaryText={value.get('name')}
-                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                      menuItems={!singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         value.get('chapters').map((item) => (
@@ -268,7 +261,7 @@ export default class CurrentChoice extends React.PureComponent {
                           />
                         )).toList().toJS()
                       )}
-                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                      onClick={singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         this.handleOnClickCopyTarget({
@@ -293,9 +286,9 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('groupId')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
+                      leftIcon={!singleQuestionItemNeedCopy.size ? undefined : <GoLeftSvg />}
                       primaryText={value.get('groupName')}
-                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                      menuItems={!singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         value.get('chapters').map((item) => (
@@ -310,7 +303,7 @@ export default class CurrentChoice extends React.PureComponent {
                           />
                         )).toList().toJS()
                       )}
-                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                      onClick={singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         this.handleOnClickCopyTarget({
@@ -335,9 +328,9 @@ export default class CurrentChoice extends React.PureComponent {
                       key={value.get('id')}
                       anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                      leftIcon={copyMethod === 'copyEntireChapter' ? undefined : <GoLeftSvg />}
+                      leftIcon={!singleQuestionItemNeedCopy.size ? undefined : <GoLeftSvg />}
                       primaryText={value.get('name')}
-                      menuItems={copyMethod === 'copyEntireChapter' ? (
+                      menuItems={!singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         value.get('chapters').map((item) => (
@@ -352,7 +345,7 @@ export default class CurrentChoice extends React.PureComponent {
                           />
                         )).toList().toJS()
                       )}
-                      onClick={copyMethod === 'copySelectedQuestionItems' ? (
+                      onClick={singleQuestionItemNeedCopy.size ? (
                         undefined
                       ) : (
                         this.handleOnClickCopyTarget({
@@ -415,41 +408,31 @@ export default class CurrentChoice extends React.PureComponent {
           title={'请决定复制方式'}
           actions={[
             <FlatButton
-              key={'closeDialog'}
-              label={'关闭对话框'}
+              key={'close'}
+              label={'关闭'}
               onClick={this.handleOnCloseCopyMethodDialog}
             />,
             <FlatButton
-              key={'copyEntireChapter'}
-              label={'带章节信息'}
+              key={'determine'}
+              label={'确定'}
               primary
-              onClick={this.handleOnDecideCopyMethod({
-                method: 'copyEntireChapter',
-              })}
-            />,
-            <FlatButton
-              key={'copySelectedQuestionItems'}
-              label={'仅复制选中项'}
-              primary
-              onClick={this.handleOnDecideCopyMethod({
-                method: 'copySelectedQuestionItems',
-              })}
+              onClick={this.handleOnDecideCopyMethod}
             />,
           ]}
           open={showCopyMethodDialog}
           onRequestClose={this.handleOnCloseCopyMethodDialog}
         >
           {'您当前选择的项目中，下列章节中的项目被全部选中，请选择哪些章节需要整体复制到指定位置'}
-          {needDecideCopyEntireChapterList.map((value) => (
+          {needDecideCopyEntireChapterMap.map((value) => (
             <Toggle
               key={value.get('id')}
               label={value.get('name')}
               onToggle={handleOnSelectNeedCopyEntireChapter({
                 id: value.get('id'),
               })}
-              toggled={decidedCopyEntireChapterList.has(value.get('id'))}
+              toggled={decidedCopyEntireChapterIdsMap.has(value.get('id'))}
             />
-          )).toJS()}
+          )).toList().toJS()}
         </Dialog>
       </div>
     )

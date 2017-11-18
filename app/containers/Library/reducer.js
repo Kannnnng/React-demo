@@ -22,7 +22,8 @@ const initialState = fromJS({
     selectedChapterId: null,
     searchText: null,
     isShowAllSelectedQuestionItems: false,
-    needCopyEntireChapterList: [],
+    /* 当前用户决定整体复制的章节信息集合 */
+    decidedCopyEntireChapterIdsList: [],
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
@@ -188,7 +189,7 @@ export default handleActions({
           selectedChapterId: null,
           searchText: null,
           isShowAllSelectedQuestionItems: false,
-          needCopyEntireChapterList: [],
+          decidedCopyEntireChapterIdsList: [],
         }))
     },
     throw(state) {
@@ -235,7 +236,7 @@ export default handleActions({
       return state
     },
   },
-  /* 显示当前所有选中的题目、组卷和课件 */
+  /* 显示当前选中的课程、课程组或课堂中所有选中的题目、组卷和课件 */
   'APP/LIBRARY/SHOW_ALL_SELECTED_QUESTIONITEMS_ACTION': {
     next(state) {
       return state
@@ -384,7 +385,7 @@ export default handleActions({
         /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         .setIn(['status', 'copyQuestionItemToLibraryStatus'], 'succeed')
-        .setIn(['status', 'needCopyEntireChapterList'], immutableArrayEmpty)
+        .setIn(['status', 'decidedCopyEntireChapterIdsList'], immutableArrayEmpty)
     },
     throw(state) {
       return state.setIn(['status', 'copyQuestionItemToLibraryStatus'], 'failed')
@@ -396,15 +397,15 @@ export default handleActions({
       const id = lodash.get(action, 'payload.id')
       const isSelected = lodash.get(action, 'payload.isSelected')
       if (isSelected) {
-        if (state.getIn(['others', 'needCopyEntireChapterList']).includes(id)) {
+        if (state.getIn(['others', 'decidedCopyEntireChapterIdsList']).includes(id)) {
           return state
         }
         return state
-          .updateIn(['others', 'needCopyEntireChapterList'], (value) => value.push(id))
+          .updateIn(['others', 'decidedCopyEntireChapterIdsList'], (value) => value.push(id))
       }
-      const index = state.getIn(['others', 'needCopyEntireChapterList']).findIndex((value) => value === id)
-      if (index !== -1) {
-        return state.deleteIn(['others', 'needCopyEntireChapterList', index])
+      const index = state.getIn(['others', 'decidedCopyEntireChapterIdsList']).keyOf(id)
+      if (index) {
+        return state.deleteIn(['others', 'decidedCopyEntireChapterIdsList', index])
       }
       return state
     },

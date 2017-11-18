@@ -516,33 +516,53 @@ const statusSelector = createSelector(
   (selectorDomain) => selectorDomain.get('status') || immutableObjectEmpty
 )
 
-/* 计算出用户确定哪些章节需要整体拷贝（带章节信息） */
-const needDecideCopyEntireChapterListSelector = createSelector(
+/* 计算出用户需要确定哪些章节将整体拷贝（带章节信息） */
+const needDecideCopyEntireChapterMapSelector = createSelector(
   selectedAllQuestionItemsSelector,
   selectedCourseChaptersSelector,
   (selectedAllQuestionItems, selectedCourseChapters) => (
-    selectedCourseChapters.map((value) => (
+    selectedCourseChapters.reduce((result, value) => (
       value
         .get('coursewares')
         .concat(value.get('questions'))
         .concat(value.get('quizzes'))
-        .every((value) => selectedAllQuestionItems.has(value)) ? {
-          id: value.get('id'),
-          name: value.get('name'),
-        } : undefined
-    ))
+        .every((item) => selectedAllQuestionItems.has(item)) ? (
+          result.set(value.get('id'), fromJS({
+            id: value.get('id'),
+            name: value.get('name'),
+          }))
+        ) : result
+    ), immutableObjectEmpty)
   )
 )
 
-/* 获取当前哪些章节用户决定整体复制 */
-const decidedCopyEntireChapterListSelector = createSelector(
+/* 当前用户决定整体复制的章节信息集合 */
+const decidedCopyEntireChapterIdsMapSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
-  (selectorDomain, selectedCourseChaptersSelector) => (
-    selectorDomain.getIn(['others', 'needCopyEntireChapterList']).reduce((result, value) => (
-      result.set(value, selectedCourseChaptersSelector.get(value))
+  (selectorDomain, selectedCourseChapters) => (
+    selectorDomain.getIn(['others', 'decidedCopyEntireChapterIdsList']).reduce((result, value) => (
+      result.set(value, selectedCourseChapters.get(value))
     ), immutableObjectEmpty)
   )
+)
+
+/* 计算出用户确定哪些章节需要整体复制以后，是否还有单个的题目、组卷或课件剩余 */
+const singleQuestionItemNeedCopySelector = createSelector(
+  selectedAllQuestionItemsSelector,
+  needDecideCopyEntireChapterMapSelector,
+  decidedCopyEntireChapterIdsMapSelector,
+  (selectedAllQuestionItems, needDecideCopyEntireChapterMap, decidedCopyEntireChapterIdsMap) => {
+    const questionItemIdsInEntireChapter = decidedCopyEntireChapterIdsMap.reduce((result, value) => (
+      result
+        .concat(value.get('coursewares'))
+        .concat(value.get('questions'))
+        .concat(value.get('quizzes'))
+    ), immutableArrayEmpty)
+    return selectedAllQuestionItems.map((value, key) => (
+      questionItemIdsInEntireChapter.includes(key) ? undefined : value
+    ))
+  }
 )
 
 /* 导出最终的数据 */
@@ -562,8 +582,9 @@ const selector = createSelector(
   selectedCurrentQuestionItemsSelector,
   previewQuestionItemSelector,
   statusSelector,
-  needDecideCopyEntireChapterListSelector,
-  decidedCopyEntireChapterListSelector,
+  needDecideCopyEntireChapterMapSelector,
+  decidedCopyEntireChapterIdsMapSelector,
+  singleQuestionItemNeedCopySelector,
   (
     myInfomation,
     myCourses,
@@ -580,8 +601,9 @@ const selector = createSelector(
     selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
-    needDecideCopyEntireChapterList,
-    decidedCopyEntireChapterList,
+    needDecideCopyEntireChapterMap,
+    decidedCopyEntireChapterIdsMap,
+    singleQuestionItemNeedCopy,
   ) => ({
     myInfomation,
     myCourses,
@@ -598,8 +620,9 @@ const selector = createSelector(
     selectedCurrentQuestionItems,
     previewQuestionItem,
     status,
-    needDecideCopyEntireChapterList,
-    decidedCopyEntireChapterList,
+    needDecideCopyEntireChapterMap,
+    decidedCopyEntireChapterIdsMap,
+    singleQuestionItemNeedCopy,
   })
 )
 
