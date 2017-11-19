@@ -21,6 +21,12 @@ const initialState = fromJS({
     previewQuestionItem: {},
     selectedChapterId: null,
     searchText: null,
+    /* 选择项目类型作为筛选条件，默认单题、组卷、课件全部显示 */
+    selectedQuestionItemTypes: {
+      courseware: true,
+      question: true,
+      quiz: true,
+    },
     isShowAllSelectedQuestionItems: false,
     /* 当前用户决定整体复制的章节信息集合 */
     decidedCopyEntireChapterIdsList: [],
@@ -191,6 +197,11 @@ export default handleActions({
           previewQuestionItem: {},
           selectedChapterId: null,
           searchText: null,
+          selectedQuestionItemTypes: {
+            courseware: true,
+            question: true,
+            quiz: true,
+          },
           isShowAllSelectedQuestionItems: false,
           decidedCopyEntireChapterIdsList: [],
         }))
@@ -225,7 +236,7 @@ export default handleActions({
       return state
     },
   },
-  /* 将输入的搜索内容作为筛选条件 */
+  /* 输入文字作为筛选条件，筛选对象是题目的题干、组卷的标题、课件的名字 */
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION': {
     next(state, action) {
       const searchText = lodash.get(action, 'payload.searchText')
@@ -234,6 +245,20 @@ export default handleActions({
         .setIn(['others', 'currentPageNumber'], 1)
         /* 在指定输入内容作为筛选条件时，不将原来选中的内容删除 */
         .setIn(['others', 'isShowAllSelectedQuestionItems'], false)
+    },
+    throw(state) {
+      return state
+    },
+  },
+  /* 选择项目类型作为筛选条件，默认单题、组卷、课件全部显示 */
+  'APP/LIBRARY/FILTER_QUESTIONS_BY_TYPE_ACTION': {
+    next(state, action) {
+      const name = lodash.get(action, 'payload.name')
+      const isChecked = lodash.get(action, 'payload.isChecked')
+      if (isChecked) {
+        return state.setIn(['others', 'selectedQuestionItemTypes', name], true)
+      }
+      return state.setIn(['others', 'selectedQuestionItemTypes', name], false)
     },
     throw(state) {
       return state
@@ -263,6 +288,11 @@ export default handleActions({
           currentPageNumber: 1,
           selectedChapterId: null,
           searchText: null,
+          selectedQuestionItemTypes: {
+            courseware: true,
+            question: true,
+            quiz: true,
+          },
           isShowAllSelectedQuestionItems: false,
         }))
     },

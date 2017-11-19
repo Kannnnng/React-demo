@@ -180,6 +180,15 @@ const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
   }
 )
 
+/* 当前被选中的课程、课程组或课堂的名称 */
+const selectedCourseOrCourseGroupOrClassroomNameSelector = createSelector(
+  selectedCourseOrCourseGroupOrClassroomSelector,
+  (selectedCourseOrCourseGroupOrClassroom) => (
+    selectedCourseOrCourseGroupOrClassroom.get('name') ||
+    selectedCourseOrCourseGroupOrClassroom.get('groupName')
+  )
+)
+
 /* 当前被选中的课程、课程组或课堂中的章节集合 */
 /* 因为在前面的 selector 中已经将课程、课程组和课堂中的章节恢复了，因此在这里不必要在使用 */
 /* chaptersSelector */
@@ -277,6 +286,12 @@ const searchTextSelector = createSelector(
   (selectorDomain) => selectorDomain.getIn(['others', 'searchText']) || null
 )
 
+/* 当前设置的项目类型筛选条件，默认全部显示，即题目、组卷和课件 */
+const selectedQuestionItemTypesSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => selectorDomain.getIn(['others', 'selectedQuestionItemTypes']) || immutableObjectEmpty
+)
+
 /* 当前课程、课程组或课堂中选定的所有题目、组卷和课件集合，每个对象存有其 ID 和 name 属性 */
 const selectedAllQuestionItemsSelector = createSelector(
   selectorDomain,
@@ -296,17 +311,22 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
   selectedCourseQuizzesSelector,
   selectedChapterSelector,
   searchTextSelector,
+  selectedQuestionItemTypesSelector,
   isShowAllSelectedQuestionItemsSelector,
   selectedAllQuestionItemsSelector,
   (
-    coursewares,
-    questions,
-    quizzes,
+    tempCoursewares,
+    tempQuestions,
+    tempQuizzes,
     selectedChapter,
     searchText,
+    selectedQuestionItemTypes,
     isShowAllSelectedQuestionItems,
     selectedAllQuestionItems,
   ) => {
+    const coursewares = selectedQuestionItemTypes.get('courseware') ? tempCoursewares : immutableObjectEmpty
+    const questions = selectedQuestionItemTypes.get('question') ? tempQuestions : immutableObjectEmpty
+    const quizzes = selectedQuestionItemTypes.get('quiz') ? tempQuizzes : immutableObjectEmpty
     let result
     /* 如果要求仅显示当前选中的题目、组卷和课件，则章节筛选条件和搜索筛选条件均不生效 */
     if (isShowAllSelectedQuestionItems) {
@@ -589,11 +609,13 @@ const selector = createSelector(
   myCoursesSelector,
   myCourseGroupsSelector,
   myClassroomsSelector,
+  selectedCourseOrCourseGroupOrClassroomNameSelector,
   selectedCourseChaptersSelector,
   selectedCourseLabelsSelector,
   selectedQuestionsAndQuizzesAndCoursewaresSelector,
   pagedSelectedQuestionsAndQuizzesAndCoursewaresSelector,
   searchConditionsSelector,
+  selectedQuestionItemTypesSelector,
   totalPagesSelector,
   currentPageNumberSelector,
   selectedAllQuestionItemsSelector,
@@ -608,11 +630,13 @@ const selector = createSelector(
     myCourses,
     myCourseGroups,
     myClassrooms,
+    selectedCourseOrCourseGroupOrClassroomName,
     selectedCollectionChapters,
     selectedCollectionLabels,
     selectedCollectionAllQuestionItems,
     selectedCollectionQuestionItems,
     filterConditions,
+    selectedQuestionItemTypes,
     totalPages,
     currentPageNumber,
     selectedAllQuestionItems,
@@ -627,11 +651,13 @@ const selector = createSelector(
     myCourses,
     myCourseGroups,
     myClassrooms,
+    selectedCourseOrCourseGroupOrClassroomName,
     selectedCollectionChapters,
     selectedCollectionLabels,
     selectedCollectionAllQuestionItems,
     selectedCollectionQuestionItems,
     filterConditions,
+    selectedQuestionItemTypes,
     totalPages,
     currentPageNumber,
     selectedAllQuestionItems,

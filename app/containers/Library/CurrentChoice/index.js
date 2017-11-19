@@ -40,9 +40,13 @@ export default class CurrentChoice extends React.PureComponent {
     courseGroups: ImmutablePropTypes.map.isRequired,
     /* 教师本人的所有课堂，immutable 对象 */
     classrooms: ImmutablePropTypes.map.isRequired,
+    /* 当前被选中的课程、课程组或课堂的名称 */
+    selectedCourseOrCourseGroupOrClassroomName: PropTypes.string.isRequired,
     /* 当前选择的课程、课程组或课堂所包含的章节信息，immutable 数组 */
     /* 使用数组的原因是需要根据章节的 rank 属性按顺序显示 */
     chapters: ImmutablePropTypes.list.isRequired,
+    /* 当前设置的项目类型筛选条件，默认全部显示，即题目、组卷和课件 */
+    selectedQuestionItemTypes: ImmutablePropTypes.map.isRequired,
     /* 当前是否已经选择了至少一个题目、组卷或课件 */
     isSelectedCurrentQuestionItemsEmpty: PropTypes.bool.isRequired,
     /* 当前是否将符合过滤条件的题目、组卷和课件全部选择了 */
@@ -70,6 +74,8 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickShowAllSelectedQuestionItems: PropTypes.func.isRequired,
     /* 当某一个需要全部复制到指定位置的章节被选中时触发 */
     handleOnSelectNeedCopyEntireChapter: PropTypes.func.isRequired,
+    /* 选择是否显示某一类型的项目，例如是否显示题目、组卷或课件 */
+    handleOnClickSelectQuestionItemTypes: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -77,6 +83,9 @@ export default class CurrentChoice extends React.PureComponent {
     courses: immutableObjectEmpty,
     courseGroups: immutableObjectEmpty,
     classrooms: immutableObjectEmpty,
+    selectedCourseOrCourseGroupOrClassroomName: '全部',
+    chapters: immutableArrayEmpty,
+    selectedQuestionItemTypes: immutableObjectEmpty,
     isSelectedCurrentQuestionItemsEmpty: true,
     isSelectAll: false,
     needDecideCopyEntireChapterMap: immutableObjectEmpty,
@@ -90,6 +99,7 @@ export default class CurrentChoice extends React.PureComponent {
     handleOnClickShowAllQuestionItems: () => {},
     handleOnClickShowAllSelectedQuestionItems: () => {},
     handleOnSelectNeedCopyEntireChapter: () => () => {},
+    handleOnClickSelectQuestionItemTypes: () => () => {},
   }
 
   state = {
@@ -155,7 +165,9 @@ export default class CurrentChoice extends React.PureComponent {
       courses,
       courseGroups,
       classrooms,
+      selectedCourseOrCourseGroupOrClassroomName,
       chapters,
+      selectedQuestionItemTypes,
       isSelectedCurrentQuestionItemsEmpty,
       isSelectAll,
       needDecideCopyEntireChapterMap,
@@ -167,6 +179,7 @@ export default class CurrentChoice extends React.PureComponent {
       handleOnClickShowAllQuestionItems,
       handleOnClickShowAllSelectedQuestionItems,
       handleOnSelectNeedCopyEntireChapter,
+      handleOnClickSelectQuestionItemTypes,
     } = this.props
     const {
       copyToButtonElement,
@@ -184,7 +197,7 @@ export default class CurrentChoice extends React.PureComponent {
             <Chip
               onClick={handleOnClickShowAllQuestionItems}
             >
-              {'全部'}
+              {selectedCourseOrCourseGroupOrClassroomName}
             </Chip>
             {/* 当教师选择了至少一个题目、组卷或课件之后才显示“已选择” */}
             {/* 因为动画需要，因此教师没有选择任何项目时，“已选择”需要被隐藏而非删除，因此需要单独渲染 */}
@@ -385,15 +398,38 @@ export default class CurrentChoice extends React.PureComponent {
               )).toJS()}
             </div>
           </div>
-          <div className={styles.search}>
-            <div>{'搜索:'}</div>
-            <input type='text' ref={(node) => {this.searchInputElement = node}} />
-            <IconButton
-              onClick={this.handleOnClickSearch}
-              style={{ padding: '0', width: '24px', height: '24px' }}
-            >
-              <SearchSvg />
-            </IconButton>
+          <div className={styles.typeFilterAndSearch}>
+            <div className={styles.typeFilter}>
+              <div>{'类型:'}</div>
+              {selectedQuestionItemTypes.map((value, key) => (
+                <Checkbox
+                  key={key}  // eslint-disable-line
+                  checked={value}
+                  label={(
+                    (key === 'courseware' && '课件') ||
+                    (key === 'question' && '题目') ||
+                    (key === 'quiz' && '组卷') || '其他'
+                  )}
+                  labelPosition={'left'}
+                  labelStyle={{ whiteSpace: 'nowrap', marginTop: '6px', marginRight: '5px' }}
+                  iconStyle={{ marginTop: '3px' }}
+                  onCheck={handleOnClickSelectQuestionItemTypes({
+                    name: key,
+                  })}
+                  style={{ width: 'auto' }}
+                />
+              )).toList().toJS()}
+            </div>
+            <div className={styles.search}>
+              <div>{'搜索:'}</div>
+              <input type='text' ref={(node) => {this.searchInputElement = node}} />
+              <IconButton
+                onClick={this.handleOnClickSearch}
+                style={{ padding: '0', width: '24px', height: '24px' }}
+              >
+                <SearchSvg />
+              </IconButton>
+            </div>
           </div>
         </fieldset>
         <div className={styles.selectAll}>

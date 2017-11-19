@@ -42,8 +42,32 @@
   }
 }
 
-.search {
+.typeFilterAndSearch {
   display: flex;
+  align-items: center;
+  height: 24px;
+}
+
+.typeFilter {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+
+  > :nth-child(1) {
+    flex: none;
+
+    & ~ * {
+      top: -3px;
+
+      &:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.search {
+  display: inline-flex;
   align-items: center;
 
   > :nth-child(2) {
@@ -58,5 +82,5 @@
 .selectAll {
   position: absolute;
   right: 17px;
-  bottom: 5px;
+  bottom: 10px;
 }

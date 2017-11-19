@@ -51,6 +51,8 @@ class Library extends React.PureComponent {
     myCourseGroups: ImmutablePropTypes.map,
     /* 教师本人的所有课堂 */
     myClassrooms: ImmutablePropTypes.map,
+    /* 当前被选中的课程、课程组或课堂的名称 */
+    selectedCourseOrCourseGroupOrClassroomName: PropTypes.string,
     /* 当前选择的课程、课程组或课堂所包含的章节信息 */
     selectedCollectionChapters: ImmutablePropTypes.list,
     /* 当前选择的课程、课程组或课堂所包含的知识点信息 */
@@ -64,6 +66,12 @@ class Library extends React.PureComponent {
     /* 当前设置的筛选条件 */
     /* 使用数组的原因是需要有显示顺序，显示效果类似于 全部 > 章节 > 搜索 > 手动选择 */
     filterConditions: ImmutablePropTypes.list,
+    /* 当前设置的项目类型筛选条件，默认全部显示，即题目、组卷和课件 */
+    selectedQuestionItemTypes: ImmutablePropTypes.mapContains({
+      courseware: PropTypes.bool.isRequired,
+      question: PropTypes.bool.isRequired,
+      quiz: PropTypes.bool.isRequired,
+    }),
     /* 经过分页操作以后，计算出的总页数 */
     totalPages: PropTypes.number.isRequired,
     /* 当前页码 */
@@ -237,10 +245,6 @@ class Library extends React.PureComponent {
     const sourcePosition = event.currentTarget.getClientRects()[0]
     const targetPosition = jQuery('#questionItemShoppingCartTarget')[0].getClientRects()[0]
     if (isChecked) {
-      jQuery('#questionItemShoppingCartTarget')
-        .css({ opacity: '1' })
-        .prev()
-        .css({ opacity: '1' })
       /* 如果选中，则显示点击以后的类似“商品进入购物车”动画 */
       jQuery('#questionItemShoppingCartSource')
         .clone()
@@ -256,8 +260,12 @@ class Library extends React.PureComponent {
         .animate({
           top: `${targetPosition.top + 10}px`,
           left: `${targetPosition.left + 45}px`,
-        }, '350', () => {
+        }, 500, () => {
           jQuery('#questionItemShoppingCartSourceDuplicate').remove()
+          jQuery('#questionItemShoppingCartTarget')
+            .css({ opacity: '1' })
+            .prev()
+            .css({ opacity: '1' })
           this.props.actions.selectQuestionItemAction({
             id,
             name,
@@ -359,16 +367,26 @@ class Library extends React.PureComponent {
     })
   }
 
+  /* 选择是否显示某一类型的项目，例如是否显示题目、组卷或课件 */
+  handleOnClickSelectQuestionItemTypes = ({ name }) => (event, isInputChecked) => {
+    this.props.actions.filterQuestionsByTypeAction({
+      name,
+      isChecked: isInputChecked,
+    })
+  }
+
   render() {
     const {
       myInfomation,
       myClassrooms,
       myCourses,
       myCourseGroups,
+      selectedCourseOrCourseGroupOrClassroomName,
       selectedCollectionChapters,
       selectedCollectionLabels,
       selectedCollectionQuestionItems,
       filterConditions,
+      selectedQuestionItemTypes,
       totalPages,
       currentPageNumber,
       selectedAllQuestionItems,
@@ -490,7 +508,9 @@ class Library extends React.PureComponent {
               courses={myCourses}
               courseGroups={myCourseGroups}
               classrooms={myClassrooms}
+              selectedCourseOrCourseGroupOrClassroomName={selectedCourseOrCourseGroupOrClassroomName}
               chapters={selectedCollectionChapters}
+              selectedQuestionItemTypes={selectedQuestionItemTypes}
               isSelectedCurrentQuestionItemsEmpty={selectedAllQuestionItems.isEmpty()}
               isSelectAll={(
                 selectedCollectionQuestionItems.size === selectedCurrentQuestionItems.size &&
@@ -507,6 +527,7 @@ class Library extends React.PureComponent {
               handleOnClickShowAllQuestionItems={this.handleOnClickShowAllQuestionItems}
               handleOnClickShowAllSelectedQuestionItems={this.handleOnClickShowAllSelectedQuestionItems}
               handleOnSelectNeedCopyEntireChapter={this.handleOnSelectNeedCopyEntireChapter}
+              handleOnClickSelectQuestionItemTypes={this.handleOnClickSelectQuestionItemTypes}
             />
           </div>
           <div className={styles.displayArea}>

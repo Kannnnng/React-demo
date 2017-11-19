@@ -77,6 +77,11 @@ export const filterQuestionsBySearchAction = createAction(
   'APP/LIBRARY/FILTER_QUESTIONS_BY_SEARCH_ACTION',
 )
 
+/* 选择项目类型作为筛选条件，默认单题、组卷、课件全部显示 */
+export const filterQuestionsByTypeAction = createAction(
+  'APP/LIBRARY/FILTER_QUESTIONS_BY_TYPE_ACTION',
+)
+
 /* 显示当前所有选中的题目、组卷和课件 */
 export const showAllSelectedQuestionItemsAction = createAction(
   'APP/LIBRARY/SHOW_ALL_SELECTED_QUESTIONITEMS_ACTION',
