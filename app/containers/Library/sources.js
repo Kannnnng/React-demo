@@ -150,7 +150,7 @@ export function copyQuestionItemToLibrary({
         questionIds,
         quizIds,
       },
-      sourceChapters: !sourceChapters.length ? undefined : sourceChapters,
+      chapters: !sourceChapters.length ? undefined : sourceChapters,
     })
     .then(() => ({
       name,
