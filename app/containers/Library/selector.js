@@ -171,7 +171,7 @@ const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
         case 'courseGroup':
           return myCourseGroups.isEmpty() ? immutableObjectEmpty : myCourseGroups.get(id)
         case 'classroom':
-          return myClassrooms.isEmpty() ? immutableObjectEmpty : myClassrooms.get(Number(id))
+          return myClassrooms.isEmpty() ? immutableObjectEmpty : myClassrooms.get(id)
         default:
           return immutableObjectEmpty
       }
@@ -521,49 +521,35 @@ const needDecideCopyEntireChapterMapSelector = createSelector(
   selectedAllQuestionItemsSelector,
   selectedCourseChaptersSelector,
   (selectedAllQuestionItems, selectedCourseChapters) => (
-    selectedCourseChapters.reduce((result, value) => (
-      value
-        .get('coursewares')
-        .concat(value.get('questions'))
-        .concat(value.get('quizzes'))
-        .every((item) => selectedAllQuestionItems.has(item)) ? (
-          result.set(value.get('id'), fromJS({
-            id: value.get('id'),
-            name: value.get('name'),
-          }))
-        ) : result
-    ), immutableObjectEmpty)
+    selectedCourseChapters.reduce((result, value) => {
+      /* 点击某一课程、课程组或章节时，会有很小一段时间中章节里没有题目、组卷和课件的信息，因此 */
+      /* 需要进行判断 */
+      if (value.get('coursewares')) {
+        return value
+          .get('coursewares')
+          .concat(value.get('questions'))
+          .concat(value.get('quizzes'))
+          .every((item) => selectedAllQuestionItems.has(item)) ? (
+            result.set(value.get('id'), fromJS({
+              id: value.get('id'),
+              name: value.get('name'),
+            }))
+          ) : result
+      }
+      return result
+    }, immutableObjectEmpty)
   )
 )
 
 /* 当前用户决定整体复制的章节信息集合 */
-// {
-//   id: {
-//     id: chapterId,
-//     name: chapterName,
-//     questionIds: [
-//       questionId,
-//       questionId,
-//       ...
-//     ],
-//     coursewareIds: [
-//       coursewareId,
-//       coursewareId,
-//       ...
-//     ],
-//     quizIds: [
-//       quizId,
-//       quizId,
-//       ...
-//     ],
-//   }
-// }
+/* selectedCourseChaptersSelector 中的章节信息已经恢复为嵌套对象形式 */
+/* selectedCourseChaptersSelector 是 List 结构 */
 const decidedCopyEntireChapterIdsMapSelector = createSelector(
   selectorDomain,
   selectedCourseChaptersSelector,
   (selectorDomain, selectedCourseChapters) => (
     selectorDomain.getIn(['others', 'decidedCopyEntireChapterIdsList']).reduce((result, value) => (
-      result.set(value, selectedCourseChapters.get(value))
+      result.set(value, selectedCourseChapters.find((item) => item.get('id') === value))
     ), immutableObjectEmpty)
   )
 )
@@ -574,6 +560,13 @@ const singleQuestionItemNeedCopySelector = createSelector(
   needDecideCopyEntireChapterMapSelector,
   decidedCopyEntireChapterIdsMapSelector,
   (selectedAllQuestionItems, needDecideCopyEntireChapterMap, decidedCopyEntireChapterIdsMap) => {
+    /* 如果当前没有要整体复制的章节，或者用户没有选择要整体复制的章节，则直接返回当前选择的所有项目 */
+    if (
+      needDecideCopyEntireChapterMap.isEmpty() ||
+      decidedCopyEntireChapterIdsMap.isEmpty()
+    ) {
+      return selectedAllQuestionItems
+    }
     /* 当前用户决定整体复制的章节中所包含的所有题目、组卷和课件 ID 集合 */
     const questionItemIdsInEntireChapter = decidedCopyEntireChapterIdsMap.reduce((result, value) => (
       result
@@ -584,9 +577,9 @@ const singleQuestionItemNeedCopySelector = createSelector(
     /* 如果当前被选中的题目、组卷或课件 ID 存在于 questionItemIdsInEntireChapter 中 */
     /* 则返回 undefined，不存在则说明该项目 ID 所在章节没有被选择为带章节复制，也就是说 */
     /* 该项目属于单项 */
-    return selectedAllQuestionItems.map((value, key) => (
-      questionItemIdsInEntireChapter.includes(key) ? undefined : value
-    ))
+    return selectedAllQuestionItems.reduce((result, value, key) => (
+      questionItemIdsInEntireChapter.includes(key) ? result : result.set(key, value)
+    ), immutableObjectEmpty)
   }
 )
 

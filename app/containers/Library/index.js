@@ -102,9 +102,9 @@ class Library extends React.PureComponent {
       ImmutablePropTypes.contains({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        coursewares: PropTypes.array.isRequired,
-        questions: PropTypes.array.isRequired,
-        quizzes: PropTypes.array.isRequired,
+        coursewares: ImmutablePropTypes.list,
+        questions: ImmutablePropTypes.list,
+        quizzes: ImmutablePropTypes.list,
       }),
       PropTypes.string.isRequired,
     ),

@@ -19,6 +19,8 @@ export const Labels = new schema.Array(new schema.Entity('labels'))
 /* 课堂 */
 export const Classrooms = new schema.Array(new schema.Entity('classrooms', {
   chapters: Chapters,
+}, {
+  idAttribute: 'courseId',
 }))
 /* 课程 */
 export const Courses = new schema.Array(new schema.Entity('courses', {

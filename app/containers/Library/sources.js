@@ -102,7 +102,7 @@ export function getQuestionsByClassroomId({
         questions: Questions,
         quizzes: Quizzes,
       })
-      result.classroomId = classroomId
+      result.classroomId = classroomId.toString()
       return result
     })
     .catch((error) => {throw error})
@@ -111,6 +111,9 @@ export function getQuestionsByClassroomId({
 export function copyQuestionItemToLibrary({
   /* 标示要复制到的是课程、课程组还是课堂 */
   name,
+  /* 如果当前是要复制到课程组，那么 targetId 表示该课程组所对应的 library 的 ID，因此还需要 */
+  /* groupId 来指明课程组 ID */
+  groupId,
   /* 要复制到的课程、课程组或课堂的 ID */
   targetId,
   /* 要复制到的章节的 ID */
@@ -129,51 +132,37 @@ export function copyQuestionItemToLibrary({
     quiz: quizIds,
   }
   selectedQuestionItems.forEach((value) => {
-    mapIdToCollection[value.name].push(value.id)
+    if (value) {
+      mapIdToCollection[value.name].push(value.id)
+    }
   })
-  return (name === 'classrooms' ? (
-    copyMethod === 'copyEntireChapter' ? (
-      http.post(`v2/copy/${targetId}/chapter`, {
-        chapters: [
-          sourceChapter,
-        ],
-      })
-    ) : (
-      http.post(`v2/preparations?courseId=${targetId}`, {
-        unitId: targetChapterId,
-        coursewareIds,
-        questionIds,
-        quizIds,
-      })
-    )
-  ) : (
-    copyMethod === 'copyEntireChapter' ? (
-      http.post('v2/copy/chapter', {
-        libraryId: targetId,
-        chapters: [
-          sourceChapter,
-        ],
-      })
-    ) : (
-      http.post('v2/copy', {
-        libraryId: targetId,
+  for (let i = 0, len = sourceChapters.length; i < len; i++) {
+    sourceChapters[i].coursewareIds = sourceChapters[i].coursewares
+    sourceChapters[i].questionIds = sourceChapters[i].questions
+    sourceChapters[i].quizIds = sourceChapters[i].quizzes
+  }
+  return http
+    .post(`${name === 'classrooms' ? 'v2/copy/unit/all' : 'v2/copy/all'}` , {
+      [name === 'classrooms' ? 'courseId' : 'libraryId']: targetId,
+      sources: !selectedQuestionItems.length ? undefined : {
         chapterId: targetChapterId,
         coursewareIds,
         questionIds,
         quizIds,
-      })
-    )
-  )).then(() => ({
-    name,
-    targetId,
-    numbers: !sourceChapters.length ? selectedQuestionItems.length : (
-      sourceChapters.reduce((result, value) => (
-        result +
-          value.coursewareIds.length +
-          value.questionIds.length +
-          value.quizIds.length
-      ), selectedQuestionItems.length)
-    ),
-  }))
-  .catch((error) => {throw error})
+      },
+      sourceChapters: !sourceChapters.length ? undefined : sourceChapters,
+    })
+    .then(() => ({
+      name,
+      targetId: name === 'courseGroups' ? groupId : targetId,
+      numbers: !sourceChapters.length ? selectedQuestionItems.length : (
+        sourceChapters.reduce((result, value) => (
+          result +
+            value.coursewareIds.length +
+            value.questionIds.length +
+            value.quizIds.length
+        ), selectedQuestionItems.length)
+      ),
+    }))
+    .catch((error) => {throw error})
 }

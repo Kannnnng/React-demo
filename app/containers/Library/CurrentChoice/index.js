@@ -296,6 +296,7 @@ export default class CurrentChoice extends React.PureComponent {
                             key={item.get('id')}
                             primaryText={item.get('name')}
                             onClick={this.handleOnClickCopyTarget({
+                              groupId: value.get('groupId'),
                               targetId: value.get('library'),
                               targetChapterId: item.get('id'),
                               name: 'courseGroups',
@@ -307,6 +308,7 @@ export default class CurrentChoice extends React.PureComponent {
                         undefined
                       ) : (
                         this.handleOnClickCopyTarget({
+                          groupId: value.get('groupId'),
                           targetId: value.get('library'),
                           name: 'courseGroups',
                         })

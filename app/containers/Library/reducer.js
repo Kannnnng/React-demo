@@ -165,6 +165,9 @@ export default handleActions({
         .mergeDeepIn(['classrooms'], fromJS({
           [classroomId]: result,
         }))
+        /* 上面 mergeDeepIn 操作不会覆盖 newCopyedQuestionItemNumbers 属性，这导致 */
+        /* 用于提示课堂有新增题目、组卷或课件的状态标志位不能被抹去，因此需要手动删除 */
+        .deleteIn(['classrooms', classroomId, 'newCopyedQuestionItemNumbers'])
         .setIn(['status', 'getQuestionsByClassroomIdStatus'], 'succeed')
     },
     throw(state) {
@@ -376,14 +379,15 @@ export default handleActions({
   'APP/LIBRARY/COPY_QUESTIONITEM_TO_LIBRARY_ACTION': {
     next(state, action) {
       const name = lodash.get(action, 'payload.name')
-      const targetId = lodash.get(action, 'payload.targetId')
+      /* 我去你大爷，数字属性名与字符属性名区分的这么详细干嘛！ */
+      const targetId = lodash.get(action, 'payload.targetId').toString()
       const numbers = lodash.get(action, 'payload.numbers')
       return state
         /* name 可以为 course、courseGroup、classroom 三个值 */
         /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
         /* newCopyedQuestionItemNumbers 的主要作用是在复制操作成功以后，在对应的 */
         /* 课程、课程组或课堂名称附近显示新增题目、组卷和课件的数量 */
-        .setIn([name, targetId, 'newCopyedQuestionItemNumbers'], numbers)
+        .updateIn([name, targetId, 'newCopyedQuestionItemNumbers'], (value) => (value || 0) + numbers)
         /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
         /* 清空用户决定要将整个章节复制到指定位置的章节 ID 集合 */
@@ -407,10 +411,7 @@ export default handleActions({
           .updateIn(['others', 'decidedCopyEntireChapterIdsList'], (value) => value.push(id))
       }
       const index = state.getIn(['others', 'decidedCopyEntireChapterIdsList']).keyOf(id)
-      if (index) {
-        return state.deleteIn(['others', 'decidedCopyEntireChapterIdsList', index])
-      }
-      return state
+      return state.deleteIn(['others', 'decidedCopyEntireChapterIdsList', index])
     },
     throw(state) {
       return state
