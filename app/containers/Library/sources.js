@@ -122,6 +122,8 @@ export function copyQuestionItemToLibrary({
   selectedQuestionItems,
   /* 被复制章节的具体信息 */
   sourceChapters,
+  /* 当从课堂中向课程、课程组或其他课堂复制时，需要整体复制的章节 ID 集合 */
+  units,
 }) {
   const coursewareIds = []
   const questionIds = []
@@ -151,18 +153,22 @@ export function copyQuestionItemToLibrary({
         quizIds,
       },
       chapters: !sourceChapters.length ? undefined : sourceChapters,
+      units,
     })
     .then(() => ({
       name,
       targetId: name === 'courseGroups' ? groupId : targetId,
-      numbers: !sourceChapters.length ? selectedQuestionItems.length : (
-        sourceChapters.reduce((result, value) => (
-          result +
-            value.coursewareIds.length +
-            value.questionIds.length +
-            value.quizIds.length
-        ), selectedQuestionItems.length)
-      ),
+      newCopyedQuestionItemIds: {
+        id: name === 'courseGroups' ? groupId : targetId,
+        questionItemIdsList: selectedQuestionItems
+          .map((value) => value.id)
+          .concat(sourceChapters.map((value) => (
+            value
+              .coursewareIds
+              .concat(value.questionIds)
+              .concat(value.quizIds)
+          ))),
+      },
     }))
     .catch((error) => {throw error})
 }

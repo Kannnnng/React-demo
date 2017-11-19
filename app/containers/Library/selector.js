@@ -603,6 +603,18 @@ const singleQuestionItemNeedCopySelector = createSelector(
   }
 )
 
+/* 属性名为课程、课程组或课堂的 ID，值为新复制过来的题目、组卷和课件的 ID */
+const newCopyedQuestionItemIdsSelector = createSelector(
+  selectorDomain,
+  (selectorDomain) => {
+    const id = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'id'])
+    if (id) {
+      return selectorDomain.getIn(['others', 'newCopyedQuestionItemIdsMap', id]) || immutableArrayEmpty
+    }
+    return immutableArrayEmpty
+  }
+)
+
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
@@ -625,6 +637,7 @@ const selector = createSelector(
   needDecideCopyEntireChapterMapSelector,
   decidedCopyEntireChapterIdsMapSelector,
   singleQuestionItemNeedCopySelector,
+  newCopyedQuestionItemIdsSelector,
   (
     myInfomation,
     myCourses,
@@ -646,6 +659,7 @@ const selector = createSelector(
     needDecideCopyEntireChapterMap,
     decidedCopyEntireChapterIdsMap,
     singleQuestionItemNeedCopy,
+    newCopyedQuestionItemIds,
   ) => ({
     myInfomation,
     myCourses,
@@ -667,6 +681,7 @@ const selector = createSelector(
     needDecideCopyEntireChapterMap,
     decidedCopyEntireChapterIdsMap,
     singleQuestionItemNeedCopy,
+    newCopyedQuestionItemIds,
   })
 )
 

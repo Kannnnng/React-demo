@@ -39,6 +39,8 @@ export default function QuestionItem({
   isChecked,
   /* 课件的预览地址 */
   previewUrl,
+  /* 当前题目、组卷或课件是否是刚刚从其他地方复制过来的 */
+  isNewCopyed,
   /* 当列表项被点击时触发 */
   handleOnClick,
   /* 当列表项被选中或取消选中时触发 */
@@ -154,6 +156,9 @@ export default function QuestionItem({
         </div>
         <div>
           {Array(difficulty).fill('☆')}
+        </div>
+        <div>
+          {isNewCopyed && 'new'}
         </div>
       </div>
       <div className={styles.summary}>

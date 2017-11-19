@@ -124,6 +124,9 @@ class Library extends React.PureComponent {
       }),
       PropTypes.string.isRequired,
     ),
+    newCopyedQuestionItemIds: ImmutablePropTypes.listOf(
+      PropTypes.string.isRequired,
+    ),
   }
 
   state = {
@@ -193,6 +196,7 @@ class Library extends React.PureComponent {
 
   /* 将选择好的题目、组卷和课件复制到指定位置 */
   handleOnClickCopyTarget = (value) => {
+    const [name] = this.state.selectableListValue.split('|')
     this.props.actions.initialCopyQuestionItemToLibraryStatusAction({
       status: 'doing',
     })
@@ -215,6 +219,7 @@ class Library extends React.PureComponent {
       /* 数组即可，其数据结构在 selector 中已经被处理好 */
         this.props.decidedCopyEntireChapterIdsMap.toList().toJS()
       ),
+      units: name !== 'classroom' ? undefined : this.props.decidedCopyEntireChapterIdsMap.keySeq().toJS(),
     })
   }
 
@@ -396,6 +401,7 @@ class Library extends React.PureComponent {
       needDecideCopyEntireChapterMap,
       decidedCopyEntireChapterIdsMap,
       singleQuestionItemNeedCopy,
+      newCopyedQuestionItemIds,
     } = this.props
     const {
       selectableListValue,
@@ -554,6 +560,7 @@ class Library extends React.PureComponent {
                 fileType={value.get('fileType')}
                 isChecked={selectedAllQuestionItems.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
+                isNewCopyed={newCopyedQuestionItemIds.includes(value.get('id'))}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
               />
