@@ -11,6 +11,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Checkbox from 'material-ui/Checkbox'
+import New from 'material-ui/svg-icons/av/fiber-new'
 import {
   questionPattern,
 } from 'utils/constants'
@@ -157,9 +158,7 @@ export default function QuestionItem({
         <div>
           {Array(difficulty).fill('☆')}
         </div>
-        <div>
-          {isNewCopyed && 'new'}
-        </div>
+        {isNewCopyed && <New />}
       </div>
       <div className={styles.summary}>
         <div>
@@ -208,6 +207,7 @@ QuestionItem.propTypes = {
   fileType: PropTypes.string,
   isChecked: PropTypes.bool,
   previewUrl: PropTypes.string,
+  isNewCopyed: PropTypes.bool,
   handleOnClick: PropTypes.func.isRequired,
   handleOnQuestionItemCheck: PropTypes.func.isRequired
 }

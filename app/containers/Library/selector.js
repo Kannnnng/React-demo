@@ -164,6 +164,7 @@ const selectedCourseOrCourseGroupOrClassroomSelector = createSelector(
   (selectorDomain, myCourses, myCourseGroups, myClassrooms) => {
     if (!selectorDomain.isEmpty()) {
       const id = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'id'])
+      /* name 表示当前选中的是课程、课程组还是课堂 */
       const name = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'name'])
       switch (name) {
         case 'course':

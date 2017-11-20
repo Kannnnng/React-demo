@@ -158,17 +158,14 @@ export function copyQuestionItemToLibrary({
     .then(() => ({
       name,
       targetId: name === 'courseGroups' ? groupId : targetId,
-      newCopyedQuestionItemIds: {
-        id: name === 'courseGroups' ? groupId : targetId,
-        questionItemIdsList: selectedQuestionItems
-          .map((value) => value.id)
-          .concat(sourceChapters.map((value) => (
-            value
-              .coursewareIds
-              .concat(value.questionIds)
-              .concat(value.quizIds)
-          ))),
-      },
+      newCopyedQuestionItemIdsList: selectedQuestionItems
+        .map((value) => value.id)
+        .concat(sourceChapters.map((value) => (
+          value
+            .coursewareIds
+            .concat(value.questionIds)
+            .concat(value.quizIds)
+        )))
     }))
     .catch((error) => {throw error})
 }

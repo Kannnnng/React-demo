@@ -413,18 +413,18 @@ export default handleActions({
       const name = lodash.get(action, 'payload.name')
       /* 我去你大爷，数字属性名与字符属性名区分的这么详细干嘛！ */
       const targetId = lodash.get(action, 'payload.targetId').toString()
-      const {id, questionItemIdsList} = lodash.get(action, 'payload.newCopyedQuestionItemIds')
+      const newCopyedQuestionItemIdsList = lodash.get(action, 'payload.newCopyedQuestionItemIdsList')
       return state
         /* name 可以为 course、courseGroup、classroom 三个值 */
         /* targetId 可以为课程 ID、课程组 ID、课堂 ID */
         /* newCopyedQuestionItemNumbers 的主要作用是在复制操作成功以后，在对应的 */
         /* 课程、课程组或课堂名称附近显示新增题目、组卷和课件的数量 */
         .updateIn([name, targetId, 'newCopyedQuestionItemNumbers'], (value) => (
-          (value || 0) + questionItemIdsList.length
+          (value || 0) + newCopyedQuestionItemIdsList.length
         ))
-        .updateIn(['others', 'newCopyedQuestionItemIdsMap', id], (value) => (
+        .updateIn(['others', 'newCopyedQuestionItemIdsMap', targetId], (value) => (
           (value || immutableArrayEmpty)
-            .concat(questionItemIdsList)
+            .concat(newCopyedQuestionItemIdsList)
             .toSet()
             .toList()
         ))
