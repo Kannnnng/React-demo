@@ -145,7 +145,7 @@ const vendors = [
   // 'material-ui',
   /* md5 这个库在代码中暂时没用到 */
   // 'md5',
-  // 'moment',
+  'moment',
   'normalizr',
   'react',
   /* 实现拖拽效果的两个库，在目前的项目中可以暂时不使用 */
@@ -156,11 +156,11 @@ const vendors = [
   // 'react-hot-component-loader',
   // 'react-hot-loader',
   'react-loadable',
-  'react-redux',
-  'react-router-dom',
+  // 'react-redux',
+  // 'react-router-dom',
   'react-tap-event-plugin',
-  'redux',
-  'redux-actions',
+  // 'redux',
+  // 'redux-actions',
   /* 不在此处统一引用，因为这个工具库还是有点大，使用 ES6 模块化引用可以防止不必要的代码被 */
   /* 打包进去 */
   // 'redux-form',
@@ -181,9 +181,12 @@ const vendors = [
 if (process.env.NODE_ENV !== 'production') {
   vendors.push('jquery')
   vendors.push('mockjs')
-  vendors.push('moment')
   vendors.push('prop-types')
   vendors.push('react-immutable-proptypes')
+  vendors.push('react-redux')
+  vendors.push('react-router-dom')
+  vendors.push('redux')
+  vendors.push('redux-actions')
   vendors.push('redux-form')
   vendors.push('redux-logger')
 }
