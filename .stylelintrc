@@ -9,5 +9,11 @@
     "rule-empty-line-before": "always-multi-line",
     "shorthand-property-no-redundant-values": true,
     "unit-no-unknown": true,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        ignorePseudoClasses: ["local", "global"],
+      },
+    ]
   }
 }

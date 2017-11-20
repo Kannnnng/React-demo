@@ -5,12 +5,12 @@
 
 html,
 body,
-body > :nth-child(2),
-body > :nth-child(2) > div {
+:global(#app),
+:global(#app) > div {
   height: 100%;
 }
 
-body > :nth-child(1) > * {
+body > .pace > * {
 
   &:nth-child(1) {
     background-color: #3B9E46;
