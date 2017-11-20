@@ -192,7 +192,7 @@ export default handleActions({
             id,
             name,
           },
-          currentNumber: 1,
+          currentPageNumber: 1,
           selectedAllQuestionItems: {},
           previewQuestionItem: {},
           selectedChapterId: null,
@@ -256,9 +256,13 @@ export default handleActions({
       const name = lodash.get(action, 'payload.name')
       const isChecked = lodash.get(action, 'payload.isChecked')
       if (isChecked) {
-        return state.setIn(['others', 'selectedQuestionItemTypes', name], true)
+        return state
+          .setIn(['others', 'selectedQuestionItemTypes', name], true)
+          .setIn(['others', 'currentPageNumber'], 1)
       }
-      return state.setIn(['others', 'selectedQuestionItemTypes', name], false)
+      return state
+        .setIn(['others', 'selectedQuestionItemTypes', name], false)
+        .setIn(['others', 'currentPageNumber'], 1)
     },
     throw(state) {
       return state
@@ -316,6 +320,7 @@ export default handleActions({
         case 'select':
           return state
             .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)
+            .setIn(['others', 'currentPageNumber'], 1)
         default:
           return state
       }

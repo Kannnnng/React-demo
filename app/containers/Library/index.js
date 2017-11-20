@@ -515,8 +515,10 @@ class Library extends React.PureComponent {
               selectedQuestionItemTypes={selectedQuestionItemTypes}
               isSelectedCurrentQuestionItemsEmpty={selectedAllQuestionItems.isEmpty()}
               isSelectAll={(
-                selectedCollectionQuestionItems.size === selectedCurrentQuestionItems.size &&
-                selectedCurrentQuestionItems.size !== 0
+                /* 判断依据是，当前在页面上显示的项目数量与当前选中的项目数量是否相等，且不为零 */
+                selectedCollectionQuestionItems.every((value, key) => (
+                  selectedCurrentQuestionItems.has(key)
+                )) && selectedCurrentQuestionItems.size !== 0
               )}
               needDecideCopyEntireChapterMap={needDecideCopyEntireChapterMap}
               decidedCopyEntireChapterIdsMap={decidedCopyEntireChapterIdsMap}
