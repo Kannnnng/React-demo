@@ -30,8 +30,6 @@ const initialState = fromJS({
     isShowAllSelectedQuestionItems: false,
     /* 当前用户决定整体复制的章节信息集合 */
     decidedCopyEntireChapterIdsList: [],
-    /* 属性名为课程、课程组或课堂的 ID，值为新复制过来的题目、组卷和课件的 ID */
-    newCopyedQuestionItemIdsMap: {},
   },
   status: {
     copyQuestionItemToLibraryStatus: 'initial',
@@ -421,12 +419,6 @@ export default handleActions({
         /* 课程、课程组或课堂名称附近显示新增题目、组卷和课件的数量 */
         .updateIn([name, targetId, 'newCopyedQuestionItemNumbers'], (value) => (
           (value || 0) + newCopyedQuestionItemIdsList.length
-        ))
-        .updateIn(['others', 'newCopyedQuestionItemIdsMap', targetId], (value) => (
-          (value || immutableArrayEmpty)
-            .concat(newCopyedQuestionItemIdsList)
-            .toSet()
-            .toList()
         ))
         /* 清空已经选择的题目、组卷和课件集合 */
         .setIn(['others', 'selectedAllQuestionItems'], immutableObjectEmpty)

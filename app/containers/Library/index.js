@@ -124,9 +124,6 @@ class Library extends React.PureComponent {
       }),
       PropTypes.string.isRequired,
     ),
-    newCopyedQuestionItemIds: ImmutablePropTypes.listOf(
-      PropTypes.string.isRequired,
-    ),
   }
 
   state = {
@@ -401,12 +398,12 @@ class Library extends React.PureComponent {
       needDecideCopyEntireChapterMap,
       decidedCopyEntireChapterIdsMap,
       singleQuestionItemNeedCopy,
-      newCopyedQuestionItemIds,
     } = this.props
     const {
       selectableListValue,
       currentQuizPage,
     } = this.state
+
 
     return (
       <div className={styles.container}>
@@ -560,7 +557,7 @@ class Library extends React.PureComponent {
                 fileType={value.get('fileType')}
                 isChecked={selectedAllQuestionItems.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
-                isNewCopyed={newCopyedQuestionItemIds.includes(value.get('id'))}
+                isNewCopyed={value.get('isNew')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
               />

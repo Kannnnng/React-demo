@@ -335,13 +335,20 @@ const selectedQuestionsAndQuizzesAndCoursewaresSelector = createSelector(
       if (selectedAllQuestionItems.isEmpty()) {
         return immutableObjectEmpty.toOrderedMap()
       }
-      result = selectedAllQuestionItems.reduce((tempResultresult, value, key) => (
-        tempResultresult.set(key, (
+      result = selectedAllQuestionItems.reduce((tempResultresult, value, key) => {
+        /* 根据当前选中的项目类型，分别从题目、组卷和课件集合中获取各自的数据 */
+        const questionItem = (
           (value.get('name') === 'courseware' && coursewares.get(key)) ||
           (value.get('name') === 'quiz' && quizzes.get(key)) ||
           (value.get('name') === 'question' && questions.get(key))
-        ))
-      ), immutableObjectEmpty)
+        )
+        /* 如果获取到了有效数据，则放入结果中 */
+        if (questionItem) {
+          return tempResultresult.set(key, questionItem)
+        }
+        /* 没有获取到有效数据，直接返回原有结果 */
+        return tempResultresult
+      }, immutableObjectEmpty)
     } else {
       if (searchText) {
         result = coursewares
@@ -604,18 +611,6 @@ const singleQuestionItemNeedCopySelector = createSelector(
   }
 )
 
-/* 属性名为课程、课程组或课堂的 ID，值为新复制过来的题目、组卷和课件的 ID */
-const newCopyedQuestionItemIdsSelector = createSelector(
-  selectorDomain,
-  (selectorDomain) => {
-    const id = selectorDomain.getIn(['others', 'selectedCourseOrCourseGroupOrClassroom', 'id'])
-    if (id) {
-      return selectorDomain.getIn(['others', 'newCopyedQuestionItemIdsMap', id]) || immutableArrayEmpty
-    }
-    return immutableArrayEmpty
-  }
-)
-
 /* 导出最终的数据 */
 const selector = createSelector(
   myInfomationSelector,
@@ -638,7 +633,6 @@ const selector = createSelector(
   needDecideCopyEntireChapterMapSelector,
   decidedCopyEntireChapterIdsMapSelector,
   singleQuestionItemNeedCopySelector,
-  newCopyedQuestionItemIdsSelector,
   (
     myInfomation,
     myCourses,
@@ -660,7 +654,6 @@ const selector = createSelector(
     needDecideCopyEntireChapterMap,
     decidedCopyEntireChapterIdsMap,
     singleQuestionItemNeedCopy,
-    newCopyedQuestionItemIds,
   ) => ({
     myInfomation,
     myCourses,
@@ -682,7 +675,6 @@ const selector = createSelector(
     needDecideCopyEntireChapterMap,
     decidedCopyEntireChapterIdsMap,
     singleQuestionItemNeedCopy,
-    newCopyedQuestionItemIds,
   })
 )
 
