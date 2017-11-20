@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const baseURL = process.env.NODE_ENV === 'production' ? '//localhost:6000/api/' : '/api/'
+
 const http = axios.create({
-  baseURL: '/api/',
+  baseURL,
   timeout: 10000,
   headers: {
     'X-Custom-Header': 'foobar',

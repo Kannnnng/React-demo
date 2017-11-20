@@ -404,7 +404,6 @@ class Library extends React.PureComponent {
       currentQuizPage,
     } = this.state
 
-
     return (
       <div className={styles.container}>
         <div className={styles.leftArea}>
