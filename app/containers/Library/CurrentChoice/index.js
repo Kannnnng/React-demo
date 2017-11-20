@@ -132,6 +132,12 @@ export default class CurrentChoice extends React.PureComponent {
     })
   }
 
+  handleOnPressDownSearchButton = (event) => {
+    if (event.keyCode === 13) {
+      this.handleOnClickSearch()
+    }
+  }
+
   handleOnClickSearch = () => {
     this.props.handleOnClickSearch({
       value: this.searchInputElement.value,
@@ -422,7 +428,12 @@ export default class CurrentChoice extends React.PureComponent {
             </div>
             <div className={styles.search}>
               <div>{'搜索:'}</div>
-              <input type='text' ref={(node) => {this.searchInputElement = node}} />
+              <input
+                type='text'
+                ref={(node) => {this.searchInputElement = node}}
+                onKeyDown={this.handleOnPressDownSearchButton}
+                tabIndex='0'
+              />
               <IconButton
                 onClick={this.handleOnClickSearch}
                 style={{ padding: '0', width: '24px', height: '24px' }}

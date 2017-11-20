@@ -57,7 +57,7 @@ class Library extends React.PureComponent {
     selectedCollectionChapters: ImmutablePropTypes.list,
     /* 当前选择的课程、课程组或课堂所包含的知识点信息 */
     selectedCollectionLabels: ImmutablePropTypes.map,
-    /* 当前选择的课程、课程组或课堂所包含的经过筛选条件筛选后的所有题目、组卷和课件 */
+    /* 经过筛选后显示在页面上的当前被选中课程的题目、组卷、课件集合 */
     selectedCollectionAllQuestionItems: ImmutablePropTypes.orderedMap,
     /* 当前选择的课程、课程组或课堂所包含的已经经过分页操作的题目、组卷和课件 */
     /* 已经经过分页操作，每页最多显示 10 个条目，因此该属性的 size 小于等于 10 */
@@ -558,7 +558,7 @@ class Library extends React.PureComponent {
                 fileType={value.get('fileType')}
                 isChecked={selectedAllQuestionItems.has(value.get('id'))}
                 previewUrl={value.get('previewUrl')}
-                isNewCopyed={value.get('isNew')}
+                isNewCopyed={value.get('new')}
                 handleOnClick={this.handleOnClickQuestionItem}
                 handleOnQuestionItemCheck={this.handleOnQuestionItemCheck}
               />
