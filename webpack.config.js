@@ -128,17 +128,17 @@ if (process.env.NODE_ENV === 'production') {
     new CopyWebpackPlugin([
       /* 复制图片到 build 文件夹 */
       {
-        from: 'lib/*.[png|jpg|jpeg|gif|svg]',
-        to: 'build/assets',
+        from: path.resolve(ROOT_PATH, 'lib/*.[png|jpg|jpeg|gif|svg]'),
+        to: path.resolve(BUILD_PATH, 'assets'),
       },
       /* 复制 JS、CSS 文件到 build 文件夹 */
       {
-        from: 'lib/*.[js|css]',
-        to: 'build',
+        from: path.resolve(ROOT_PATH, 'lib/*.[js|css]'),
+        to: BUILD_PATH,
       },
     ]),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ]
 } else {
   entry = {
@@ -195,7 +195,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 问题，所以现在只在生产环境中开启这个功能 */
     // new webpack.optimize.ModuleConcatenationPlugin(),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ]
 }
 

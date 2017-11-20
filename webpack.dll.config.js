@@ -85,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
     /* 禁止打包匹配文件 */
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ]
 } else {
   output = {
@@ -128,13 +128,15 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.IgnorePlugin(/^\.\/cjs\/react\.production\.min\.js$/, /react$/),
     new webpack.IgnorePlugin(/^\.\/cjs\/react-dom\.production\.min\.js$/, /react-dom$/),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 }
 
 const vendors = [
   'axios',
   'immutable',
+  /* 不需要将 jquery 整个打包到 DLL 文件中 */
+  // 'jquery',
   /* lodash-es 可以通过 lodash-webpack-plugin 这款插件实现精确引用，防止将整个 lodash-es */
   /* 全部打包到最后的文件中 */
   // 'lodash-es',
@@ -143,7 +145,7 @@ const vendors = [
   // 'material-ui',
   /* md5 这个库在代码中暂时没用到 */
   // 'md5',
-  'moment',
+  // 'moment',
   'normalizr',
   'react',
   /* 实现拖拽效果的两个库，在目前的项目中可以暂时不使用 */
@@ -168,6 +170,8 @@ const vendors = [
 
 ]
 
+/* 处于开发环境时将 jQuery 也打包到 DLL 文件中 */
+/* 处于开发环境时将 Moment 也打包到 DLL 文件中 */
 /* 处于开发环境时将 Mockjs 也打包到 DLL 文件中 */
 /* 处于开发环境时将 prop-types 也打包到 DLL 文件中 */
 /* 处于开发环境时将 react-immutable-proptypes 也打包到 DLL 文件中 */
@@ -175,7 +179,9 @@ const vendors = [
 /* 处于开发环境时将 redux-form 也打包到 DLL 文件中，因此引用 redux-form 一般就是全部引用 */
 /* 很少估计也是懒得单个引用 */
 if (process.env.NODE_ENV !== 'production') {
+  vendors.push('jquery')
   vendors.push('mockjs')
+  vendors.push('moment')
   vendors.push('prop-types')
   vendors.push('react-immutable-proptypes')
   vendors.push('redux-form')
