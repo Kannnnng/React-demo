@@ -1,8 +1,8 @@
 import React from 'react'
-import HotLoader from 'react-hot-component-loader'
 import Loadable from 'react-loadable'
-import BrowserRouter from 'react-router-dom/BrowserRouter'
+import HotLoader from 'react-hot-component-loader'
 import HashRouter from 'react-router-dom/HashRouter'
+import BrowserRouter from 'react-router-dom/BrowserRouter'
 import Route from 'react-router-dom/Route'
 import LoadingComponent from 'containers/LoadingComponent'
 

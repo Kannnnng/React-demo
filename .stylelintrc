@@ -6,7 +6,12 @@
     "color-hex-length": null,
     "color-hex-case": "upper",
     "comment-empty-line-before": null,
-    "rule-empty-line-before": "always-multi-line",
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        except: ["after-single-line-comment"],
+      },
+    ],
     "shorthand-property-no-redundant-values": true,
     "unit-no-unknown": true,
     "selector-pseudo-class-no-unknown": [
