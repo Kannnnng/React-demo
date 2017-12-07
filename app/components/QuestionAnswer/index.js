@@ -18,12 +18,24 @@ import CoursewarePreview from 'components/CoursewarePreview'
 import SubQuestionTitle from './SubQuestionTitle'
 import styles from './styles'
 
+require.ensure([
+  // Require Editor JS files.
+  'froala-editor/js/froala_editor.pkgd.min.js',
+  // Require Editor CSS files.
+  'froala-editor/css/froala_style.min.css',
+  'froala-editor/css/froala_editor.pkgd.min.css',
+], (require) => {
+    require('froala-editor/js/froala_editor.pkgd.min.js')
+    require('froala-editor/css/froala_style.min.css')
+    require('froala-editor/css/froala_editor.pkgd.min.css')
+}, 'froala-editor')
+
 // Require Editor JS files.
-import 'froala-editor/js/froala_editor.pkgd.min.js'  // eslint-disable-line
+// import 'froala-editor/js/froala_editor.pkgd.min.js'  // eslint-disable-line
 
 // Require Editor CSS files.
-import 'froala-editor/css/froala_style.min.css'  // eslint-disable-line
-import 'froala-editor/css/froala_editor.pkgd.min.css'  // eslint-disable-line
+// import 'froala-editor/css/froala_style.min.css'  // eslint-disable-line
+// import 'froala-editor/css/froala_editor.pkgd.min.css'  // eslint-disable-line
 
 class QuestionAnswer extends React.Component {
   static propTypes = {
