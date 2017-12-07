@@ -1,5 +1,6 @@
 import Mock, { Random } from 'mockjs'
 import moment from 'moment'
+import { letter } from 'utils/constants'
 
 export default Mock.mock({
   DiscussionHeader: {
@@ -98,7 +99,15 @@ export default Mock.mock({
         correctRate: Random.integer(0, 100),
         referenceCount: Random.integer(0, 100),
         usageCount: Random.integer(0, 100),
-        easyWrongOption: /A?B?C?D?/,
+        easyWrongOption: function () {
+          const result = []
+          for (let index = 0; index < 4; index++) {
+            if (Math.random() > 0.5) {
+              result.push(letter[index])
+            }
+          }
+          return result
+        },
         hasCorrectness: Random.boolean(),
         correctAnswer: Random.boolean(),
         strict: Random.boolean(),
