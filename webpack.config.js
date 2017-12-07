@@ -151,6 +151,8 @@ if (process.env.NODE_ENV === 'production') {
     path: BUILD_PATH,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
+    /* 图片等文件的引用路径 */
+    publicPath: '/',
   }
   cache = true
   /* 源代码与编译后代码的匹配模式 */
