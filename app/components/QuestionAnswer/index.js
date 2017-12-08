@@ -25,10 +25,10 @@ require.ensure([
   'froala-editor/css/froala_style.min.css',
   'froala-editor/css/froala_editor.pkgd.min.css',
 ], (require) => {
-    require('froala-editor/js/froala_editor.pkgd.min.js')
-    require('froala-editor/css/froala_style.min.css')
-    require('froala-editor/css/froala_editor.pkgd.min.css')
-}, 'froala-editor')
+  require('froala-editor/js/froala_editor.pkgd.min.js')
+  require('froala-editor/css/froala_style.min.css')
+  require('froala-editor/css/froala_editor.pkgd.min.css')
+}, 'FroalaEditor')
 
 // Require Editor JS files.
 // import 'froala-editor/js/froala_editor.pkgd.min.js'  // eslint-disable-line
