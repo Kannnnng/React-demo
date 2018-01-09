@@ -3,15 +3,8 @@
   padding: 0;
 }
 
-html,
-body,
-:global(#app),
-:global(#app) > div {
-  height: 100%;
-}
-
-/* 修改加载进度条样式 */
-body > .pace > * {
+/* 修改加载进度条颜色 */
+body > :global(.pace) > * {
 
   &:nth-child(1) {
     background-color: #3B9E46;
@@ -25,4 +18,12 @@ body > .pace > * {
     border-top-color: #3B9E46;
     border-left-color: #3B9E46;
   }
+}
+
+/* 将页面高度撑满 */
+html,
+body,
+body > :global(#app),
+body > :global(#app) > div {
+  height: 100%;
 }

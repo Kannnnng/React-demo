@@ -4,6 +4,7 @@ import HotLoader from 'react-hot-component-loader'
 import HashRouter from 'react-router-dom/HashRouter'
 import BrowserRouter from 'react-router-dom/BrowserRouter'
 import Route from 'react-router-dom/Route'
+import Loading from 'components/Loading'
 import LoadingComponent from 'containers/LoadingComponent'
 
 const LoadComponent = (loader) => {
@@ -17,7 +18,7 @@ const LoadComponent = (loader) => {
   return HotLoader(
     loader,
     {
-      LoadingComponent,
+      Loading,
     }
   )
 }

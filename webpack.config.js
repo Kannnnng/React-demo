@@ -36,8 +36,8 @@ if (process.env.NODE_ENV === 'production') {
   }
   output = {
     path: BUILD_PATH,
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].chunk.js',
+    filename: 'js/[name].[hash].js',
+    chunkFilename: 'js/[name].[hash].chunk.js',
     /* 图片等文件的引用路径 */
     publicPath: '/React-demo/build/',
   }
@@ -79,12 +79,12 @@ if (process.env.NODE_ENV === 'production') {
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: path.resolve(BUILD_PATH, 'vendor.pro.manifest.json'),
+      manifest: path.resolve(BUILD_PATH, 'proDll/vendor.pro.manifest.json'),
     }),
     /* 将 CSS 代码单独抽离出来 */
     new ExtractTextPlugin({
       allChunks: true,
-      filename: 'styles.[hash].css',
+      filename: 'css/styles.[hash].css',
     }),
     /* 与 extract-text-webpack-plugin 协同工作，压缩 CSS 代码 */
     new OptimizeCssAssetsPlugin({
@@ -92,25 +92,30 @@ if (process.env.NODE_ENV === 'production') {
     }),
     /* 打包时不再将整个 lodash 完全打包生成的文件中，而是仅将 lodash 中使用到的函数文件打包到生成文件中 */
     /* 相当于该插件代替开发人员手动筛选要引用的 lodash 中的文件 */
-    new LodashModuleReplacementPlugin({
-      paths: true,
-    }),
+    /* 因为在项目中使用了 lodash 的 es6 版本，已经能够根据依赖自动筛选所需要的 lodash 模块， */
+    /* 所以可以将这个插件去掉了 */
+    // new LodashModuleReplacementPlugin({
+    //   paths: true,
+    // }),
     /* 通过多线程的方式快速编译代码 */
     new HappyPack({
       id: 'js',
-      threads: 2,
+      threads: 4,
       loaders: ['babel-loader'],
     }),
     /* 每次编译生产环境代码时先将之前的文件删除掉 */
     new CleanWebpackPlugin(
       [
-        'build/app.*.js',
-        'build/*.chunk.js',
-        'build/styles.*.css',
-        'build/styles.*.css.map',
+        'build/js/app.*.js',
+        'build/js/*.chunk.js',
+        'build/css/styles.*.css',
+        'build/css/styles.*.css.map',
       ],
       {
+        /* 将删除操作产生的信息打印到控制台上 */
         verbose: true,
+        /* 如果设置为 true，则仅仅显示符合删除条件的文件列表，也就是说哪些文件将要被删除，但 */
+        /* 实际上不会执行删除操作 */
         dry: false,
       }
     ),
@@ -126,19 +131,30 @@ if (process.env.NODE_ENV === 'production') {
     }),
     /* 复制指定文件到指定文件夹 */
     new CopyWebpackPlugin([
-      /* 复制图片到 build 文件夹 */
+      /* 复制 js 文件到 build/js 文件夹 */
       {
-        from: path.resolve(ROOT_PATH, 'lib/*.[png|jpg|jpeg|gif|svg]'),
-        to: path.resolve(BUILD_PATH, 'assets'),
+        from: 'lib/js/**/*',
+        to: path.resolve(BUILD_PATH, 'js'),
+        flatten: true,
+        force: true,
       },
-      /* 复制 JS、CSS 文件到 build 文件夹 */
+      /* 复制 css 文件到 build/css 文件夹 */
       {
-        from: path.resolve(ROOT_PATH, 'lib/*.[js|css]'),
-        to: BUILD_PATH,
+        from: 'lib/css/**/*',
+        to: path.resolve(BUILD_PATH, 'css'),
+        flatten: true,
+        force: true,
+      },
+      /* 复制图片文件到 build/images 文件夹 */
+      {
+        from: 'lib/images/**/*',
+        to: path.resolve(BUILD_PATH, 'images'),
+        flatten: true,
+        force: true,
       },
     ]),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 } else {
   entry = {
@@ -190,14 +206,38 @@ if (process.env.NODE_ENV === 'production') {
     /* 引入 DLL 文件 */
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: path.resolve(BUILD_PATH, 'vendor.dev.manifest.json'),
+      manifest: path.resolve(BUILD_PATH, 'devDll/vendor.dev.manifest.json'),
     }),
     /* 开启作用域提升功能 */
     /* 在开发环境中开启这个功能，我自己感觉会导致与 react-hot-loader 有冲突，总是会发生一些 */
     /* 问题，所以现在只在生产环境中开启这个功能 */
     // new webpack.optimize.ModuleConcatenationPlugin(),
+    /* 复制指定文件到指定文件夹 */
+    new CopyWebpackPlugin([
+      /* 复制 js 文件到 build/js 文件夹 */
+      {
+        from: 'lib/js/**/*',
+        to: path.resolve(BUILD_PATH, 'js'),
+        flatten: true,
+        force: true,
+      },
+      /* 复制 css 文件到 build/css 文件夹 */
+      {
+        from: 'lib/css/**/*',
+        to: path.resolve(BUILD_PATH, 'css'),
+        flatten: true,
+        force: true,
+      },
+      /* 复制图片文件到 build/images 文件夹 */
+      {
+        from: 'lib/images/**/*',
+        to: path.resolve(BUILD_PATH, 'images'),
+        flatten: true,
+        force: true,
+      },
+    ]),
     /* 以可视化的方式查看当前项目中引用的各个模块的大小 */
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 }
 
@@ -251,7 +291,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        loader: 'style-loader!css-loader?root=.',
+        loader: 'style-loader!css-loader',
         include: NODE_MODULES_PATH,
       },
       {
@@ -277,17 +317,17 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
-        loader: 'url-loader?limit=4096&name=assets/[hash].[ext]',
+        loader: 'url-loader?limit=4096&name=images/[hash].[ext]',
         exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(ttf|woff|woff2)$/i,
-        loader: 'url-loader?limit=4096',
+        loader: 'url-loader?limit=4096&name=fonts/[hash].[ext]',
         exclude: NODE_MODULES_PATH,
       },
       {
         test: /\.(mp4|ogg|mp3)$/i,
-        loader: 'file-loader',
+        loader: 'file-loader&name=medias/[hash].[ext]',
         exclude: NODE_MODULES_PATH,
       },
     ],

@@ -19,7 +19,7 @@ process.env.NODE_ENV = env === 'pro' ? 'production' : 'development'
 
 if (process.env.NODE_ENV === 'production') {
   output = {
-    path: BUILD_PATH,
+    path: path.resolve(BUILD_PATH, 'proDll'),
     filename: '[name].[hash].pro.dll.js',
     library: '[name]_library',
   }
@@ -57,18 +57,21 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.NoEmitOnErrorsPlugin(),
     /* 打包公共代码库为一个 DLL 文件 */
     new webpack.DllPlugin({
-      path: path.resolve(BUILD_PATH, '[name].pro.manifest.json'),
+      path: path.resolve(BUILD_PATH, 'proDll/[name].pro.manifest.json'),
       name: '[name]_library',
       context: __dirname,
     }),
     /* 每次编译生产环境代码时先将之前的文件删除掉 */
     new CleanWebpackPlugin(
       [
-        'build/vendor.*.pro.dll.js',
-        'build/vendor.pro.manifest.json',
+        'build/proDll/vendor.*.pro.dll.js',
+        'build/proDll/vendor.pro.manifest.json',
       ],
       {
+        /* 将删除操作产生的信息打印到控制台上 */
         verbose: true,
+        /* 如果设置为 true，则仅仅显示符合删除条件的文件列表，也就是说哪些文件将要被删除，但 */
+        /* 实际上不会执行删除操作 */
         dry: false,
       }
     ),
@@ -89,22 +92,22 @@ if (process.env.NODE_ENV === 'production') {
   ]
 } else {
   output = {
-    path: BUILD_PATH,
+    path: path.resolve(BUILD_PATH, 'devDll'),
     filename: '[name].[hash].dev.dll.js',
     library: '[name]_library',
   }
   plugins = [
     /* 打包公共代码库为一个 DLL 文件 */
     new webpack.DllPlugin({
-      path: path.resolve(BUILD_PATH, '[name].dev.manifest.json'),
+      path: path.resolve(BUILD_PATH, 'devDll/[name].dev.manifest.json'),
       name: '[name]_library',
       context: __dirname,
     }),
     /* 每次编译生产环境代码时先将之前的文件删除掉 */
     new CleanWebpackPlugin(
       [
-        'build/vendor.*.dev.dll.js',
-        'build/vendor.dev.manifest.json',
+        'build/devDll/vendor.*.dev.dll.js',
+        'build/devDll/vendor.dev.manifest.json',
       ],
       {
         verbose: true,
@@ -145,7 +148,8 @@ const vendors = [
   // 'material-ui',
   /* md5 这个库在代码中暂时没用到 */
   // 'md5',
-  'moment',
+  /* moment 现在已经使用 ES6 重新编写了，所以可以按需加载 */
+  // 'moment',
   'normalizr',
   'react',
   /* 实现拖拽效果的两个库，在目前的项目中可以暂时不使用 */
@@ -181,6 +185,7 @@ const vendors = [
 if (process.env.NODE_ENV !== 'production') {
   vendors.push('jquery')
   vendors.push('mockjs')
+  vendors.push('moment')
   vendors.push('prop-types')
   vendors.push('react-immutable-proptypes')
   vendors.push('react-redux')
